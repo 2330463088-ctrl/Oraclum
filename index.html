@@ -2434,7 +2434,7 @@
             { id: 'exam', icon: 'fa-graduation-cap', nameZh: '考试学业', nameEn: 'Exam', previewZh: '考试运势如何？', previewEn: 'How will my exam go?' },
             { id: 'lawsuit', icon: 'fa-gavel', nameZh: '诉讼纠纷', nameEn: 'Lawsuit', previewZh: '诉讼结果如何？', previewEn: 'What will be the lawsuit outcome?' },
             { id: 'career', icon: 'fa-building', nameZh: '事业职场', nameEn: 'Career', previewZh: '事业发展方向？', previewEn: 'Where is my career heading?' },
-            { id: 'marriage', icon: 'fa-rings-wedding', nameZh: '婚姻家庭', nameEn: 'Marriage', previewZh: '婚姻运势如何？', previewEn: 'How is my marriage luck?' },
+            { id: 'marriage', icon: 'fa-users', nameZh: '婚姻家庭', nameEn: 'Marriage', previewZh: '婚姻运势如何？', previewEn: 'How is my marriage luck?' },
             { id: 'startup', icon: 'fa-rocket', nameZh: '创业开张', nameEn: 'Startup', previewZh: '创业时机如何？', previewEn: 'Is it a good time to start?' }
         ];
 
@@ -2836,31 +2836,51 @@
             const month = localTime.getMonth() + 1;
             const day = localTime.getDate();
             const hour = localTime.getHours();
+            const minute = localTime.getMinutes();
             
-            // 天干地支计算（简化版）
+            // 天干地支计算
             const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
             const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
             
+            // 年柱
             const yearGan = tiangan[(year - 4) % 10];
             const yearZhi = dizhi[(year - 4) % 12];
-            const hourZhi = dizhi[Math.floor((hour + 1) / 2) % 12];
             
-            return `你是小卜（Oraculum），一位融合古典智慧与现代审美的奇门遁甲顾问。
+            // 月柱（简化计算）
+            const monthZhi = dizhi[(month + 1) % 12];
+            const monthGan = tiangan[(year * 12 + month + 3) % 10];
+            
+            // 日柱（简化计算）
+            const baseDate = new Date(1900, 0, 31);
+            const dayDiff = Math.floor((localTime - baseDate) / (24 * 60 * 60 * 1000));
+            const dayGan = tiangan[dayDiff % 10];
+            const dayZhi = dizhi[dayDiff % 12];
+            
+            // 时柱
+            const hourZhi = dizhi[Math.floor((hour + 1) / 2) % 12];
+            const hourGan = tiangan[(tiangan.indexOf(dayGan) * 2 + Math.floor((hour + 1) / 2)) % 10];
+            
+            const bazi = `${yearGan}${yearZhi}年 ${monthGan}${monthZhi}月 ${dayGan}${dayZhi}日 ${hourGan}${hourZhi}时`;
+            
+            const timeStr = `${year}年${month}月${day}日 ${hour}:${minute.toString().padStart(2, '0')}`;
+            
+            return `你是小卜（Oraculum），一位专业的奇门遁甲顾问。
 
-用户咨询：${question}
-场景：${currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn}
-起局时间：${year}年${month}月${day}日 ${hour}时
-干支：${yearGan}${yearZhi}年 · ${hourZhi}时
+【用户咨询】${question}
+【场景】${currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn}
+【起局时间】${timeStr}
+【四柱干支】${bazi}
 
-回答要求：
-1. 用${currentLang === 'zh' ? '中文' : 'English'}回答
-2. 先给出核心结论（简洁有力）
-3. 再用通俗语言解释奇门依据
-4. 用🧭👕⏰等emoji点缀建议
-5. 风险提醒要一针见血
-6. 情绪价值温暖收尾
-7. 保持专业但亲切的语气
-8. 回答长度适中，约200-300字`;
+【回答要求】
+1. 必须用${currentLang === 'zh' ? '中文' : 'English'}回答
+2. 开头必须先显示"📅 起局时间：${timeStr}"和"🔮 四柱：${bazi}"（英文界面显示 "📅 Time: ..." 和 "🔮 BaZi: ..."）
+3. 然后给出核心结论（简洁有力）
+4. 再用通俗语言解释奇门依据
+5. 分点建议时必须换行，不要使用*号或·号开头，直接用数字或文字描述
+6. 用🧭👕⏰💰等emoji点缀建议
+7. 风险提醒要一针见血
+8. 情绪价值温暖收尾
+9. 回答长度200-300字`;
         }
 
         // 输入框事件
