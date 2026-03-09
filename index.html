@@ -3693,28 +3693,30 @@
         
         /**
          * 获取测试命盘数据（2007年9月4日丑时）
-         * 正确的紫微斗数排盘结果
+         * 根据用户提供的正确排盘数据
          */
         function getDemoChart() {
+            // 2007年9月4日丑时（农历丁亥年七月廿三丑时）
+            // 紫微斗数排盘结果
             return {
                 mainStar: '天同 巨门',
                 birthDate: '2007-9-4',
-                lunarDate: '二〇〇七年七月廿三',
+                lunarDate: '丁亥年七月廿三',
                 shichen: '丑时',
                 wuxingJu: '木三局',
                 palaces: [
-                    // 顺序：命宫、兄弟、夫妻、子女、财帛、疾厄、迁移、仆役、官禄、田宅、福德、父母
+                    // 十二宫按逆时针排列：命宫→兄弟→夫妻→子女→财帛→疾厄→迁移→仆役→官禄→田宅→福德→父母
                     { key: 'life', dizhi: '卯', name: '命宫', nameEn: 'Life', stars: ['天同', '巨门'], isEmpty: false },
                     { key: 'siblings', dizhi: '寅', name: '兄弟', nameEn: 'Siblings', stars: ['贪狼', '禄存'], isEmpty: false },
-                    { key: 'spouse', dizhi: '丑', name: '夫妻', nameEn: 'Spouse', stars: ['天机'], isEmpty: false },
-                    { key: 'children', dizhi: '子', name: '子女', nameEn: 'Children', stars: [], isEmpty: true },
+                    { key: 'spouse', dizhi: '丑', name: '夫妻', nameEn: 'Spouse', stars: ['太阴'], isEmpty: false },
+                    { key: 'children', dizhi: '子', name: '子女', nameEn: 'Children', stars: ['廉贞', '天府'], isEmpty: false },
                     { key: 'wealth', dizhi: '亥', name: '财帛', nameEn: 'Wealth', stars: [], isEmpty: true },
-                    { key: 'health', dizhi: '戌', name: '疾厄', nameEn: 'Health', stars: ['太阴'], isEmpty: false },
+                    { key: 'health', dizhi: '戌', name: '疾厄', nameEn: 'Health', stars: ['七杀'], isEmpty: false },
                     { key: 'travel', dizhi: '酉', name: '迁移', nameEn: 'Travel', stars: [], isEmpty: true },
-                    { key: 'servants', dizhi: '申', name: '仆役', nameEn: 'Servants', stars: ['廉贞', '天府'], isEmpty: false },
-                    { key: 'career', dizhi: '未', name: '官禄', nameEn: 'Career', stars: ['太阳'], isEmpty: false },
+                    { key: 'servants', dizhi: '申', name: '仆役', nameEn: 'Servants', stars: ['紫微'], isEmpty: false },
+                    { key: 'career', dizhi: '未', name: '官禄', nameEn: 'Career', stars: ['天机'], isEmpty: false },
                     { key: 'property', dizhi: '午', name: '田宅', nameEn: 'Property', stars: ['破军'], isEmpty: false },
-                    { key: 'fortune', dizhi: '巳', name: '福德', nameEn: 'Fortune', stars: ['紫微', '七杀'], isEmpty: false },
+                    { key: 'fortune', dizhi: '巳', name: '福德', nameEn: 'Fortune', stars: ['太阳', '天梁'], isEmpty: false },
                     { key: 'parents', dizhi: '辰', name: '父母', nameEn: 'Parents', stars: ['武曲', '天相'], isEmpty: false }
                 ]
             };
