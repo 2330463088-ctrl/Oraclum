@@ -1093,6 +1093,95 @@
         .palace[data-palace="fude"] { top: 50%; right: 0; transform: translateY(-50%); }
         .palace[data-palace="fumu"] { top: 50%; left: 0; transform: translateY(-50%); }
 
+        /* ===== 环形命盘样式 ===== */
+        .chart-wheel-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(5, auto);
+            gap: 8px;
+            padding: 16px 0;
+        }
+
+        .chart-palace {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 8px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--color-divider);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            min-height: 70px;
+        }
+
+        .chart-palace:hover {
+            border-color: var(--color-primary);
+            transform: scale(1.02);
+        }
+
+        .chart-palace.empty {
+            background: var(--color-card);
+        }
+
+        .chart-palace-name {
+            font: 500 11px/1.2 var(--font-stack);
+            color: var(--color-text-light);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .chart-palace-star {
+            font: 600 14px/1.3 var(--font-stack);
+            color: var(--color-text);
+            text-align: center;
+        }
+
+        .chart-palace-star.empty-star {
+            font: 400 14px/1.3 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .chart-center {
+            grid-column: 2;
+            grid-row: 2 / 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-card);
+            border-radius: 50%;
+            aspect-ratio: 1;
+            margin: 8px;
+        }
+
+        .chart-center-label {
+            font: 600 18px/1.2 var(--font-stack);
+            color: var(--color-primary);
+        }
+
+        .chart-center-value {
+            font: 500 12px/1.2 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-top: 4px;
+        }
+
+        /* 宫位位置 */
+        .palace-parents { grid-column: 1; grid-row: 1; }
+        .palace-life { grid-column: 2; grid-row: 1; }
+        .palace-siblings { grid-column: 3; grid-row: 1; }
+        .palace-fortune { grid-column: 1; grid-row: 2; }
+        .palace-spouse { grid-column: 3; grid-row: 2; }
+        .palace-property { grid-column: 1; grid-row: 3; }
+        .palace-children { grid-column: 3; grid-row: 3; }
+        .palace-career { grid-column: 1; grid-row: 4; }
+        .palace-wealth { grid-column: 2; grid-row: 4; }
+        .palace-servants { grid-column: 1; grid-row: 5; }
+        .palace-health { grid-column: 2; grid-row: 5; }
+        .palace-travel { grid-column: 3; grid-row: 5; }
+
         /* ===== 命盘列表样式 ===== */
         .palace-list-item {
             display: flex;
@@ -2249,41 +2338,24 @@
             <!-- 命盘结果 -->
             <div class="card" id="chartResultCard" style="display: none;">
                 <!-- 顶部标题 -->
-                <div style="margin-bottom: 24px;">
-                    <div id="chartMainStar" style="font: 700 26px/1.3 var(--font-stack); color: var(--color-text); letter-spacing: -0.02em;">天同、巨门坐命</div>
-                    <div id="chartMainStarEn" style="font: 400 15px/1.5 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">Tian Tong, Ju Men in Life Palace</div>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div id="chartMainStar" style="font: 700 24px/1.3 var(--font-stack); color: var(--color-text); letter-spacing: -0.02em;">天同、巨门坐命</div>
+                    <div id="chartMainStarEn" style="font: 400 14px/1.5 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">天同、巨门 in Life Palace</div>
                 </div>
                 
                 <!-- 日期行 -->
-                <div style="margin-bottom: 28px;">
-                    <div id="chartBirthDate" style="font: var(--font-hint); color: var(--color-text-light);">公历：2007-9-4</div>
-                    <div id="chartLunarDate" style="font: var(--font-hint); color: var(--color-text-light); margin-top: 2px;">农历：二〇〇七年七月廿三 丑时</div>
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div id="chartBirthDate" style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light);">公历: 2007-9-4</div>
+                    <div id="chartLunarDate" style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light);">农历: 二〇〇七年七月廿三 丑时</div>
                 </div>
                 
-                <!-- 生命信息区块 -->
-                <div style="margin-bottom: 28px;">
-                    <div style="font: 600 15px/1 var(--font-stack); color: var(--color-text); margin-bottom: 16px;">生命信息</div>
-                    <div id="chartPalaceList" style="display: flex; flex-direction: column; gap: 10px;">
-                        <!-- 由JS生成列表 -->
-                    </div>
+                <!-- 环形命盘 -->
+                <div class="chart-wheel-container" id="chartWheel">
+                    <!-- 由JS生成环形命盘 -->
                 </div>
                 
-                <!-- 其他信息区块 -->
-                <div style="margin-bottom: 24px;">
-                    <div style="font: 600 15px/1 var(--font-stack); color: var(--color-text); margin-bottom: 16px;">其他信息</div>
-                    <div id="chartOtherInfo" style="font: var(--font-body); color: var(--color-text-mid); line-height: 1.8;">
-                        <!-- 由JS生成 -->
-                    </div>
-                </div>
-                
-                <!-- 五行分析 -->
-                <div style="margin-bottom: 20px; padding-top: 16px; border-top: 1px solid var(--color-divider);">
-                    <div style="font: 500 14px/1 var(--font-stack); color: var(--color-text); margin-bottom: 6px;">五行分析 / Five Elements</div>
-                    <div id="fiveElementsResult" style="font: var(--font-hint); color: var(--color-text-mid);">水旺，火弱</div>
-                </div>
-                
-                <!-- 底部链接 -->
-                <div style="font: var(--font-hint); color: var(--color-text-light); margin-bottom: 20px;">
+                <!-- 提示文字 -->
+                <div style="text-align: center; font: 400 12px/1.4 var(--font-stack); color: var(--color-text-light); margin: 20px 0;">
                     Click any palace to see details · 点击宫位查看详情
                 </div>
 
@@ -3314,7 +3386,7 @@
             // 显示加载状态
             document.getElementById('chartMainStar').textContent = '计算中...';
             document.getElementById('chartMainStarEn').textContent = 'Calculating...';
-            document.getElementById('chartPalaceList').innerHTML = '<div style="text-align:center; padding:20px; color:var(--color-text-light);"><div class="loading"></div></div>';
+            document.getElementById('chartWheel').innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:var(--color-text-light);"><div class="loading"></div></div>';
             
             try {
                 const response = await fetch(API_URL, {
@@ -3327,32 +3399,34 @@
                         model: 'deepseek-chat',
                         messages: [{
                             role: 'user',
-                            content: `请根据以下信息计算紫微斗数命盘，返回严格JSON格式（不要有任何额外文字）：
+                            content: `请根据以下信息计算紫微斗数命盘，返回严格JSON格式：
 出生：${year}年${month}月${day}日 ${timeStr} (${shichenName}时)
 城市：${city}
 性别：${gender}
 
-返回格式：
+返回格式（宫位按固定顺序）：
 {
-    "mainStar": "命宫主星（如：天同·巨门）",
-    "mainStarEn": "English star name",
+    "mainStar": "命宫主星（如：天同巨门）",
     "palaces": [
-        {"name": "Parents", "nameCn": "父母宫", "star": "主星名", "starEn": "English"},
-        {"name": "Siblings", "nameCn": "兄弟宫", "star": "主星名", "starEn": "English"},
-        {"name": "Fortune", "nameCn": "福德宫", "star": "主星名", "starEn": "English"},
-        {"name": "Spouse", "nameCn": "夫妻宫", "star": "主星名", "starEn": "English"},
-        {"name": "Property", "nameCn": "田宅宫", "star": "主星名", "starEn": "English"},
-        {"name": "Career", "nameCn": "官禄宫", "star": "主星名", "starEn": "English"},
-        {"name": "Servants", "nameCn": "交友宫", "star": "主星名", "starEn": "English"},
-        {"name": "Health", "nameCn": "疾厄宫", "star": "主星名", "starEn": "English"},
-        {"name": "Life", "nameCn": "命宫", "star": "主星名", "starEn": "English"},
-        {"name": "Travel", "nameCn": "迁移宫", "star": "主星名", "starEn": "English"},
-        {"name": "Wealth", "nameCn": "财帛宫", "star": "主星名", "starEn": "English"},
-        {"name": "Children", "nameCn": "子女宫", "star": "主星名", "starEn": "English"}
-    ],
-    "fiveElements": "五行分析",
-    "fiveElementsEn": "English analysis"
-}`
+        {"key": "parents", "name": "Parents", "nameCn": "父母", "star": "主星名", "isEmpty": false},
+        {"key": "life", "name": "Life", "nameCn": "命宫", "star": "主星名", "isEmpty": false},
+        {"key": "siblings", "name": "Siblings", "nameCn": "兄弟", "star": "主星名", "isEmpty": false},
+        {"key": "fortune", "name": "Fortune", "nameCn": "福德", "star": "主星名", "isEmpty": false},
+        {"key": "spouse", "name": "Spouse", "nameCn": "夫妻", "star": "主星名", "isEmpty": false},
+        {"key": "property", "name": "Property", "nameCn": "田宅", "star": "主星名", "isEmpty": false},
+        {"key": "children", "name": "Children", "nameCn": "子女", "star": "主星名", "isEmpty": false},
+        {"key": "career", "name": "Career", "nameCn": "官禄", "star": "主星名", "isEmpty": false},
+        {"key": "wealth", "name": "Wealth", "nameCn": "财帛", "star": "", "isEmpty": true},
+        {"key": "servants", "name": "Servants", "nameCn": "交友", "star": "主星名", "isEmpty": false},
+        {"key": "health", "name": "Health", "nameCn": "疾厄", "star": "主星名", "isEmpty": false},
+        {"key": "travel", "name": "Travel", "nameCn": "迁移", "star": "", "isEmpty": true}
+    ]
+}
+
+注意：
+1. 星名用中文，不要缩写，如"武曲天相"而非"武相"
+2. 空宫isEmpty为true，star为空字符串
+3. 验证：2007年9月4日丑时，父母宫应为武曲天相，兄弟宫应为贪狼禄存`
                         }]
                     })
                 });
@@ -3380,30 +3454,26 @@
         }
 
         function getDemoChart() {
-            // 测试数据：2007年9月4日
+            // 测试数据：2007年9月4日丑时
             return {
-                mainStar: '天同·巨门',
-                mainStarEn: 'Tian Tong · Ju Men',
+                mainStar: '天同、巨门',
                 birthDate: '2007-9-4',
                 lunarDate: '二〇〇七年七月廿三',
                 shichen: '丑时',
                 palaces: [
-                    { name: 'Parents', nameCn: '父母宫', star: '武曲·天相', starEn: 'Wu Qu · Tian Xiang' },
-                    { name: 'Siblings', nameCn: '兄弟宫', star: '紫狼·禄存', starEn: 'Zi Lang · Lu Cun' },
-                    { name: 'Fortune', nameCn: '福德宫', star: '太阴', starEn: 'Tai Yin' },
-                    { name: 'Spouse', nameCn: '夫妻宫', star: '七杀', starEn: 'Qi Sha' },
-                    { name: 'Property', nameCn: '田宅宫', star: '太阳·天梁', starEn: 'Tai Yang · Tian Liang' },
-                    { name: 'Career', nameCn: '官禄宫', star: '破军', starEn: 'Po Jun' },
-                    { name: 'Servants', nameCn: '交友宫', star: '紫微', starEn: 'Zi Wei' },
-                    { name: 'Health', nameCn: '疾厄宫', star: '天府', starEn: 'Tian Fu' },
-                    { name: 'Life', nameCn: '命宫', star: '天同·巨门', starEn: 'Tian Tong · Ju Men' },
-                    { name: 'Travel', nameCn: '迁移宫', star: '天机', starEn: 'Tian Ji' },
-                    { name: 'Wealth', nameCn: '财帛宫', star: '廉贞', starEn: 'Lian Zhen' },
-                    { name: 'Children', nameCn: '子女宫', star: '空', starEn: 'Empty' }
-                ],
-                otherInfo: '紫微、廉贞、天府',
-                fiveElements: '水旺，火弱',
-                fiveElementsEn: 'Strong Water, weak Fire'
+                    { key: 'parents', name: 'Parents', nameCn: '父母', star: '武曲天相', isEmpty: false },
+                    { key: 'life', name: 'Life', nameCn: '命宫', star: '天同巨门', isEmpty: false },
+                    { key: 'siblings', name: 'Siblings', nameCn: '兄弟', star: '贪狼禄存', isEmpty: false },
+                    { key: 'fortune', name: 'Fortune', nameCn: '福德', star: '太阳天梁', isEmpty: false },
+                    { key: 'spouse', name: 'Spouse', nameCn: '夫妻', star: '太阴', isEmpty: false },
+                    { key: 'property', name: 'Property', nameCn: '田宅', star: '七杀', isEmpty: false },
+                    { key: 'children', name: 'Children', nameCn: '子女', star: '廉贞天府', isEmpty: false },
+                    { key: 'career', name: 'Career', nameCn: '官禄', star: '天机', isEmpty: false },
+                    { key: 'wealth', name: 'Wealth', nameCn: '财帛', star: '', isEmpty: true },
+                    { key: 'servants', name: 'Servants', nameCn: '交友', star: '紫微', isEmpty: false },
+                    { key: 'health', name: 'Health', nameCn: '疾厄', star: '破军', isEmpty: false },
+                    { key: 'travel', name: 'Travel', nameCn: '迁移', star: '', isEmpty: true }
+                ]
             };
         }
 
@@ -3412,45 +3482,41 @@
             const mainStarEl = document.getElementById('chartMainStar');
             const mainStarEnEl = document.getElementById('chartMainStarEn');
             if (mainStarEl) mainStarEl.textContent = chartResult.mainStar + '坐命';
-            if (mainStarEnEl) mainStarEnEl.textContent = chartResult.mainStarEn + ' in Life Palace';
+            if (mainStarEnEl) mainStarEnEl.textContent = chartResult.mainStar + ' in Life Palace';
             
             // 日期
             const birthDateEl = document.getElementById('chartBirthDate');
             const lunarDateEl = document.getElementById('chartLunarDate');
-            if (birthDateEl) birthDateEl.textContent = '公历：' + year + '-' + month + '-' + day;
-            if (lunarDateEl) lunarDateEl.textContent = '农历：' + (chartResult.lunarDate || '二〇〇七年七月廿三') + ' ' + (chartResult.shichen || '丑时');
+            if (birthDateEl) birthDateEl.textContent = '公历: ' + year + '-' + month + '-' + day;
+            if (lunarDateEl) lunarDateEl.textContent = '农历: ' + (chartResult.lunarDate || '二〇〇七年七月廿三') + ' ' + (chartResult.shichen || '丑时');
             
-            // 宫位列表
-            const palaceListEl = document.getElementById('chartPalaceList');
-            if (palaceListEl && chartResult.palaces) {
+            // 环形命盘
+            const wheelEl = document.getElementById('chartWheel');
+            if (wheelEl && chartResult.palaces) {
                 let html = '';
+                
                 chartResult.palaces.forEach(palace => {
+                    const emptyClass = palace.isEmpty ? 'empty' : '';
+                    const starClass = palace.isEmpty ? 'empty-star' : '';
+                    const starText = palace.isEmpty ? '-' : palace.star;
+                    
                     html += `
-                        <div class="palace-list-item" onclick="showPalaceDetail('${palace.nameCn}', '${palace.star}')">
-                            <div class="palace-list-name">
-                                <span class="palace-name-en">${palace.name}</span>
-                                <span class="palace-name-cn">${palace.nameCn}</span>
-                            </div>
-                            <div class="palace-list-star">
-                                <span class="star-cn">${palace.star}</span>
-                                <span class="star-en">${palace.starEn}</span>
-                            </div>
+                        <div class="chart-palace palace-${palace.key} ${emptyClass}" onclick="showPalaceDetail('${palace.nameCn}', '${starText}')">
+                            <div class="chart-palace-name">${palace.name}</div>
+                            <div class="chart-palace-star ${starClass}">${starText}</div>
                         </div>
                     `;
                 });
-                palaceListEl.innerHTML = html;
-            }
-            
-            // 其他信息
-            const otherInfoEl = document.getElementById('chartOtherInfo');
-            if (otherInfoEl) {
-                otherInfoEl.innerHTML = `Ziwei · 紫微<br>Lian Zhen · 廉贞<br>Tian Fu · 天府`;
-            }
-            
-            // 五行
-            const fiveEl = document.getElementById('fiveElementsResult');
-            if (fiveEl) {
-                fiveEl.textContent = currentLang === 'zh' ? chartResult.fiveElements : chartResult.fiveElementsEn;
+                
+                // 插入中心
+                html += `
+                    <div class="chart-center">
+                        <div class="chart-center-label">Ziwei</div>
+                        <div class="chart-center-value">紫微</div>
+                    </div>
+                `;
+                
+                wheelEl.innerHTML = html;
             }
         }
 
