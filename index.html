@@ -3356,27 +3356,71 @@
 
         // 计算奇门遁甲排盘
         function calculateQimenDunjia(year, month, day, hour, minute) {
-            // 计算四柱
+            // 天干地支
             const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
             const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
             
+            // 时辰对应表（23点开始为晚子时，属于当天）
+            // 子时：23:00-00:59（晚子时23-0点，早子时0-1点合并处理）
+            const shichenMap = [
+                [23, 0],   // 子时：23:00-00:59
+                [1, 2],    // 丑时：01:00-02:59
+                [3, 4],    // 寅时：03:00-04:59
+                [5, 6],    // 卯时：05:00-06:59
+                [7, 8],    // 辰时：07:00-08:59
+                [9, 10],   // 巳时：09:00-10:59
+                [11, 12],  // 午时：11:00-12:59
+                [13, 14],  // 未时：13:00-14:59
+                [15, 16],  // 申时：15:00-16:59
+                [17, 18],  // 酉时：17:00-18:59
+                [19, 20],  // 戌时：19:00-20:59
+                [21, 22]   // 亥时：21:00-22:59
+            ];
+            
+            // 确定时辰索引
+            let shichenIdx = 0;
+            for (let i = 0; i < shichenMap.length; i++) {
+                if (hour === shichenMap[i][0] || hour === shichenMap[i][1]) {
+                    shichenIdx = i;
+                    break;
+                }
+                // 晚子时特殊处理（23点算当天，但用子时）
+                if (hour === 23) {
+                    shichenIdx = 0;
+                    break;
+                }
+            }
+            
+            const hourZhi = dizhi[shichenIdx];
+            
+            // 年柱
             const yearGan = tiangan[(year - 4) % 10];
             const yearZhi = dizhi[(year - 4) % 12];
+            
+            // 月柱（以节气为准，简化计算）
             const monthZhi = dizhi[(month + 1) % 12];
             const monthGan = tiangan[(year * 12 + month + 3) % 10];
+            
+            // 日柱（从1900年1月31日甲子日开始计算）
             const baseDate = new Date(1900, 0, 31);
             const dayDiff = Math.floor((new Date(year, month - 1, day) - baseDate) / (24 * 60 * 60 * 1000));
             const dayGan = tiangan[dayDiff % 10];
             const dayZhi = dizhi[dayDiff % 12];
-            const hourZhi = dizhi[Math.floor((hour + 1) / 2) % 12];
-            const hourGan = tiangan[(tiangan.indexOf(dayGan) * 2 + Math.floor((hour + 1) / 2)) % 10];
             
-            // 判断阴阳遁
+            // 时柱（五鼠遁元）
+            // 甲己日起甲子时，乙庚日起丙子时，丙辛日起戊子时，丁壬日起庚子时，戊癸日起壬子时
+            const dayGanIdx = tiangan.indexOf(dayGan);
+            const hourGanStart = [0, 2, 4, 6, 8][dayGanIdx % 5]; // 甲己0，乙庚2，丙辛4，丁壬6，戊癸8
+            const hourGan = tiangan[(hourGanStart + shichenIdx) % 10];
+            
+            // 判断节气和阴阳遁
             const jieqi = getJieqi(month, day);
-            const yangDun = [1, 2, 3, 4, 5, 6].includes(month) || (month === 11 && day >= 22) || (month === 12 && day < 22);
+            // 阳遁：冬至后到芒种前（含惊蛰、春分等）
+            // 阴遁：夏至后到大雪前
+            const yangDun = isYangDun(month, day);
             
             // 计算局数
-            const juNum = calculateJuNumber(dayGan, dayZhi, yangDun);
+            const juNum = calculateJuNumber(dayGan, dayZhi, yangDun, shichenIdx);
             
             // 地盘布局
             const dipan = buildDipan(juNum, yangDun);
@@ -3400,6 +3444,10 @@
             const riGanLuogong = findLuogong(dayGan, tianpan, dipan);
             const shiGanLuogong = findLuogong(hourGan, tianpan, dipan);
             
+            // 判断早晚子时
+            const isLateZi = hour === 23;
+            const shichenName = isLateZi ? '晚子时' : (hour >= 0 && hour < 1 ? '早子时' : `${hourZhi}时`);
+            
             return {
                 bazi: {
                     year: `${yearGan}${yearZhi}`,
@@ -3407,6 +3455,7 @@
                     day: `${dayGan}${dayZhi}`,
                     hour: `${hourGan}${hourZhi}`
                 },
+                shichenName: shichenName,
                 ju: {
                     yinYang: yangDun ? '阳遁' : '阴遁',
                     number: juNum,
@@ -3424,6 +3473,19 @@
             };
         }
 
+        // 判断是否阳遁
+        function isYangDun(month, day) {
+            // 阳遁：冬至(12.22) → 芒种(6.5)前
+            // 阴遁：夏至(6.21) → 大雪(12.7)前
+            if (month === 12 && day >= 22) return true;  // 冬至后
+            if (month === 1 || month === 2 || month === 3 || month === 4 || month === 5) return true; // 冬至到芒种前
+            if (month === 6 && day < 21) return true;    // 夏至前
+            if (month === 6 && day >= 21) return false;  // 夏至后
+            if (month === 7 || month === 8 || month === 9 || month === 10 || month === 11) return false; // 夏至到大雪前
+            if (month === 12 && day < 7) return false;   // 大雪前
+            return true;
+        }
+
         // 获取节气
         function getJieqi(month, day) {
             const jieqiList = [
@@ -3437,23 +3499,51 @@
             return jieqiList[Math.min(idx, 23)];
         }
 
-        // 计算局数
-        function calculateJuNumber(dayGan, dayZhi, yangDun) {
-            // 简化算法：根据日干支计算
+        // 计算局数（根据日干支所属旬和节气）
+        function calculateJuNumber(dayGan, dayZhi, yangDun, shichenIdx) {
             const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
             const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            
             const ganIdx = tiangan.indexOf(dayGan);
             const zhiIdx = dizhi.indexOf(dayZhi);
             
-            // 六仪遁甲
-            const liuyi = ['戊', '己', '庚', '辛', '壬', '癸'];
-            const xun = Math.floor((ganIdx - zhiIdx + 12) % 12 / 2);
+            // 确定旬首（六仪）
+            // 甲子旬→戊，甲戌旬→己，甲申旬→庚，甲午旬→辛，甲辰旬→壬，甲寅旬→癸
+            const xunShou = [
+                { name: '甲子旬', liuyi: '戊', ju: [1, 4, 7] },    // 戊
+                { name: '甲戌旬', liuyi: '己', ju: [2, 5, 8] },    // 己
+                { name: '甲申旬', liuyi: '庚', ju: [3, 6, 9] },    // 庚
+                { name: '甲午旬', liuyi: '辛', ju: [4, 7, 1] },    // 辛
+                { name: '甲辰旬', liuyi: '壬', ju: [5, 8, 2] },    // 壬
+                { name: '甲寅旬', liuyi: '癸', ju: [6, 9, 3] }     // 癸
+            ];
             
-            // 根据元（上中下）确定局数
+            // 根据日支确定旬
+            let xunIdx = 0;
+            const xunStart = [0, 10, 8, 6, 4, 2]; // 甲子、甲戌、甲申、甲午、甲辰、甲寅对应的支位
+            for (let i = 0; i < 6; i++) {
+                const startZhi = xunStart[i];
+                const endZhi = (startZhi + 9) % 12;
+                if (startZhi <= endZhi) {
+                    if (zhiIdx >= startZhi && zhiIdx <= endZhi) {
+                        xunIdx = i;
+                        break;
+                    }
+                } else {
+                    if (zhiIdx >= startZhi || zhiIdx <= endZhi) {
+                        xunIdx = i;
+                        break;
+                    }
+                }
+            }
+            
+            // 确定元（上中下元）
+            // 简化：用时辰/节气判断，这里用日支简单模拟
             const yuan = zhiIdx % 3; // 0=上元, 1=中元, 2=下元
-            const baseJu = [1, 7, 4, 1, 7, 4][xun]; // 简化映射
             
-            return yangDun ? (baseJu + yuan - 1) % 9 + 1 : (baseJu - yuan + 9) % 9 || 9;
+            // 返回对应局数
+            const juArr = xunShou[xunIdx].ju;
+            return yangDun ? juArr[yuan] : juArr[2 - yuan];
         }
 
         // 构建地盘
@@ -3630,68 +3720,55 @@
             // 用神信息
             const ysInfo = YONGSHEN[yongshen] || YONGSHEN['求财'];
             
-            return `你是小卜（Oraculum），一位精通奇门遁甲的专业顾问。
+            // 获取日干落宫的八门、九星、八神
+            const riPalace = qimen.riGanLuogong;
+            const riMen = qimen.bamen[riPalace] || '开门';
+            const riStar = qimen.jiuxing[riPalace] || '天心';
+            const riShen = qimen.bashen[riPalace] || '值符';
+            
+            // 获取时干落宫的八门、九星、八神
+            const shiPalace = qimen.shiGanLuogong;
+            const shiMen = qimen.bamen[shiPalace] || '生门';
+            const shiStar = qimen.jiuxing[shiPalace] || '天辅';
+            const shiShen = qimen.bashen[shiPalace] || '六合';
+            
+            return `你是小卜（Oraculum），一位精通奇门遁甲的实战派顾问。你的回答直接切入本质，不做废话，但要说透。
 
 【用户咨询】${question}
 【场景】${currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn}
-【节气】${qimen.jieqi}
+【节气】${qimen.jieqi} 【时辰】${qimen.shichenName}
 【起局时间】${timeStr}
 【四柱干支】${baziStr}
 【局数】${qimen.ju.name}
 
-【奇门盘面信息】
-一、四柱分析
-- 年柱${qimen.bazi.year}：代表根基与外部环境
-- 月柱${qimen.bazi.month}：代表当前形势与机遇
-- 日柱${qimen.bazi.day}：代表求测者本人（日干为体）
-- 时柱${qimen.bazi.hour}：代表所问之事（时干为用）
+【奇门盘面核心数据】
+日干${qimen.bazi.day[0]}（代表你本人）落${riPalace}，临${riMen}、${riStar}星、${riShen}
+时干${qimen.bazi.hour[0]}（代表此事）落${shiPalace}，临${shiMen}、${shiStar}星、${shiShen}
+格局：${qimen.geju.join('、') || '普通格局'}
 
-二、日干落宫
-- 日干${qimen.bazi.day[0]}落${qimen.riGanLuogong}
-- 该宫五行：${TIANGAN_WUXING[qimen.bazi.day[0]].wuxing}，方位：${TIANGAN_WUXING[qimen.bazi.day[0]].direction}
+用神参考（${yongshen}）：主用${ysInfo.star}，辅用${ysInfo.god}，${ysInfo.note}
 
-三、时干落宫
-- 时干${qimen.bazi.hour[0]}落${qimen.shiGanLuogong}
-- 时干为用神，主事体吉凶
+【地理方位】
+北京属坎卦正北，上海属震卦正东，广州深圳属离卦正南，成都重庆属坤卦西南，西安属乾卦西北，杭州南京属震卦正东，武汉居中宫，青岛大连属艮卦东北，厦门福州属巽卦东南
 
-四、主要格局
-${qimen.geju.map(g => `- ${g}：${QIMEN_GJ[g]?.meaning || '详见分析'}`).join('\n')}
-
-五、用神参考（${yongshen}）
-- 主用神：${ysInfo.star}
-- 辅助神：${ysInfo.god}
-- 说明：${ysInfo.note}
-
-六、地理方位参考
-- 北京：坎一宫，正北，属坎卦
-- 上海：震三宫，正东，属震卦
-- 广州/深圳：离九宫，正南，属离卦
-- 成都/重庆：坤二宫，西南，属坤卦
-- 西安：乾六宫，西北，属乾卦
-- 杭州/南京：震三宫，正东，属震卦
-- 武汉：中五宫，中宫
-- 青岛/大连：艮八宫，东北，属艮卦
-- 厦门/福州：巽四宫，东南，属巽卦
-- 昆明/贵阳：坤二宫，西南，属坤卦
-
-【回答要求】
-1. 必须用${currentLang === 'zh' ? '中文' : 'English'}回答
-2. 开头显示：📅 起局时间：${timeStr}，🔮 四柱：${baziStr}，🎯 ${qimen.ju.name}
-3. 核心结论放最前面，简洁有力（不超过两句话）
-4. 多维度分析（不低于三个维度）：
-   - 日干与时干的关系（体用关系）
-   - 格局吉凶（${qimen.geju.join('、')}）
-   - 用神落宫旺衰（${ysInfo.star}落何宫）
-   - 八门吉凶（开门、生门、休门为吉门）
-   - 九星状态（天辅、天心为吉星）
-   - 八神影响（值符、六合为吉神）
-5. 分点建议用数字或文字描述，换行清晰
-6. 用 🧭👕⏰💰📍 等emoji点缀
-7. 地理方位建议要具体（如：往东走有利、避开北方等）
-8. 风险提醒一针见血
-9. 温暖收尾，给予情绪价值
-10. 禁止使用星号符号
-11. 回答长度250-350字`;
+【回答规范】
+1. 用${currentLang === 'zh' ? '中文' : 'English'}回答
+2. 开头格式：📅 ${timeStr} ${qimen.shichenName} | 🔮 ${baziStr} | 🎯 ${qimen.ju.name}
+3. 第一句直接说结论，不要铺垫，直击要害
+4. 分析要讲透：
+   日干落宫情况意味着什么（你现在的状态）
+   时干落宫情况意味着什么（事情的发展）
+   日时关系是生还是克（对你有利还是不利）
+   格局是吉是凶（飞鸟跌穴大吉、伏吟主滞、反吟主反复）
+   八门吉凶（开门利事业、生门利求财、休门宜守、伤门主争斗）
+   九星状态（天辅利学业、天心利医病、天芮主病患）
+   八神影响（值符大吉、六合利合作、白虎主血光、玄武防小人）
+5. 方位建议要具体：利何方、忌何方、何时行动最佳
+6. 分条列举建议，每条都要有依据
+7. 风险点要直说，不要含糊
+8. 最后给一句实打实的行动指引
+9. 禁止使用星号符号，禁止用「」「」等符号包裹
+10. 字数300-500字，说清楚讲透`;
         }
 
         // 输入框事件
