@@ -1206,21 +1206,20 @@
             text-align: center;
         }
 
-        /* 十二宫位位置 - 命宫在未，逆时针排列 */
-        /* 地支固定位置：巳(1,1) 午(2,1) 未(3,1) 申(4,1) 辰(1,2) 酉(4,2) 卯(1,3) 戌(4,3) 寅(1,4) 丑(2,4) 子(3,4) 亥(4,4) */
-        /* 宫位对应：未=命宫 午=兄弟 巳=夫妻 辰=子女 卯=财帛 寅=疾厄 丑=迁移 子=仆役 亥=官禄 戌=田宅 酉=福德 申=父母 */
-        .palace-spouse { grid-column: 1; grid-row: 1; }     /* 巳-夫妻 */
-        .palace-siblings { grid-column: 2; grid-row: 1; }   /* 午-兄弟 */
-        .palace-life { grid-column: 3; grid-row: 1; }       /* 未-命宫 */
-        .palace-parents { grid-column: 4; grid-row: 1; }    /* 申-父母 */
-        .palace-children { grid-column: 1; grid-row: 2; }   /* 辰-子女 */
-        .palace-fortune { grid-column: 4; grid-row: 2; }    /* 酉-福德 */
-        .palace-wealth { grid-column: 1; grid-row: 3; }     /* 卯-财帛 */
-        .palace-property { grid-column: 4; grid-row: 3; }   /* 戌-田宅 */
-        .palace-health { grid-column: 1; grid-row: 4; }     /* 寅-疾厄 */
-        .palace-travel { grid-column: 2; grid-row: 4; }     /* 丑-迁移 */
-        .palace-servants { grid-column: 3; grid-row: 4; }   /* 子-仆役 */
-        .palace-career { grid-column: 4; grid-row: 4; }     /* 亥-官禄 */
+        /* 十二宫位位置 - 按地支固定位置布局 */
+        /* 地支位置（顺时针从巳开始）：巳(1,1) 午(2,1) 未(3,1) 申(4,1) 辰(1,2) 酉(4,2) 卯(1,3) 戌(4,3) 寅(1,4) 丑(2,4) 子(3,4) 亥(4,4) */
+        .palace-dizhi-si   { grid-column: 1; grid-row: 1; }   /* 巳 */
+        .palace-dizhi-wu   { grid-column: 2; grid-row: 1; }   /* 午 */
+        .palace-dizhi-wei  { grid-column: 3; grid-row: 1; }   /* 未 */
+        .palace-dizhi-shen { grid-column: 4; grid-row: 1; }   /* 申 */
+        .palace-dizhi-chen { grid-column: 1; grid-row: 2; }   /* 辰 */
+        .palace-dizhi-you  { grid-column: 4; grid-row: 2; }   /* 酉 */
+        .palace-dizhi-mao  { grid-column: 1; grid-row: 3; }   /* 卯 */
+        .palace-dizhi-xu   { grid-column: 4; grid-row: 3; }   /* 戌 */
+        .palace-dizhi-yin  { grid-column: 1; grid-row: 4; }   /* 寅 */
+        .palace-dizhi-chou { grid-column: 2; grid-row: 4; }   /* 丑 */
+        .palace-dizhi-zi   { grid-column: 3; grid-row: 4; }   /* 子 */
+        .palace-dizhi-hai  { grid-column: 4; grid-row: 4; }   /* 亥 */
 
         /* ===== 命盘列表样式 ===== */
         .palace-list-item {
@@ -3615,8 +3614,8 @@
             // 9. 格式化输出
             const formattedPalaces = formatPalaces(palaces, mingGongIdx);
             
-            // 获取命宫主星
-            const mingGongStars = palaces[mingGongIdx].stars;
+            // 获取命宫主星（命宫在palaces数组的第一个位置）
+            const mingGongStars = palaces[0].stars;
             
             // 农历日期字符串
             const dayNames = ['日', '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
@@ -3848,9 +3847,12 @@
             const ziweiOffsets = [0, -1, -3, -4, -5, -8]; // 逆时针偏移
             
             ziweiStars.forEach((star, i) => {
-                const idx = (ziweiIdx + ziweiOffsets[i] + 12) % 12;
-                palaces[idx].stars.push(star);
-                palaces[idx].isEmpty = false;
+                const gongIdx = (ziweiIdx + ziweiOffsets[i] + 12) % 12;
+                const palace = palaces.find(p => p.idx === gongIdx);
+                if (palace) {
+                    palace.stars.push(star);
+                    palace.isEmpty = false;
+                }
             });
             
             // 天府系主星（从天府位置开始，顺时针方向安星）
@@ -3858,9 +3860,12 @@
             const tianfuOffsets = [0, 1, 2, 3, 4, 5, 6, 10]; // 顺时针偏移
             
             tianfuStars.forEach((star, i) => {
-                const idx = (tianfuIdx + tianfuOffsets[i]) % 12;
-                palaces[idx].stars.push(star);
-                palaces[idx].isEmpty = false;
+                const gongIdx = (tianfuIdx + tianfuOffsets[i]) % 12;
+                const palace = palaces.find(p => p.idx === gongIdx);
+                if (palace) {
+                    palace.stars.push(star);
+                    palace.isEmpty = false;
+                }
             });
         }
         
@@ -3875,31 +3880,46 @@
                 '甲': 2, '乙': 3, '丙': 5, '丁': 6, '戊': 5,
                 '己': 6, '庚': 8, '辛': 9, '壬': 11, '癸': 0
             };
-            const lucunIdx = lucunPositions[yearGan];
-            if (lucunIdx !== undefined) {
-                palaces[lucunIdx].stars.push('禄存');
-                palaces[lucunIdx].isEmpty = false;
+            const lucunGongIdx = lucunPositions[yearGan];
+            if (lucunGongIdx !== undefined) {
+                const lucunPalace = palaces.find(p => p.idx === lucunGongIdx);
+                if (lucunPalace) {
+                    lucunPalace.stars.push('禄存');
+                    lucunPalace.isEmpty = false;
+                }
                 
                 // 擎羊在禄存后一宫（顺时针）
-                const qingyangIdx = (lucunIdx + 1) % 12;
-                palaces[qingyangIdx].stars.push('擎羊');
-                palaces[qingyangIdx].isEmpty = false;
+                const qingyangGongIdx = (lucunGongIdx + 1) % 12;
+                const qingyangPalace = palaces.find(p => p.idx === qingyangGongIdx);
+                if (qingyangPalace) {
+                    qingyangPalace.stars.push('擎羊');
+                    qingyangPalace.isEmpty = false;
+                }
                 
                 // 陀罗在禄存前一宫（逆时针）
-                const tuoluoIdx = (lucunIdx - 1 + 12) % 12;
-                palaces[tuoluoIdx].stars.push('陀罗');
-                palaces[tuoluoIdx].isEmpty = false;
+                const tuoluoGongIdx = (lucunGongIdx - 1 + 12) % 12;
+                const tuoluoPalace = palaces.find(p => p.idx === tuoluoGongIdx);
+                if (tuoluoPalace) {
+                    tuoluoPalace.stars.push('陀罗');
+                    tuoluoPalace.isEmpty = false;
+                }
             }
             
             // 文昌（根据时辰，从戌宫起子时，逆数到生时）
-            const wenchangIdx = (10 - shichenIdx + 12) % 12;
-            palaces[wenchangIdx].stars.push('文昌');
-            palaces[wenchangIdx].isEmpty = false;
+            const wenchangGongIdx = (10 - shichenIdx + 12) % 12;
+            const wenchangPalace = palaces.find(p => p.idx === wenchangGongIdx);
+            if (wenchangPalace) {
+                wenchangPalace.stars.push('文昌');
+                wenchangPalace.isEmpty = false;
+            }
             
             // 文曲（从辰宫起子时，顺数到生时）
-            const wenquIdx = (5 + shichenIdx) % 12;
-            palaces[wenquIdx].stars.push('文曲');
-            palaces[wenquIdx].isEmpty = false;
+            const wenquGongIdx = (5 + shichenIdx) % 12;
+            const wenquPalace = palaces.find(p => p.idx === wenquGongIdx);
+            if (wenquPalace) {
+                wenquPalace.stars.push('文曲');
+                wenquPalace.isEmpty = false;
+            }
         }
         
         /**
@@ -3973,35 +3993,31 @@
             if (wheelEl && chartResult.palaces) {
                 let html = '';
                 
-                // 按照命盘位置渲染（命宫在未）
-                // 布局：巳(夫妻) 午(兄弟) 未(命宫) 申(父母) | 辰(子女) [中] [中] 酉(福德) | 卯(财帛) [中] [中] 戌(田宅) | 寅(疾厄) 丑(迁移) 子(仆役) 亥(官禄)
-                const layoutOrder = [
-                    'spouse', 'siblings', 'life', 'parents',    // 上排
-                    'children', 'fortune',                      // 中上左、右
-                    'wealth', 'property',                       // 中下左、右
-                    'health', 'travel', 'servants', 'career'    // 下排
-                ];
+                // 地支拼音映射
+                const dizhiPinyin = {
+                    '子': 'zi', '丑': 'chou', '寅': 'yin', '卯': 'mao', '辰': 'chen', '巳': 'si',
+                    '午': 'wu', '未': 'wei', '申': 'shen', '酉': 'you', '戌': 'xu', '亥': 'hai'
+                };
                 
-                layoutOrder.forEach(key => {
-                    const palace = chartResult.palaces.find(p => p.key === key);
-                    if (palace) {
-                        const emptyClass = palace.isEmpty ? 'empty' : '';
-                        const starsHtml = palace.isEmpty 
-                            ? '<div class="chart-palace-star empty-star">-</div>'
-                            : palace.stars.map(s => `<div class="chart-palace-star major">${s}</div>`).join('');
-                        
-                        html += `
-                            <div class="chart-palace palace-${key} ${emptyClass}" onclick="showPalaceDetail('${palace.name}', ${JSON.stringify(palace.stars)})">
-                                <div class="chart-palace-header">
-                                    <span class="chart-palace-name">${palace.name}</span>
-                                    <span class="chart-palace-dizhi">${palace.dizhi}</span>
-                                </div>
-                                <div class="chart-palace-stars">
-                                    ${starsHtml}
-                                </div>
+                // 按地支位置渲染（每个宫位显示在其地支对应的位置）
+                chartResult.palaces.forEach(palace => {
+                    const emptyClass = palace.isEmpty ? 'empty' : '';
+                    const dizhiClass = 'palace-dizhi-' + dizhiPinyin[palace.dizhi];
+                    const starsHtml = palace.isEmpty 
+                        ? '<div class="chart-palace-star empty-star">-</div>'
+                        : palace.stars.map(s => `<div class="chart-palace-star major">${s}</div>`).join('');
+                    
+                    html += `
+                        <div class="chart-palace ${dizhiClass} ${emptyClass}" onclick="showPalaceDetail('${palace.name}', ${JSON.stringify(palace.stars)})">
+                            <div class="chart-palace-header">
+                                <span class="chart-palace-name">${palace.name}</span>
+                                <span class="chart-palace-dizhi">${palace.dizhi}</span>
                             </div>
-                        `;
-                    }
+                            <div class="chart-palace-stars">
+                                ${starsHtml}
+                            </div>
+                        </div>
+                    `;
                 });
                 
                 // 中心区域
