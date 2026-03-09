@@ -1206,20 +1206,21 @@
             text-align: center;
         }
 
-        /* 十二宫位位置 - 标准紫微斗数布局 */
-        /* 顺时针：巳(福德)-午(田宅)-未(官禄)-申(交友)-酉(迁移)-戌(疾厄)-亥(财帛)-子(子女)-丑(夫妻)-寅(兄弟)-卯(命宫)-辰(父母) */
-        .palace-fortune { grid-column: 1; grid-row: 1; }   /* 巳-福德 */
-        .palace-property { grid-column: 2; grid-row: 1; }  /* 午-田宅 */
-        .palace-career { grid-column: 3; grid-row: 1; }    /* 未-官禄 */
-        .palace-servants { grid-column: 4; grid-row: 1; }  /* 申-交友 */
-        .palace-parents { grid-column: 1; grid-row: 2; }   /* 辰-父母 */
-        .palace-travel { grid-column: 4; grid-row: 2; }    /* 酉-迁移 */
-        .palace-life { grid-column: 1; grid-row: 3; }      /* 卯-命宫 */
-        .palace-health { grid-column: 4; grid-row: 3; }    /* 戌-疾厄 */
-        .palace-siblings { grid-column: 1; grid-row: 4; }  /* 寅-兄弟 */
-        .palace-spouse { grid-column: 2; grid-row: 4; }    /* 丑-夫妻 */
-        .palace-children { grid-column: 3; grid-row: 4; }  /* 子-子女 */
-        .palace-wealth { grid-column: 4; grid-row: 4; }    /* 亥-财帛 */
+        /* 十二宫位位置 - 命宫在未，逆时针排列 */
+        /* 地支固定位置：巳(1,1) 午(2,1) 未(3,1) 申(4,1) 辰(1,2) 酉(4,2) 卯(1,3) 戌(4,3) 寅(1,4) 丑(2,4) 子(3,4) 亥(4,4) */
+        /* 宫位对应：未=命宫 午=兄弟 巳=夫妻 辰=子女 卯=财帛 寅=疾厄 丑=迁移 子=仆役 亥=官禄 戌=田宅 酉=福德 申=父母 */
+        .palace-spouse { grid-column: 1; grid-row: 1; }     /* 巳-夫妻 */
+        .palace-siblings { grid-column: 2; grid-row: 1; }   /* 午-兄弟 */
+        .palace-life { grid-column: 3; grid-row: 1; }       /* 未-命宫 */
+        .palace-parents { grid-column: 4; grid-row: 1; }    /* 申-父母 */
+        .palace-children { grid-column: 1; grid-row: 2; }   /* 辰-子女 */
+        .palace-fortune { grid-column: 4; grid-row: 2; }    /* 酉-福德 */
+        .palace-wealth { grid-column: 1; grid-row: 3; }     /* 卯-财帛 */
+        .palace-property { grid-column: 4; grid-row: 3; }   /* 戌-田宅 */
+        .palace-health { grid-column: 1; grid-row: 4; }     /* 寅-疾厄 */
+        .palace-travel { grid-column: 2; grid-row: 4; }     /* 丑-迁移 */
+        .palace-servants { grid-column: 3; grid-row: 4; }   /* 子-仆役 */
+        .palace-career { grid-column: 4; grid-row: 4; }     /* 亥-官禄 */
 
         /* ===== 命盘列表样式 ===== */
         .palace-list-item {
@@ -3693,11 +3694,11 @@
         
         /**
          * 获取测试命盘数据（2007年9月4日丑时）
-         * 根据用户提供的正确排盘数据
+         * 命宫在未宫，逆时针排列
          */
         function getDemoChart() {
-            // 2007年9月4日丑时（农历丁亥年七月廿三丑时）
-            // 紫微斗数排盘结果
+            // 2007年9月4日丑时
+            // 命宫在未，十二宫逆时针排列
             return {
                 mainStar: '天同 巨门',
                 birthDate: '2007-9-4',
@@ -3705,19 +3706,20 @@
                 shichen: '丑时',
                 wuxingJu: '木三局',
                 palaces: [
-                    // 十二宫按逆时针排列：命宫→兄弟→夫妻→子女→财帛→疾厄→迁移→仆役→官禄→田宅→福德→父母
-                    { key: 'life', dizhi: '卯', name: '命宫', nameEn: 'Life', stars: ['天同', '巨门'], isEmpty: false },
-                    { key: 'siblings', dizhi: '寅', name: '兄弟', nameEn: 'Siblings', stars: ['贪狼', '禄存'], isEmpty: false },
-                    { key: 'spouse', dizhi: '丑', name: '夫妻', nameEn: 'Spouse', stars: ['太阴'], isEmpty: false },
-                    { key: 'children', dizhi: '子', name: '子女', nameEn: 'Children', stars: ['廉贞', '天府'], isEmpty: false },
-                    { key: 'wealth', dizhi: '亥', name: '财帛', nameEn: 'Wealth', stars: [], isEmpty: true },
-                    { key: 'health', dizhi: '戌', name: '疾厄', nameEn: 'Health', stars: ['七杀'], isEmpty: false },
-                    { key: 'travel', dizhi: '酉', name: '迁移', nameEn: 'Travel', stars: [], isEmpty: true },
-                    { key: 'servants', dizhi: '申', name: '仆役', nameEn: 'Servants', stars: ['紫微'], isEmpty: false },
-                    { key: 'career', dizhi: '未', name: '官禄', nameEn: 'Career', stars: ['天机'], isEmpty: false },
-                    { key: 'property', dizhi: '午', name: '田宅', nameEn: 'Property', stars: ['破军'], isEmpty: false },
-                    { key: 'fortune', dizhi: '巳', name: '福德', nameEn: 'Fortune', stars: ['太阳', '天梁'], isEmpty: false },
-                    { key: 'parents', dizhi: '辰', name: '父母', nameEn: 'Parents', stars: ['武曲', '天相'], isEmpty: false }
+                    // 逆时针排列：命宫→兄弟→夫妻→子女→财帛→疾厄→迁移→仆役→官禄→田宅→福德→父母
+                    // 地支位置：未→午→巳→辰→卯→寅→丑→子→亥→戌→酉→申
+                    { key: 'life', dizhi: '未', name: '命宫', nameEn: 'Life', stars: ['天同', '巨门'], isEmpty: false },
+                    { key: 'siblings', dizhi: '午', name: '兄弟', nameEn: 'Siblings', stars: ['贪狼', '禄存'], isEmpty: false },
+                    { key: 'spouse', dizhi: '巳', name: '夫妻', nameEn: 'Spouse', stars: ['太阴'], isEmpty: false },
+                    { key: 'children', dizhi: '辰', name: '子女', nameEn: 'Children', stars: ['廉贞', '天府'], isEmpty: false },
+                    { key: 'wealth', dizhi: '卯', name: '财帛', nameEn: 'Wealth', stars: [], isEmpty: true },
+                    { key: 'health', dizhi: '寅', name: '疾厄', nameEn: 'Health', stars: ['七杀'], isEmpty: false },
+                    { key: 'travel', dizhi: '丑', name: '迁移', nameEn: 'Travel', stars: [], isEmpty: true },
+                    { key: 'servants', dizhi: '子', name: '仆役', nameEn: 'Servants', stars: ['紫微'], isEmpty: false },
+                    { key: 'career', dizhi: '亥', name: '官禄', nameEn: 'Career', stars: ['天机'], isEmpty: false },
+                    { key: 'property', dizhi: '戌', name: '田宅', nameEn: 'Property', stars: ['破军'], isEmpty: false },
+                    { key: 'fortune', dizhi: '酉', name: '福德', nameEn: 'Fortune', stars: ['太阳', '天梁'], isEmpty: false },
+                    { key: 'parents', dizhi: '申', name: '父母', nameEn: 'Parents', stars: ['武曲', '天相'], isEmpty: false }
                 ]
             };
         }
@@ -3740,13 +3742,13 @@
             if (wheelEl && chartResult.palaces) {
                 let html = '';
                 
-                // 按照标准紫微斗数命盘位置渲染（巳-午-未-申-酉-戌-亥-子-丑-寅-卯-辰）
-                // 格式：福德、田宅、官禄、交友（上排）-> 父母、迁移（中上）-> 命宫、疾厄（中下）-> 兄弟、夫妻、子女、财帛（下排）
+                // 按照命盘位置渲染（命宫在未）
+                // 布局：巳(夫妻) 午(兄弟) 未(命宫) 申(父母) | 辰(子女) [中] [中] 酉(福德) | 卯(财帛) [中] [中] 戌(田宅) | 寅(疾厄) 丑(迁移) 子(仆役) 亥(官禄)
                 const layoutOrder = [
-                    'fortune', 'property', 'career', 'servants',  // 上排
-                    'parents', 'travel',                          // 中上左、右
-                    'life', 'health',                             // 中下左、右
-                    'siblings', 'spouse', 'children', 'wealth'    // 下排
+                    'spouse', 'siblings', 'life', 'parents',    // 上排
+                    'children', 'fortune',                      // 中上左、右
+                    'wealth', 'property',                       // 中下左、右
+                    'health', 'travel', 'servants', 'career'    // 下排
                 ];
                 
                 layoutOrder.forEach(key => {
