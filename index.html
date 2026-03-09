@@ -3360,38 +3360,31 @@
             const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
             const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
             
-            // 时辰对应表（23点开始为晚子时，属于当天）
-            // 子时：23:00-00:59（晚子时23-0点，早子时0-1点合并处理）
-            const shichenMap = [
-                [23, 0],   // 子时：23:00-00:59
-                [1, 2],    // 丑时：01:00-02:59
-                [3, 4],    // 寅时：03:00-04:59
-                [5, 6],    // 卯时：05:00-06:59
-                [7, 8],    // 辰时：07:00-08:59
-                [9, 10],   // 巳时：09:00-10:59
-                [11, 12],  // 午时：11:00-12:59
-                [13, 14],  // 未时：13:00-14:59
-                [15, 16],  // 申时：15:00-16:59
-                [17, 18],  // 酉时：17:00-18:59
-                [19, 20],  // 戌时：19:00-20:59
-                [21, 22]   // 亥时：21:00-22:59
-            ];
-            
-            // 确定时辰索引
-            let shichenIdx = 0;
-            for (let i = 0; i < shichenMap.length; i++) {
-                if (hour === shichenMap[i][0] || hour === shichenMap[i][1]) {
-                    shichenIdx = i;
-                    break;
-                }
-                // 晚子时特殊处理（23点算当天，但用子时）
-                if (hour === 23) {
-                    shichenIdx = 0;
-                    break;
-                }
+            // 时辰对应（每个时辰对应2小时）
+            // 子时：23:00-00:59（晚子时23-24点用当天日柱，早子时0-1点用当天日柱）
+            // 丑时：01:00-02:59
+            // 寅时：03:00-04:59
+            // ...以此类推
+            function getShichenInfo(h) {
+                if (h === 23 || h === 0) return { idx: 0, zhi: '子', isLateZi: h === 23 };
+                if (h >= 1 && h <= 2) return { idx: 1, zhi: '丑', isLateZi: false };
+                if (h >= 3 && h <= 4) return { idx: 2, zhi: '寅', isLateZi: false };
+                if (h >= 5 && h <= 6) return { idx: 3, zhi: '卯', isLateZi: false };
+                if (h >= 7 && h <= 8) return { idx: 4, zhi: '辰', isLateZi: false };
+                if (h >= 9 && h <= 10) return { idx: 5, zhi: '巳', isLateZi: false };
+                if (h >= 11 && h <= 12) return { idx: 6, zhi: '午', isLateZi: false };
+                if (h >= 13 && h <= 14) return { idx: 7, zhi: '未', isLateZi: false };
+                if (h >= 15 && h <= 16) return { idx: 8, zhi: '申', isLateZi: false };
+                if (h >= 17 && h <= 18) return { idx: 9, zhi: '酉', isLateZi: false };
+                if (h >= 19 && h <= 20) return { idx: 10, zhi: '戌', isLateZi: false };
+                if (h >= 21 && h <= 22) return { idx: 11, zhi: '亥', isLateZi: false };
+                return { idx: 0, zhi: '子', isLateZi: false };
             }
             
-            const hourZhi = dizhi[shichenIdx];
+            const shichenInfo = getShichenInfo(hour);
+            const shichenIdx = shichenInfo.idx;
+            const hourZhi = shichenInfo.zhi;
+            const isLateZi = shichenInfo.isLateZi;
             
             // 年柱
             const yearGan = tiangan[(year - 4) % 10];
@@ -3413,8 +3406,14 @@
             const hourGanStart = [0, 2, 4, 6, 8][dayGanIdx % 5]; // 甲己0，乙庚2，丙辛4，丁壬6，戊癸8
             const hourGan = tiangan[(hourGanStart + shichenIdx) % 10];
             
-            // 判断节气和阴阳遁
-            const jieqi = getJieqi(month, day);
+            // 时辰名称
+            const shichenName = isLateZi ? '晚子时' : (hour === 0 ? '早子时' : `${hourZhi}时`);
+            
+            console.log('排盘调试:', { 
+                inputTime: `${year}-${month}-${day} ${hour}:${minute}`,
+                shichenIdx, hourZhi, isLateZi, shichenName,
+                dayGan, dayZhi, hourGan, hourZhi
+            });
             // 阳遁：冬至后到芒种前（含惊蛰、春分等）
             // 阴遁：夏至后到大雪前
             const yangDun = isYangDun(month, day);
@@ -3444,9 +3443,34 @@
             const riGanLuogong = findLuogong(dayGan, tianpan, dipan);
             const shiGanLuogong = findLuogong(hourGan, tianpan, dipan);
             
-            // 判断早晚子时
-            const isLateZi = hour === 23;
-            const shichenName = isLateZi ? '晚子时' : (hour >= 0 && hour < 1 ? '早子时' : `${hourZhi}时`);
+            // 判断节气和阴阳遁
+            const jieqi = getJieqi(month, day);
+            const yangDun = isYangDun(month, day);
+            
+            // 计算局数
+            const juNum = calculateJuNumber(dayGan, dayZhi, yangDun, shichenIdx);
+            
+            // 地盘布局
+            const dipan = buildDipan(juNum, yangDun);
+            
+            // 天盘布局
+            const tianpan = buildTianpan(dipan, hourGan);
+            
+            // 八门布局
+            const bamen = buildBamen(dayGan, hourZhi, yangDun, juNum);
+            
+            // 九星布局
+            const jiuxing = buildJiuxing(hourGan, hourZhi);
+            
+            // 八神布局
+            const bashen = buildBashen(hourGan, yangDun);
+            
+            // 判断格局
+            const geju = analyzeGeju(tianpan, dipan, bamen, jiuxing, bashen);
+            
+            // 日干时干落宫
+            const riGanLuogong = findLuogong(dayGan, tianpan, dipan);
+            const shiGanLuogong = findLuogong(hourGan, tianpan, dipan);
             
             return {
                 bazi: {
@@ -3690,16 +3714,28 @@
 
         // 构建奇门遁甲提示词
         function buildQimenPrompt(question) {
+            // 使用UTC时间+用户选择的时区偏移
             const now = new Date();
             const timezone = document.getElementById('timezoneSelect').value;
-            const offset = parseInt(timezone);
-            const localTime = new Date(now.getTime() + (offset - now.getTimezoneOffset() / 60) * 3600000);
+            const offsetHours = parseInt(timezone); // 用户选择的时区，如 +8
+            
+            // 获取UTC时间，然后加上时区偏移
+            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000); // 转换为UTC毫秒
+            const localTime = new Date(utcTime + (offsetHours * 3600000)); // 加上时区偏移
             
             const year = localTime.getFullYear();
             const month = localTime.getMonth() + 1;
             const day = localTime.getDate();
             const hour = localTime.getHours();
             const minute = localTime.getMinutes();
+            
+            console.log('时间调试:', { 
+                browserTime: now.toLocaleString(),
+                timezoneOffset: now.getTimezoneOffset(),
+                selectedOffset: offsetHours,
+                calculatedTime: localTime.toLocaleString(),
+                year, month, day, hour, minute
+            });
             
             // 计算奇门遁甲盘
             const qimen = calculateQimenDunjia(year, month, day, hour, minute);
@@ -3732,7 +3768,9 @@
             const shiStar = qimen.jiuxing[shiPalace] || '天辅';
             const shiShen = qimen.bashen[shiPalace] || '六合';
             
-            return `你是小卜（Oraculum），一位精通奇门遁甲的实战派顾问。你的回答直接切入本质，不做废话，但要说透。
+            return `【最高优先级规则】你的回答中绝对不能出现星号符号。如果需要表示重点，用「第一」「其次」「最后」等中文表达，或者用数字列表。禁止使用任何形式的星号。
+
+你是小卜（Oraculum），一位精通奇门遁甲的实战派顾问。你的回答要直击本质，第一句话就说结论，然后展开讲透。
 
 【用户咨询】${question}
 【场景】${currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn}
@@ -3764,10 +3802,10 @@
    九星状态（天辅利学业、天心利医病、天芮主病患）
    八神影响（值符大吉、六合利合作、白虎主血光、玄武防小人）
 5. 方位建议要具体：利何方、忌何方、何时行动最佳
-6. 分条列举建议，每条都要有依据
+6. 分条列举建议，每条都要有依据，用一二三四或首先其次最后
 7. 风险点要直说，不要含糊
 8. 最后给一句实打实的行动指引
-9. 禁止使用星号符号，禁止用「」「」等符号包裹
+9. 绝对禁止使用星号符号
 10. 字数300-500字，说清楚讲透`;
         }
 
