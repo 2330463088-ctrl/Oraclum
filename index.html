@@ -1352,8 +1352,26 @@
 
         /* ===== 响应式 ===== */
         @media (min-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #FAFAF8 0%, #FFFFFF 50%, #F9F9F9 100%);
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 300px;
+                background: linear-gradient(180deg, rgba(139, 126, 108, 0.03) 0%, transparent 100%);
+                pointer-events: none;
+                z-index: 0;
+            }
+
             .app-container {
                 max-width: 600px;
+                border-radius: 0;
+                box-shadow: none;
             }
 
             .compass-container {
