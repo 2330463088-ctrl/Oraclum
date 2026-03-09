@@ -1093,94 +1093,133 @@
         .palace[data-palace="fude"] { top: 50%; right: 0; transform: translateY(-50%); }
         .palace[data-palace="fumu"] { top: 50%; left: 0; transform: translateY(-50%); }
 
-        /* ===== 环形命盘样式 ===== */
+        /* ===== 紫微斗数标准命盘样式 ===== */
         .chart-wheel-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(5, auto);
-            gap: 8px;
-            padding: 16px 0;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 2px;
+            padding: 0;
+            background: var(--color-divider);
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .chart-palace {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 14px 8px;
+            justify-content: flex-start;
+            padding: 8px 6px;
             background: white;
-            border-radius: 12px;
-            border: 1px solid var(--color-divider);
             cursor: pointer;
             transition: all var(--transition-normal);
-            min-height: 70px;
+            min-height: 80px;
         }
 
         .chart-palace:hover {
-            border-color: var(--color-primary);
-            transform: scale(1.02);
+            background: var(--color-card-hover);
         }
 
         .chart-palace.empty {
             background: var(--color-card);
         }
 
+        .chart-palace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
         .chart-palace-name {
-            font: 500 11px/1.2 var(--font-stack);
+            font: 500 12px/1.2 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .chart-palace-dizhi {
+            font: 400 10px/1.2 var(--font-stack);
             color: var(--color-text-light);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        }
+
+        .chart-palace-stars {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            width: 100%;
         }
 
         .chart-palace-star {
-            font: 600 14px/1.3 var(--font-stack);
+            font: 400 11px/1.3 var(--font-stack);
             color: var(--color-text);
             text-align: center;
+            white-space: nowrap;
+        }
+
+        .chart-palace-star.major {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .chart-palace-star.minor {
+            font-weight: 400;
+            color: var(--color-text-mid);
         }
 
         .chart-palace-star.empty-star {
-            font: 400 14px/1.3 var(--font-stack);
+            font: 400 11px/1.3 var(--font-stack);
             color: var(--color-text-light);
         }
 
+        /* 中心空区域 */
         .chart-center {
-            grid-column: 2;
+            grid-column: 2 / 4;
             grid-row: 2 / 4;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--color-card);
-            border-radius: 50%;
-            aspect-ratio: 1;
-            margin: 8px;
+            background: white;
+            border-radius: 0;
         }
 
-        .chart-center-label {
-            font: 600 18px/1.2 var(--font-stack);
+        .chart-center-main {
+            font: 700 20px/1.2 var(--font-stack);
             color: var(--color-primary);
         }
 
-        .chart-center-value {
+        .chart-center-sub {
             font: 500 12px/1.2 var(--font-stack);
             color: var(--color-text-mid);
             margin-top: 4px;
         }
 
-        /* 宫位位置 */
-        .palace-parents { grid-column: 1; grid-row: 1; }
-        .palace-life { grid-column: 2; grid-row: 1; }
-        .palace-siblings { grid-column: 3; grid-row: 1; }
-        .palace-fortune { grid-column: 1; grid-row: 2; }
-        .palace-spouse { grid-column: 3; grid-row: 2; }
-        .palace-property { grid-column: 1; grid-row: 3; }
-        .palace-children { grid-column: 3; grid-row: 3; }
-        .palace-career { grid-column: 1; grid-row: 4; }
-        .palace-wealth { grid-column: 2; grid-row: 4; }
-        .palace-servants { grid-column: 1; grid-row: 5; }
-        .palace-health { grid-column: 2; grid-row: 5; }
-        .palace-travel { grid-column: 3; grid-row: 5; }
+        .chart-center-info {
+            font: 400 11px/1.4 var(--font-stack);
+            color: var(--color-text-light);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* 十二宫位位置 - 标准紫微斗数布局 */
+        /* 顺时针：巳(福德)-午(田宅)-未(官禄)-申(交友)-酉(迁移)-戌(疾厄)-亥(财帛)-子(子女)-丑(夫妻)-寅(兄弟)-卯(命宫)-辰(父母) */
+        .palace-fortune { grid-column: 1; grid-row: 1; }   /* 巳-福德 */
+        .palace-property { grid-column: 2; grid-row: 1; }  /* 午-田宅 */
+        .palace-career { grid-column: 3; grid-row: 1; }    /* 未-官禄 */
+        .palace-servants { grid-column: 4; grid-row: 1; }  /* 申-交友 */
+        .palace-parents { grid-column: 1; grid-row: 2; }   /* 辰-父母 */
+        .palace-travel { grid-column: 4; grid-row: 2; }    /* 酉-迁移 */
+        .palace-life { grid-column: 1; grid-row: 3; }      /* 卯-命宫 */
+        .palace-health { grid-column: 4; grid-row: 3; }    /* 戌-疾厄 */
+        .palace-siblings { grid-column: 1; grid-row: 4; }  /* 寅-兄弟 */
+        .palace-spouse { grid-column: 2; grid-row: 4; }    /* 丑-夫妻 */
+        .palace-children { grid-column: 3; grid-row: 4; }  /* 子-子女 */
+        .palace-wealth { grid-column: 4; grid-row: 4; }    /* 亥-财帛 */
 
         /* ===== 命盘列表样式 ===== */
         .palace-list-item {
@@ -3453,26 +3492,230 @@
             }
         }
 
-        function getDemoChart() {
-            // 测试数据：2007年9月4日丑时（按正确排盘）
+        // ===== 紫微斗数排盘核心算法 =====
+        
+        // 十四主星
+        const MAJOR_STARS = ['紫微', '天机', '太阳', '武曲', '天同', '廉贞', '天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '破军'];
+        
+        // 地支
+        const DIZHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+        
+        // 宫位名称（逆时针顺序：命宫开始）
+        const PALACE_NAMES = ['命宫', '兄弟', '夫妻', '子女', '财帛', '疾厄', '迁移', '仆役', '官禄', '田宅', '福德', '父母'];
+        const PALACE_NAMES_EN = ['Life', 'Siblings', 'Spouse', 'Children', 'Wealth', 'Health', 'Travel', 'Servants', 'Career', 'Property', 'Fortune', 'Parents'];
+        
+        // 五行局
+        const FIVE_ELEMENTS = ['水二局', '木三局', '金四局', '土五局', '火六局'];
+        
+        /**
+         * 紫微斗数排盘算法
+         * @param {number} year - 出生年
+         * @param {number} month - 出生月
+         * @param {number} day - 出生日
+         * @param {number} hour - 出生时辰（0-23）
+         * @param {string} gender - 性别
+         */
+        function calculateZiweiChart(year, month, day, hour, gender) {
+            // 计算农历（简化版，实际需要使用农历转换库）
+            const lunarInfo = solarToLunar(year, month, day);
+            
+            // 计算时辰地支
+            const shichenIdx = Math.floor((hour + 1) / 2) % 12;
+            const shichenDizhi = DIZHI[shichenIdx];
+            
+            // 定命宫位置
+            // 命宫公式：从寅起月，顺行到月，再逆行到时
+            let mingGongIdx = (month - 1 + shichenIdx) % 12; // 简化计算
+            
+            // 计算五行局
+            const wuxingJu = calculateWuxingJu(year, gender, mingGongIdx);
+            
+            // 安十四主星
+            const palaces = placeMainStars(year, month, day, hour, mingGongIdx, wuxingJu);
+            
             return {
-                mainStar: '天同、巨门',
+                mingGongIdx,
+                shichenDizhi,
+                wuxingJu,
+                palaces,
+                lunarInfo
+            };
+        }
+        
+        /**
+         * 安置十四主星
+         */
+        function placeMainStars(year, month, day, hour, mingGongIdx, wuxingJu) {
+            const palaces = [];
+            
+            // 初始化12宫
+            for (let i = 0; i < 12; i++) {
+                const palaceIdx = (mingGongIdx + i) % 12;
+                palaces.push({
+                    idx: palaceIdx,
+                    dizhi: DIZHI[palaceIdx],
+                    name: PALACE_NAMES[i],
+                    nameEn: PALACE_NAMES_EN[i],
+                    stars: [],
+                    majorStars: [],
+                    minorStars: []
+                });
+            }
+            
+            // 紫微星定位（核心算法）
+            // 根据"五虎遁"和五行局计算紫微星位置
+            const ziweiIdx = calculateZiweiPosition(month, day, wuxingJu);
+            
+            // 安紫微系主星
+            placeZiweiStars(palaces, ziweiIdx, mingGongIdx);
+            
+            // 安天府系主星
+            placeTianfuStars(palaces, ziweiIdx);
+            
+            // 安辅星
+            placeMinorStars(palaces, year, hour, mingGongIdx);
+            
+            return palaces;
+        }
+        
+        /**
+         * 计算紫微星位置
+         */
+        function calculateZiweiPosition(month, day, wuxingJu) {
+            // 紫微星定位公式：生日 + 五行局数调整
+            // 这是一个简化算法，实际更复杂
+            const juNum = parseInt(wuxingJu.charAt(1)); // 局数
+            let pos = Math.floor((day + juNum) / 3) % 12;
+            return pos;
+        }
+        
+        /**
+         * 安紫微系主星（紫微、天机、太阳、武曲、天同、廉贞）
+         */
+        function placeZiweiStars(palaces, ziweiIdx, mingGongIdx) {
+            const ziweiStars = [
+                { name: '紫微', offset: 0 },
+                { name: '天机', offset: 1 },
+                { name: '太阳', offset: 3 },
+                { name: '武曲', offset: 4 },
+                { name: '天同', offset: 5 },
+                { name: '廉贞', offset: 8 }
+            ];
+            
+            ziweiStars.forEach(star => {
+                const palacePos = (ziweiIdx + star.offset) % 12;
+                palaces[palacePos].majorStars.push(star.name);
+                palaces[palacePos].stars.push(star.name);
+            });
+        }
+        
+        /**
+         * 安天府系主星（天府、太阴、贪狼、巨门、天相、天梁、七杀、破军）
+         */
+        function placeTianfuStars(palaces, ziweiIdx) {
+            // 天府与紫微相对，隔一宫
+            const tianfuIdx = (12 - ziweiIdx) % 12;
+            
+            const tianfuStars = [
+                { name: '天府', offset: 0 },
+                { name: '太阴', offset: 1 },
+                { name: '贪狼', offset: 2 },
+                { name: '巨门', offset: 3 },
+                { name: '天相', offset: 4 },
+                { name: '天梁', offset: 5 },
+                { name: '七杀', offset: 6 },
+                { name: '破军', offset: 10 }
+            ];
+            
+            tianfuStars.forEach(star => {
+                const palacePos = (tianfuIdx + star.offset) % 12;
+                palaces[palacePos].majorStars.push(star.name);
+                palaces[palacePos].stars.push(star.name);
+            });
+        }
+        
+        /**
+         * 安辅星（禄存、擎羊、陀罗、文昌、文曲等）
+         */
+        function placeMinorStars(palaces, year, hour, mingGongIdx) {
+            // 根据年干安禄存
+            const yearGan = (year - 4) % 10;
+            const lucunPositions = [2, 3, 5, 6, 5, 6, 8, 9, 0, 1]; // 甲乙丙丁戊己庚辛壬癸
+            const lucunIdx = lucunPositions[yearGan];
+            
+            palaces[lucunIdx].minorStars.push('禄存');
+            palaces[lucunIdx].stars.push('禄存');
+            
+            // 擎羊在禄存前一位
+            const qingyangIdx = (lucunIdx + 1) % 12;
+            palaces[qingyangIdx].minorStars.push('擎羊');
+            palaces[qingyangIdx].stars.push('擎羊');
+            
+            // 陀罗在禄存后一位
+            const tuoluoIdx = (lucunIdx - 1 + 12) % 12;
+            palaces[tuoluoIdx].minorStars.push('陀罗');
+            palaces[tuoluoIdx].stars.push('陀罗');
+            
+            // 文昌（根据时辰）
+            const wenchangIdx = (12 - Math.floor((hour + 1) / 2)) % 12;
+            palaces[wenchangIdx].minorStars.push('文昌');
+            palaces[wenchangIdx].stars.push('文昌');
+            
+            // 文曲（与文昌相对）
+            const wenquIdx = (wenchangIdx + 4) % 12;
+            palaces[wenquIdx].minorStars.push('文曲');
+            palaces[wenquIdx].stars.push('文曲');
+        }
+        
+        /**
+         * 计算五行局
+         */
+        function calculateWuxingJu(year, gender, mingGongIdx) {
+            // 简化计算：根据年份和命宫位置
+            const yearGan = (year - 4) % 10;
+            const wuxingTable = ['木三局', '木三局', '水二局', '水二局', '土五局', '土五局', '金四局', '金四局', '火六局', '火六局'];
+            return wuxingTable[yearGan];
+        }
+        
+        /**
+         * 阳历转农历（简化版）
+         */
+        function solarToLunar(year, month, day) {
+            // 简化实现，返回基本农历信息
+            return {
+                year: year,
+                month: month,
+                day: day,
+                lunarMonth: month,
+                lunarDay: day
+            };
+        }
+        
+        /**
+         * 获取测试命盘数据（2007年9月4日丑时）
+         * 正确的紫微斗数排盘结果
+         */
+        function getDemoChart() {
+            return {
+                mainStar: '天同 巨门',
                 birthDate: '2007-9-4',
                 lunarDate: '二〇〇七年七月廿三',
                 shichen: '丑时',
+                wuxingJu: '木三局',
                 palaces: [
-                    { key: 'parents', name: 'Parents', nameCn: '父母', star: '武曲 天相', isEmpty: false },
-                    { key: 'life', name: 'Life', nameCn: '命宫', star: '天同 巨门', isEmpty: false },
-                    { key: 'siblings', name: 'Siblings', nameCn: '兄弟', star: '贪狼 禄存', isEmpty: false },
-                    { key: 'fortune', name: 'Fortune', nameCn: '福德', star: '紫微 七杀', isEmpty: false },
-                    { key: 'spouse', name: 'Spouse', nameCn: '夫妻', star: '天机', isEmpty: false },
-                    { key: 'property', name: 'Property', nameCn: '田宅', star: '破军', isEmpty: false },
-                    { key: 'children', name: 'Children', nameCn: '子女', star: '', isEmpty: true },
-                    { key: 'career', name: 'Career', nameCn: '事业', star: '太阳', isEmpty: false },
-                    { key: 'wealth', name: 'Wealth', nameCn: '财帛', star: '', isEmpty: true },
-                    { key: 'servants', name: 'Servants', nameCn: '仆役', star: '廉贞 天府', isEmpty: false },
-                    { key: 'health', name: 'Health', nameCn: '疾厄', star: '太阴', isEmpty: false },
-                    { key: 'travel', name: 'Travel', nameCn: '迁移', star: '', isEmpty: true }
+                    // 顺序：命宫、兄弟、夫妻、子女、财帛、疾厄、迁移、仆役、官禄、田宅、福德、父母
+                    { key: 'life', dizhi: '卯', name: '命宫', nameEn: 'Life', stars: ['天同', '巨门'], isEmpty: false },
+                    { key: 'siblings', dizhi: '寅', name: '兄弟', nameEn: 'Siblings', stars: ['贪狼', '禄存'], isEmpty: false },
+                    { key: 'spouse', dizhi: '丑', name: '夫妻', nameEn: 'Spouse', stars: ['天机'], isEmpty: false },
+                    { key: 'children', dizhi: '子', name: '子女', nameEn: 'Children', stars: [], isEmpty: true },
+                    { key: 'wealth', dizhi: '亥', name: '财帛', nameEn: 'Wealth', stars: [], isEmpty: true },
+                    { key: 'health', dizhi: '戌', name: '疾厄', nameEn: 'Health', stars: ['太阴'], isEmpty: false },
+                    { key: 'travel', dizhi: '酉', name: '迁移', nameEn: 'Travel', stars: [], isEmpty: true },
+                    { key: 'servants', dizhi: '申', name: '仆役', nameEn: 'Servants', stars: ['廉贞', '天府'], isEmpty: false },
+                    { key: 'career', dizhi: '未', name: '官禄', nameEn: 'Career', stars: ['太阳'], isEmpty: false },
+                    { key: 'property', dizhi: '午', name: '田宅', nameEn: 'Property', stars: ['破军'], isEmpty: false },
+                    { key: 'fortune', dizhi: '巳', name: '福德', nameEn: 'Fortune', stars: ['紫微', '七杀'], isEmpty: false },
+                    { key: 'parents', dizhi: '辰', name: '父母', nameEn: 'Parents', stars: ['武曲', '天相'], isEmpty: false }
                 ]
             };
         }
@@ -3488,31 +3731,53 @@
             const birthDateEl = document.getElementById('chartBirthDate');
             const lunarDateEl = document.getElementById('chartLunarDate');
             if (birthDateEl) birthDateEl.textContent = '公历: ' + year + '-' + month + '-' + day;
-            if (lunarDateEl) lunarDateEl.textContent = '农历: ' + (chartResult.lunarDate || '二〇〇七年七月廿三') + ' ' + (chartResult.shichen || '丑时');
+            if (lunarDateEl) lunarDateEl.textContent = '农历: ' + (chartResult.lunarDate || '') + ' ' + (chartResult.shichen || '');
             
-            // 环形命盘
+            // 标准命盘布局
             const wheelEl = document.getElementById('chartWheel');
             if (wheelEl && chartResult.palaces) {
                 let html = '';
                 
-                chartResult.palaces.forEach(palace => {
-                    const emptyClass = palace.isEmpty ? 'empty' : '';
-                    const starClass = palace.isEmpty ? 'empty-star' : '';
-                    const starText = palace.isEmpty ? '-' : palace.star;
-                    
-                    html += `
-                        <div class="chart-palace palace-${palace.key} ${emptyClass}" onclick="showPalaceDetail('${palace.nameCn}', '${starText}')">
-                            <div class="chart-palace-name">${palace.name}</div>
-                            <div class="chart-palace-star ${starClass}">${starText}</div>
-                        </div>
-                    `;
+                // 按照标准紫微斗数命盘位置渲染（巳-午-未-申-酉-戌-亥-子-丑-寅-卯-辰）
+                // 格式：福德、田宅、官禄、交友（上排）-> 父母、迁移（中上）-> 命宫、疾厄（中下）-> 兄弟、夫妻、子女、财帛（下排）
+                const layoutOrder = [
+                    'fortune', 'property', 'career', 'servants',  // 上排
+                    'parents', 'travel',                          // 中上左、右
+                    'life', 'health',                             // 中下左、右
+                    'siblings', 'spouse', 'children', 'wealth'    // 下排
+                ];
+                
+                layoutOrder.forEach(key => {
+                    const palace = chartResult.palaces.find(p => p.key === key);
+                    if (palace) {
+                        const emptyClass = palace.isEmpty ? 'empty' : '';
+                        const starsHtml = palace.isEmpty 
+                            ? '<div class="chart-palace-star empty-star">-</div>'
+                            : palace.stars.map(s => `<div class="chart-palace-star major">${s}</div>`).join('');
+                        
+                        html += `
+                            <div class="chart-palace palace-${key} ${emptyClass}" onclick="showPalaceDetail('${palace.name}', ${JSON.stringify(palace.stars)})">
+                                <div class="chart-palace-header">
+                                    <span class="chart-palace-name">${palace.name}</span>
+                                    <span class="chart-palace-dizhi">${palace.dizhi}</span>
+                                </div>
+                                <div class="chart-palace-stars">
+                                    ${starsHtml}
+                                </div>
+                            </div>
+                        `;
+                    }
                 });
                 
-                // 插入中心
+                // 中心区域
                 html += `
                     <div class="chart-center">
-                        <div class="chart-center-label">Ziwei</div>
-                        <div class="chart-center-value">紫微</div>
+                        <div class="chart-center-main">紫微</div>
+                        <div class="chart-center-sub">Ziwei</div>
+                        <div class="chart-center-info">
+                            ${chartResult.wuxingJu || '木三局'}<br>
+                            ${chartResult.shichen || '丑时'}
+                        </div>
                     </div>
                 `;
                 
