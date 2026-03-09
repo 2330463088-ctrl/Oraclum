@@ -1221,59 +1221,67 @@
         .palace-dizhi-zi   { grid-column: 3; grid-row: 4; }   /* 子 */
         .palace-dizhi-hai  { grid-column: 4; grid-row: 4; }   /* 亥 */
 
-        /* ===== 命盘列表样式 ===== */
-        .palace-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--color-divider);
-            cursor: pointer;
+        /* ===== 简化命盘卡片样式 ===== */
+        .palace-card {
+            background: white;
+            border-radius: var(--radius-small);
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
             transition: all var(--transition-fast);
         }
 
-        .palace-list-item:last-child {
-            border-bottom: none;
+        .palace-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 2px 8px rgba(139, 126, 108, 0.1);
         }
 
-        .palace-list-item:hover {
-            background: var(--color-card);
-            margin: 0 -12px;
-            padding: 12px;
-            border-radius: var(--radius-small);
+        .palace-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
         }
 
-        .palace-list-name {
+        .palace-card-title {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
-        .palace-name-en {
-            font: 600 15px/1.2 var(--font-stack);
+        .palace-card-title-en {
+            font: 600 16px/1.2 var(--font-stack);
             color: var(--color-text);
         }
 
-        .palace-name-cn {
+        .palace-card-title-cn {
             font: 400 12px/1.2 var(--font-stack);
             color: var(--color-text-light);
         }
 
-        .palace-list-star {
-            text-align: right;
+        .palace-card-star {
             display: flex;
             flex-direction: column;
+            align-items: flex-end;
             gap: 2px;
         }
 
-        .star-cn {
-            font: 500 14px/1.2 var(--font-stack);
-            color: var(--color-text-secondary);
+        .palace-card-star-cn {
+            font: 600 18px/1.2 var(--font-stack);
+            color: var(--color-primary);
         }
 
-        .star-en {
+        .palace-card-star-en {
             font: 400 11px/1.2 var(--font-stack);
-            color: var(--color-text-light);
+            color: var(--color-text-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .palace-card-desc {
+            font: 400 14px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+            padding-top: 12px;
+            border-top: 1px solid var(--color-divider);
         }
 
         /* ===== 命盘输入样式 ===== */
@@ -2339,14 +2347,14 @@
         </header>
         <div class="wushu-detail-content">
             <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
-                紫微斗数，十四主星，洞察先天运势。
+                Ziwei Doushu — Discover your destiny through four key life areas.
             </p>
 
             <!-- 排盘输入 -->
             <div class="card" id="chartInputCard">
                 <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                    <button class="btn btn-small btn-outline" id="calendarSolar" onclick="setCalendar('solar')" style="flex: 1;" data-i18n="solar">阳历</button>
-                    <button class="btn btn-small" id="calendarLunar" onclick="setCalendar('lunar')" style="flex: 1; background: var(--color-card); color: var(--color-text);" data-i18n="lunar">农历</button>
+                    <button class="btn btn-small btn-outline" id="calendarSolar" onclick="setCalendar('solar')" style="flex: 1;" data-i18n="solar">阳历 / Solar</button>
+                    <button class="btn btn-small" id="calendarLunar" onclick="setCalendar('lunar')" style="flex: 1; background: var(--color-card); color: var(--color-text);" data-i18n="lunar">农历 / Lunar</button>
                 </div>
                 
                 <div class="chart-input-row">
@@ -2361,46 +2369,40 @@
                 </div>
                 
                 <div class="chart-input-row">
-                    <input type="text" id="birthCity" class="chart-input-field" placeholder="出生城市 / Birth City" value="北京">
+                    <input type="text" id="birthCity" class="chart-input-field" placeholder="Birth City" value="Beijing">
                     <select id="birthGender" class="chart-select">
-                        <option value="male" data-i18n="male">男 / Male</option>
-                        <option value="female" data-i18n="female">女 / Female</option>
+                        <option value="male">Male / 男</option>
+                        <option value="female">Female / 女</option>
                     </select>
                 </div>
                 
                 <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" onclick="calculateChart()">
-                    <i class="fa-solid fa-play" style="margin-right: 8px;"></i>
-                    <span data-i18n="start_chart">开始排盘</span>
+                    <i class="fa-solid fa-sparkles" style="margin-right: 8px;"></i>
+                    <span>Reveal My Chart</span>
                 </button>
             </div>
 
-            <!-- 命盘结果 -->
+            <!-- 命盘结果 - 简化版四宫 -->
             <div class="card" id="chartResultCard" style="display: none;">
-                <!-- 顶部标题 -->
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div id="chartMainStar" style="font: 700 24px/1.3 var(--font-stack); color: var(--color-text); letter-spacing: -0.02em;">天同、巨门坐命</div>
-                    <div id="chartMainStarEn" style="font: 400 14px/1.5 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">天同、巨门 in Life Palace</div>
+                <!-- 标题区 -->
+                <div style="margin-bottom: 24px;">
+                    <div style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text);">Your Chart Snapshot</div>
+                    <div style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">命盘简析</div>
                 </div>
                 
-                <!-- 日期行 -->
-                <div style="text-align: center; margin-bottom: 24px;">
-                    <div id="chartBirthDate" style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light);">公历: 2007-9-4</div>
-                    <div id="chartLunarDate" style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light);">农历: 二〇〇七年七月廿三 丑时</div>
+                <!-- 出生日期信息 -->
+                <div id="chartBirthInfo" style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--color-divider);">
+                    <!-- 由JS填充 -->
                 </div>
                 
-                <!-- 环形命盘 -->
-                <div class="chart-wheel-container" id="chartWheel">
-                    <!-- 由JS生成环形命盘 -->
-                </div>
-                
-                <!-- 提示文字 -->
-                <div style="text-align: center; font: 400 12px/1.4 var(--font-stack); color: var(--color-text-light); margin: 20px 0;">
-                    Click any palace to see details · 点击宫位查看详情
+                <!-- 四宫卡片列表 -->
+                <div id="chartPalacesList" style="display: flex; flex-direction: column; gap: 16px;">
+                    <!-- 由JS动态生成 -->
                 </div>
 
-                <button class="btn btn-primary" style="width: 100%;" onclick="showChartInput()">
-                    <i class="fa-solid fa-play" style="margin-right: 8px;"></i>
-                    <span>重新排盘 / Recalculate</span>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 24px;" onclick="showChartInput()">
+                    <i class="fa-solid fa-rotate" style="margin-right: 8px;"></i>
+                    <span>New Reading</span>
                 </button>
             </div>
         </div>
@@ -3404,32 +3406,181 @@
             }
         }
 
+        // 星曜英文名映射
+        const STAR_EN_NAMES = {
+            '紫微': 'Ziwei', '天机': 'Tianji', '太阳': 'Taiyang', '武曲': 'Wuqu', 
+            '天同': 'Tiantong', '廉贞': 'Lianzhen', '天府': 'Tianfu', '太阴': 'Taiyin',
+            '贪狼': 'Tanlang', '巨门': 'Jumen', '天相': 'Tianxiang', '天梁': 'Tianliang',
+            '七杀': 'Qisha', '破军': 'Pojun', '禄存': 'Lucun', '文昌': 'Wenchang',
+            '文曲': 'Wenqu', '擎羊': 'Qingyang', '陀罗': 'Tuoluo', '空宫': 'Empty'
+        };
+
+        // 星曜性格解读模板
+        const STAR_PERSONALITY = {
+            '紫微': 'You are a natural leader with royal energy. Confident and ambitious, you inspire others naturally.',
+            '天机': 'You have a brilliant strategic mind. Quick-witted and adaptable, you excel at planning and problem-solving.',
+            '太阳': 'You radiate warmth and positivity. Natural charisma draws people to you; you shine in social settings.',
+            '武曲': 'You are determined and action-oriented. Financial savvy and strong willpower drive your success.',
+            '天同': 'You bring harmony wherever you go. Optimistic and peace-loving, you create balance in relationships.',
+            '廉贞': 'You are passionate and transformative. Intense energy fuels your drive for achievement.',
+            '天府': 'You are generous and stable. Natural wealth attraction; you build security for yourself and others.',
+            '太阴': 'You are intuitive and nurturing. Deep emotional intelligence guides your creative expression.',
+            '贪狼': 'You are charismatic and multi-talented. Social butterfly with magnetic charm; success comes through connections.',
+            '巨门': 'You are articulate and insightful. Strong communication skills; you uncover truth through dialogue.',
+            '天相': 'You are diplomatic and fair-minded. Natural mediator; you bring balance to any situation.',
+            '天梁': 'You are wise and protective. Natural mentor energy; others seek your guidance and support.',
+            '七杀': 'You are bold and independent. Trailblazer spirit; you forge your own path fearlessly.',
+            '破军': 'You are revolutionary and pioneering. Change-maker energy; you transform whatever you touch.',
+            '禄存': 'Fortune favors you. Natural luck with wealth accumulation; steady prosperity flows your way.',
+            '文昌': 'You have literary talent. Academic success and artistic abilities come naturally to you.',
+            '文曲': 'You possess artistic flair. Creative expression and romantic sensibility define you.',
+            '空宫': 'Your path is open to infinite possibilities. You define yourself rather than being defined by stars.'
+        };
+
         async function calculateChart() {
             const year = parseInt(document.getElementById('birthYear').value);
             const month = parseInt(document.getElementById('birthMonth').value);
             const day = parseInt(document.getElementById('birthDay').value);
             const hour = parseInt(document.getElementById('birthHour').value);
-            const minute = parseInt(document.getElementById('birthMinute').value) || 0;
-            const city = document.getElementById('birthCity').value || '北京';
             const gender = document.getElementById('birthGender').value;
             
             document.getElementById('chartInputCard').style.display = 'none';
             document.getElementById('chartResultCard').style.display = 'block';
             
             // 显示加载状态
-            document.getElementById('chartMainStar').textContent = '计算中...';
-            document.getElementById('chartMainStarEn').textContent = 'Calculating...';
-            document.getElementById('chartWheel').innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:var(--color-text-light);"><div class="loading"></div></div>';
+            document.getElementById('chartBirthInfo').innerHTML = '<div style="text-align:center; padding:20px;"><div class="loading"></div><div style="margin-top:12px; color:var(--color-text-mid);">Calculating your chart...</div></div>';
+            document.getElementById('chartPalacesList').innerHTML = '';
             
-            // 使用本地算法计算命盘
             try {
+                // 先计算本地命盘获取星曜
                 const chartResult = calculateZiweiChart(year, month, day, hour, gender);
-                renderChart(chartResult, year, month, day);
+                
+                // 调用API获取解读
+                const interpretations = await getChartInterpretation(chartResult, year, month, day, hour, gender);
+                
+                // 渲染简化版命盘
+                renderSimplifiedChart(chartResult, interpretations, year, month, day);
             } catch (error) {
                 console.error('排盘错误:', error);
-                document.getElementById('chartMainStar').textContent = '排盘出错';
-                document.getElementById('chartMainStarEn').textContent = 'Calculation Error';
+                document.getElementById('chartBirthInfo').innerHTML = '<div style="text-align:center; color:var(--color-danger);">Calculation error. Please try again.</div>';
             }
+        }
+
+        // 调用DeepSeek API获取命盘解读
+        async function getChartInterpretation(chartResult, year, month, day, hour, gender) {
+            // 提取四个核心宫位的主星
+            const mingStar = chartResult.palaces[0].stars[0] || '空宫';  // 命宫
+            const caiboStar = chartResult.palaces[4].stars[0] || '空宫'; // 财帛宫
+            const qianyiStar = chartResult.palaces[6].stars[0] || '空宫'; // 迁移宫
+            const guanluStar = chartResult.palaces[8].stars[0] || '空宫'; // 官禄宫
+
+            const prompt = `You are a Ziwei Doushu (Purple Star Astrology) expert. Analyze the following birth chart for an international audience. Keep interpretations positive, inspiring, and easy to understand like horoscopes.
+
+Birth data: ${year}-${month}-${day}, ${hour}:00, ${gender}
+Main stars in key palaces:
+- Life Palace (命宫): ${mingStar}
+- Wealth Palace (财帛宫): ${caiboStar}
+- Career Palace (官禄宫): ${guanluStar}
+- Travel Palace (迁移宫): ${qianyiStar}
+
+Return ONLY valid JSON (no markdown, no explanation):
+{
+  "ming": {"star": "${mingStar}", "starEn": "${STAR_EN_NAMES[mingStar] || mingStar}", "desc": "2-3 sentences about personality and life direction"},
+  "guanlu": {"star": "${guanluStar}", "starEn": "${STAR_EN_NAMES[guanluStar] || guanluStar}", "desc": "2-3 sentences about career and work style"},
+  "caibo": {"star": "${caiboStar}", "starEn": "${STAR_EN_NAMES[caiboStar] || caiboStar}", "desc": "2-3 sentences about wealth and money management"},
+  "qianyi": {"star": "${qianyiStar}", "starEn": "${STAR_EN_NAMES[qianyiStar] || qianyiStar}", "desc": "2-3 sentences about travel and social connections"}
+}`;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat',
+                        messages: [{ role: 'user', content: prompt }],
+                        temperature: 0.7,
+                        max_tokens: 800
+                    })
+                });
+
+                const data = await response.json();
+                const content = data.choices[0].message.content;
+                
+                // 解析JSON
+                const jsonMatch = content.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+            } catch (e) {
+                console.log('API call failed, using fallback');
+            }
+
+            // Fallback: 使用本地解读
+            return {
+                ming: { star: mingStar, starEn: STAR_EN_NAMES[mingStar] || mingStar, desc: STAR_PERSONALITY[mingStar] || 'Your unique path unfolds naturally.' },
+                guanlu: { star: guanluStar, starEn: STAR_EN_NAMES[guanluStar] || guanluStar, desc: STAR_PERSONALITY[guanluStar] || 'Your career evolves in unexpected ways.' },
+                caibo: { star: caiboStar, starEn: STAR_EN_NAMES[caiboStar] || caiboStar, desc: STAR_PERSONALITY[caiboStar] || 'Abundance flows to you naturally.' },
+                qianyi: { star: qianyiStar, starEn: STAR_EN_NAMES[qianyiStar] || qianyiStar, desc: STAR_PERSONALITY[qianyiStar] || 'Adventure awaits on your horizon.' }
+            };
+        }
+
+        // 渲染简化版命盘
+        function renderSimplifiedChart(chartResult, interpretations, year, month, day) {
+            // 出生日期信息
+            const birthInfoHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font: 600 15px/1.3 var(--font-stack); color: var(--color-text);">${year}.${month}.${day}</div>
+                        <div style="font: 400 12px/1.3 var(--font-stack); color: var(--color-text-light);">${chartResult.lunarDate} · ${chartResult.shichen}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font: 500 13px/1.3 var(--font-stack); color: var(--color-primary);">${chartResult.wuxingJu}</div>
+                        <div style="font: 400 11px/1.3 var(--font-stack); color: var(--color-text-light);">${chartResult.yearGanZhi} Year</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('chartBirthInfo').innerHTML = birthInfoHtml;
+
+            // 四宫卡片
+            const palaces = [
+                { key: 'ming', titleEn: 'Life Palace', titleCn: '命宫', icon: 'fa-solid fa-sun', interpretation: interpretations.ming },
+                { key: 'guanlu', titleEn: 'Career Palace', titleCn: '官禄宫', icon: 'fa-solid fa-briefcase', interpretation: interpretations.guanlu },
+                { key: 'caibo', titleEn: 'Wealth Palace', titleCn: '财帛宫', icon: 'fa-solid fa-coins', interpretation: interpretations.caibo },
+                { key: 'qianyi', titleEn: 'Travel Palace', titleCn: '迁移宫', icon: 'fa-solid fa-plane', interpretation: interpretations.qianyi }
+            ];
+
+            let cardsHtml = '';
+            palaces.forEach(palace => {
+                const interp = palace.interpretation || { star: '空宫', starEn: 'Empty', desc: 'Open to infinite possibilities.' };
+                cardsHtml += `
+                    <div class="palace-card">
+                        <div class="palace-card-header">
+                            <div class="palace-card-title">
+                                <div class="palace-card-title-en">
+                                    <i class="${palace.icon}" style="margin-right: 8px; color: var(--color-primary); opacity: 0.7;"></i>
+                                    ${palace.titleEn}
+                                </div>
+                                <div class="palace-card-title-cn">${palace.titleCn}</div>
+                            </div>
+                            <div class="palace-card-star">
+                                <div class="palace-card-star-cn">${interp.star}</div>
+                                <div class="palace-card-star-en">${interp.starEn}</div>
+                            </div>
+                        </div>
+                        <div class="palace-card-desc">${interp.desc}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('chartPalacesList').innerHTML = cardsHtml;
+        }
+
+        function showChartInput() {
+            document.getElementById('chartInputCard').style.display = 'block';
+            document.getElementById('chartResultCard').style.display = 'none';
         }
 
         // ===== 紫微斗数排盘核心算法 =====
@@ -3973,76 +4124,6 @@
                     { key: 'parents', dizhi: '申', name: '父母', nameEn: 'Parents', stars: ['武曲', '天相'], isEmpty: false }
                 ]
             };
-        }
-
-        function renderChart(chartResult, year, month, day, timeStr) {
-            // 主星
-            const mainStarEl = document.getElementById('chartMainStar');
-            const mainStarEnEl = document.getElementById('chartMainStarEn');
-            if (mainStarEl) mainStarEl.textContent = chartResult.mainStar + '坐命';
-            if (mainStarEnEl) mainStarEnEl.textContent = chartResult.mainStar + ' in Life Palace';
-            
-            // 日期
-            const birthDateEl = document.getElementById('chartBirthDate');
-            const lunarDateEl = document.getElementById('chartLunarDate');
-            if (birthDateEl) birthDateEl.textContent = '公历: ' + year + '-' + month + '-' + day;
-            if (lunarDateEl) lunarDateEl.textContent = '农历: ' + (chartResult.lunarDate || '') + ' ' + (chartResult.shichen || '');
-            
-            // 标准命盘布局
-            const wheelEl = document.getElementById('chartWheel');
-            if (wheelEl && chartResult.palaces) {
-                let html = '';
-                
-                // 地支拼音映射
-                const dizhiPinyin = {
-                    '子': 'zi', '丑': 'chou', '寅': 'yin', '卯': 'mao', '辰': 'chen', '巳': 'si',
-                    '午': 'wu', '未': 'wei', '申': 'shen', '酉': 'you', '戌': 'xu', '亥': 'hai'
-                };
-                
-                // 按地支位置渲染（每个宫位显示在其地支对应的位置）
-                chartResult.palaces.forEach(palace => {
-                    const emptyClass = palace.isEmpty ? 'empty' : '';
-                    const dizhiClass = 'palace-dizhi-' + dizhiPinyin[palace.dizhi];
-                    const starsHtml = palace.isEmpty 
-                        ? '<div class="chart-palace-star empty-star">-</div>'
-                        : palace.stars.map(s => `<div class="chart-palace-star major">${s}</div>`).join('');
-                    
-                    html += `
-                        <div class="chart-palace ${dizhiClass} ${emptyClass}" onclick="showPalaceDetail('${palace.name}', ${JSON.stringify(palace.stars)})">
-                            <div class="chart-palace-header">
-                                <span class="chart-palace-name">${palace.name}</span>
-                                <span class="chart-palace-dizhi">${palace.dizhi}</span>
-                            </div>
-                            <div class="chart-palace-stars">
-                                ${starsHtml}
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                // 中心区域
-                html += `
-                    <div class="chart-center">
-                        <div class="chart-center-main">紫微</div>
-                        <div class="chart-center-sub">Ziwei</div>
-                        <div class="chart-center-info">
-                            ${chartResult.wuxingJu || '木三局'}<br>
-                            ${chartResult.shichen || '丑时'}
-                        </div>
-                    </div>
-                `;
-                
-                wheelEl.innerHTML = html;
-            }
-        }
-
-        function showChartInput() {
-            document.getElementById('chartInputCard').style.display = 'block';
-            document.getElementById('chartResultCard').style.display = 'none';
-        }
-
-        function showPalaceDetail(name, star) {
-            alert(`${name}: ${star}`);
         }
 
         // ===== 摇卦功能 =====
