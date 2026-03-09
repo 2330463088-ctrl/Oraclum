@@ -3414,34 +3414,6 @@
                 shichenIdx, hourZhi, isLateZi, shichenName,
                 dayGan, dayZhi, hourGan, hourZhi
             });
-            // 阳遁：冬至后到芒种前（含惊蛰、春分等）
-            // 阴遁：夏至后到大雪前
-            const yangDun = isYangDun(month, day);
-            
-            // 计算局数
-            const juNum = calculateJuNumber(dayGan, dayZhi, yangDun, shichenIdx);
-            
-            // 地盘布局
-            const dipan = buildDipan(juNum, yangDun);
-            
-            // 天盘布局
-            const tianpan = buildTianpan(dipan, hourGan);
-            
-            // 八门布局
-            const bamen = buildBamen(dayGan, hourZhi, yangDun, juNum);
-            
-            // 九星布局
-            const jiuxing = buildJiuxing(hourGan, hourZhi);
-            
-            // 八神布局
-            const bashen = buildBashen(hourGan, yangDun);
-            
-            // 判断格局
-            const geju = analyzeGeju(tianpan, dipan, bamen, jiuxing, bashen);
-            
-            // 日干时干落宫
-            const riGanLuogong = findLuogong(dayGan, tianpan, dipan);
-            const shiGanLuogong = findLuogong(hourGan, tianpan, dipan);
             
             // 判断节气和阴阳遁
             const jieqi = getJieqi(month, day);
