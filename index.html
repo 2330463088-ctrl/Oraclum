@@ -370,15 +370,16 @@
             letter-spacing: 0.05em;
         }
 
-        /* 八方位置 - 后天八卦（现代地图方向：上北下南） */
-        .compass-sector.north { top: 0; left: 50%; transform: translateX(-50%); }
-        .compass-sector.south { bottom: 0; left: 50%; transform: translateX(-50%); }
-        .compass-sector.east { right: 0; top: 50%; transform: translateY(-50%); }
-        .compass-sector.west { left: 0; top: 50%; transform: translateY(-50%); }
-        .compass-sector.northeast { top: 24px; right: 24px; }
-        .compass-sector.northwest { top: 24px; left: 24px; }
-        .compass-sector.southeast { bottom: 24px; right: 24px; }
-        .compass-sector.southwest { bottom: 24px; left: 24px; }
+        /* 八方位置 - 后天八卦（传统布局：上南下北，左东右西） */
+        /* 按照图片：上离、下坎、左震、右兑、左上巽、左下艮、右上坤、右下乾 */
+        .compass-sector.south { top: 0; left: 50%; transform: translateX(-50%); }      /* 离卦-南-上 */
+        .compass-sector.north { bottom: 0; left: 50%; transform: translateX(-50%); }   /* 坎卦-北-下 */
+        .compass-sector.east { left: 0; top: 50%; transform: translateY(-50%); }       /* 震卦-东-左 */
+        .compass-sector.west { right: 0; top: 50%; transform: translateY(-50%); }      /* 兑卦-西-右 */
+        .compass-sector.southeast { top: 24px; left: 24px; }    /* 巽卦-东南-左上 */
+        .compass-sector.northeast { bottom: 24px; left: 24px; } /* 艮卦-东北-左下 */
+        .compass-sector.southwest { top: 24px; right: 24px; }   /* 坤卦-西南-右上 */
+        .compass-sector.northwest { bottom: 24px; right: 24px; }/* 乾卦-西北-右下 */
 
         .compass-result {
             text-align: center;
@@ -894,6 +895,7 @@
             color: var(--color-text-mid);
         }
 
+        /* ===== 五术卡片 ===== */
         .wushu-card {
             display: flex;
             align-items: center;
@@ -904,11 +906,17 @@
             border: 1px solid var(--color-divider);
             border-radius: var(--radius-card);
             background: var(--color-bg);
+            margin-bottom: 16px;
         }
 
         .wushu-card:hover {
             border-color: var(--color-primary);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .wushu-card:active {
+            transform: translateY(0);
         }
 
         .wushu-icon {
@@ -920,11 +928,21 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            transition: all var(--transition-normal);
+        }
+
+        .wushu-card:hover .wushu-icon {
+            background: var(--color-primary);
+        }
+
+        .wushu-card:hover .wushu-icon i {
+            color: white;
         }
 
         .wushu-icon i {
             font-size: 22px;
             color: var(--color-primary);
+            transition: color var(--transition-fast);
         }
 
         .wushu-content {
@@ -959,6 +977,7 @@
 
         .wushu-card:hover .wushu-arrow {
             transform: translateX(4px);
+            color: var(--color-primary);
         }
 
         /* ===== 五术详情页 ===== */
@@ -1938,7 +1957,7 @@
 
             <main class="main-content">
                 <!-- 山·修身 -->
-                <div class="card wushu-card" onclick="openWushuDetail('mountain')">
+                <div class="wushu-card" onclick="openWushuDetail('mountain')">
                     <div class="wushu-icon">
                         <i class="fa-regular fa-mountain"></i>
                     </div>
@@ -1951,7 +1970,7 @@
                 </div>
 
                 <!-- 医·养生 -->
-                <div class="card wushu-card" onclick="openWushuDetail('medicine')">
+                <div class="wushu-card" onclick="openWushuDetail('medicine')">
                     <div class="wushu-icon">
                         <i class="fa-regular fa-leaf"></i>
                     </div>
@@ -1964,7 +1983,7 @@
                 </div>
 
                 <!-- 命·命盘 -->
-                <div class="card wushu-card" onclick="openWushuDetail('fate')">
+                <div class="wushu-card" onclick="openWushuDetail('fate')">
                     <div class="wushu-icon">
                         <i class="fa-regular fa-star"></i>
                     </div>
@@ -1977,7 +1996,7 @@
                 </div>
 
                 <!-- 相·相宅 -->
-                <div class="card wushu-card" onclick="openWushuDetail('physiognomy')">
+                <div class="wushu-card" onclick="openWushuDetail('physiognomy')">
                     <div class="wushu-icon">
                         <i class="fa-regular fa-eye"></i>
                     </div>
@@ -1990,7 +2009,7 @@
                 </div>
 
                 <!-- 卜·占卜 -->
-                <div class="card wushu-card" onclick="openWushuDetail('divination')">
+                <div class="wushu-card" onclick="openWushuDetail('divination')">
                     <div class="wushu-icon">
                         <i class="fa-regular fa-coins"></i>
                     </div>
