@@ -978,6 +978,164 @@
         .palace[data-palace="fude"] { top: 50%; right: 0; transform: translateY(-50%); }
         .palace[data-palace="fumu"] { top: 50%; left: 0; transform: translateY(-50%); }
 
+        /* ===== 命盘输入样式 ===== */
+        .chart-input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .chart-select {
+            flex: 1;
+            padding: 14px 12px;
+            border-radius: var(--radius-small);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: white;
+            font: 400 15px/1 var(--font-stack);
+            color: var(--color-text);
+            outline: none;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+
+        .chart-select:focus {
+            border-color: var(--color-primary);
+        }
+
+        .chart-input-field {
+            flex: 1;
+            padding: 14px 12px;
+            border-radius: var(--radius-small);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: white;
+            font: 400 15px/1 var(--font-stack);
+            color: var(--color-text);
+            outline: none;
+        }
+
+        .chart-input-field:focus {
+            border-color: var(--color-primary);
+        }
+
+        /* ===== 圆形紫微命盘 ===== */
+        .ziwei-chart-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+        }
+
+        .ziwei-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--color-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .ziwei-center-en {
+            font: 400 10px/1 var(--font-stack);
+            opacity: 0.8;
+        }
+
+        .ziwei-center-cn {
+            font: 600 13px/1 var(--font-stack);
+            margin-top: 2px;
+        }
+
+        .ziwei-palace {
+            position: absolute;
+            width: 68px;
+            height: 68px;
+            background: var(--color-card);
+            border-radius: var(--radius-small);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .ziwei-palace:hover {
+            background: white;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .ziwei-palace-name {
+            font: 500 10px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .ziwei-palace-star {
+            font: 600 11px/1.2 var(--font-stack);
+            color: var(--color-text);
+            margin-top: 2px;
+            text-align: center;
+        }
+
+        /* 十二宫位置 - 按照设计稿布局 */
+        .ziwei-palace[data-palace="life"] { top: 110px; right: 15px; }
+        .ziwei-palace[data-palace="parents"] { top: 45px; right: 50px; }
+        .ziwei-palace[data-palace="siblings"] { top: 45px; right: 120px; }
+        .ziwei-palace[data-palace="spouse"] { top: 15px; left: 50%; transform: translateX(-50%); }
+        .ziwei-palace[data-palace="children"] { top: 45px; left: 50px; }
+        .ziwei-palace[data-palace="wealth"] { top: 45px; left: 120px; }
+        .ziwei-palace[data-palace="health"] { top: 110px; left: 15px; }
+        .ziwei-palace[data-palace="travel"] { bottom: 110px; left: 15px; }
+        .ziwei-palace[data-palace="servants"] { bottom: 45px; left: 50px; }
+        .ziwei-palace[data-palace="career"] { bottom: 15px; left: 50%; transform: translateX(-50%); }
+        .ziwei-palace[data-palace="property"] { bottom: 45px; right: 50px; }
+        .ziwei-palace[data-palace="fortune"] { bottom: 45px; right: 120px; }
+
+        /* ===== 本周推荐卡片 ===== */
+        .weekly-recipe-cards {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .weekly-recipe-card {
+            flex: 1;
+            padding: 16px 12px;
+            background: white;
+            border-radius: var(--radius-small);
+            text-align: center;
+        }
+
+        .weekly-recipe-day {
+            font: 400 12px/1 var(--font-stack);
+            color: var(--color-text-light);
+            margin-bottom: 8px;
+        }
+
+        .weekly-recipe-name {
+            font: 500 14px/1.3 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .weekly-recipe-effect {
+            font: 400 12px/1.3 var(--font-stack);
+            color: var(--color-primary);
+            margin-top: 4px;
+        }
+
+
         .chart-input {
             display: flex;
             flex-wrap: wrap;
@@ -1230,6 +1388,37 @@
             font: 400 11px/1 var(--font-stack);
             color: var(--color-primary);
             margin-top: 8px;
+        }
+
+        /* ===== 本周食谱卡片 ===== */
+        .weekly-recipe-cards {
+            display: flex;
+            gap: 12px;
+        }
+
+        .weekly-recipe-card {
+            flex: 1;
+            padding: 16px;
+            background: var(--color-card);
+            border-radius: var(--radius-card);
+            text-align: center;
+        }
+
+        .weekly-recipe-day {
+            font: 500 11px/1 var(--font-stack);
+            color: var(--color-text-light);
+            margin-bottom: 8px;
+        }
+
+        .weekly-recipe-name {
+            font: 500 14px/1.3 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .weekly-recipe-effect {
+            font: 400 12px/1.4 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-top: 4px;
         }
 
         /* ===== 免责声明 ===== */
@@ -1894,37 +2083,39 @@
             <div class="wushu-detail-title" data-i18n="wushu_medicine">医·养生</div>
         </header>
         <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;" data-i18n="medicine_intro">
-                医术，以中医为基础，涵盖食疗、经络、养生等，追求阴阳平衡、健康长寿。
+            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
+                医术，中医之道，涵盖草药、针灸、推拿等，强调阴阳调和、顺应天时。
             </p>
 
             <!-- 今日养生 -->
             <div class="card">
-                <div class="card-header">
-                    <div class="card-title" data-i18n="today_wellness">今日养生 · 惊蛰宜养肝</div>
-                </div>
+                <div style="font: 400 12px/1 var(--font-stack); color: var(--color-text-light); margin-bottom: 8px;">惊蛰时节</div>
+                <div class="card-title" style="margin-bottom: 12px;">今日养生·惊蛰宜养肝</div>
                 <p style="font: 500 16px/1.4 var(--font-stack); color: var(--color-text);">雪梨银耳羹</p>
-                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
-                    滋阴润肺，适合春季养生。雪梨清热化痰，银耳滋阴润燥。
+                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 6px;">
+                    清热润肺，滋阴养颜。
                 </p>
-                <button class="btn btn-outline" style="margin-top: 16px;" onclick="alert('雪梨银耳羹做法：\n1. 银耳提前泡发2小时\n2. 雪梨切块\n3. 加入冰糖、枸杞\n4. 隔水炖1小时')" data-i18n="view_recipe">查看做法</button>
+                <button class="btn btn-primary" style="margin-top: 16px;" onclick="alert('雪梨银耳羹做法：\n\n1. 银耳提前泡发2小时，撕成小朵\n2. 雪梨去皮切块\n3. 将银耳、雪梨放入炖盅\n4. 加入冰糖、枸杞\n5. 隔水炖1小时即可\n\n功效：滋阴润肺，适合春季养肝')" data-i18n="view_recipe">查看做法</button>
             </div>
 
             <!-- 本周推荐 -->
             <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="weekly_recipes">本周推荐食谱</div>
-                <div class="scroll-container">
-                    <div class="scroll-card">
-                        <div class="scroll-card-title">山药排骨汤</div>
-                        <div class="scroll-card-desc">健脾益胃</div>
+                <div class="card-title" style="margin-bottom: 16px;">本周推荐</div>
+                <div class="weekly-recipe-cards">
+                    <div class="weekly-recipe-card">
+                        <div class="weekly-recipe-day">周一</div>
+                        <div class="weekly-recipe-name">山药排骨汤</div>
+                        <div class="weekly-recipe-effect">健脾养胃</div>
                     </div>
-                    <div class="scroll-card">
-                        <div class="scroll-card-title">百合炒西芹</div>
-                        <div class="scroll-card-desc">清心安神</div>
+                    <div class="weekly-recipe-card">
+                        <div class="weekly-recipe-day">周二</div>
+                        <div class="weekly-recipe-name">百合炒西芹</div>
+                        <div class="weekly-recipe-effect">清心安神</div>
                     </div>
-                    <div class="scroll-card">
-                        <div class="scroll-card-title">枸杞菊花茶</div>
-                        <div class="scroll-card-desc">明目养肝</div>
+                    <div class="weekly-recipe-card">
+                        <div class="weekly-recipe-day">周三</div>
+                        <div class="weekly-recipe-name">枸杞菊花茶</div>
+                        <div class="weekly-recipe-effect">滋补肝肾</div>
                     </div>
                 </div>
             </div>
@@ -1932,8 +2123,10 @@
             <!-- 体质测试 -->
             <div class="card">
                 <div class="card-title" data-i18n="body_quiz">体质测试</div>
-                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 4px;" data-i18n="quiz_desc">8道题测出体质</p>
-                <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" id="startQuizBtn" onclick="startQuiz()" data-i18n="start_quiz">开始测试</button>
+                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
+                    5道题测出你的中医体质类型，获取专属养生建议。
+                </p>
+                <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" id="startQuizBtn" onclick="startQuiz()" data-i18n="start_quiz">开始测试</button>
                 
                 <div class="quiz-container" id="quizContainer">
                     <div class="quiz-question" id="quizQuestion"></div>
@@ -1941,19 +2134,6 @@
                         <button class="quiz-option" onclick="answerQuiz(true)" data-i18n="yes">是</button>
                         <button class="quiz-option" onclick="answerQuiz(false)" data-i18n="no">不是</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- 命盘联动建议 -->
-            <div class="card">
-                <div class="card-title" data-i18n="chart_based">基于您的命盘推荐</div>
-                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
-                    <span data-i18n="chart_advice">根据您的五行分析（木旺土弱），推荐补脾食谱：</span>
-                </p>
-                <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
-                    <span class="tag">山药小米粥</span>
-                    <span class="tag">南瓜羹</span>
-                    <span class="tag">红枣桂圆汤</span>
                 </div>
             </div>
         </div>
@@ -1968,70 +2148,72 @@
             <div class="wushu-detail-title" data-i18n="wushu_fate">命·命盘</div>
         </header>
         <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;" data-i18n="fate_intro">
-                紫微斗数，通过出生时间推演人生运势，揭示性格特质与人生方向。
+            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
+                <span data-i18n="fate_intro">根据您的出生信息生成真实命盘</span>
             </p>
 
             <!-- 排盘输入 -->
-            <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="enter_birth">输入出生信息</div>
-                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
-                    <button class="btn btn-small btn-outline" id="calendarSolar" onclick="setCalendar('solar')" data-i18n="solar">阳历</button>
-                    <button class="btn btn-small" id="calendarLunar" onclick="setCalendar('lunar')" style="background: var(--color-card); color: var(--color-text);" data-i18n="lunar">农历</button>
+            <div class="card" id="chartInputCard">
+                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                    <button class="btn btn-small btn-outline" id="calendarSolar" onclick="setCalendar('solar')" style="flex: 1;" data-i18n="solar">阳历</button>
+                    <button class="btn btn-small" id="calendarLunar" onclick="setCalendar('lunar')" style="flex: 1; background: var(--color-card); color: var(--color-text);" data-i18n="lunar">农历</button>
                 </div>
-                <div class="chart-input">
-                    <select id="birthYear">
+                
+                <div class="chart-input-row">
+                    <select id="birthYear" class="chart-select">
                         <!-- 年份由JS生成 -->
                     </select>
-                    <select id="birthMonth">
+                    <select id="birthMonth" class="chart-select">
                         <!-- 月份由JS生成 -->
                     </select>
-                    <select id="birthDay">
+                    <select id="birthDay" class="chart-select">
                         <!-- 日期由JS生成 -->
                     </select>
-                    <select id="birthHour">
-                        <option value="0">子时 (23-01)</option>
-                        <option value="1">丑时 (01-03)</option>
-                        <option value="2">寅时 (03-05)</option>
-                        <option value="3">卯时 (05-07)</option>
-                        <option value="4">辰时 (07-09)</option>
-                        <option value="5">巳时 (09-11)</option>
-                        <option value="6">午时 (11-13)</option>
-                        <option value="7">未时 (13-15)</option>
-                        <option value="8">申时 (15-17)</option>
-                        <option value="9">酉时 (17-19)</option>
-                        <option value="10">戌时 (19-21)</option>
-                        <option value="11">亥时 (21-23)</option>
+                </div>
+                
+                <div class="chart-input-row">
+                    <select id="birthHour" class="chart-select">
+                        <!-- 小时由JS生成 -->
+                    </select>
+                    <select id="birthMinute" class="chart-select">
+                        <!-- 分钟由JS生成 -->
                     </select>
                 </div>
-                <div class="chart-input">
-                    <input type="text" id="birthCity" placeholder="出生城市" style="flex: 1;">
-                    <select id="birthGender">
+                
+                <div class="chart-input-row">
+                    <input type="text" id="birthCity" class="chart-input-field" placeholder="出生城市" value="北京">
+                    <select id="birthGender" class="chart-select">
                         <option value="male" data-i18n="male">男</option>
                         <option value="female" data-i18n="female">女</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" onclick="calculateChart()" data-i18n="start_chart">开始排盘</button>
+                
+                <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" onclick="calculateChart()">
+                    <i class="fa-solid fa-play" style="margin-right: 8px;"></i>
+                    <span data-i18n="start_chart">开始排盘</span>
+                </button>
             </div>
 
             <!-- 命盘结果 -->
             <div class="card" id="chartResultCard" style="display: none;">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="ziwei_chart">紫微斗数命盘</div>
-                <div class="chart-container" id="chartContainer">
-                    <div class="chart-center">
-                        <div class="chart-center-label" data-i18n="center">中天</div>
-                        <div class="chart-center-value" id="chartCenterValue">紫微</div>
-                    </div>
-                    <!-- 十二宫由JS生成 -->
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div id="chartMainStar" style="font: 600 22px/1.3 var(--font-stack); color: var(--color-text);">天同、巨门坐命</div>
+                    <div id="chartMainStarEn" style="font: 400 14px/1.4 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">天同、巨门 in Life Palace</div>
+                    <div id="chartBirthDate" style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 12px;">公历 2007-9-4 · 农历 二〇〇七年七月廿三</div>
                 </div>
                 
-                <!-- 五行分析 -->
-                <div style="margin-top: 20px; padding: 16px; background: white; border-radius: var(--radius-small);">
-                    <div style="font: 500 15px/1 var(--font-stack); color: var(--color-text);" data-i18n="five_elements">五行分析</div>
-                    <div id="fiveElementsResult" style="margin-top: 12px; font: 400 14px/1.6 var(--font-stack); color: var(--color-text-mid);">
-                        水旺火弱，宜补火制水，多穿红色、紫色衣物，居所宜南向。
-                    </div>
+                <div class="ziwei-chart-container" id="ziweiChartContainer">
+                    <!-- 圆形命盘由JS生成 -->
                 </div>
+                
+                <div style="text-align: center; font: var(--font-hint); color: var(--color-text-light); margin-top: 16px;">
+                    Click any palace to see details · 点击宫位查看详情
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" onclick="showChartInput()">
+                    <i class="fa-solid fa-play" style="margin-right: 8px;"></i>
+                    <span>重新排盘</span>
+                </button>
             </div>
         </div>
     </div>
@@ -2519,14 +2701,11 @@
 
         // ===== 体质测试问题 =====
         const quizQuestions = [
-            '您是否容易疲劳？',
-            '您是否容易失眠？',
-            '您是否食欲不振？',
-            '您是否容易感冒？',
-            '您是否经常口干？',
-            '您是否容易出汗？',
-            '您是否大便正常？',
-            '您是否情绪稳定？'
+            '您是否容易疲劳、气短？',
+            '您是否怕冷、手脚冰凉？',
+            '您是否容易失眠多梦？',
+            '您是否食欲不振、消化不良？',
+            '您是否容易出汗、怕热？'
         ];
 
         // ===== 全局状态 =====
@@ -2974,19 +3153,25 @@
 
         function finishQuiz() {
             const yesCount = quizAnswers.filter(a => a).length;
-            let constitution = currentLang === 'zh' ? '平和质' : 'Balanced';
+            let constitution, advice;
             
-            if (yesCount >= 6) {
+            if (yesCount >= 4) {
                 constitution = currentLang === 'zh' ? '气虚质' : 'Qi Deficient';
-            } else if (yesCount >= 4) {
+                advice = currentLang === 'zh' ? '建议多食用补气食物，如黄芪、人参、红枣。' : 'Suggestion: Eat more qi-tonifying foods like astragalus, ginseng, and red dates.';
+            } else if (yesCount >= 3) {
                 constitution = currentLang === 'zh' ? '湿热质' : 'Damp-Heat';
-            } else if (yesCount >= 2) {
+                advice = currentLang === 'zh' ? '建议清热利湿，多食绿豆、冬瓜、薏米。' : 'Suggestion: Clear heat and dampness with mung beans, winter melon, and coix seed.';
+            } else if (yesCount >= 1) {
                 constitution = currentLang === 'zh' ? '阳虚质' : 'Yang Deficient';
+                advice = currentLang === 'zh' ? '建议温补阳气，多食桂圆、羊肉、生姜。' : 'Suggestion: Warm and tonify yang with longan, lamb, and ginger.';
+            } else {
+                constitution = currentLang === 'zh' ? '平和质' : 'Balanced';
+                advice = currentLang === 'zh' ? '恭喜您！体质平和，继续保持均衡饮食。' : 'Congratulations! Your constitution is balanced. Keep maintaining a balanced diet.';
             }
             
             alert(currentLang === 'zh' 
-                ? `测试完成！您的体质类型：${constitution}\n\n建议：多食用健脾食物，如山药、小米、南瓜。` 
-                : `Quiz complete! Your constitution: ${constitution}\n\nSuggestion: Eat more spleen-nourishing foods like yam, millet, and pumpkin.`);
+                ? `测试完成！\n\n您的体质类型：${constitution}\n\n${advice}` 
+                : `Quiz complete!\n\nYour constitution: ${constitution}\n\n${advice}`);
             
             document.getElementById('startQuizBtn').style.display = 'block';
             document.getElementById('quizContainer').classList.remove('active');
