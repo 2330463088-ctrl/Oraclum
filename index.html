@@ -3414,12 +3414,6 @@
             const city = document.getElementById('birthCity').value || '北京';
             const gender = document.getElementById('birthGender').value;
             
-            const shichenNames = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-            const shichenIdx = Math.floor((hour + 1) / 2) % 12;
-            const shichenName = shichenNames[shichenIdx];
-            
-            const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-            
             document.getElementById('chartInputCard').style.display = 'none';
             document.getElementById('chartResultCard').style.display = 'block';
             
@@ -3428,268 +3422,505 @@
             document.getElementById('chartMainStarEn').textContent = 'Calculating...';
             document.getElementById('chartWheel').innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:var(--color-text-light);"><div class="loading"></div></div>';
             
+            // 使用本地算法计算命盘
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: 'deepseek-chat',
-                        messages: [{
-                            role: 'user',
-                            content: `请根据以下信息计算紫微斗数命盘，返回严格JSON格式：
-出生：${year}年${month}月${day}日 ${timeStr} (${shichenName}时)
-城市：${city}
-性别：${gender}
-
-返回格式（宫位按固定顺序）：
-{
-    "mainStar": "命宫主星（如：天同巨门）",
-    "palaces": [
-        {"key": "parents", "name": "Parents", "nameCn": "父母", "star": "主星名", "isEmpty": false},
-        {"key": "life", "name": "Life", "nameCn": "命宫", "star": "主星名", "isEmpty": false},
-        {"key": "siblings", "name": "Siblings", "nameCn": "兄弟", "star": "主星名", "isEmpty": false},
-        {"key": "fortune", "name": "Fortune", "nameCn": "福德", "star": "主星名", "isEmpty": false},
-        {"key": "spouse", "name": "Spouse", "nameCn": "夫妻", "star": "主星名", "isEmpty": false},
-        {"key": "property", "name": "Property", "nameCn": "田宅", "star": "主星名", "isEmpty": false},
-        {"key": "children", "name": "Children", "nameCn": "子女", "star": "主星名", "isEmpty": false},
-        {"key": "career", "name": "Career", "nameCn": "官禄", "star": "主星名", "isEmpty": false},
-        {"key": "wealth", "name": "Wealth", "nameCn": "财帛", "star": "", "isEmpty": true},
-        {"key": "servants", "name": "Servants", "nameCn": "交友", "star": "主星名", "isEmpty": false},
-        {"key": "health", "name": "Health", "nameCn": "疾厄", "star": "主星名", "isEmpty": false},
-        {"key": "travel", "name": "Travel", "nameCn": "迁移", "star": "", "isEmpty": true}
-    ]
-}
-
-注意：
-1. 星名用中文，不要缩写，如"武曲天相"而非"武相"
-2. 空宫isEmpty为true，star为空字符串
-3. 验证：2007年9月4日丑时，父母宫应为武曲天相，兄弟宫应为贪狼禄存`
-                        }]
-                    })
-                });
-                
-                const data = await response.json();
-                let chartResult;
-                
-                try {
-                    const content = data.choices[0].message.content;
-                    const jsonMatch = content.match(/\{[\s\S]*\}/);
-                    if (jsonMatch) {
-                        chartResult = JSON.parse(jsonMatch[0]);
-                    } else {
-                        throw new Error('No JSON found');
-                    }
-                } catch (e) {
-                    chartResult = getDemoChart();
-                }
-                
-                renderChart(chartResult, year, month, day, timeStr);
-                
+                const chartResult = calculateZiweiChart(year, month, day, hour, gender);
+                renderChart(chartResult, year, month, day);
             } catch (error) {
-                renderChart(getDemoChart(), year, month, day, timeStr);
+                console.error('排盘错误:', error);
+                document.getElementById('chartMainStar').textContent = '排盘出错';
+                document.getElementById('chartMainStarEn').textContent = 'Calculation Error';
             }
         }
 
         // ===== 紫微斗数排盘核心算法 =====
         
-        // 十四主星
-        const MAJOR_STARS = ['紫微', '天机', '太阳', '武曲', '天同', '廉贞', '天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '破军'];
-        
+        // 天干
+        const TIANGAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
         // 地支
         const DIZHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-        
-        // 宫位名称（逆时针顺序：命宫开始）
+        // 宫位名称
         const PALACE_NAMES = ['命宫', '兄弟', '夫妻', '子女', '财帛', '疾厄', '迁移', '仆役', '官禄', '田宅', '福德', '父母'];
         const PALACE_NAMES_EN = ['Life', 'Siblings', 'Spouse', 'Children', 'Wealth', 'Health', 'Travel', 'Servants', 'Career', 'Property', 'Fortune', 'Parents'];
+        // 五行局对应数字
+        const WUXING_JU_NUM = { '水二局': 2, '木三局': 3, '金四局': 4, '土五局': 5, '火六局': 6 };
         
-        // 五行局
-        const FIVE_ELEMENTS = ['水二局', '木三局', '金四局', '土五局', '火六局'];
+        // 农历数据（1900-2100年）
+        // 每个数据包含：农历年份总天数信息
+        const lunarInfo = [
+            0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
+            0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
+            0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
+            0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
+            0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
+            0x06ca0,0x0b550,0x15355,0x04da0,0x0a5b0,0x14573,0x052b0,0x0a9a8,0x0e950,0x06aa0,
+            0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
+            0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b6a0,0x195a6,
+            0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
+            0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x05ac0,0x0ab60,0x096d5,0x092e0,
+            0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
+            0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
+            0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
+            0x05aa0,0x076a3,0x096d0,0x04afb,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
+            0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0,
+            0x14b63,0x09370,0x049f8,0x04970,0x064b0,0x168a6,0x0ea50,0x06b20,0x1a6c4,0x0aae0,
+            0x0a2e0,0x0d2e3,0x0c960,0x0d557,0x0d4a0,0x0da50,0x05d55,0x056a0,0x0a6d0,0x055d4,
+            0x052d0,0x0a9b8,0x0a950,0x0b4a0,0x0b6a6,0x0ad50,0x055a0,0x0aba4,0x0a5b0,0x052b0,
+            0x0b273,0x06930,0x07337,0x06aa0,0x0ad50,0x14b55,0x04b60,0x0a570,0x054e4,0x0d160,
+            0x0e968,0x0d520,0x0daa0,0x16aa6,0x056d0,0x04ae0,0x0a9d4,0x0a2d0,0x0d150,0x0f252,
+            0x0d520
+        ];
+        
+        // 获取农历年的总天数
+        function lYearDays(y) {
+            let sum = 348;
+            for (let i = 0x8000; i > 0x8; i >>= 1) {
+                sum += (lunarInfo[y - 1900] & i) ? 1 : 0;
+            }
+            return sum + leapDays(y);
+        }
+        
+        // 获取闰月天数
+        function leapDays(y) {
+            if (leapMonth(y)) {
+                return (lunarInfo[y - 1900] & 0x10000) ? 30 : 29;
+            }
+            return 0;
+        }
+        
+        // 获取闰月月份
+        function leapMonth(y) {
+            return lunarInfo[y - 1900] & 0xf;
+        }
+        
+        // 获取农历月天数
+        function monthDays(y, m) {
+            return (lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29;
+        }
         
         /**
-         * 紫微斗数排盘算法
-         * @param {number} year - 出生年
-         * @param {number} month - 出生月
-         * @param {number} day - 出生日
-         * @param {number} hour - 出生时辰（0-23）
-         * @param {string} gender - 性别
+         * 阳历转农历
          */
-        function calculateZiweiChart(year, month, day, hour, gender) {
-            // 计算农历（简化版，实际需要使用农历转换库）
-            const lunarInfo = solarToLunar(year, month, day);
+        function solarToLunar(year, month, day) {
+            // 基准日期：1900年1月31日（农历1900年正月初一）
+            const baseDate = new Date(1900, 0, 31);
+            const targetDate = new Date(year, month - 1, day);
+            let offset = Math.floor((targetDate - baseDate) / 86400000);
             
-            // 计算时辰地支
-            const shichenIdx = Math.floor((hour + 1) / 2) % 12;
-            const shichenDizhi = DIZHI[shichenIdx];
+            // 计算农历年
+            let lunarYear = 1900;
+            let temp = 0;
+            for (lunarYear = 1900; lunarYear < 2101 && offset > 0; lunarYear++) {
+                temp = lYearDays(lunarYear);
+                offset -= temp;
+            }
+            if (offset < 0) {
+                offset += temp;
+                lunarYear--;
+            }
             
-            // 定命宫位置
-            // 命宫公式：从寅起月，顺行到月，再逆行到时
-            let mingGongIdx = (month - 1 + shichenIdx) % 12; // 简化计算
+            // 计算农历月
+            let leap = leapMonth(lunarYear);
+            let isLeap = false;
+            let lunarMonth = 1;
+            temp = 0;
             
-            // 计算五行局
-            const wuxingJu = calculateWuxingJu(year, gender, mingGongIdx);
+            for (lunarMonth = 1; lunarMonth < 13 && offset > 0; lunarMonth++) {
+                if (leap > 0 && lunarMonth === (leap + 1) && !isLeap) {
+                    --lunarMonth;
+                    isLeap = true;
+                    temp = leapDays(lunarYear);
+                } else {
+                    temp = monthDays(lunarYear, lunarMonth);
+                }
+                
+                if (isLeap && lunarMonth === (leap + 1)) {
+                    isLeap = false;
+                }
+                
+                offset -= temp;
+            }
             
-            // 安十四主星
-            const palaces = placeMainStars(year, month, day, hour, mingGongIdx, wuxingJu);
+            if (offset === 0 && leap > 0 && lunarMonth === leap + 1) {
+                if (isLeap) {
+                    isLeap = false;
+                } else {
+                    isLeap = true;
+                    --lunarMonth;
+                }
+            }
+            
+            if (offset < 0) {
+                offset += temp;
+                --lunarMonth;
+            }
+            
+            const lunarDay = offset + 1;
+            
+            // 获取年干支
+            const ganIdx = (lunarYear - 4) % 10;
+            const zhiIdx = (lunarYear - 4) % 12;
             
             return {
-                mingGongIdx,
-                shichenDizhi,
-                wuxingJu,
-                palaces,
-                lunarInfo
+                year: lunarYear,
+                month: lunarMonth,
+                day: lunarDay,
+                yearGan: TIANGAN[ganIdx],
+                yearZhi: DIZHI[zhiIdx],
+                yearGanZhi: TIANGAN[ganIdx] + DIZHI[zhiIdx],
+                isLeap: isLeap
             };
         }
         
         /**
-         * 安置十四主星
+         * 紫微斗数完整排盘算法
          */
-        function placeMainStars(year, month, day, hour, mingGongIdx, wuxingJu) {
-            const palaces = [];
+        function calculateZiweiChart(year, month, day, hour, gender) {
+            // 阳历转农历
+            const lunar = solarToLunar(year, month, day);
             
-            // 初始化12宫
+            // 使用农历年干支
+            const yearGan = lunar.yearGan;
+            const yearZhi = lunar.yearZhi;
+            
+            // 计算时辰地支索引（子时=0, 丑时=1, ...）
+            const shichenIdx = Math.floor((hour + 1) / 2) % 12;
+            const shichenName = DIZHI[shichenIdx];
+            
+            // 1. 定命宫位置（使用农历月份）
+            // 从寅宫（索引2）起正月，顺数到生月，再逆数到生时
+            const mingGongIdx = calculateMingGong(lunar.month, shichenIdx);
+            
+            // 2. 定身宫位置
+            const shenGongIdx = calculateShenGong(lunar.month, shichenIdx);
+            
+            // 3. 定五行局
+            const wuxingJu = calculateWuxingJu(mingGongIdx, yearGan);
+            
+            // 4. 初始化十二宫
+            const palaces = initPalaces(mingGongIdx);
+            
+            // 5. 安紫微星（使用农历日期）
+            const ziweiIdx = calculateZiweiPosition(lunar.day, wuxingJu);
+            
+            // 6. 安天府星（与紫微相对）
+            const tianfuIdx = calculateTianfuPosition(ziweiIdx);
+            
+            // 7. 安十四主星
+            placeAllMainStars(palaces, ziweiIdx, tianfuIdx);
+            
+            // 8. 安辅星（禄存、擎羊、陀罗等）
+            placeMinorStars(palaces, yearGan, shichenIdx);
+            
+            // 9. 格式化输出
+            const formattedPalaces = formatPalaces(palaces, mingGongIdx);
+            
+            // 获取命宫主星
+            const mingGongStars = palaces[mingGongIdx].stars;
+            
+            // 农历日期字符串
+            const dayNames = ['日', '初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
+                '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+                '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'];
+            const lunarDayName = dayNames[lunar.day] || lunar.day;
+            const lunarMonthName = lunar.isLeap ? '闰' + lunar.month + '月' : lunar.month + '月';
+            
+            return {
+                mainStar: mingGongStars.length > 0 ? mingGongStars.join(' ') : '空宫',
+                yearGanZhi: yearGan + yearZhi,
+                lunarDate: lunar.yearGanZhi + '年' + lunarMonthName + lunarDayName,
+                shichen: shichenName + '时',
+                wuxingJu: wuxingJu,
+                palaces: formattedPalaces,
+                mingGongIdx: mingGongIdx
+            };
+        }
+        
+        /**
+         * 获取年干支
+         */
+        function getYearGanZhi(year) {
+            // 年干：年份-4 除以10的余数
+            const ganIdx = (year - 4) % 10;
+            // 年支：年份-4 除以12的余数
+            const zhiIdx = (year - 4) % 12;
+            return {
+                gan: TIANGAN[ganIdx],
+                zhi: DIZHI[zhiIdx],
+                ganIdx: ganIdx,
+                zhiIdx: zhiIdx
+            };
+        }
+        
+        /**
+         * 定命宫：从寅起月，顺数到生月，再逆数到生时
+         */
+        function calculateMingGong(month, shichenIdx) {
+            // 寅宫索引为2
+            const yinIdx = 2;
+            // 从寅宫顺数到生月
+            let pos = (yinIdx + month - 1) % 12;
+            // 从该位置逆数到生时
+            pos = (pos - shichenIdx + 12) % 12;
+            return pos;
+        }
+        
+        /**
+         * 定身宫：从寅起月，顺数到生月，再顺数到生时
+         */
+        function calculateShenGong(month, shichenIdx) {
+            const yinIdx = 2;
+            let pos = (yinIdx + month - 1 + shichenIdx) % 12;
+            return pos;
+        }
+        
+        /**
+         * 定五行局：根据命宫天干和地支的纳音
+         */
+        function calculateWuxingJu(mingGongIdx, yearGan) {
+            // 命宫地支
+            const mingZhi = DIZHI[mingGongIdx];
+            
+            // 五虎遁：根据年干推命宫天干
+            // 甲己之年丙作首，乙庚之年戊为头
+            // 丙辛之岁寻庚上，丁壬壬寅顺水流
+            // 戊癸之年甲寅求
+            const yinGanTable = {
+                0: 2,  // 甲年 → 寅宫从丙开始
+                5: 2,  // 己年 → 寅宫从丙开始
+                1: 4,  // 乙年 → 寅宫从戊开始
+                6: 4,  // 庚年 → 寅宫从戊开始
+                2: 6,  // 丙年 → 寅宫从庚开始
+                7: 6,  // 辛年 → 寅宫从庚开始
+                3: 8,  // 丁年 → 寅宫从壬开始
+                8: 8,  // 壬年 → 寅宫从壬开始
+                4: 0,  // 戊年 → 寅宫从甲开始
+                9: 0   // 癸年 → 寅宫从甲开始
+            };
+            
+            const ganIdx = TIANGAN.indexOf(yearGan);
+            const yinGanIdx = yinGanTable[ganIdx];
+            
+            // 命宫天干 = 寅宫天干 + (命宫地支 - 寅) 
+            // 寅=2, 命宫在mingGongIdx位置
+            const steps = (mingGongIdx - 2 + 12) % 12;
+            const mingGanIdx = (yinGanIdx + steps) % 10;
+            const mingGan = TIANGAN[mingGanIdx];
+            
+            // 六十甲子纳音五行局表（紫微斗数专用）
+            const nayin = {
+                // 甲子、乙丑 - 海中金
+                '甲子': '金四局', '乙丑': '金四局',
+                // 丙寅、丁卯 - 炉中火
+                '丙寅': '火六局', '丁卯': '火六局',
+                // 戊辰、己巳 - 大林木
+                '戊辰': '木三局', '己巳': '木三局',
+                // 庚午、辛未 - 路旁土
+                '庚午': '土五局', '辛未': '土五局',
+                // 壬申、癸酉 - 剑锋金
+                '壬申': '金四局', '癸酉': '金四局',
+                // 甲戌、乙亥 - 山头火
+                '甲戌': '火六局', '乙亥': '火六局',
+                // 丙子、丁丑 - 涧下水
+                '丙子': '水二局', '丁丑': '水二局',
+                // 戊寅、己卯 - 城头土
+                '戊寅': '土五局', '己卯': '土五局',
+                // 庚辰、辛巳 - 白蜡金
+                '庚辰': '金四局', '辛巳': '金四局',
+                // 壬午、癸未 - 杨柳木
+                '壬午': '木三局', '癸未': '木三局',
+                // 甲申、乙酉 - 泉中水
+                '甲申': '水二局', '乙酉': '水二局',
+                // 丙戌、丁亥 - 屋上土
+                '丙戌': '土五局', '丁亥': '土五局',
+                // 戊子、己丑 - 霹雳火
+                '戊子': '火六局', '己丑': '火六局',
+                // 庚寅、辛卯 - 松柏木
+                '庚寅': '木三局', '辛卯': '木三局',
+                // 壬辰、癸巳 - 长流水
+                '壬辰': '水二局', '癸巳': '水二局',
+                // 甲午、乙未 - 沙中金
+                '甲午': '金四局', '乙未': '金四局',
+                // 丙申、丁酉 - 山下火
+                '丙申': '火六局', '丁酉': '火六局',
+                // 戊戌、己亥 - 平地木
+                '戊戌': '木三局', '己亥': '木三局',
+                // 庚子、辛丑 - 壁上土
+                '庚子': '土五局', '辛丑': '土五局',
+                // 壬寅、癸卯 - 金箔金
+                '壬寅': '金四局', '癸卯': '金四局',
+                // 甲辰、乙巳 - 覆灯火
+                '甲辰': '火六局', '乙巳': '火六局',
+                // 丙午、丁未 - 天河水
+                '丙午': '水二局', '丁未': '水二局',
+                // 戊申、己酉 - 大驿土
+                '戊申': '土五局', '己酉': '土五局',
+                // 庚戌、辛亥 - 钗钏金
+                '庚戌': '金四局', '辛亥': '金四局',
+                // 壬子、癸丑 - 桑柘木
+                '壬子': '木三局', '癸丑': '木三局',
+                // 甲寅、乙卯 - 大溪水
+                '甲寅': '水二局', '乙卯': '水二局',
+                // 丙辰、丁巳 - 沙中土
+                '丙辰': '土五局', '丁巳': '土五局',
+                // 戊午、己未 - 天上火
+                '戊午': '火六局', '己未': '火六局',
+                // 庚申、辛酉 - 石榴木
+                '庚申': '木三局', '辛酉': '木三局',
+                // 壬戌、癸亥 - 大海水
+                '壬戌': '水二局', '癸亥': '水二局'
+            };
+            
+            return nayin[mingGan + mingZhi] || '木三局';
+        }
+        
+        /**
+         * 初始化十二宫（逆时针排列）
+         * 命宫 → 兄弟 → 夫妻 → 子女 → 财帛 → 疾厄 → 迁移 → 仆役 → 官禄 → 田宅 → 福德 → 父母
+         * 每个宫位在地支上是逆时针方向排列的
+         */
+        function initPalaces(mingGongIdx) {
+            const palaces = [];
             for (let i = 0; i < 12; i++) {
-                const palaceIdx = (mingGongIdx + i) % 12;
+                // 逆时针方向：命宫在mingGongIdx，兄弟在mingGongIdx-1，...
+                const gongIdx = (mingGongIdx - i + 12) % 12;
                 palaces.push({
-                    idx: palaceIdx,
-                    dizhi: DIZHI[palaceIdx],
+                    idx: gongIdx,
+                    dizhi: DIZHI[gongIdx],
                     name: PALACE_NAMES[i],
                     nameEn: PALACE_NAMES_EN[i],
                     stars: [],
-                    majorStars: [],
-                    minorStars: []
+                    isEmpty: true
                 });
             }
-            
-            // 紫微星定位（核心算法）
-            // 根据"五虎遁"和五行局计算紫微星位置
-            const ziweiIdx = calculateZiweiPosition(month, day, wuxingJu);
-            
-            // 安紫微系主星
-            placeZiweiStars(palaces, ziweiIdx, mingGongIdx);
-            
-            // 安天府系主星
-            placeTianfuStars(palaces, ziweiIdx);
-            
-            // 安辅星
-            placeMinorStars(palaces, year, hour, mingGongIdx);
-            
             return palaces;
         }
         
         /**
          * 计算紫微星位置
+         * 公式：根据五行局和农历生日
+         * 水二局：初一日紫微在丑，每两日进一位
+         * 木三局：初一日紫微在寅，每三日进一位
+         * 金四局：初一日紫微在亥，每四日进一位
+         * 土五局：初一日紫微在午，每五日进一位
+         * 火六局：初一日紫微在酉，每六日进一位
          */
-        function calculateZiweiPosition(month, day, wuxingJu) {
-            // 紫微星定位公式：生日 + 五行局数调整
-            // 这是一个简化算法，实际更复杂
-            const juNum = parseInt(wuxingJu.charAt(1)); // 局数
-            let pos = Math.floor((day + juNum) / 3) % 12;
-            return pos;
-        }
-        
-        /**
-         * 安紫微系主星（紫微、天机、太阳、武曲、天同、廉贞）
-         */
-        function placeZiweiStars(palaces, ziweiIdx, mingGongIdx) {
-            const ziweiStars = [
-                { name: '紫微', offset: 0 },
-                { name: '天机', offset: 1 },
-                { name: '太阳', offset: 3 },
-                { name: '武曲', offset: 4 },
-                { name: '天同', offset: 5 },
-                { name: '廉贞', offset: 8 }
-            ];
+        function calculateZiweiPosition(day, wuxingJu) {
+            const juNum = WUXING_JU_NUM[wuxingJu];
             
-            ziweiStars.forEach(star => {
-                const palacePos = (ziweiIdx + star.offset) % 12;
-                palaces[palacePos].majorStars.push(star.name);
-                palaces[palacePos].stars.push(star.name);
-            });
-        }
-        
-        /**
-         * 安天府系主星（天府、太阴、贪狼、巨门、天相、天梁、七杀、破军）
-         */
-        function placeTianfuStars(palaces, ziweiIdx) {
-            // 天府与紫微相对，隔一宫
-            const tianfuIdx = (12 - ziweiIdx) % 12;
-            
-            const tianfuStars = [
-                { name: '天府', offset: 0 },
-                { name: '太阴', offset: 1 },
-                { name: '贪狼', offset: 2 },
-                { name: '巨门', offset: 3 },
-                { name: '天相', offset: 4 },
-                { name: '天梁', offset: 5 },
-                { name: '七杀', offset: 6 },
-                { name: '破军', offset: 10 }
-            ];
-            
-            tianfuStars.forEach(star => {
-                const palacePos = (tianfuIdx + star.offset) % 12;
-                palaces[palacePos].majorStars.push(star.name);
-                palaces[palacePos].stars.push(star.name);
-            });
-        }
-        
-        /**
-         * 安辅星（禄存、擎羊、陀罗、文昌、文曲等）
-         */
-        function placeMinorStars(palaces, year, hour, mingGongIdx) {
-            // 根据年干安禄存
-            const yearGan = (year - 4) % 10;
-            const lucunPositions = [2, 3, 5, 6, 5, 6, 8, 9, 0, 1]; // 甲乙丙丁戊己庚辛壬癸
-            const lucunIdx = lucunPositions[yearGan];
-            
-            palaces[lucunIdx].minorStars.push('禄存');
-            palaces[lucunIdx].stars.push('禄存');
-            
-            // 擎羊在禄存前一位
-            const qingyangIdx = (lucunIdx + 1) % 12;
-            palaces[qingyangIdx].minorStars.push('擎羊');
-            palaces[qingyangIdx].stars.push('擎羊');
-            
-            // 陀罗在禄存后一位
-            const tuoluoIdx = (lucunIdx - 1 + 12) % 12;
-            palaces[tuoluoIdx].minorStars.push('陀罗');
-            palaces[tuoluoIdx].stars.push('陀罗');
-            
-            // 文昌（根据时辰）
-            const wenchangIdx = (12 - Math.floor((hour + 1) / 2)) % 12;
-            palaces[wenchangIdx].minorStars.push('文昌');
-            palaces[wenchangIdx].stars.push('文昌');
-            
-            // 文曲（与文昌相对）
-            const wenquIdx = (wenchangIdx + 4) % 12;
-            palaces[wenquIdx].minorStars.push('文曲');
-            palaces[wenquIdx].stars.push('文曲');
-        }
-        
-        /**
-         * 计算五行局
-         */
-        function calculateWuxingJu(year, gender, mingGongIdx) {
-            // 简化计算：根据年份和命宫位置
-            const yearGan = (year - 4) % 10;
-            const wuxingTable = ['木三局', '木三局', '水二局', '水二局', '土五局', '土五局', '金四局', '金四局', '火六局', '火六局'];
-            return wuxingTable[yearGan];
-        }
-        
-        /**
-         * 阳历转农历（简化版）
-         */
-        function solarToLunar(year, month, day) {
-            // 简化实现，返回基本农历信息
-            return {
-                year: year,
-                month: month,
-                day: day,
-                lunarMonth: month,
-                lunarDay: day
+            // 基准位置（初一所的位置）
+            const basePositions = {
+                '水二局': 1,  // 丑
+                '木三局': 2,  // 寅
+                '金四局': 11, // 亥
+                '土五局': 6,  // 午
+                '火六局': 9   // 酉
             };
+            
+            const basePos = basePositions[wuxingJu];
+            // 计算紫微星位置
+            const offset = Math.floor((day - 1) / juNum);
+            const ziweiIdx = (basePos + offset) % 12;
+            
+            return ziweiIdx;
+        }
+        
+        /**
+         * 计算天府星位置（与紫微相对）
+         * 天府星定位规则：紫微在寅，天府在申；紫微在卯，天府在未...
+         * 公式：天府位置 = 寅 + (寅 - 紫微位置)
+         */
+        function calculateTianfuPosition(ziweiIdx) {
+            // 以寅(2)为基准
+            const yinIdx = 2;
+            return (yinIdx + (yinIdx - ziweiIdx) + 12) % 12;
+        }
+        
+        /**
+         * 安十四主星
+         * 紫微系主星：以紫微为基准，逆时针排列
+         * 天府系主星：以天府为基准，顺时针排列
+         */
+        function placeAllMainStars(palaces, ziweiIdx, tianfuIdx) {
+            // 紫微系主星（从紫微位置开始，逆时针方向安星）
+            // 紫微在基准位，天机在紫微逆一位，太阳在逆三位...
+            const ziweiStars = ['紫微', '天机', '太阳', '武曲', '天同', '廉贞'];
+            const ziweiOffsets = [0, -1, -3, -4, -5, -8]; // 逆时针偏移
+            
+            ziweiStars.forEach((star, i) => {
+                const idx = (ziweiIdx + ziweiOffsets[i] + 12) % 12;
+                palaces[idx].stars.push(star);
+                palaces[idx].isEmpty = false;
+            });
+            
+            // 天府系主星（从天府位置开始，顺时针方向安星）
+            const tianfuStars = ['天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '破军'];
+            const tianfuOffsets = [0, 1, 2, 3, 4, 5, 6, 10]; // 顺时针偏移
+            
+            tianfuStars.forEach((star, i) => {
+                const idx = (tianfuIdx + tianfuOffsets[i]) % 12;
+                palaces[idx].stars.push(star);
+                palaces[idx].isEmpty = false;
+            });
+        }
+        
+        /**
+         * 安辅星
+         */
+        function placeMinorStars(palaces, yearGan, shichenIdx) {
+            // 禄存位置（根据年干）
+            // 甲禄在寅(2)，乙禄在卯(3)，丙禄在巳(5)，丁禄在午(6)，戊禄在巳(5)
+            // 己禄在午(6)，庚禄在申(8)，辛禄在酉(9)，壬禄在亥(11)，癸禄在子(0)
+            const lucunPositions = {
+                '甲': 2, '乙': 3, '丙': 5, '丁': 6, '戊': 5,
+                '己': 6, '庚': 8, '辛': 9, '壬': 11, '癸': 0
+            };
+            const lucunIdx = lucunPositions[yearGan];
+            if (lucunIdx !== undefined) {
+                palaces[lucunIdx].stars.push('禄存');
+                palaces[lucunIdx].isEmpty = false;
+                
+                // 擎羊在禄存后一宫（顺时针）
+                const qingyangIdx = (lucunIdx + 1) % 12;
+                palaces[qingyangIdx].stars.push('擎羊');
+                palaces[qingyangIdx].isEmpty = false;
+                
+                // 陀罗在禄存前一宫（逆时针）
+                const tuoluoIdx = (lucunIdx - 1 + 12) % 12;
+                palaces[tuoluoIdx].stars.push('陀罗');
+                palaces[tuoluoIdx].isEmpty = false;
+            }
+            
+            // 文昌（根据时辰，从戌宫起子时，逆数到生时）
+            const wenchangIdx = (10 - shichenIdx + 12) % 12;
+            palaces[wenchangIdx].stars.push('文昌');
+            palaces[wenchangIdx].isEmpty = false;
+            
+            // 文曲（从辰宫起子时，顺数到生时）
+            const wenquIdx = (5 + shichenIdx) % 12;
+            palaces[wenquIdx].stars.push('文曲');
+            palaces[wenquIdx].isEmpty = false;
+        }
+        
+        /**
+         * 格式化宫位数据
+         */
+        function formatPalaces(palaces, mingGongIdx) {
+            const result = [];
+            const keyOrder = ['life', 'siblings', 'spouse', 'children', 'wealth', 'health', 'travel', 'servants', 'career', 'property', 'fortune', 'parents'];
+            
+            for (let i = 0; i < 12; i++) {
+                const palace = palaces[i];
+                result.push({
+                    key: keyOrder[i],
+                    dizhi: palace.dizhi,
+                    name: palace.name,
+                    nameEn: palace.nameEn,
+                    stars: palace.stars,
+                    isEmpty: palace.stars.length === 0
+                });
+            }
+            return result;
         }
         
         /**
@@ -3704,7 +3935,7 @@
                 birthDate: '2007-9-4',
                 lunarDate: '丁亥年七月廿三',
                 shichen: '丑时',
-                wuxingJu: '木三局',
+                wuxingJu: '水二局',
                 palaces: [
                     // 逆时针排列：命宫→兄弟→夫妻→子女→财帛→疾厄→迁移→仆役→官禄→田宅→福德→父母
                     // 地支位置：未→午→巳→辰→卯→寅→丑→子→亥→戌→酉→申
