@@ -3786,36 +3786,30 @@
             const shiStar = qimen.jiuxing[shiPalace] || '天辅';
             const shiShen = qimen.bashen[shiPalace] || '六合';
             
-            // 年命落宫（当前年干）
-            const yearGan = qimen.bazi.year[0];
-            const nianmingLuogong = findLuogong(yearGan, qimen.tianpan, qimen.dipan);
-            const nianmingMen = qimen.bamen[nianmingLuogong] || '开门';
-            const nianmingStar = qimen.jiuxing[nianmingLuogong] || '天心';
+            // 流年年干（不是年命）
+            const liunianGan = qimen.bazi.year[0];
+            const liunianLuogong = findLuogong(liunianGan, qimen.tianpan, qimen.dipan);
+            const liunianMen = qimen.bamen[liunianLuogong] || '开门';
+            const liunianStar = qimen.jiuxing[liunianLuogong] || '天心';
             
-            // 从用户问题中提取出生年份（如果有）
-            const birthYearMatch = question.match(/(\d{4})\s*年/);
-            let birthYearGan = null;
-            let birthNianmingLuogong = null;
-            let birthNianmingMen = null;
-            let birthNianmingStar = null;
+            // 从用户问题中提取出生年份（如果有）- 这才是年命
+            const birthYearMatch = question.match(/(\d{4})\s*(年|出生)/);
+            let nianmingGan = null;
+            let nianmingLuogong = null;
+            let nianmingMen = null;
+            let nianmingStar = null;
             
             if (birthYearMatch) {
                 const birthYear = parseInt(birthYearMatch[1]);
                 const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
-                birthYearGan = tiangan[(birthYear - 4) % 10];
-                birthNianmingLuogong = findLuogong(birthYearGan, qimen.tianpan, qimen.dipan);
-                birthNianmingMen = qimen.bamen[birthNianmingLuogong] || '开门';
-                birthNianmingStar = qimen.jiuxing[birthNianmingLuogong] || '天心';
+                nianmingGan = tiangan[(birthYear - 4) % 10];
+                nianmingLuogong = findLuogong(nianmingGan, qimen.tianpan, qimen.dipan);
+                nianmingMen = qimen.bamen[nianmingLuogong] || '开门';
+                nianmingStar = qimen.jiuxing[nianmingLuogong] || '天心';
             }
             
-            // 实际使用的年命数据
-            const actualNianmingGan = birthYearGan || yearGan;
-            const actualNianmingLuogong = birthNianmingLuogong || nianmingLuogong;
-            const actualNianmingMen = birthNianmingMen || nianmingMen;
-            const actualNianmingStar = birthNianmingStar || nianmingStar;
-            
             // 判断是否为大事情
-            const bigMatters = ['婚姻', '结婚', '生子', '怀孕', '疾病', '生病', '手术', '生死', '财运', '投资', '买房', '卖房'];
+            const bigMatters = ['婚姻', '结婚', '生子', '怀孕', '疾病', '生病', '手术', '生死', '大财运', '投资', '买房', '卖房', '离婚', '官司', '诉讼'];
             const isBigMatter = bigMatters.some(m => question.includes(m));
             
             return `【格式禁止】输出中不能有星号，用中文数字列表。
@@ -3828,45 +3822,54 @@
 【四柱】${baziStr}
 【局】${qimen.ju.name}（${qimen.jieqi}）
 
-【盘面】
+【盘面数据】
 日干${qimen.bazi.day[0]}落${riPalace}，临${riMen}、${riStar}星、${riShen}
 时干${qimen.bazi.hour[0]}落${shiPalace}，临${shiMen}、${shiStar}星、${shiShen}
-年命${actualNianmingGan}落${actualNianmingLuogong}，临${actualNianmingMen}、${actualNianmingStar}星${birthYearGan ? '（用户生年）' : '（流年）'}
+流年干${liunianGan}落${liunianLuogong}，临${liunianMen}、${liunianStar}星
+${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}、${nianmingStar}星（用户生年天干）` : ''}
 格局：${qimen.geju.join('、') || '普通'}
 用神：${yongshen}→${ysInfo.star}
+是否大事情：${isBigMatter ? '是，需要年命辅助' : '否，无需年命'}
+
+【年命正确理解】
+年命是指客户出生那一年的天干，不是起局时的年干。
+例如：1990年出生的人，年命是庚；1985年出生的人，年命是乙。
+年命落宫代表当事人在这件事中的根基和运势。
+只有涉及婚姻、生子、疾病、生死、大财运、买房卖房、官司诉讼等人生大事情时，才需要询问客户出生年份并代入年命分析。小事不问。
 
 【地理】北京坎正北、上海震正东、广深离正南、成渝坤西南、西安乾西北、杭宁震正东、武汉中宫、青大艮东北、厦福巽东南
 
 【回答规范】
-一、大事情追问规则
-涉及婚姻、生子、疾病、生死、大财运、买房卖房等大事，若用户未提供出生年份，先追问：「这事关重大，请问您是哪一年出生的？我用您的年命来细看。」等用户提供年份后再详细分析。小事情可直接回答。
+一、大事情处理规则
+当前问题${isBigMatter ? '属于大事情' : '不属于大事情'}。
+若属于大事情且用户未提供出生年份，先追问：「这事关重大，想给您看准一点，请问您是哪一年出生的？」
+用户提供年份后，用其出生年天干作为年命，代入盘面分析年命落宫情况。
 
 二、开头第一句
-必须直截了当说结论，格式：「这事大概率能成，但...」或「这事有阻力，需要...」。不要说「可能」「也许」「或许」，好就是好，不好就是不好。
+必须直截了当，格式：「这事大概率能成，但...」或「这事有阻力，需要...」。禁止「可能」「也许」「或许」。
 
-三、分析框架（吉凶参半，各说各的）
-1. 用神落宫情况：落在哪个宫、临什么门、什么星、什么神，各自代表什么含义
-2. 有利因素：吉门、吉星、吉神带来的助力
-3. 风险隐患：凶门、凶星、凶神埋下的雷，具体在哪个环节出问题
-4. 年命分析：年命落宫吉凶，与日时关系，判断对当事人有利还是不利
+三、分析框架
+1. 用神落宫：落在哪宫、临什么门星神，各自含义
+2. 有利因素：吉门吉星吉神的助力
+3. 风险隐患：凶门凶星凶神的雷，具体哪个环节出问题
+4. 年命分析（仅大事情）：年命落宫吉凶，与日时关系，判断对当事人利弊
 
-四、具体建议（必须给，不能空）
-1. 方位建议：坐哪个方向、去哪个方向办事有利、避开哪个方向
-2. 时间建议：什么时辰办事最佳、避开什么时间
-3. 颜色建议：穿什么颜色衣服、佩戴什么颜色物品助运
-4. 行为建议：具体要做什么、注意什么、检查什么
-5. 重点提示：哪个条款要看清、哪个环节要把关、哪个细节不能放过
+四、具体建议（必须给）
+1. 方位：坐哪、去哪、避开哪
+2. 时间：什么时辰办事最佳
+3. 颜色：穿什么颜色助运
+4. 行为：具体做什么、注意什么、检查什么
+5. 重点：哪个条款要看清、哪个细节不能放过
 
 五、语气风格
 专业术语30%+白话70%
-分析要详细，建议要具体
-语气温柔但态度坚定
-结尾给一句暖心话：「XX是死的，人是活的，XX也别慌」
+分析详细，建议具体
+语气温柔，态度坚定
+结尾暖心：「XX是死的，人是活的，XX也别慌」
 
-六、字数要求
-400-600字，说透讲清
+六、字数400-600字
 
-【示例风格参考】
+【示例】
 问：后天下午2点和合作伙伴谈合同条款，能帮我分析吗？
 答：这事大概率能谈成，但过程得费点口舌。你的用神落兑七宫，开门临玄武，说明对方心里有小算盘，想在条款里藏点东西，不过天柱星当值，你脑子清醒，能抓住关键漏洞。要注意的是，惊门在乾宫，白虎压着，签之前务必把违约条款和付款周期盯死，容易在这两块出幺蛾子。建议你谈的时候坐会议室的西边位置，兑宫主口舌，坐那儿能压住场；穿件白色或浅金色衬衫，金气能助你逻辑不乱。开口前先喝两口水，下午2点属未时，火土旺，补水能防急躁。重点咬住甲方延迟交付时单方解约这一条，盘上显示这是他们的软肋。合同是死的，人是活的，谈崩了也别慌。`;
         }
