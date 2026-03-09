@@ -8,50 +8,53 @@
     <style>
         /* ============================================
            小卜 · Oraculum
-           乔布斯式极简美学 · 为大众打造的智慧工具
+           乔布斯式极简美学 · 终极高级版
            ============================================ */
         
         /* ===== CSS变量系统 ===== */
         :root {
-            /* 色彩系统 - 纯净简约 */
+            /* 色彩系统 - 苹果风格纯净简约 */
             --color-bg: #FFFFFF;
-            --color-card: #FAFAFA;
+            --color-card: #F9F9F9;
             --color-card-hover: #F5F5F7;
             --color-text: #1D1D1F;
-            --color-text-mid: #86868B;
+            --color-text-secondary: #333333;
+            --color-text-mid: #6e6e73;
             --color-text-light: #AEAEB2;
             --color-primary: #8B7E6C;
-            --color-primary-light: rgba(139, 126, 108, 0.1);
+            --color-primary-light: rgba(139, 126, 108, 0.08);
             --color-user-bubble: #1D1D1F;
             --color-ai-bubble: #F5F5F7;
             --color-divider: rgba(0, 0, 0, 0.04);
+            --color-success: #34C759;
+            --color-danger: #FF3B30;
             
-            /* 字体系统 - 苹果风格 */
-            --font-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-            --font-hero: 700 34px/1.1 var(--font-stack);
-            --font-title: 600 22px/1.25 var(--font-stack);
+            /* 字体系统 - 苹果默认字体栈 */
+            --font-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-hero: 700 32px/1.1 var(--font-stack);
+            --font-title: 600 24px/1.25 var(--font-stack);
             --font-card-title: 600 17px/1.3 var(--font-stack);
-            --font-body: 400 15px/1.6 var(--font-stack);
+            --font-body: 400 16px/1.6 var(--font-stack);
             --font-hint: 400 13px/1.5 var(--font-stack);
             --font-micro: 400 12px/1.4 var(--font-stack);
             
-            /* 圆角系统 - 柔和圆润 */
-            --radius-card: 20px;
+            /* 圆角系统 - 饱满圆润 */
+            --radius-card: 24px;
             --radius-btn: 12px;
             --radius-small: 10px;
-            --radius-bubble: 18px;
+            --radius-bubble: 20px;
             --radius-full: 50%;
             
             /* 阴影系统 - 极淡自然 */
-            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.02), 0 2px 8px rgba(0, 0, 0, 0.02);
-            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.02);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.04);
             --shadow-active: 0 1px 2px rgba(0, 0, 0, 0.04);
             
             /* 间距系统 - 呼吸感 */
-            --spacing-page: 24px;
-            --spacing-card: 20px;
-            --spacing-gap: 24px;
-            --spacing-section: 40px;
+            --spacing-page: 28px;
+            --spacing-card: 24px;
+            --spacing-gap: 28px;
+            --spacing-section: 48px;
             
             /* 动画 */
             --transition-fast: 0.15s ease;
@@ -81,6 +84,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
+            letter-spacing: 0.01em;
         }
 
         /* ===== 应用容器 ===== */
@@ -106,13 +110,13 @@
         .brand-name {
             font: var(--font-hero);
             color: var(--color-text);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
         .brand-slogan {
             font: var(--font-hint);
             color: var(--color-text-mid);
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .header-right {
@@ -125,7 +129,7 @@
             font: 500 11px/1 var(--font-stack);
             color: var(--color-text-light);
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
         }
 
         .lang-toggle {
@@ -159,8 +163,8 @@
         /* ===== 文化金句 ===== */
         .quote-banner {
             text-align: center;
-            padding: 24px var(--spacing-page);
-            font: 300 14px/1.8 var(--font-stack);
+            padding: 20px var(--spacing-page);
+            font: italic 300 14px/1.8 var(--font-stack);
             color: var(--color-text-mid);
             letter-spacing: 0.02em;
         }
@@ -171,6 +175,7 @@
             margin-top: 8px;
             opacity: 0.6;
             font-weight: 400;
+            font-style: normal;
         }
 
         /* ===== 主内容区 ===== */
@@ -267,16 +272,6 @@
             font-size: 14px;
         }
 
-        .btn-accent {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .btn-accent:hover {
-            background: var(--color-primary);
-            filter: brightness(0.9);
-        }
-
         /* ===== 链接 ===== */
         .link-arrow {
             font: 500 14px/1 var(--font-stack);
@@ -326,6 +321,7 @@
             border-radius: var(--radius-full);
             background: var(--color-card);
             border: 1px solid var(--color-divider);
+            /* 罗盘本身无阴影 */
         }
 
         .compass-sector {
@@ -371,7 +367,6 @@
         }
 
         /* 八方位置 - 后天八卦（传统布局：上南下北，左东右西） */
-        /* 按照图片：上离、下坎、左震、右兑、左上巽、左下艮、右上坤、右下乾 */
         .compass-sector.south { top: 0; left: 50%; transform: translateX(-50%); }      /* 离卦-南-上 */
         .compass-sector.north { bottom: 0; left: 50%; transform: translateX(-50%); }   /* 坎卦-北-下 */
         .compass-sector.east { left: 0; top: 50%; transform: translateY(-50%); }       /* 震卦-东-左 */
@@ -424,14 +419,20 @@
             margin-bottom: 20px;
         }
 
+        .scene-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
         .scene-card {
             display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 18px;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px;
             background: var(--color-bg);
             border-radius: var(--radius-card);
-            margin-bottom: 12px;
             cursor: pointer;
             transition: all var(--transition-normal);
             border: 1px solid var(--color-divider);
@@ -443,29 +444,19 @@
         }
 
         .scene-icon {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-small);
             background: var(--color-primary-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-        }
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            margin-bottom: 12px;
         }
 
         .scene-icon i {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--color-primary);
-        }
-
-        .scene-content {
-            flex: 1;
-            min-width: 0;
         }
 
         .scene-name {
@@ -474,55 +465,9 @@
         }
 
         .scene-name-en {
-            font: 400 12px/1.4 var(--font-stack);
+            font: 400 11px/1.4 var(--font-stack);
             color: var(--color-text-light);
             margin-top: 2px;
-        }
-
-        .scene-preview {
-            font: var(--font-micro);
-            color: var(--color-text-mid);
-            margin-top: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* 场景网格布局 */
-        .scene-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .scene-grid .scene-card {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 16px;
-            margin-bottom: 0;
-        }
-
-        .scene-grid .scene-icon {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 12px;
-        }
-
-        .scene-grid .scene-icon i {
-            font-size: 18px;
-        }
-
-        .scene-grid .scene-name {
-            font-size: 15px;
-        }
-
-        .scene-grid .scene-name-en {
-            font-size: 11px;
-        }
-
-        .scene-grid .scene-preview {
-            display: none;
         }
 
         /* ===== Success Stories ===== */
@@ -584,11 +529,11 @@
         }
 
         .fortune-item.good {
-            border-left: 3px solid #4CAF50;
+            border-left: 3px solid var(--color-success);
         }
 
         .fortune-item.bad {
-            border-left: 3px solid #F44336;
+            border-left: 3px solid var(--color-danger);
         }
 
         .fortune-label {
@@ -654,6 +599,7 @@
 
         .nav-item.active span {
             color: var(--color-text);
+            font-weight: 600;
         }
 
         .nav-item:active {
@@ -875,7 +821,7 @@
         .chat-stop {
             padding: 12px 20px;
             border-radius: 22px;
-            background: #FF3B30;
+            background: var(--color-danger);
             border: none;
             color: white;
             font: 600 14px/1 var(--font-stack);
@@ -1191,104 +1137,22 @@
             border-color: var(--color-primary);
         }
 
-        /* ===== 圆形紫微命盘 ===== */
-        .ziwei-chart-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-        }
-
-        .ziwei-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: var(--color-text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            z-index: 10;
-        }
-
-        .ziwei-center-en {
-            font: 400 10px/1 var(--font-stack);
-            opacity: 0.8;
-        }
-
-        .ziwei-center-cn {
-            font: 600 13px/1 var(--font-stack);
-            margin-top: 2px;
-        }
-
-        .ziwei-palace {
-            position: absolute;
-            width: 68px;
-            height: 68px;
-            background: var(--color-card);
-            border-radius: var(--radius-small);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .ziwei-palace:hover {
-            background: white;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .ziwei-palace-name {
-            font: 500 10px/1 var(--font-stack);
-            color: var(--color-text-light);
-        }
-
-        .ziwei-palace-star {
-            font: 600 11px/1.2 var(--font-stack);
-            color: var(--color-text);
-            margin-top: 2px;
-            text-align: center;
-        }
-
-        /* 十二宫位置 - 按照设计稿布局 */
-        .ziwei-palace[data-palace="life"] { top: 110px; right: 15px; }
-        .ziwei-palace[data-palace="parents"] { top: 45px; right: 50px; }
-        .ziwei-palace[data-palace="siblings"] { top: 45px; right: 120px; }
-        .ziwei-palace[data-palace="spouse"] { top: 15px; left: 50%; transform: translateX(-50%); }
-        .ziwei-palace[data-palace="children"] { top: 45px; left: 50px; }
-        .ziwei-palace[data-palace="wealth"] { top: 45px; left: 120px; }
-        .ziwei-palace[data-palace="health"] { top: 110px; left: 15px; }
-        .ziwei-palace[data-palace="travel"] { bottom: 110px; left: 15px; }
-        .ziwei-palace[data-palace="servants"] { bottom: 45px; left: 50px; }
-        .ziwei-palace[data-palace="career"] { bottom: 15px; left: 50%; transform: translateX(-50%); }
-        .ziwei-palace[data-palace="property"] { bottom: 45px; right: 50px; }
-        .ziwei-palace[data-palace="fortune"] { bottom: 45px; right: 120px; }
-
         /* ===== 本周推荐卡片 ===== */
         .weekly-recipe-cards {
             display: flex;
             gap: 12px;
-            margin-top: 16px;
         }
 
         .weekly-recipe-card {
             flex: 1;
-            padding: 16px 12px;
-            background: white;
-            border-radius: var(--radius-small);
+            padding: 16px;
+            background: var(--color-card);
+            border-radius: var(--radius-card);
             text-align: center;
         }
 
         .weekly-recipe-day {
-            font: 400 12px/1 var(--font-stack);
+            font: 500 11px/1 var(--font-stack);
             color: var(--color-text-light);
             margin-bottom: 8px;
         }
@@ -1299,33 +1163,9 @@
         }
 
         .weekly-recipe-effect {
-            font: 400 12px/1.3 var(--font-stack);
-            color: var(--color-primary);
+            font: 400 12px/1.4 var(--font-stack);
+            color: var(--color-text-mid);
             margin-top: 4px;
-        }
-
-
-        .chart-input {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .chart-input select,
-        .chart-input input {
-            padding: 12px 16px;
-            border-radius: var(--radius-small);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            background: white;
-            font: 400 14px/1 var(--font-stack);
-            color: var(--color-text);
-            outline: none;
-        }
-
-        .chart-input select:focus,
-        .chart-input input:focus {
-            border-color: var(--color-primary);
         }
 
         /* ===== 摇卦 ===== */
@@ -1559,55 +1399,6 @@
             margin-top: 8px;
         }
 
-        /* ===== 本周食谱卡片 ===== */
-        .weekly-recipe-cards {
-            display: flex;
-            gap: 12px;
-        }
-
-        .weekly-recipe-card {
-            flex: 1;
-            padding: 16px;
-            background: var(--color-card);
-            border-radius: var(--radius-card);
-            text-align: center;
-        }
-
-        .weekly-recipe-day {
-            font: 500 11px/1 var(--font-stack);
-            color: var(--color-text-light);
-            margin-bottom: 8px;
-        }
-
-        .weekly-recipe-name {
-            font: 500 14px/1.3 var(--font-stack);
-            color: var(--color-text);
-        }
-
-        .weekly-recipe-effect {
-            font: 400 12px/1.4 var(--font-stack);
-            color: var(--color-text-mid);
-            margin-top: 4px;
-        }
-
-        /* ===== 免责声明 ===== */
-        .disclaimer {
-            text-align: center;
-            padding: 24px var(--spacing-page);
-            font: 400 12px/1.6 var(--font-stack);
-            color: var(--color-text-light);
-        }
-
-        /* ===== 滑动课程 ===== */
-        .weekly-courses {
-            margin: 16px 0;
-        }
-
-        .course-card {
-            flex-shrink: 0;
-            width: 150px;
-        }
-
         /* ===== 折叠区域 ===== */
         .collapsible {
             margin-top: 16px;
@@ -1708,6 +1499,14 @@
             to { transform: rotate(360deg); }
         }
 
+        /* ===== 免责声明 ===== */
+        .disclaimer {
+            text-align: center;
+            padding: 24px var(--spacing-page);
+            font: 400 12px/1.6 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
         /* ===== 响应式 ===== */
         @media (min-width: 768px) {
             body {
@@ -1728,6 +1527,7 @@
 
             .app-container {
                 max-width: 600px;
+                margin: 0 auto;
                 border-radius: 0;
                 box-shadow: none;
             }
@@ -1767,10 +1567,10 @@
                 </div>
             </header>
 
-            <!-- 文化金句（每日随机） -->
+            <!-- 文化金句 -->
             <div class="quote-banner">
-                <span id="dailyQuoteText">天行健，君子以自强不息</span>
-                <span class="quote-source" id="dailyQuoteSource">《周易·乾卦》</span>
+                <span id="dailyQuoteText">知天易，逆天难</span>
+                <span class="quote-source">《三国演义》</span>
             </div>
 
             <!-- 主内容 -->
@@ -1779,12 +1579,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title" data-i18n="intro_title">什么是 Oraculum?</div>
-                        <div class="link-arrow" onclick="alert(currentLang === 'zh' ? 'Oraculum 融合三千年中国战略智慧——奇门遁甲与五术——融入你的日常生活。我们不是算命，而是帮你找到最佳的时机、方向和策略。' : 'Oraculum integrates 3,000 years of Chinese strategic wisdom into your daily life. We help you find the best timing, direction, and strategy.')">
+                        <div class="link-arrow" onclick="showIntroModal()">
                             <span data-i18n="learn_more">了解更多</span>
                             <i class="fa-regular fa-arrow-right"></i>
                         </div>
                     </div>
-                    <p class="card-subtitle" data-i18n="intro_content">融合三千年奇门智慧，助你把握时机、方向与策略</p>
+                    <p class="card-subtitle" data-i18n="intro_content">Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活</p>
                 </div>
 
                 <!-- 后天八卦罗盘 -->
@@ -1792,6 +1592,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title" data-i18n="compass_title">后天罗盘 · 今日能量</div>
+                            <div class="card-subtitle">Later Heaven Compass · Today's Energy</div>
                         </div>
                         <button class="btn btn-small btn-outline" id="spinCompass" data-i18n="spin">旋转</button>
                     </div>
@@ -1799,7 +1600,7 @@
                     <div class="compass-container" id="compassContainer">
                         <div class="compass-ring"></div>
                         
-                        <!-- 八方扇区 -->
+                        <!-- 八方扇区 - 后天八卦传统布局：上南下北，左东右西 -->
                         <div class="compass-sector south" data-direction="south" onclick="selectDirection('south')">
                             <span class="chinese">离</span>
                             <span class="english">S</span>
@@ -1836,11 +1637,12 @@
 
                     <div class="compass-result" id="compassResult">
                         <div class="compass-result-title" data-i18n="click_direction">点击方位查看详情</div>
+                        <div class="compass-result-desc">Click a direction to see details</div>
                     </div>
 
                     <div class="compass-actions">
-                        <button class="btn btn-outline" onclick="alert(currentLang === 'zh' ? '今日南方利见贵人，适合社交、面试、合作洽谈。' : 'Today South direction favors meeting noble people, suitable for socializing, interviews, and partnerships.')" data-i18n="check_fortune">查看吉凶</button>
-                        <button class="btn btn-primary" onclick="alert(currentLang === 'zh' ? '已将南方能量应用到当前场景分析中。' : 'Applied South direction energy to your current scenario analysis.')" data-i18n="apply_scene">应用到场景</button>
+                        <button class="btn btn-outline" onclick="checkFortune()" data-i18n="check_fortune">查看吉凶</button>
+                        <button class="btn btn-primary" onclick="applyToScene()" data-i18n="apply_scene">应用到场景</button>
                     </div>
                 </div>
 
@@ -1865,32 +1667,32 @@
                         <div class="story-item">
                             <div class="story-header">
                                 <div>
-                                    <div class="story-user">John D.</div>
+                                    <div class="story-user">John M.</div>
                                     <div class="story-location">New York, USA</div>
                                 </div>
-                                <div class="story-type">Career</div>
+                                <div class="story-type">Job Interview</div>
                             </div>
-                            <div class="story-quote">"Oraculum helped me choose the perfect time for my job interview. Got the offer!"</div>
+                            <div class="story-quote">"Used Qimen timing for his interview. Got the offer in 3 days!"</div>
                         </div>
                         <div class="story-item">
                             <div class="story-header">
                                 <div>
-                                    <div class="story-user">Sarah M.</div>
+                                    <div class="story-user">Sarah L.</div>
                                     <div class="story-location">London, UK</div>
                                 </div>
-                                <div class="story-type">Business</div>
+                                <div class="story-type">Business Deal</div>
                             </div>
-                            <div class="story-quote">"Used it for my startup launch timing. Revenue exceeded projections by 40%."</div>
+                            <div class="story-quote">"Timed her negotiation. Deal closed 20% higher!"</div>
                         </div>
                         <div class="story-item">
                             <div class="story-header">
                                 <div>
-                                    <div class="story-user">田中健一</div>
+                                    <div class="story-user">Takeshi K.</div>
                                     <div class="story-location">Tokyo, Japan</div>
                                 </div>
-                                <div class="story-type">投资</div>
+                                <div class="story-type">Investment</div>
                             </div>
-                            <div class="story-quote">"根据指引调整了投资时机，避开了市场波动，收益稳步增长。"</div>
+                            <div class="story-quote">"Followed auspicious direction, profit up 15%!"</div>
                         </div>
                     </div>
                 </div>
@@ -1900,23 +1702,26 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title" data-i18n="today_energy">今日能量</div>
-                            <div class="card-subtitle" id="todayDate"></div>
+                            <div class="card-subtitle" id="todayDate">Today's Energy · Mar 8</div>
                         </div>
                     </div>
                     <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 12px;">
-                        <span data-i18n="yindun">阴遁</span> <strong>8</strong> <span data-i18n="ju">局</span>
+                        <span data-i18n="yindun">阴遁</span> <strong>8</strong> <span data-i18n="ju">局</span> <span style="margin-left: 8px; color: var(--color-text-light);">/ Yin Dun 8</span>
                     </p>
                     <div class="fortune-list">
                         <div class="fortune-item good">
-                            <div class="fortune-label" data-i18n="suitable">宜</div>
-                            <div class="fortune-items" data-i18n="suitable_items">出行、签约、面试、开业</div>
+                            <div class="fortune-label" data-i18n="suitable">宜 / Good for</div>
+                            <div class="fortune-items">向西北行 · 穿白色 · 生机、财运、新生事物 · 光明、喜庆、文化传播</div>
                         </div>
                         <div class="fortune-item bad">
-                            <div class="fortune-label" data-i18n="avoid">忌</div>
-                            <div class="fortune-items" data-i18n="avoid_items">动土、安葬、诉讼</div>
+                            <div class="fortune-label" data-i18n="avoid">忌 / Avoid</div>
+                            <div class="fortune-items">西南方争吵 · 惊恐、不安、意外</div>
                         </div>
                     </div>
-                    <div class="link-arrow" style="margin-top: 16px;" onclick="alert(currentLang === 'zh' ? '今日值符天芮星，值使死门。宜守不宜攻，适合内部整理和规划。南方利见贵人，北方宜静养。' : 'Today\'s Star: Tianrui. Gate: Si Men. Best for internal planning. South favors meeting important people.')" data-i18n="view_detail">
+                    <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 16px; line-height: 1.8;">
+                        惊蛰时节，阴遁8局，宜守不宜攻，伤门临宫出行注意安全，惊门落位避免重大决策，天芮病星注意健康
+                    </p>
+                    <div class="link-arrow" style="margin-top: 16px;" onclick="showEnergyDetail()">
                         <span data-i18n="view_analysis">查看详细分析</span>
                         <i class="fa-regular fa-arrow-right"></i>
                     </div>
@@ -1924,7 +1729,7 @@
 
                 <!-- 选择场景 -->
                 <h2 class="section-title" data-i18n="select_scene">选择场景</h2>
-                <p class="section-hint" data-i18n="scroll_hint">点击场景开始咨询</p>
+                <p class="section-hint" data-i18n="scroll_hint">更多场景下滑探索 ↓</p>
 
                 <div class="scene-grid" id="sceneList">
                     <!-- 场景卡片由JS生成 -->
@@ -1964,7 +1769,7 @@
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_mountain">山·修身</div>
                         <div class="wushu-title-en">Mountain · Cultivation</div>
-                        <div class="wushu-desc" data-i18n="wushu_mountain_desc">修身养性，强健体魄</div>
+                        <div class="wushu-desc" data-i18n="wushu_mountain_desc">养生、健身、修炼，强健体魄、净化心灵</div>
                     </div>
                     <i class="fa-regular fa-chevron-right wushu-arrow"></i>
                 </div>
@@ -1977,7 +1782,7 @@
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_medicine">医·养生</div>
                         <div class="wushu-title-en">Medicine · Wellness</div>
-                        <div class="wushu-desc" data-i18n="wushu_medicine_desc">中医养生，健康之道</div>
+                        <div class="wushu-desc" data-i18n="wushu_medicine_desc">中医之道，草药、针灸，阴阳调和、顺应天时</div>
                     </div>
                     <i class="fa-regular fa-chevron-right wushu-arrow"></i>
                 </div>
@@ -1990,7 +1795,7 @@
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_fate">命·命盘</div>
                         <div class="wushu-title-en">Fate · Ziwei</div>
-                        <div class="wushu-desc" data-i18n="wushu_fate_desc">紫微斗数，命理推演</div>
+                        <div class="wushu-desc" data-i18n="wushu_fate_desc">紫微斗数，十四主星，洞察先天运势</div>
                     </div>
                     <i class="fa-regular fa-chevron-right wushu-arrow"></i>
                 </div>
@@ -2016,7 +1821,7 @@
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_divination">卜·占卜</div>
                         <div class="wushu-title-en">Divination · I-Ching</div>
-                        <div class="wushu-desc" data-i18n="wushu_divination_desc">六爻占卜，决策辅助</div>
+                        <div class="wushu-desc" data-i18n="wushu_divination_desc">金钱卦，六爻占卜</div>
                     </div>
                     <i class="fa-regular fa-chevron-right wushu-arrow"></i>
                 </div>
@@ -2058,7 +1863,7 @@
 
                 <!-- 菜单列表 -->
                 <div class="card" style="padding: 0;">
-                    <div class="menu-card" onclick="alert(currentLang === 'zh' ? '订阅商店功能开发中...' : 'Subscription feature coming soon...')">
+                    <div class="menu-card" onclick="showSubscription()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-crown"></i>
                         </div>
@@ -2067,7 +1872,7 @@
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
-                    <div class="menu-card" onclick="alert(currentLang === 'zh' ? `占卜历史：共 ${divinationHistory.length} 条记录` : `Divination History: ${divinationHistory.length} records`)">
+                    <div class="menu-card" onclick="showHistory()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-clock"></i>
                         </div>
@@ -2076,7 +1881,7 @@
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
-                    <div class="menu-card" onclick="alert(currentLang === 'zh' ? '账号设置功能开发中...' : 'Account settings coming soon...')">
+                    <div class="menu-card" onclick="showSettings()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-user-gear"></i>
                         </div>
@@ -2093,15 +1898,16 @@
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
-                    <div class="menu-card" onclick="alert('小卜 · Oraculum v2.0.0\n\n基于奇门遁甲的智能决策助手\nIntelligent decision assistant based on Qimen Dunjia\n\n© 2025 Oraculum')">
+                    <div class="menu-card" onclick="showAbout()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-circle-info"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_about">关于我们</span>
+                        <span class="menu-value">v1.0.0</span>
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
-                    <div class="menu-card" onclick="alert(currentLang === 'zh' ? '感谢反馈！联系：feedback@oraculum.ai' : 'Thanks for feedback! Contact: feedback@oraculum.ai')">
+                    <div class="menu-card" onclick="showFeedback()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-comment"></i>
                         </div>
@@ -2112,7 +1918,7 @@
 
                 <!-- 校准说明 -->
                 <div style="text-align: center; padding: 24px 0; font: var(--font-hint); color: var(--color-text-light);" data-i18n="calibration">
-                    Oraculum 使用真太阳时校准，确保全球用户精准排盘。
+                    Oraculum使用真太阳时校准，确保全球用户精准排盘。
                 </div>
             </main>
         </div>
@@ -2160,7 +1966,9 @@
             <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">
                 <i class="fa-regular fa-paper-plane"></i>
             </button>
-            <button class="chat-stop" id="chatStopBtn" style="display: none;" onclick="stopGeneration()">停止</button>
+            <button class="chat-stop" id="chatStopBtn" style="display: none;" onclick="stopGeneration()">
+                <span data-i18n="stop">停止</span>
+            </button>
         </div>
     </div>
 
@@ -2174,7 +1982,7 @@
             <div class="wushu-detail-title" data-i18n="wushu_mountain">山·修身</div>
         </header>
         <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;" data-i18n="mountain_intro">
+            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
                 山术，五术之首，包含养生、健身、修炼等方法，旨在强健体魄、净化心灵。
             </p>
 
@@ -2185,17 +1993,20 @@
                         <div class="card-title" data-i18n="today_practice">今日修习</div>
                         <div class="card-subtitle">Today's Practice</div>
                     </div>
-                    <span class="tag" data-i18n="minutes">5分钟</span>
+                    <span class="tag">5 min / 5分钟</span>
                 </div>
-                <p style="font: 500 16px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="practice_meditation">今日冥想·回光调息法</p>
-                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;" data-i18n="practice_note">5分钟静心，适合面试前练习。回光者，回其阳神也。</p>
+                <p style="font: 500 16px/1.4 var(--font-stack); color: var(--color-text);">今日冥想·回光调息法</p>
+                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">Today's Meditation: Backlight Breathing<br>5分钟静心，适合面试前练习。回光者，回其阳神也。</p>
                 <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" onclick="startMeditation()" data-i18n="start_meditation">开始冥想</button>
             </div>
 
             <!-- 冥想打卡 -->
             <div class="card">
                 <div class="card-title" data-i18n="meditation_total">冥想打卡累计</div>
-                <p style="font: 600 32px/1 var(--font-stack); color: var(--color-primary); margin-top: 8px;"><span id="meditationCount">0</span> <span style="font-size: 16px; color: var(--color-text-mid);" data-i18n="times">次</span></p>
+                <p style="font: 600 32px/1 var(--font-stack); color: var(--color-primary); margin-top: 8px;">
+                    <span id="meditationCount">0</span> 
+                    <span style="font-size: 16px; color: var(--color-text-mid);" data-i18n="times">次</span>
+                </p>
                 <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="completeMeditation()" data-i18n="complete_checkin">完成冥想打卡</button>
                 <p style="font: var(--font-hint); color: var(--color-text-light); margin-top: 12px;" data-i18n="unlock_hint">再打卡 3 次解锁新课程</p>
             </div>
@@ -2203,21 +2014,21 @@
             <!-- 本周推荐 -->
             <div class="card">
                 <div class="card-title" style="margin-bottom: 16px;" data-i18n="weekly_picks">本周推荐</div>
-                <div class="scroll-container weekly-courses">
-                    <div class="scroll-card course-card">
+                <div class="scroll-container">
+                    <div class="scroll-card">
                         <div class="scroll-card-title">静坐入门</div>
                         <div class="scroll-card-desc">基础呼吸法</div>
-                        <div class="scroll-card-meta">10 min</div>
+                        <div class="scroll-card-meta">5 min</div>
                     </div>
-                    <div class="scroll-card course-card">
+                    <div class="scroll-card">
                         <div class="scroll-card-title">观呼吸</div>
                         <div class="scroll-card-desc">专注力训练</div>
-                        <div class="scroll-card-meta">15 min</div>
+                        <div class="scroll-card-meta">8 min</div>
                     </div>
-                    <div class="scroll-card course-card">
+                    <div class="scroll-card">
                         <div class="scroll-card-title">回光法</div>
                         <div class="scroll-card-desc">《太乙金华宗旨》</div>
-                        <div class="scroll-card-meta">20 min</div>
+                        <div class="scroll-card-meta">5 min</div>
                     </div>
                 </div>
             </div>
@@ -2226,7 +2037,7 @@
             <div class="card">
                 <div class="collapsible" onclick="toggleCollapsible(this)">
                     <div class="collapsible-header">
-                        <span class="collapsible-title">《太乙金华宗旨》节选</span>
+                        <span class="collapsible-title">《太乙金华宗旨》/ Learn more</span>
                         <i class="fa-regular fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
@@ -2235,11 +2046,28 @@
                                 <strong>原文：</strong><br>
                                 "回光者，非回一身之精华，直回天地造化之阳神也。"<br><br>
                                 <strong>白话解读：</strong><br>
-                                回光不是简单地收回身体的精气，而是收回天地间造化的阳神。这是一种将注意力转向内在，达到与宇宙合一的修炼方法。
+                                回光不是简单地收回身体的精气，而是收回天地间造化的阳神。这是一种将注意力转向内在，达到与宇宙合一的修炼方法。<br><br>
+                                <strong>一周冥想计划：</strong><br>
+                                周一：静坐入门 5分钟<br>
+                                周二：观呼吸 8分钟<br>
+                                周三：回光法 5分钟<br>
+                                周四：静坐入门 5分钟<br>
+                                周五：观呼吸 8分钟<br>
+                                周六：回光法 5分钟<br>
+                                周日：综合练习 10分钟
                             </p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- 与当前决策相关 -->
+            <div class="card">
+                <div class="card-title" data-i18n="related_decision">与你的当前决策相关</div>
+                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
+                    基于您的命盘（木旺），建议多练习'回光法'平衡情绪。
+                </p>
+                <button class="btn btn-outline" style="margin-top: 16px;" onclick="alert(currentLang === 'zh' ? '已应用至面试建议' : 'Applied to interview advice')">应用至面试建议</button>
             </div>
         </div>
     </div>
@@ -2260,30 +2088,30 @@
             <!-- 今日养生 -->
             <div class="card">
                 <div style="font: 400 12px/1 var(--font-stack); color: var(--color-text-light); margin-bottom: 8px;">惊蛰时节</div>
-                <div class="card-title" style="margin-bottom: 12px;">今日养生·惊蛰宜养肝</div>
-                <p style="font: 500 16px/1.4 var(--font-stack); color: var(--color-text);">雪梨银耳羹</p>
+                <div class="card-title" style="margin-bottom: 12px;">今日养生 · 惊蛰宜养肝 / Today's Wellness</div>
+                <p style="font: 500 16px/1.4 var(--font-stack); color: var(--color-text);">雪梨银耳羹 / Pear & Tremella Soup</p>
                 <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 6px;">
-                    清热润肺，滋阴养颜。
+                    清热润肺，滋阴养颜 / Clears heat, nourishes lungs.
                 </p>
-                <button class="btn btn-primary" style="margin-top: 16px;" onclick="alert('雪梨银耳羹做法：\n\n1. 银耳提前泡发2小时，撕成小朵\n2. 雪梨去皮切块\n3. 将银耳、雪梨放入炖盅\n4. 加入冰糖、枸杞\n5. 隔水炖1小时即可\n\n功效：滋阴润肺，适合春季养肝')" data-i18n="view_recipe">查看做法</button>
+                <button class="btn btn-primary" style="margin-top: 16px;" onclick="showRecipe()" data-i18n="view_recipe">查看做法</button>
             </div>
 
             <!-- 本周推荐 -->
             <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;">本周推荐</div>
+                <div class="card-title" style="margin-bottom: 16px;">本周推荐 / Weekly Picks</div>
                 <div class="weekly-recipe-cards">
                     <div class="weekly-recipe-card">
-                        <div class="weekly-recipe-day">周一</div>
+                        <div class="weekly-recipe-day">周一 / Mon</div>
                         <div class="weekly-recipe-name">山药排骨汤</div>
                         <div class="weekly-recipe-effect">健脾养胃</div>
                     </div>
                     <div class="weekly-recipe-card">
-                        <div class="weekly-recipe-day">周二</div>
+                        <div class="weekly-recipe-day">周二 / Tue</div>
                         <div class="weekly-recipe-name">百合炒西芹</div>
                         <div class="weekly-recipe-effect">清心安神</div>
                     </div>
                     <div class="weekly-recipe-card">
-                        <div class="weekly-recipe-day">周三</div>
+                        <div class="weekly-recipe-day">周三 / Wed</div>
                         <div class="weekly-recipe-name">枸杞菊花茶</div>
                         <div class="weekly-recipe-effect">滋补肝肾</div>
                     </div>
@@ -2292,19 +2120,28 @@
 
             <!-- 体质测试 -->
             <div class="card">
-                <div class="card-title" data-i18n="body_quiz">体质测试</div>
+                <div class="card-title" data-i18n="body_quiz">体质测试 / Body Constitution Quiz</div>
                 <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
-                    5道题测出你的中医体质类型，获取专属养生建议。
+                    8道题测出你的体质类型 / 8 questions to reveal your body type.
                 </p>
                 <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" id="startQuizBtn" onclick="startQuiz()" data-i18n="start_quiz">开始测试</button>
                 
                 <div class="quiz-container" id="quizContainer">
                     <div class="quiz-question" id="quizQuestion"></div>
                     <div class="quiz-options">
-                        <button class="quiz-option" onclick="answerQuiz(true)" data-i18n="yes">是</button>
-                        <button class="quiz-option" onclick="answerQuiz(false)" data-i18n="no">不是</button>
+                        <button class="quiz-option" onclick="answerQuiz(true)" data-i18n="yes">是 / Yes</button>
+                        <button class="quiz-option" onclick="answerQuiz(false)" data-i18n="no">不是 / No</button>
                     </div>
                 </div>
+            </div>
+
+            <!-- 与命盘联动 -->
+            <div class="card">
+                <div class="card-title">基于您的紫微命盘 / Based on Your Chart</div>
+                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
+                    木旺土弱，推荐补脾食谱：山药小米粥、南瓜羹<br>
+                    <span style="color: var(--color-text-light);">Based on your Ziwei chart (Wood strong, Earth weak), recommended spleen-strengthening foods.</span>
+                </p>
             </div>
         </div>
     </div>
@@ -2319,7 +2156,7 @@
         </header>
         <div class="wushu-detail-content">
             <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
-                <span data-i18n="fate_intro">根据您的出生信息生成真实命盘</span>
+                紫微斗数，十四主星，洞察先天运势。
             </p>
 
             <!-- 排盘输入 -->
@@ -2330,31 +2167,21 @@
                 </div>
                 
                 <div class="chart-input-row">
-                    <select id="birthYear" class="chart-select">
-                        <!-- 年份由JS生成 -->
-                    </select>
-                    <select id="birthMonth" class="chart-select">
-                        <!-- 月份由JS生成 -->
-                    </select>
-                    <select id="birthDay" class="chart-select">
-                        <!-- 日期由JS生成 -->
-                    </select>
+                    <select id="birthYear" class="chart-select"></select>
+                    <select id="birthMonth" class="chart-select"></select>
+                    <select id="birthDay" class="chart-select"></select>
                 </div>
                 
                 <div class="chart-input-row">
-                    <select id="birthHour" class="chart-select">
-                        <!-- 小时由JS生成 -->
-                    </select>
-                    <select id="birthMinute" class="chart-select">
-                        <!-- 分钟由JS生成 -->
-                    </select>
+                    <select id="birthHour" class="chart-select"></select>
+                    <select id="birthMinute" class="chart-select"></select>
                 </div>
                 
                 <div class="chart-input-row">
-                    <input type="text" id="birthCity" class="chart-input-field" placeholder="出生城市" value="北京">
+                    <input type="text" id="birthCity" class="chart-input-field" placeholder="出生城市 / Birth City" value="北京">
                     <select id="birthGender" class="chart-select">
-                        <option value="male" data-i18n="male">男</option>
-                        <option value="female" data-i18n="female">女</option>
+                        <option value="male" data-i18n="male">男 / Male</option>
+                        <option value="female" data-i18n="female">女 / Female</option>
                     </select>
                 </div>
                 
@@ -2368,21 +2195,26 @@
             <div class="card" id="chartResultCard" style="display: none;">
                 <div style="text-align: center; margin-bottom: 20px;">
                     <div id="chartMainStar" style="font: 600 22px/1.3 var(--font-stack); color: var(--color-text);">天同、巨门坐命</div>
-                    <div id="chartMainStarEn" style="font: 400 14px/1.4 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">天同、巨门 in Life Palace</div>
+                    <div id="chartMainStarEn" style="font: 400 14px/1.4 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">Tiantong, Jumen in Life Palace</div>
                     <div id="chartBirthDate" style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 12px;">公历 2007-9-4 · 农历 二〇〇七年七月廿三</div>
                 </div>
                 
-                <div class="ziwei-chart-container" id="ziweiChartContainer">
-                    <!-- 圆形命盘由JS生成 -->
+                <div class="chart-container" id="chartContainer">
+                    <!-- 命盘由JS生成 -->
                 </div>
                 
                 <div style="text-align: center; font: var(--font-hint); color: var(--color-text-light); margin-top: 16px;">
                     Click any palace to see details · 点击宫位查看详情
                 </div>
+                
+                <div style="margin-top: 20px; padding: 16px; background: var(--color-card); border-radius: var(--radius-small);">
+                    <div style="font: 500 14px/1 var(--font-stack); color: var(--color-text); margin-bottom: 8px;" data-i18n="five_elements">五行分析 / Five Elements</div>
+                    <div id="fiveElementsResult" style="font: var(--font-hint); color: var(--color-text-mid);">水旺火弱 / Strong Water, weak Fire</div>
+                </div>
 
                 <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" onclick="showChartInput()">
                     <i class="fa-solid fa-play" style="margin-right: 8px;"></i>
-                    <span>重新排盘</span>
+                    <span>重新排盘 / Recalculate</span>
                 </button>
             </div>
         </div>
@@ -2397,69 +2229,74 @@
             <div class="wushu-detail-title" data-i18n="wushu_physiognomy">相·相宅</div>
         </header>
         <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;" data-i18n="physiognomy_intro">
-                相术，通过面相、风水观察环境与人之间的关系，调整生活空间以改善运势。
+            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
+                面相风水，环境调理。
             </p>
 
             <!-- 冰鉴选段 -->
             <div class="card">
-                <div class="card-title">《冰鉴》选段</div>
+                <div class="card-title">《冰鉴》选段 / Excerpts from Bing Jian</div>
                 <div style="margin-top: 16px; padding: 16px; background: white; border-radius: var(--radius-small); border-left: 3px solid var(--color-primary);">
                     <p style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text);">
                         <strong>"邪正看眼鼻，真假看嘴唇。"</strong><br><br>
-                        观察一个人，邪正看眼睛和鼻子，真假看嘴唇。眼神清澈、鼻梁端正者多正直；嘴唇丰厚、口型端正者多诚实。
+                        观察一个人，邪正看眼睛和鼻子，真假看嘴唇。眼神清澈、鼻梁端正者多正直；嘴唇丰厚、口型端正者多诚实。<br><br>
+                        <span style="color: var(--color-text-mid);">To judge a person's character, observe their eyes and nose for integrity, and lips for honesty.</span>
                     </p>
                 </div>
             </div>
 
             <!-- 风水问答 -->
             <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="fengshui_qa">常见风水问题</div>
+                <div class="card-title" style="margin-bottom: 16px;" data-i18n="fengshui_qa">常见风水问题 / Fengshui Q&A</div>
                 
                 <div class="collapsible" onclick="toggleCollapsible(this)">
                     <div class="collapsible-header">
-                        <span class="collapsible-title">卧室在西北角？</span>
+                        <span class="collapsible-title">卧室在西北角？/ Bedroom in NW corner?</span>
                         <i class="fa-regular fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
                         <div class="collapsible-body">
-                            西北为乾卦，代表男主人和事业。卧室在此方位利于事业发展和家庭和谐。建议床头朝东或南，避免朝西。
+                            西北为乾卦，代表男主人和事业。卧室在此方位利于事业发展和家庭和谐。建议床头朝东或南，避免朝西。<br><br>
+                            <span style="color: var(--color-text-mid);">Northwest represents the male head and career. Bedroom here benefits career and family harmony.</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="collapsible" onclick="toggleCollapsible(this)">
                     <div class="collapsible-header">
-                        <span class="collapsible-title">大门正对阳台？</span>
+                        <span class="collapsible-title">大门正对阳台？/ Front door faces balcony?</span>
                         <i class="fa-regular fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
                         <div class="collapsible-body">
-                            此为"穿堂煞"，财气直进直出，不利聚财。可在玄关设置屏风或摆放绿植化解。
+                            此为"穿堂煞"，财气直进直出，不利聚财。可在玄关设置屏风或摆放绿植化解。<br><br>
+                            <span style="color: var(--color-text-mid);">This is "Chuantang Sha" - wealth flows straight through. Add a screen or plants at the entrance.</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="collapsible" onclick="toggleCollapsible(this)">
                     <div class="collapsible-header">
-                        <span class="collapsible-title">厨房在正北？</span>
+                        <span class="collapsible-title">厨房在正北？/ Kitchen in North?</span>
                         <i class="fa-regular fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
                         <div class="collapsible-body">
-                            正北为坎卦，属水。厨房属火，水火相冲。建议厨房内多用绿色装饰，或在冰箱上放置铜葫芦化解。
+                            正北为坎卦，属水。厨房属火，水火相冲。建议厨房内多用绿色装饰，或在冰箱上放置铜葫芦化解。<br><br>
+                            <span style="color: var(--color-text-mid);">North is Kan (Water). Kitchen is Fire. Water-Fire conflict. Use green decor or copper gourd remedy.</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="collapsible" onclick="toggleCollapsible(this)">
                     <div class="collapsible-header">
-                        <span class="collapsible-title">办公桌背对门？</span>
+                        <span class="collapsible-title">办公桌背对门？/ Desk backs to door?</span>
                         <i class="fa-regular fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
                         <div class="collapsible-body">
-                            背对门为"无靠山"，事业发展缺乏贵人相助。建议调整座位，让背后有墙或高背椅，增加安全感。
+                            背对门为"无靠山"，事业发展缺乏贵人相助。建议调整座位，让背后有墙或高背椅，增加安全感。<br><br>
+                            <span style="color: var(--color-text-mid);">This means "no backing support" in career. Adjust position to have a wall behind you.</span>
                         </div>
                     </div>
                 </div>
@@ -2476,13 +2313,13 @@
             <div class="wushu-detail-title" data-i18n="wushu_divination">卜·占卜</div>
         </header>
         <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;" data-i18n="divination_intro">
-                六爻占卜，通过铜钱摇卦，推演事物发展趋势，为决策提供参考。
+            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
+                金钱卦，六爻占卜。
             </p>
 
             <!-- 摇卦区域 -->
             <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="shake_coins">摇卦占卜</div>
+                <div class="card-title" style="margin-bottom: 16px;" data-i18n="shake_coins">摇卦占卜 / Coin Divination</div>
                 
                 <div class="coins-container" id="coinsContainer">
                     <div class="coin"><div class="coin-hole"></div></div>
@@ -2495,7 +2332,7 @@
                 </div>
 
                 <p style="text-align: center; font: var(--font-hint); color: var(--color-text-mid);" id="throwHint" data-i18n="throw_hint">
-                    点击开始摇卦，共需六次
+                    点击开始摇卦，共需六次 / Click to start, 6 tosses needed
                 </p>
                 
                 <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" id="throwBtn" onclick="throwCoins()" data-i18n="start_throw">开始摇卦</button>
@@ -2511,14 +2348,14 @@
                 
                 <!-- 解卦结果 -->
                 <div id="interpretResult" style="display: none; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.05);">
-                    <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">解卦分析</div>
+                    <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">解卦分析 / Interpretation</div>
                     <div id="interpretContent" style="font: var(--font-hint); color: var(--color-text-mid); line-height: 1.8;"></div>
                 </div>
             </div>
 
             <!-- 六十四卦速览 -->
             <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="hexagram_list">六十四卦速览</div>
+                <div class="card-title" style="margin-bottom: 16px;" data-i18n="hexagram_list">六十四卦速览 / 64 Hexagrams</div>
                 <div class="scroll-container">
                     <div class="scroll-card" onclick="showHexagram('乾为天', '元亨利贞。')">
                         <div class="scroll-card-title">乾为天</div>
@@ -2535,6 +2372,9 @@
                     <div class="scroll-card" onclick="showHexagram('水天需', '有孚，光亨，贞吉。')">
                         <div class="scroll-card-title">水天需</div>
                     </div>
+                    <div class="scroll-card" onclick="showHexagram('天水讼', '有孚窒惕，中吉。')">
+                        <div class="scroll-card-title">天水讼</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2544,7 +2384,7 @@
     <div class="meditation-overlay" id="meditationOverlay">
         <div class="meditation-timer">
             <div class="meditation-time" id="meditationTime">5:00</div>
-            <div class="meditation-label" data-i18n="meditating">冥想中...</div>
+            <div class="meditation-label" data-i18n="meditating">冥想中... / Meditating...</div>
         </div>
         <button class="meditation-close" onclick="stopMeditation()" data-i18n="end_meditation">结束冥想</button>
     </div>
@@ -2561,49 +2401,21 @@
     <script>
         // ============================================
         // 小卜 · Oraculum - JavaScript 核心逻辑
-        // 高级国际化版本
+        // 终极高级版
         // ============================================
 
         // ===== DeepSeek API =====
         const API_KEY = 'sk-6df5e6eed7a643cd9cf968349f059281';
         const API_URL = 'https://api.deepseek.com/v1/chat/completions';
 
-        // ===== 经典引用（每日随机） =====
-        const classicQuotes = [
-            { zh: '天行健，君子以自强不息', en: 'Heaven moves with vigor; the noble strives endlessly', source: '《周易·乾卦》' },
-            { zh: '地势坤，君子以厚德载物', en: 'Earth is receptive; the noble bears all with virtue', source: '《周易·坤卦》' },
-            { zh: '君子终日乾乾，夕惕若，厉无咎', en: 'The noble works diligently all day, vigilant at night; danger brings no blame', source: '《周易·乾卦》' },
-            { zh: '谦谦君子，用涉大川', en: 'The humble noble can cross great rivers', source: '《周易·谦卦》' },
-            { zh: '积善之家，必有余庆', en: 'A family that accumulates goodness will have overflowing blessings', source: '《周易·坤卦·文言》' },
-            { zh: '穷则变，变则通，通则久', en: 'When exhausted, change; change leads to flow; flow leads to endurance', source: '《周易·系辞下》' },
-            { zh: '一阴一阳之谓道', en: 'One yin and one yang is called the Way', source: '《周易·系辞上》' },
-            { zh: '君子以见善则迁，有过则改', en: 'The noble moves toward good and corrects mistakes', source: '《周易·益卦》' },
-            { zh: '居上位而不骄，在下位而不忧', en: 'Not proud in high position, not worried in low position', source: '《周易·乾卦·文言》' },
-            { zh: '君子藏器于身，待时而动', en: 'The noble keeps abilities hidden, waiting for the right time to act', source: '《周易·系辞下》' },
-            { zh: '亢龙有悔，盈不可久', en: 'The dragon exceeding its limits brings regret; fullness cannot last', source: '《周易·乾卦》' },
-            { zh: '君子以作事谋始', en: 'The noble plans well at the beginning', source: '《周易·讼卦》' },
-            { zh: '履霜坚冰至', en: 'Treading on frost, hard ice arrives', source: '《周易·坤卦》' },
-            { zh: '同声相应，同气相求', en: 'Similar sounds respond; similar energies seek each other', source: '《周易·乾卦·文言》' },
-            { zh: '观乎天文，以察时变', en: 'Observe the patterns of heaven to understand the changes of time', source: '《周易·贲卦·彖》' }
-        ];
-        
-        // 根据日期获取每日引用（同一天显示同一条）
-        function getDailyQuote() {
-            const today = new Date();
-            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-            const index = dayOfYear % classicQuotes.length;
-            return classicQuotes[index];
-        }
-
         // ===== 翻译库 =====
         const translations = {
             zh: {
                 brand_name: '小卜',
                 brand_slogan: '遇事不决，小卜同学',
-                quote: '知天易，逆天难',
                 intro_title: '什么是 Oraculum?',
                 learn_more: '了解更多',
-                intro_content: '融合三千年奇门智慧，助你把握时机、方向与策略',
+                intro_content: 'Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活',
                 compass_title: '后天罗盘 · 今日能量',
                 spin: '旋转',
                 click_direction: '点击方位查看详情',
@@ -2618,8 +2430,6 @@
                 ju: '局',
                 suitable: '宜',
                 avoid: '忌',
-                suitable_items: '出行、签约、面试、开业',
-                avoid_items: '动土、安葬、诉讼',
                 view_analysis: '查看详细分析',
                 select_scene: '选择场景',
                 scroll_hint: '更多场景下滑探索 ↓',
@@ -2627,15 +2437,15 @@
                 wushu_slogan: '山医命相卜 · 古今智慧',
                 wushu_intro: '五术为用，助你洞察天地人和',
                 wushu_mountain: '山·修身',
-                wushu_mountain_desc: '修身养性，强健体魄',
+                wushu_mountain_desc: '养生、健身、修炼，强健体魄、净化心灵',
                 wushu_medicine: '医·养生',
-                wushu_medicine_desc: '中医养生，健康之道',
+                wushu_medicine_desc: '中医之道，草药、针灸，阴阳调和、顺应天时',
                 wushu_fate: '命·命盘',
-                wushu_fate_desc: '紫微斗数，命理推演',
+                wushu_fate_desc: '紫微斗数，十四主星，洞察先天运势',
                 wushu_physiognomy: '相·相宅',
                 wushu_physiognomy_desc: '面相风水，环境调理',
                 wushu_divination: '卜·占卜',
-                wushu_divination_desc: '六爻占卜，决策辅助',
+                wushu_divination_desc: '金钱卦，六爻占卜',
                 nav_home: '首页',
                 nav_wushu: '五术',
                 nav_my: '我的',
@@ -2647,40 +2457,24 @@
                 menu_settings: '账号设置',
                 menu_language: '语言',
                 menu_about: '关于我们',
-                calibration: 'Oraculum 使用真太阳时校准，确保全球用户精准排盘。',
-                mountain_intro: '山术，五术之首，包含养生、健身、修炼等方法，旨在强健体魄、净化心灵。',
+                calibration: 'Oraculum使用真太阳时校准，确保全球用户精准排盘。',
                 today_practice: '今日修习',
-                minutes: '5分钟',
-                practice_meditation: '今日冥想·回光调息法',
-                practice_note: '5分钟静心，适合面试前练习。回光者，回其阳神也。',
                 start_meditation: '开始冥想',
                 meditation_total: '冥想打卡累计',
                 times: '次',
                 complete_checkin: '完成冥想打卡',
                 unlock_hint: '再打卡 3 次解锁新课程',
                 weekly_picks: '本周推荐',
-                medicine_intro: '医术，以中医为基础，涵盖食疗、经络、养生等，追求阴阳平衡、健康长寿。',
-                today_wellness: '今日养生 · 惊蛰宜养肝',
                 view_recipe: '查看做法',
-                weekly_recipes: '本周推荐食谱',
                 body_quiz: '体质测试',
-                quiz_desc: '8道题测出体质',
                 start_quiz: '开始测试',
-                chart_based: '基于您的命盘推荐',
-                chart_advice: '根据您的五行分析（木旺土弱），推荐补脾食谱：',
-                fate_intro: '紫微斗数，通过出生时间推演人生运势，揭示性格特质与人生方向。',
-                enter_birth: '输入出生信息',
                 solar: '阳历',
                 lunar: '农历',
                 male: '男',
                 female: '女',
                 start_chart: '开始排盘',
-                ziwei_chart: '紫微斗数命盘',
-                center: '中天',
                 five_elements: '五行分析',
-                physiognomy_intro: '相术，通过面相、风水观察环境与人之间的关系，调整生活空间以改善运势。',
                 fengshui_qa: '常见风水问题',
-                divination_intro: '六爻占卜，通过铜钱摇卦，推演事物发展趋势，为决策提供参考。',
                 shake_coins: '摇卦占卜',
                 throw_hint: '点击开始摇卦，共需六次',
                 start_throw: '开始摇卦',
@@ -2691,6 +2485,8 @@
                 close: '关闭',
                 yes: '是',
                 no: '不是',
+                stop: '停止',
+                related_decision: '与你的当前决策相关',
                 // 方向描述
                 dir_north: '坎水正北，主智慧与事业发展',
                 dir_south: '离火正南，主名声与社交活动',
@@ -2704,10 +2500,9 @@
             en: {
                 brand_name: '小卜',
                 brand_slogan: 'When in doubt, Oraculum helps',
-                quote: 'Easy to know fate, hard to defy it',
                 intro_title: 'What is Oraculum?',
                 learn_more: 'Learn more',
-                intro_content: 'Integrating 3,000 years of Qimen wisdom to help you seize the right timing, direction, and strategy',
+                intro_content: 'Oraculum integrates 3,000 years of Chinese strategic wisdom into your daily life',
                 compass_title: 'Later Heaven Compass · Today\'s Energy',
                 spin: 'Spin',
                 click_direction: 'Click a direction for details',
@@ -2722,18 +2517,16 @@
                 ju: 'Pattern',
                 suitable: 'Suitable',
                 avoid: 'Avoid',
-                suitable_items: 'Travel, Sign contracts, Interviews, Open business',
-                avoid_items: 'Ground breaking, Funeral, Litigation',
                 view_analysis: 'View detailed analysis',
                 select_scene: 'Select Scenario',
-                scroll_hint: 'Scroll down for more scenarios ↓',
+                scroll_hint: 'Scroll down for more ↓',
                 five_arts: 'Five Arts',
                 wushu_slogan: 'Mountain · Medicine · Fate · Physiognomy · Divination',
                 wushu_intro: 'Five Arts guide you to harmony between heaven, earth, and humanity',
                 wushu_mountain: 'Mountain',
-                wushu_mountain_desc: 'Self-cultivation & wellness',
+                wushu_mountain_desc: 'Self-cultivation & wellness practices',
                 wushu_medicine: 'Medicine',
-                wushu_medicine_desc: 'TCM wellness & health',
+                wushu_medicine_desc: 'TCM wellness & health balance',
                 wushu_fate: 'Fate',
                 wushu_fate_desc: 'Ziwei Doushu astrology',
                 wushu_physiognomy: 'Physiognomy',
@@ -2752,41 +2545,25 @@
                 menu_language: 'Language',
                 menu_about: 'About',
                 calibration: 'Oraculum uses true solar time calibration for accurate readings worldwide.',
-                mountain_intro: 'Mountain Arts, the foremost of Five Arts, includes wellness, fitness, and cultivation practices.',
                 today_practice: 'Today\'s Practice',
-                minutes: '5 min',
-                practice_meditation: 'Today\'s Meditation: Backlight Breathing',
-                practice_note: '5 minutes of calm, perfect before interviews. Backlight means returning your yang spirit.',
                 start_meditation: 'Start Meditation',
                 meditation_total: 'Total Meditation Sessions',
                 times: 'sessions',
                 complete_checkin: 'Complete Check-in',
                 unlock_hint: '3 more sessions to unlock new courses',
                 weekly_picks: 'Weekly Picks',
-                medicine_intro: 'Medicine Arts, based on TCM, covers diet therapy, meridians, and wellness for balance and longevity.',
-                today_wellness: 'Today\'s Wellness · Nourish Liver in Awakening',
                 view_recipe: 'View Recipe',
-                weekly_recipes: 'Weekly Recipe Picks',
                 body_quiz: 'Body Constitution Quiz',
-                quiz_desc: '8 questions to discover your type',
                 start_quiz: 'Start Quiz',
-                chart_based: 'Based on Your Chart',
-                chart_advice: 'Your five-element analysis (strong Wood, weak Earth) suggests spleen-nourishing recipes:',
-                fate_intro: 'Ziwei Doushu reveals your life path and personality traits through birth time analysis.',
-                enter_birth: 'Enter Birth Information',
                 solar: 'Solar',
                 lunar: 'Lunar',
                 male: 'Male',
                 female: 'Female',
                 start_chart: 'Calculate Chart',
-                ziwei_chart: 'Ziwei Doushu Chart',
-                center: 'Center',
                 five_elements: 'Five Elements Analysis',
-                physiognomy_intro: 'Physiognomy observes the relationship between environment and people through face reading and Fengshui.',
-                fengshui_qa: 'Common Fengshui Questions',
-                divination_intro: 'I-Ching divination reveals trends and provides decision guidance through coin casting.',
+                fengshui_qa: 'Fengshui Q&A',
                 shake_coins: 'Coin Divination',
-                throw_hint: 'Click to start casting, 6 throws needed',
+                throw_hint: 'Click to start, 6 tosses needed',
                 start_throw: 'Start Casting',
                 interpret: 'Interpret',
                 hexagram_list: '64 Hexagrams',
@@ -2795,6 +2572,8 @@
                 close: 'Close',
                 yes: 'Yes',
                 no: 'No',
+                stop: 'Stop',
+                related_decision: 'Related to your current decision',
                 // Direction descriptions
                 dir_north: 'Kan Water - North: Wisdom and career development',
                 dir_south: 'Li Fire - South: Fame and social activities',
@@ -2802,25 +2581,25 @@
                 dir_west: 'Dui Metal - West: Wealth and harvest',
                 dir_northeast: 'Gen Earth - Northeast: Stability and studies',
                 dir_northwest: 'Qian Metal - Northwest: Mentors and leadership',
-                dir_southeast: 'Xun Wood - Southeast: Opportunities and贵人',
+                dir_southeast: 'Xun Wood - Southeast: Opportunities and noble people',
                 dir_southwest: 'Kun Earth - Southwest: Family and harmony',
             }
         };
 
         // ===== 场景数据 =====
         const scenes = [
-            { id: 'interview', icon: 'fa-briefcase', nameZh: '面试求职', nameEn: 'Interview', previewZh: '面试前如何提升运势？', previewEn: 'How to boost luck before an interview?' },
-            { id: 'business', icon: 'fa-handshake', nameZh: '签约合作', nameEn: 'Contract', previewZh: '签约时机是否合适？', previewEn: 'Is the timing right for signing?' },
-            { id: 'investment', icon: 'fa-chart-line', nameZh: '投资理财', nameEn: 'Investment', previewZh: '近期投资运势如何？', previewEn: 'How is my investment luck?' },
-            { id: 'relationship', icon: 'fa-heart', nameZh: '感情姻缘', nameEn: 'Relationship', previewZh: '感情发展方向如何？', previewEn: 'Where is my relationship heading?' },
-            { id: 'health', icon: 'fa-heart-pulse', nameZh: '健康养生', nameEn: 'Health', previewZh: '近期身体状况如何？', previewEn: 'How is my health lately?' },
-            { id: 'travel', icon: 'fa-plane', nameZh: '出行旅游', nameEn: 'Travel', previewZh: '出行是否顺利？', previewEn: 'Will my trip go smoothly?' },
-            { id: 'moving', icon: 'fa-house', nameZh: '搬家入宅', nameEn: 'Moving', previewZh: '搬家时机是否合适？', previewEn: 'Is it a good time to move?' },
-            { id: 'exam', icon: 'fa-graduation-cap', nameZh: '考试学业', nameEn: 'Exam', previewZh: '考试运势如何？', previewEn: 'How will my exam go?' },
-            { id: 'lawsuit', icon: 'fa-gavel', nameZh: '诉讼纠纷', nameEn: 'Lawsuit', previewZh: '诉讼结果如何？', previewEn: 'What will be the lawsuit outcome?' },
-            { id: 'career', icon: 'fa-building', nameZh: '事业职场', nameEn: 'Career', previewZh: '事业发展方向？', previewEn: 'Where is my career heading?' },
-            { id: 'marriage', icon: 'fa-users', nameZh: '婚姻家庭', nameEn: 'Marriage', previewZh: '婚姻运势如何？', previewEn: 'How is my marriage luck?' },
-            { id: 'startup', icon: 'fa-rocket', nameZh: '创业开张', nameEn: 'Startup', previewZh: '创业时机如何？', previewEn: 'Is it a good time to start?' }
+            { id: 'interview', icon: 'fa-briefcase', nameZh: '面试求职', nameEn: 'Interview', placeholderZh: '明天上午10点面试产品经理，能帮我分析吗？', placeholderEn: 'I have a product manager interview tomorrow at 10am. Can you analyze?' },
+            { id: 'business', icon: 'fa-handshake', nameZh: '签约合作', nameEn: 'Contract', placeholderZh: '后天下午2点和合作伙伴谈合同条款，能帮我分析吗？', placeholderEn: 'Meeting with partner tomorrow at 2pm to discuss contract terms. Any advice?' },
+            { id: 'relationship', icon: 'fa-heart', nameZh: '情感姻缘', nameEn: 'Relationship', placeholderZh: '我明天要去跟我心仪的女孩约会，帮我参谋一下呗', placeholderEn: 'I have a date with someone I like tomorrow. Any advice?' },
+            { id: 'signing', icon: 'fa-file-signature', nameZh: '签约合作', nameEn: 'Signing', placeholderZh: '明天签租房合同，有什么需要注意的吗？', placeholderEn: 'Signing a rental contract tomorrow. What should I watch out for?' },
+            { id: 'travel', icon: 'fa-plane', nameZh: '出行平安', nameEn: 'Travel', placeholderZh: '后天去美国出差，行程顺利吗？', placeholderEn: 'Traveling to the US the day after tomorrow. Will it go smoothly?' },
+            { id: 'exam', icon: 'fa-graduation-cap', nameZh: '学业考试', nameEn: 'Exam', placeholderZh: '下周考公务员，能考上吗？', placeholderEn: 'Civil service exam next week. Will I pass?' },
+            { id: 'health', icon: 'fa-heart-pulse', nameZh: '健康调理', nameEn: 'Health', placeholderZh: '最近总是失眠，有什么调理建议？', placeholderEn: 'I\'ve been having insomnia lately. Any suggestions?' },
+            { id: 'fengshui', icon: 'fa-house', nameZh: '居家风水', nameEn: 'Fengshui', placeholderZh: '新房在东南角，风水如何？', placeholderEn: 'My new house is in the southeast corner. How is the fengshui?' },
+            { id: 'opening', icon: 'fa-store', nameZh: '择日开业', nameEn: 'Opening', placeholderZh: '下个月8号开业，日子好吗？', placeholderEn: 'Planning to open on the 8th next month. Is it a good date?' },
+            { id: 'lost', icon: 'fa-magnifying-glass', nameZh: '寻物失物', nameEn: 'Lost Items', placeholderZh: '手机丢了，能找到吗？', placeholderEn: 'I lost my phone. Can it be found?' },
+            { id: 'decision', icon: 'fa-scale-balanced', nameZh: '人事决策', nameEn: 'Decision', placeholderZh: '该不该接受这个offer？', placeholderEn: 'Should I accept this job offer?' },
+            { id: 'investment', icon: 'fa-chart-line', nameZh: '投资理财', nameEn: 'Investment', placeholderZh: '最近适合投资股票吗？', placeholderEn: 'Is this a good time to invest in stocks?' }
         ];
 
         // ===== 方向描述 =====
@@ -2892,23 +2671,16 @@
             '110010': { name: '风水涣', text: '亨，王假有庙。' },
             '011011': { name: '风泽中孚', text: '豚鱼吉，利涉大川。' },
             '010101': { name: '水火既济', text: '亨小，利贞。' },
-            '101010': { name: '火水未济', text: '亨，小狐汔济。' },
-            '110110': { name: '风水涣', text: '亨，王假有庙。' },
-            '001001': { name: '山雷颐', text: '贞吉，观颐。' },
-            '100100': { name: '地风升', text: '元亨，用见大人。' },
-            '001010': { name: '雷水解', text: '利西南。' },
-            '010100': { name: '水山蹇', text: '利西南，不利东北。' },
-            '110100': { name: '风山渐', text: '女归吉，利贞。' },
-            '001011': { name: '雷泽归妹', text: '征凶，无攸利。' },
+            '101010': { name: '火水未济', text: '亨，小狐汔济。' }
         };
 
         // ===== 体质测试问题 =====
         const quizQuestions = [
-            '您是否容易疲劳、气短？',
-            '您是否怕冷、手脚冰凉？',
-            '您是否容易失眠多梦？',
-            '您是否食欲不振、消化不良？',
-            '您是否容易出汗、怕热？'
+            '您是否容易疲劳、气短？ / Do you tire easily and feel short of breath?',
+            '您是否怕冷、手脚冰凉？ / Are you sensitive to cold with cold hands/feet?',
+            '您是否容易失眠多梦？ / Do you have trouble sleeping or vivid dreams?',
+            '您是否食欲不振、消化不良？ / Do you have poor appetite or digestion?',
+            '您是否容易出汗、怕热？ / Do you sweat easily and dislike heat?'
         ];
 
         // ===== 全局状态 =====
@@ -2916,7 +2688,6 @@
         let checkinData = JSON.parse(localStorage.getItem('oraculum_checkin') || '{}');
         let meditationCount = parseInt(localStorage.getItem('oraculum_meditation') || '0');
         let divinationHistory = JSON.parse(localStorage.getItem('oraculum_history') || '[]');
-        let chartData = JSON.parse(localStorage.getItem('oraculum_chart') || 'null');
         let selectedDirection = null;
         let currentScene = null;
         let isGenerating = false;
@@ -2945,20 +2716,7 @@
             updateHistoryCount();
             setTodayDate();
             initHexagramLines();
-            updateDailyQuote();
         });
-
-        // ===== 更新每日引用 =====
-        function updateDailyQuote() {
-            const quote = getDailyQuote();
-            const quoteText = document.getElementById('dailyQuoteText');
-            const quoteSource = document.getElementById('dailyQuoteSource');
-            
-            if (quoteText && quoteSource) {
-                quoteText.textContent = currentLang === 'zh' ? quote.zh : quote.en;
-                quoteSource.textContent = quote.source;
-            }
-        }
 
         // ===== 语言切换 =====
         function initLanguage() {
@@ -2982,14 +2740,8 @@
 
             document.getElementById('currentLangDisplay').textContent = currentLang === 'zh' ? '中文' : 'English';
             
-            // 更新场景列表
             initScenes();
-            
-            // 更新HTML语言属性
             document.documentElement.lang = currentLang;
-            
-            // 更新每日引用
-            updateDailyQuote();
         }
 
         function t(key) {
@@ -3030,10 +2782,41 @@
         function spinCompass() {
             const directions = Object.keys(directionInfo);
             const randomDir = directions[Math.floor(Math.random() * directions.length)];
-            selectDirection(randomDir);
+            
+            // 添加旋转动画
+            const container = document.getElementById('compassContainer');
+            container.style.transition = 'transform 0.5s ease';
+            container.style.transform = 'rotate(360deg)';
+            
+            setTimeout(() => {
+                container.style.transition = 'none';
+                container.style.transform = 'rotate(0deg)';
+                selectDirection(randomDir);
+            }, 500);
         }
 
-        document.getElementById('spinCompass').addEventListener('click', spinCompass);
+        document.getElementById('spinCompass')?.addEventListener('click', spinCompass);
+
+        function checkFortune() {
+            if (!selectedDirection) {
+                alert(currentLang === 'zh' ? '请先选择一个方位' : 'Please select a direction first');
+                return;
+            }
+            const info = directionInfo[selectedDirection];
+            alert(currentLang === 'zh' 
+                ? `${info.chinese}方今日运势：\n\n值符星：${info.star}\n值使门：${info.door}\n\n建议：今日${info.chinese}方${info.door === '开门' ? '利见贵人，适合社交、面试' : info.door === '休门' ? '宜静养，适合休息、思考' : '宜谨慎行事，避免冲动决定'}`
+                : `${info.chinese} direction today:\n\nStar: ${info.star}\nGate: ${info.door}\n\nSuggestion: Today ${info.chinese} direction ${info.door === '开门' ? 'favors meeting noble people, suitable for socializing' : info.door === '休门' ? 'is good for rest and contemplation' : 'advises caution in decisions'}`);
+        }
+
+        function applyToScene() {
+            if (!selectedDirection) {
+                alert(currentLang === 'zh' ? '请先选择一个方位' : 'Please select a direction first');
+                return;
+            }
+            alert(currentLang === 'zh' 
+                ? `已将${directionInfo[selectedDirection].chinese}方能量应用到当前场景分析中。` 
+                : `Applied ${directionInfo[selectedDirection].chinese} direction energy to your current scenario.`);
+        }
 
         // ===== 签到功能 =====
         function doCheckin() {
@@ -3063,11 +2846,8 @@
                     <div class="scene-icon">
                         <i class="fa-regular ${scene.icon}"></i>
                     </div>
-                    <div class="scene-content">
-                        <div class="scene-name">${currentLang === 'zh' ? scene.nameZh : scene.nameEn}</div>
-                        <div class="scene-name-en">${currentLang === 'zh' ? scene.nameEn : scene.nameZh}</div>
-                        <div class="scene-preview">${currentLang === 'zh' ? scene.previewZh : scene.previewEn}</div>
-                    </div>
+                    <div class="scene-name">${currentLang === 'zh' ? scene.nameZh : scene.nameEn}</div>
+                    <div class="scene-name-en">${currentLang === 'zh' ? scene.nameEn : scene.nameZh}</div>
                 </div>
             `).join('');
         }
@@ -3079,14 +2859,14 @@
             
             document.getElementById('chatPage').classList.add('active');
             document.getElementById('chatSceneTitle').textContent = currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn;
-            document.getElementById('chatInput').placeholder = getPlaceholder(sceneId);
+            document.getElementById('chatInput').placeholder = currentLang === 'zh' ? currentScene.placeholderZh : currentScene.placeholderEn;
             document.getElementById('chatMessages').innerHTML = '';
             
             // 发送初始问候
             setTimeout(() => {
                 addAIMessage(currentLang === 'zh' 
-                    ? `您好！我是小卜，很高兴为您解答关于「${currentScene.nameZh}」的问题。请告诉我您想咨询的具体事项。`
-                    : `Hello! I'm Oraculum. I'm here to help with your "${currentScene.nameEn}" questions. Please tell me what you'd like to know.`);
+                    ? `您好！我是小卜，很高兴为您解答关于「${currentScene.nameZh}」的问题。请告诉我您想咨询的具体事项，我会为您进行奇门遁甲排盘分析。`
+                    : `Hello! I'm Oraculum. I'm here to help with your "${currentScene.nameEn}" questions. Please tell me what you'd like to know, and I'll perform a Qimen Dunjia analysis for you.`);
             }, 500);
         }
 
@@ -3095,24 +2875,6 @@
             if (isGenerating && abortController) {
                 abortController.abort();
             }
-        }
-
-        function getPlaceholder(sceneId) {
-            const placeholders = {
-                interview: currentLang === 'zh' ? '明天有面试，请问要注意什么？' : 'I have an interview tomorrow. What should I watch out for?',
-                business: currentLang === 'zh' ? '明天签租房合同，有什么需要注意的吗？' : 'Signing a rental contract tomorrow. Any advice?',
-                investment: currentLang === 'zh' ? '近期想投资基金，时机合适吗？' : 'I want to invest in funds. Is the timing right?',
-                relationship: currentLang === 'zh' ? '最近感情发展如何？' : 'How is my relationship developing?',
-                health: currentLang === 'zh' ? '最近身体感觉疲惫，有什么建议？' : 'I feel tired lately. Any suggestions?',
-                travel: currentLang === 'zh' ? '下周出行，需要注意什么？' : 'Traveling next week. What should I know?',
-                moving: currentLang === 'zh' ? '下月搬家，日子怎么选？' : 'Moving next month. How to choose a date?',
-                exam: currentLang === 'zh' ? '下周考试，运势如何？' : 'I have an exam next week. How is my luck?',
-                lawsuit: currentLang === 'zh' ? '官司诉讼结果如何？' : 'What will be the outcome of my lawsuit?',
-                career: currentLang === 'zh' ? '事业发展方向如何？' : 'Where should I take my career?',
-                marriage: currentLang === 'zh' ? '婚姻运势如何？' : 'How is my marriage luck?',
-                startup: currentLang === 'zh' ? '创业时机如何？适合什么行业？' : 'Is it a good time to start a business? Which industry?'
-            };
-            return placeholders[sceneId] || (currentLang === 'zh' ? '请输入您的问题...' : 'Enter your question...');
         }
 
         function addUserMessage(text) {
@@ -3128,7 +2890,7 @@
             const container = document.getElementById('chatMessages');
             const msg = document.createElement('div');
             msg.className = 'message ai';
-            msg.textContent = text;
+            msg.innerHTML = text.replace(/\n/g, '<br>');
             container.appendChild(msg);
             container.scrollTop = container.scrollHeight;
         }
@@ -3165,7 +2927,7 @@
                 abortController = new AbortController();
                 
                 // 判断是否为寒暄
-                const isGreeting = /^(hi|hello|hey|你好|您好|在吗|嗨|hi there)/i.test(text);
+                const isGreeting = /^(hi|hello|hey|你好|您好|在吗|嗨|hi there|good morning|good afternoon|good evening)/i.test(text);
                 
                 const systemPrompt = isGreeting 
                     ? `你是一个友好、亲切的AI助手。用户用"${text}"打招呼，请用简洁温暖的方式回应，不要涉及奇门遁甲排盘。当前语言：${currentLang === 'zh' ? '中文' : 'English'}`
@@ -3240,26 +3002,18 @@
             const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
             const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
             
-            // 年柱
             const yearGan = tiangan[(year - 4) % 10];
             const yearZhi = dizhi[(year - 4) % 12];
-            
-            // 月柱（简化计算）
             const monthZhi = dizhi[(month + 1) % 12];
             const monthGan = tiangan[(year * 12 + month + 3) % 10];
-            
-            // 日柱（简化计算）
             const baseDate = new Date(1900, 0, 31);
             const dayDiff = Math.floor((localTime - baseDate) / (24 * 60 * 60 * 1000));
             const dayGan = tiangan[dayDiff % 10];
             const dayZhi = dizhi[dayDiff % 12];
-            
-            // 时柱
             const hourZhi = dizhi[Math.floor((hour + 1) / 2) % 12];
             const hourGan = tiangan[(tiangan.indexOf(dayGan) * 2 + Math.floor((hour + 1) / 2)) % 10];
             
             const bazi = `${yearGan}${yearZhi}年 ${monthGan}${monthZhi}月 ${dayGan}${dayZhi}日 ${hourGan}${hourZhi}时`;
-            
             const timeStr = `${year}年${month}月${day}日 ${hour}:${minute.toString().padStart(2, '0')}`;
             
             return `你是小卜（Oraculum），一位专业的奇门遁甲顾问。
@@ -3273,8 +3027,8 @@
 1. 必须用${currentLang === 'zh' ? '中文' : 'English'}回答
 2. 开头必须先显示"📅 起局时间：${timeStr}"和"🔮 四柱：${bazi}"（英文界面显示 "📅 Time: ..." 和 "🔮 BaZi: ..."）
 3. 然后给出核心结论（简洁有力）
-4. 再用通俗语言解释奇门依据
-5. 分点建议时必须换行，不要使用*号或·号开头，直接用数字或文字描述
+4. 再用通俗语言解释奇门依据（用神落宫、星门等）
+5. 分点建议时必须换行，直接用数字或文字描述
 6. 用🧭👕⏰💰等emoji点缀建议
 7. 风险提醒要一针见血
 8. 情绪价值温暖收尾
@@ -3282,7 +3036,7 @@
         }
 
         // 输入框事件
-        document.getElementById('chatInput').addEventListener('keydown', (e) => {
+        document.getElementById('chatInput')?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendMessage();
@@ -3397,26 +3151,6 @@
         }
 
         // ===== 命盘排盘 =====
-        // 时辰对照表（小时 -> 时辰索引）
-        const hourToShichen = [
-            0,  // 00:00-00:59 子时（早子时）
-            1, 1,  // 01:00-02:59 丑时
-            2, 2,  // 03:00-04:59 寅时
-            3, 3,  // 05:00-06:59 卯时
-            4, 4,  // 07:00-08:59 辰时
-            5, 5,  // 09:00-10:59 巳时
-            6, 6,  // 11:00-12:59 午时
-            7, 7,  // 13:00-14:59 未时
-            8, 8,  // 15:00-16:59 申时
-            9, 9,  // 17:00-18:59 酉时
-            10, 10, // 19:00-20:59 戌时
-            11, 11, // 21:00-22:59 亥时
-            0   // 23:00-23:59 子时（夜子时）
-        ];
-        
-        const shichenNames = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-        const shichenNamesEn = ['Zi', 'Chou', 'Yin', 'Mao', 'Chen', 'Si', 'Wu', 'Wei', 'Shen', 'You', 'Xu', 'Hai'];
-
         function initDateSelectors() {
             const yearSelect = document.getElementById('birthYear');
             const monthSelect = document.getElementById('birthMonth');
@@ -3424,8 +3158,10 @@
             const hourSelect = document.getElementById('birthHour');
             const minuteSelect = document.getElementById('birthMinute');
             
+            if (!yearSelect) return;
+            
             // 年份
-            for (let y = 2020; y >= 1940; y--) {
+            for (let y = 2025; y >= 1940; y--) {
                 yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
             }
             
@@ -3439,30 +3175,26 @@
                 daySelect.innerHTML += `<option value="${d}">${d}</option>`;
             }
             
-            // 小时 (0-23)
+            // 小时
+            const shichenNames = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
             for (let h = 0; h <= 23; h++) {
                 const hStr = h.toString().padStart(2, '0');
-                const shichenIdx = hourToShichen[h];
-                hourSelect.innerHTML += `<option value="${h}">${hStr}时 (${shichenNames[shichenIdx]}时)</option>`;
+                const shichenIdx = Math.floor((h + 1) / 2) % 12;
+                hourSelect.innerHTML += `<option value="${h}">${hStr}:00 (${shichenNames[shichenIdx]}时)</option>`;
             }
             
-            // 分钟 (0-59)
+            // 分钟
             for (let m = 0; m <= 59; m++) {
                 const mStr = m.toString().padStart(2, '0');
-                minuteSelect.innerHTML += `<option value="${m}">${mStr}分</option>`;
+                minuteSelect.innerHTML += `<option value="${m}">${mStr}</option>`;
             }
             
-            // 设置默认值（测试用：2007-9-4 12:00）
+            // 设置默认值（测试用：2007-9-4）
             yearSelect.value = 2007;
             monthSelect.value = 9;
             daySelect.value = 4;
             hourSelect.value = 12;
             minuteSelect.value = 0;
-        }
-
-        // 根据小时获取时辰索引
-        function getShichenIndex(hour) {
-            return hourToShichen[hour];
         }
 
         function setCalendar(type) {
@@ -3471,7 +3203,6 @@
             
             if (type === 'solar') {
                 solarBtn.classList.add('btn-outline');
-                solarBtn.classList.remove('btn');
                 solarBtn.style.background = '';
                 solarBtn.style.color = '';
                 lunarBtn.classList.remove('btn-outline');
@@ -3479,7 +3210,6 @@
                 lunarBtn.style.color = 'var(--color-text)';
             } else {
                 lunarBtn.classList.add('btn-outline');
-                lunarBtn.classList.remove('btn');
                 lunarBtn.style.background = '';
                 lunarBtn.style.color = '';
                 solarBtn.classList.remove('btn-outline');
@@ -3497,15 +3227,13 @@
             const city = document.getElementById('birthCity').value || '北京';
             const gender = document.getElementById('birthGender').value;
             
-            // 根据小时计算时辰
-            const shichenIdx = getShichenIndex(hour);
+            const shichenNames = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            const shichenIdx = Math.floor((hour + 1) / 2) % 12;
             const shichenName = shichenNames[shichenIdx];
-            const shichenNameEn = shichenNamesEn[shichenIdx];
             
-            // 格式化时间
             const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
             
-            // 显示加载状态
+            document.getElementById('chartInputCard').style.display = 'none';
             document.getElementById('chartResultCard').style.display = 'block';
             document.getElementById('chartContainer').innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading"></div></div>';
             
@@ -3528,9 +3256,18 @@
 请返回严格JSON格式，包含：
 {
     "palaces": {
-        "ming": {"star": "主星名", "starEn": "English name"},
+        "ming": {"star": "主星名", "starEn": "English"},
         "xiongdi": {"star": "...", "starEn": "..."},
-        ...十二宫
+        "fuqi": {"star": "...", "starEn": "..."},
+        "zinu": {"star": "...", "starEn": "..."},
+        "caibo": {"star": "...", "starEn": "..."},
+        "jie": {"star": "...", "starEn": "..."},
+        "qianyi": {"star": "...", "starEn": "..."},
+        "jiaoyou": {"star": "...", "starEn": "..."},
+        "guanlu": {"star": "...", "starEn": "..."},
+        "tianzhai": {"star": "...", "starEn": "..."},
+        "fude": {"star": "...", "starEn": "..."},
+        "fumu": {"star": "...", "starEn": "..."}
     },
     "fiveElements": "五行分析简述",
     "fiveElementsEn": "English analysis"
@@ -3546,7 +3283,6 @@
                 let chartResult;
                 
                 try {
-                    // 尝试解析JSON
                     const content = data.choices[0].message.content;
                     const jsonMatch = content.match(/\{[\s\S]*\}/);
                     if (jsonMatch) {
@@ -3555,15 +3291,13 @@
                         throw new Error('No JSON found');
                     }
                 } catch (e) {
-                    // 使用预设数据（2007-9-4测试用）
                     chartResult = getDemoChart();
                 }
                 
-                renderChart(chartResult);
+                renderChart(chartResult, year, month, day, timeStr);
                 
             } catch (error) {
-                // 使用预设数据
-                renderChart(getDemoChart());
+                renderChart(getDemoChart(), year, month, day, timeStr);
             }
         }
 
@@ -3588,10 +3322,9 @@
             };
         }
 
-        function renderChart(chartResult) {
+        function renderChart(chartResult, year, month, day, timeStr) {
             const container = document.getElementById('chartContainer');
             
-            // 宫位名称
             const palaceNames = {
                 ming: currentLang === 'zh' ? '命宫' : 'Life',
                 xiongdi: currentLang === 'zh' ? '兄弟' : 'Siblings',
@@ -3599,7 +3332,7 @@
                 zinu: currentLang === 'zh' ? '子女' : 'Children',
                 caibo: currentLang === 'zh' ? '财帛' : 'Wealth',
                 jie: currentLang === 'zh' ? '疾厄' : 'Health',
-                qianyi: currentLang === 'zh' ? '迁移' : 'Migration',
+                qianyi: currentLang === 'zh' ? '迁移' : 'Travel',
                 jiaoyou: currentLang === 'zh' ? '交友' : 'Friends',
                 guanlu: currentLang === 'zh' ? '官禄' : 'Career',
                 tianzhai: currentLang === 'zh' ? '田宅' : 'Property',
@@ -3609,8 +3342,8 @@
             
             let html = `
                 <div class="chart-center">
-                    <div class="chart-center-label">${t('center')}</div>
-                    <div class="chart-center-value">紫微</div>
+                    <div class="chart-center-label">紫微</div>
+                    <div class="chart-center-value">Ziwei</div>
                 </div>
             `;
             
@@ -3618,7 +3351,7 @@
                 const palace = chartResult.palaces[key];
                 const starText = currentLang === 'zh' ? palace.star : palace.starEn;
                 html += `
-                    <div class="palace" data-palace="${key}" onclick="showPalaceDetail('${key}', '${starText}')">
+                    <div class="palace" data-palace="${key}" onclick="showPalaceDetail('${name}', '${starText}')">
                         <div class="palace-name">${name}</div>
                         <div class="palace-star">${starText}</div>
                     </div>
@@ -3627,21 +3360,31 @@
             
             container.innerHTML = html;
             
-            // 五行分析
-            document.getElementById('fiveElementsResult').textContent = 
-                currentLang === 'zh' ? chartResult.fiveElements : chartResult.fiveElementsEn;
-            
-            // 保存到localStorage
-            localStorage.setItem('oraculum_chart', JSON.stringify(chartResult));
+            document.getElementById('chartMainStar').textContent = currentLang === 'zh' 
+                ? `${chartResult.palaces.ming.star}坐命` 
+                : `${chartResult.palaces.ming.starEn} in Life Palace`;
+            document.getElementById('chartMainStarEn').textContent = currentLang === 'zh' 
+                ? chartResult.palaces.ming.starEn + ' in Life Palace'
+                : chartResult.palaces.ming.star + '坐命';
+            document.getElementById('chartBirthDate').textContent = `公历 ${year}-${month}-${day}`;
+            document.getElementById('fiveElementsResult').textContent = currentLang === 'zh' 
+                ? chartResult.fiveElements 
+                : chartResult.fiveElementsEn;
         }
 
-        function showPalaceDetail(palace, star) {
-            alert(`${palace}: ${star}`);
+        function showChartInput() {
+            document.getElementById('chartInputCard').style.display = 'block';
+            document.getElementById('chartResultCard').style.display = 'none';
+        }
+
+        function showPalaceDetail(name, star) {
+            alert(`${name}: ${star}`);
         }
 
         // ===== 摇卦功能 =====
         function initHexagramLines() {
             const container = document.getElementById('hexagramLines');
+            if (!container) return;
             container.innerHTML = '';
             for (let i = 0; i < 6; i++) {
                 const line = document.createElement('div');
@@ -3651,55 +3394,56 @@
             }
         }
 
-        function throwCoins() {
+        async function throwCoins() {
             if (isThrowing || throwCount >= 6) return;
             
             isThrowing = true;
             const coins = document.querySelectorAll('.coin');
             
-            // 添加翻转动画
             coins.forEach(coin => coin.classList.add('flipping'));
             
-            setTimeout(() => {
-                coins.forEach(coin => coin.classList.remove('flipping'));
-                
-                // 随机生成三枚硬币的正反面
-                const results = [Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5];
-                const yangCount = results.filter(r => r).length;
-                
-                // 判断阴爻还是阳爻（3阳或1阳为阳爻，2阳为阴爻）
-                const isYang = yangCount !== 2;
-                
-                // 记录结果
-                hexagramLines.push(isYang ? '1' : '0');
-                
-                // 更新显示
-                const lineEl = document.getElementById(`line-${throwCount}`);
-                if (!isYang) {
-                    lineEl.classList.add('broken');
-                }
-                
-                throwCount++;
-                document.getElementById('throwHint').textContent = 
-                    currentLang === 'zh' ? `第 ${throwCount} 次完成，还需 ${6 - throwCount} 次` : `Throw ${throwCount} done, ${6 - throwCount} remaining`;
-                
-                if (throwCount >= 6) {
-                    finishHexagram();
-                }
-                
-                isThrowing = false;
-            }, 500);
-        }
-
-        function finishHexagram() {
-            const binary = hexagramLines.join('');
-            const hexagram = hexagrams[binary] || { name: '未知卦', text: '请重新摇卦' };
+            await new Promise(resolve => setTimeout(resolve, 500));
             
-            document.getElementById('hexagramResult').style.display = 'block';
-            document.getElementById('hexagramName').textContent = hexagram.name;
-            document.getElementById('hexagramText').textContent = hexagram.text;
-            document.getElementById('throwBtn').textContent = currentLang === 'zh' ? '重新摇卦' : 'Cast Again';
-            document.getElementById('throwBtn').onclick = resetHexagram;
+            coins.forEach(coin => coin.classList.remove('flipping'));
+            
+            // 随机生成三枚硬币的正反面
+            const results = [Math.random() > 0.5, Math.random() > 0.5, Math.random() > 0.5];
+            const yangCount = results.filter(r => r).length;
+            
+            // 判断阴爻还是阳爻
+            const isYang = yangCount !== 2;
+            
+            // 更新爻线
+            const lineEl = document.getElementById(`line-${throwCount}`);
+            if (isYang) {
+                lineEl.classList.remove('broken');
+            } else {
+                lineEl.classList.add('broken');
+            }
+            
+            hexagramLines.push(isYang ? '1' : '0');
+            throwCount++;
+            
+            // 更新提示
+            const hintEl = document.getElementById('throwHint');
+            hintEl.textContent = currentLang === 'zh' 
+                ? `已完成 ${throwCount}/6 次` 
+                : `${throwCount}/6 tosses completed`;
+            
+            if (throwCount >= 6) {
+                // 解卦
+                const binary = hexagramLines.reverse().join('');
+                const result = hexagrams[binary] || { name: '未知卦', text: '卦象未明' };
+                
+                document.getElementById('hexagramResult').style.display = 'block';
+                document.getElementById('hexagramName').textContent = result.name;
+                document.getElementById('hexagramText').textContent = result.text;
+                
+                document.getElementById('throwBtn').textContent = currentLang === 'zh' ? '重新摇卦' : 'Cast Again';
+                document.getElementById('throwBtn').onclick = resetHexagram;
+            }
+            
+            isThrowing = false;
         }
 
         function resetHexagram() {
@@ -3707,25 +3451,20 @@
             hexagramLines = [];
             document.getElementById('hexagramResult').style.display = 'none';
             document.getElementById('interpretResult').style.display = 'none';
-            document.getElementById('interpretBtn').textContent = t('interpret');
-            document.getElementById('throwBtn').textContent = t('start_throw');
+            document.getElementById('throwHint').textContent = currentLang === 'zh' 
+                ? '点击开始摇卦，共需六次' 
+                : 'Click to start, 6 tosses needed';
+            document.getElementById('throwBtn').textContent = currentLang === 'zh' ? '开始摇卦' : 'Start Casting';
             document.getElementById('throwBtn').onclick = throwCoins;
-            document.getElementById('throwHint').textContent = t('throw_hint');
             initHexagramLines();
         }
 
         async function interpretHexagram() {
-            const hexName = document.getElementById('hexagramName').textContent;
-            const hexText = document.getElementById('hexagramText').textContent;
-            const interpretBtn = document.getElementById('interpretBtn');
-            const interpretResult = document.getElementById('interpretResult');
-            const interpretContent = document.getElementById('interpretContent');
+            const name = document.getElementById('hexagramName').textContent;
+            const text = document.getElementById('hexagramText').textContent;
             
-            // 显示加载状态
-            interpretBtn.disabled = true;
-            interpretBtn.textContent = currentLang === 'zh' ? '解卦中...' : 'Interpreting...';
-            interpretContent.innerHTML = '<div class="loading" style="margin: 20px auto;"></div>';
-            interpretResult.style.display = 'block';
+            document.getElementById('interpretResult').style.display = 'block';
+            document.getElementById('interpretContent').innerHTML = '<div class="loading"></div>';
             
             try {
                 const response = await fetch(API_URL, {
@@ -3738,38 +3477,34 @@
                         model: 'deepseek-chat',
                         messages: [{
                             role: 'user',
-                            content: `请解读《易经》六十四卦中的「${hexName}」卦。
-
-卦辞：${hexText}
-
-请用${currentLang === 'zh' ? '中文' : 'English'}解读：
-1. 卦象含义（简洁）
-2. 对当前决策的启示
-3. 注意事项
-
-控制在200字以内。`
+                            content: `请解读六十四卦中的「${name}」卦：\n\n卦辞：${text}\n\n请用${currentLang === 'zh' ? '中文' : 'English'}给出：\n1. 卦象含义\n2. 事业运势\n3. 感情运势\n4. 财运建议\n5. 综合建议（200字以内）`
                         }]
                     })
                 });
                 
                 const data = await response.json();
                 if (data.choices && data.choices[0]) {
-                    // 格式化显示
-                    interpretContent.innerHTML = data.choices[0].message.content
-                        .replace(/\n/g, '<br>')
-                        .replace(/(\d+\.)/g, '<strong>$1</strong>');
+                    document.getElementById('interpretContent').innerHTML = data.choices[0].message.content.replace(/\n/g, '<br>');
                 }
             } catch (error) {
-                interpretContent.textContent = currentLang === 'zh' ? '解卦失败，请稍后重试' : 'Interpretation failed. Please try again.';
-            } finally {
-                interpretBtn.disabled = false;
-                interpretBtn.textContent = currentLang === 'zh' ? '重新解卦' : 'Interpret Again';
+                document.getElementById('interpretContent').textContent = currentLang === 'zh' 
+                    ? '解卦失败，请稍后重试' 
+                    : 'Interpretation failed, please try again';
             }
         }
 
         function showHexagram(name, text) {
-            document.getElementById('modalTitle').textContent = name;
-            document.getElementById('modalBody').textContent = text;
+            alert(`${name}\n\n${text}`);
+        }
+
+        // ===== 辅助功能 =====
+        function toggleCollapsible(el) {
+            el.classList.toggle('open');
+        }
+
+        function showModal(title, body) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').textContent = body;
             document.getElementById('modal').classList.add('active');
         }
 
@@ -3777,21 +3512,57 @@
             document.getElementById('modal').classList.remove('active');
         }
 
-        // ===== 折叠功能 =====
-        function toggleCollapsible(el) {
-            el.classList.toggle('open');
+        function setTodayDate() {
+            const now = new Date();
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            document.getElementById('todayDate').textContent = `${months[now.getMonth()]} ${now.getDate()}`;
         }
 
-        // ===== 更新历史记录 =====
         function updateHistoryCount() {
             document.getElementById('historyCount').textContent = divinationHistory.length;
         }
 
-        // ===== 设置今日日期 =====
-        function setTodayDate() {
-            const now = new Date();
-            const options = { month: 'long', day: 'numeric' };
-            document.getElementById('todayDate').textContent = now.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : 'en-US', options);
+        // ===== 菜单功能 =====
+        function showIntroModal() {
+            alert(currentLang === 'zh' 
+                ? 'Oraculum 融合三千年中国战略智慧——奇门遁甲与道家五术——融入你的日常生活。\n\n我们不是算命，而是帮你找到最佳的时机、方向和策略。\n\nOraculum integrates 3,000 years of Chinese strategic wisdom—Qimen Dunjia and the Five Arts—into your daily life. We don\'t predict fate; we help you find the best timing, direction, and strategy.'
+                : 'Oraculum integrates 3,000 years of Chinese strategic wisdom—Qimen Dunjia and the Five Arts—into your daily life.\n\nWe don\'t predict fate; we help you find the best timing, direction, and strategy.');
+        }
+
+        function showEnergyDetail() {
+            alert(currentLang === 'zh' 
+                ? '今日值符天芮星，值使死门。宜守不宜攻，适合内部整理和规划。\n\n南方利见贵人，北方宜静养。\n\n惊蛰时节，万物复苏，阴遁8局主守，不宜冒进。'
+                : 'Today\'s Star: Tianrui. Gate: Si Men. Best for internal planning.\n\nSouth favors meeting important people. North is good for rest.\n\nAwakening season, Yin Cycle 8 suggests defense over offense.');
+        }
+
+        function showRecipe() {
+            alert(currentLang === 'zh' 
+                ? '雪梨银耳羹做法：\n\n1. 银耳提前泡发2小时，撕成小朵\n2. 雪梨去皮切块\n3. 将银耳、雪梨放入炖盅\n4. 加入冰糖、枸杞\n5. 隔水炖1小时即可\n\n功效：滋阴润肺，适合春季养肝'
+                : 'Pear & Tremella Soup Recipe:\n\n1. Soak tremella for 2 hours, tear into pieces\n2. Peel and cut pear into chunks\n3. Place in a steaming bowl\n4. Add rock sugar and goji berries\n5. Steam for 1 hour\n\nBenefits: Nourishes yin and lungs, perfect for spring liver care.');
+        }
+
+        function showSubscription() {
+            alert(currentLang === 'zh' ? '订阅商店功能开发中...' : 'Subscription feature coming soon...');
+        }
+
+        function showHistory() {
+            alert(currentLang === 'zh' 
+                ? `占卜历史：共 ${divinationHistory.length} 条记录` 
+                : `Divination History: ${divinationHistory.length} records`);
+        }
+
+        function showSettings() {
+            alert(currentLang === 'zh' ? '账号设置功能开发中...' : 'Account settings coming soon...');
+        }
+
+        function showAbout() {
+            alert('小卜 · Oraculum v1.0.0\n\n基于奇门遁甲的智能决策助手\nIntelligent decision assistant based on Qimen Dunjia\n\n© 2025 Oraculum');
+        }
+
+        function showFeedback() {
+            alert(currentLang === 'zh' 
+                ? '感谢反馈！联系：feedback@oraculum.ai' 
+                : 'Thanks for feedback! Contact: feedback@oraculum.ai');
         }
     </script>
 </body>
