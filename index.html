@@ -154,6 +154,13 @@
             letter-spacing: 0.02em;
         }
 
+        .quote-source {
+            display: block;
+            font-size: 11px;
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
         /* ===== 主内容区 ===== */
         .main-content {
             padding: 0 var(--spacing-page);
@@ -314,15 +321,16 @@
             margin-top: 2px;
         }
 
-        /* 八方位置 */
+        /* 八方位置 - 后天八卦（现代地图方向：上北下南） */
+        /* 北方（上）：坎，南方（下）：离，东方（右）：震，西方（左）：兑 */
         .compass-sector.north { top: 0; left: 50%; transform: translateX(-50%); }
         .compass-sector.south { bottom: 0; left: 50%; transform: translateX(-50%); }
-        .compass-sector.east { left: 0; top: 50%; transform: translateY(-50%); }
-        .compass-sector.west { right: 0; top: 50%; transform: translateY(-50%); }
-        .compass-sector.northeast { top: 20px; left: 20px; }
-        .compass-sector.northwest { top: 20px; right: 20px; }
-        .compass-sector.southeast { bottom: 20px; left: 20px; }
-        .compass-sector.southwest { bottom: 20px; right: 20px; }
+        .compass-sector.east { right: 0; top: 50%; transform: translateY(-50%); }
+        .compass-sector.west { left: 0; top: 50%; transform: translateY(-50%); }
+        .compass-sector.northeast { top: 20px; right: 20px; }
+        .compass-sector.northwest { top: 20px; left: 20px; }
+        .compass-sector.southeast { bottom: 20px; right: 20px; }
+        .compass-sector.southwest { bottom: 20px; left: 20px; }
 
         .compass-result {
             text-align: center;
@@ -1598,9 +1606,10 @@
                 </div>
             </header>
 
-            <!-- 文化金句 -->
+            <!-- 文化金句（每日随机） -->
             <div class="quote-banner">
-                <span data-i18n="quote">知天易，逆天难</span>
+                <span id="dailyQuoteText">天行健，君子以自强不息</span>
+                <span class="quote-source" id="dailyQuoteSource">《周易·乾卦》</span>
             </div>
 
             <!-- 主内容 -->
@@ -2337,7 +2346,13 @@
                 <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;" id="hexagramText">
                     元亨利贞。
                 </p>
-                <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="interpretHexagram()" data-i18n="interpret">解卦</button>
+                <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" id="interpretBtn" onclick="interpretHexagram()" data-i18n="interpret">解卦</button>
+                
+                <!-- 解卦结果 -->
+                <div id="interpretResult" style="display: none; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.05);">
+                    <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">解卦分析</div>
+                    <div id="interpretContent" style="font: var(--font-hint); color: var(--color-text-mid); line-height: 1.8;"></div>
+                </div>
             </div>
 
             <!-- 六十四卦速览 -->
@@ -2391,6 +2406,33 @@
         // ===== DeepSeek API =====
         const API_KEY = 'sk-6df5e6eed7a643cd9cf968349f059281';
         const API_URL = 'https://api.deepseek.com/v1/chat/completions';
+
+        // ===== 经典引用（每日随机） =====
+        const classicQuotes = [
+            { zh: '天行健，君子以自强不息', en: 'Heaven moves with vigor; the noble strives endlessly', source: '《周易·乾卦》' },
+            { zh: '地势坤，君子以厚德载物', en: 'Earth is receptive; the noble bears all with virtue', source: '《周易·坤卦》' },
+            { zh: '君子终日乾乾，夕惕若，厉无咎', en: 'The noble works diligently all day, vigilant at night; danger brings no blame', source: '《周易·乾卦》' },
+            { zh: '谦谦君子，用涉大川', en: 'The humble noble can cross great rivers', source: '《周易·谦卦》' },
+            { zh: '积善之家，必有余庆', en: 'A family that accumulates goodness will have overflowing blessings', source: '《周易·坤卦·文言》' },
+            { zh: '穷则变，变则通，通则久', en: 'When exhausted, change; change leads to flow; flow leads to endurance', source: '《周易·系辞下》' },
+            { zh: '一阴一阳之谓道', en: 'One yin and one yang is called the Way', source: '《周易·系辞上》' },
+            { zh: '君子以见善则迁，有过则改', en: 'The noble moves toward good and corrects mistakes', source: '《周易·益卦》' },
+            { zh: '居上位而不骄，在下位而不忧', en: 'Not proud in high position, not worried in low position', source: '《周易·乾卦·文言》' },
+            { zh: '君子藏器于身，待时而动', en: 'The noble keeps abilities hidden, waiting for the right time to act', source: '《周易·系辞下》' },
+            { zh: '亢龙有悔，盈不可久', en: 'The dragon exceeding its limits brings regret; fullness cannot last', source: '《周易·乾卦》' },
+            { zh: '君子以作事谋始', en: 'The noble plans well at the beginning', source: '《周易·讼卦》' },
+            { zh: '履霜坚冰至', en: 'Treading on frost, hard ice arrives', source: '《周易·坤卦》' },
+            { zh: '同声相应，同气相求', en: 'Similar sounds respond; similar energies seek each other', source: '《周易·乾卦·文言》' },
+            { zh: '观乎天文，以察时变', en: 'Observe the patterns of heaven to understand the changes of time', source: '《周易·贲卦·彖》' }
+        ];
+        
+        // 根据日期获取每日引用（同一天显示同一条）
+        function getDailyQuote() {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const index = dayOfYear % classicQuotes.length;
+            return classicQuotes[index];
+        }
 
         // ===== 翻译库 =====
         const translations = {
@@ -2742,7 +2784,20 @@
             updateHistoryCount();
             setTodayDate();
             initHexagramLines();
+            updateDailyQuote();
         });
+
+        // ===== 更新每日引用 =====
+        function updateDailyQuote() {
+            const quote = getDailyQuote();
+            const quoteText = document.getElementById('dailyQuoteText');
+            const quoteSource = document.getElementById('dailyQuoteSource');
+            
+            if (quoteText && quoteSource) {
+                quoteText.textContent = currentLang === 'zh' ? quote.zh : quote.en;
+                quoteSource.textContent = quote.source;
+            }
+        }
 
         // ===== 语言切换 =====
         function initLanguage() {
@@ -2771,6 +2826,9 @@
             
             // 更新HTML语言属性
             document.documentElement.lang = currentLang;
+            
+            // 更新每日引用
+            updateDailyQuote();
         }
 
         function t(key) {
@@ -3178,10 +3236,32 @@
         }
 
         // ===== 命盘排盘 =====
+        // 时辰对照表（小时 -> 时辰索引）
+        const hourToShichen = [
+            0,  // 00:00-00:59 子时（早子时）
+            1, 1,  // 01:00-02:59 丑时
+            2, 2,  // 03:00-04:59 寅时
+            3, 3,  // 05:00-06:59 卯时
+            4, 4,  // 07:00-08:59 辰时
+            5, 5,  // 09:00-10:59 巳时
+            6, 6,  // 11:00-12:59 午时
+            7, 7,  // 13:00-14:59 未时
+            8, 8,  // 15:00-16:59 申时
+            9, 9,  // 17:00-18:59 酉时
+            10, 10, // 19:00-20:59 戌时
+            11, 11, // 21:00-22:59 亥时
+            0   // 23:00-23:59 子时（夜子时）
+        ];
+        
+        const shichenNames = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+        const shichenNamesEn = ['Zi', 'Chou', 'Yin', 'Mao', 'Chen', 'Si', 'Wu', 'Wei', 'Shen', 'You', 'Xu', 'Hai'];
+
         function initDateSelectors() {
             const yearSelect = document.getElementById('birthYear');
             const monthSelect = document.getElementById('birthMonth');
             const daySelect = document.getElementById('birthDay');
+            const hourSelect = document.getElementById('birthHour');
+            const minuteSelect = document.getElementById('birthMinute');
             
             // 年份
             for (let y = 2020; y >= 1940; y--) {
@@ -3198,10 +3278,30 @@
                 daySelect.innerHTML += `<option value="${d}">${d}</option>`;
             }
             
-            // 设置默认值（测试用：2007-9-4）
+            // 小时 (0-23)
+            for (let h = 0; h <= 23; h++) {
+                const hStr = h.toString().padStart(2, '0');
+                const shichenIdx = hourToShichen[h];
+                hourSelect.innerHTML += `<option value="${h}">${hStr}时 (${shichenNames[shichenIdx]}时)</option>`;
+            }
+            
+            // 分钟 (0-59)
+            for (let m = 0; m <= 59; m++) {
+                const mStr = m.toString().padStart(2, '0');
+                minuteSelect.innerHTML += `<option value="${m}">${mStr}分</option>`;
+            }
+            
+            // 设置默认值（测试用：2007-9-4 12:00）
             yearSelect.value = 2007;
             monthSelect.value = 9;
             daySelect.value = 4;
+            hourSelect.value = 12;
+            minuteSelect.value = 0;
+        }
+
+        // 根据小时获取时辰索引
+        function getShichenIndex(hour) {
+            return hourToShichen[hour];
         }
 
         function setCalendar(type) {
@@ -3232,8 +3332,17 @@
             const month = parseInt(document.getElementById('birthMonth').value);
             const day = parseInt(document.getElementById('birthDay').value);
             const hour = parseInt(document.getElementById('birthHour').value);
+            const minute = parseInt(document.getElementById('birthMinute').value) || 0;
             const city = document.getElementById('birthCity').value || '北京';
             const gender = document.getElementById('birthGender').value;
+            
+            // 根据小时计算时辰
+            const shichenIdx = getShichenIndex(hour);
+            const shichenName = shichenNames[shichenIdx];
+            const shichenNameEn = shichenNamesEn[shichenIdx];
+            
+            // 格式化时间
+            const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
             
             // 显示加载状态
             document.getElementById('chartResultCard').style.display = 'block';
@@ -3251,7 +3360,7 @@
                         messages: [{
                             role: 'user',
                             content: `请根据以下信息计算紫微斗数命盘，返回JSON格式：
-出生：${year}年${month}月${day}日 ${['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'][hour]}时
+出生：${year}年${month}月${day}日 ${timeStr} (${shichenName}时)
 城市：${city}
 性别：${gender}
 
@@ -3436,6 +3545,8 @@
             throwCount = 0;
             hexagramLines = [];
             document.getElementById('hexagramResult').style.display = 'none';
+            document.getElementById('interpretResult').style.display = 'none';
+            document.getElementById('interpretBtn').textContent = t('interpret');
             document.getElementById('throwBtn').textContent = t('start_throw');
             document.getElementById('throwBtn').onclick = throwCoins;
             document.getElementById('throwHint').textContent = t('throw_hint');
@@ -3445,6 +3556,15 @@
         async function interpretHexagram() {
             const hexName = document.getElementById('hexagramName').textContent;
             const hexText = document.getElementById('hexagramText').textContent;
+            const interpretBtn = document.getElementById('interpretBtn');
+            const interpretResult = document.getElementById('interpretResult');
+            const interpretContent = document.getElementById('interpretContent');
+            
+            // 显示加载状态
+            interpretBtn.disabled = true;
+            interpretBtn.textContent = currentLang === 'zh' ? '解卦中...' : 'Interpreting...';
+            interpretContent.innerHTML = '<div class="loading" style="margin: 20px auto;"></div>';
+            interpretResult.style.display = 'block';
             
             try {
                 const response = await fetch(API_URL, {
@@ -3473,10 +3593,16 @@
                 
                 const data = await response.json();
                 if (data.choices && data.choices[0]) {
-                    alert(data.choices[0].message.content);
+                    // 格式化显示
+                    interpretContent.innerHTML = data.choices[0].message.content
+                        .replace(/\n/g, '<br>')
+                        .replace(/(\d+\.)/g, '<strong>$1</strong>');
                 }
             } catch (error) {
-                alert(currentLang === 'zh' ? '解卦失败，请稍后重试' : 'Interpretation failed. Please try again.');
+                interpretContent.textContent = currentLang === 'zh' ? '解卦失败，请稍后重试' : 'Interpretation failed. Please try again.';
+            } finally {
+                interpretBtn.disabled = false;
+                interpretBtn.textContent = currentLang === 'zh' ? '重新解卦' : 'Interpret Again';
             }
         }
 
