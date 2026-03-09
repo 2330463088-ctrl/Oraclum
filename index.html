@@ -3174,6 +3174,431 @@
             }
         }
 
+        // ===== 奇门遁甲排盘系统 =====
+        
+        // 九宫方位
+        const QIMEN_PALACES = {
+            kan: { name: '坎一宫', direction: '正北', gua: '坎', num: 1 },
+            kun: { name: '坤二宫', direction: '西南', gua: '坤', num: 2 },
+            zhen: { name: '震三宫', direction: '正东', gua: '震', num: 3 },
+            xun: { name: '巽四宫', direction: '东南', gua: '巽', num: 4 },
+            zhong: { name: '中五宫', direction: '中宫', gua: '中', num: 5 },
+            qian: { name: '乾六宫', direction: '西北', gua: '乾', num: 6 },
+            dui: { name: '兑七宫', direction: '正西', gua: '兑', num: 7 },
+            gen: { name: '艮八宫', direction: '东北', gua: '艮', num: 8 },
+            li: { name: '离九宫', direction: '正南', gua: '离', num: 9 }
+        };
+
+        // 城市卦象映射
+        const CITY_GUA_MAP = {
+            '北京': { gua: '坎', palace: '坎一宫', direction: '正北', wuxing: '水' },
+            '上海': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '广州': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '深圳': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '成都': { gua: '坤', palace: '坤二宫', direction: '西南', wuxing: '土' },
+            '重庆': { gua: '坤', palace: '坤二宫', direction: '西南', wuxing: '土' },
+            '杭州': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '南京': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '武汉': { gua: '中', palace: '中五宫', direction: '中宫', wuxing: '土' },
+            '西安': { gua: '乾', palace: '乾六宫', direction: '西北', wuxing: '金' },
+            '天津': { gua: '坎', palace: '坎一宫', direction: '正北', wuxing: '水' },
+            '苏州': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '青岛': { gua: '艮', palace: '艮八宫', direction: '东北', wuxing: '土' },
+            '大连': { gua: '艮', palace: '艮八宫', direction: '东北', wuxing: '土' },
+            '厦门': { gua: '巽', palace: '巽四宫', direction: '东南', wuxing: '木' },
+            '福州': { gua: '巽', palace: '巽四宫', direction: '东南', wuxing: '木' },
+            '长沙': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '郑州': { gua: '中', palace: '中五宫', direction: '中宫', wuxing: '土' },
+            '沈阳': { gua: '艮', palace: '艮八宫', direction: '东北', wuxing: '土' },
+            '哈尔滨': { gua: '坎', palace: '坎一宫', direction: '正北', wuxing: '水' },
+            '昆明': { gua: '坤', palace: '坤二宫', direction: '西南', wuxing: '土' },
+            '贵阳': { gua: '坤', palace: '坤二宫', direction: '西南', wuxing: '土' },
+            '南宁': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '海口': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '兰州': { gua: '乾', palace: '乾六宫', direction: '西北', wuxing: '金' },
+            '乌鲁木齐': { gua: '乾', palace: '乾六宫', direction: '西北', wuxing: '金' },
+            '拉萨': { gua: '坤', palace: '坤二宫', direction: '西南', wuxing: '土' },
+            '呼和浩特': { gua: '坎', palace: '坎一宫', direction: '正北', wuxing: '水' },
+            '银川': { gua: '乾', palace: '乾六宫', direction: '西北', wuxing: '金' },
+            '西宁': { gua: '乾', palace: '乾六宫', direction: '西北', wuxing: '金' },
+            '太原': { gua: '坎', palace: '坎一宫', direction: '正北', wuxing: '水' },
+            '石家庄': { gua: '坎', palace: '坎一宫', direction: '正北', wuxing: '水' },
+            '济南': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '合肥': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '南昌': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '长春': { gua: '艮', palace: '艮八宫', direction: '东北', wuxing: '土' },
+            '无锡': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '宁波': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '东莞': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '佛山': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '温州': { gua: '巽', palace: '巽四宫', direction: '东南', wuxing: '木' },
+            '珠海': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '中山': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '惠州': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '香港': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '澳门': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' },
+            '台北': { gua: '震', palace: '震三宫', direction: '正东', wuxing: '木' },
+            '高雄': { gua: '离', palace: '离九宫', direction: '正南', wuxing: '火' }
+        };
+
+        // 九星
+        const JIUXING = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
+        const JIUXING_EN = ['Tianpeng', 'Tianrui', 'Tianchong', 'Tianfu', 'Tianqin', 'Tianxin', 'Tianzhu', 'Tianren', 'Tianying'];
+        const JIUXING_ATTR = {
+            '天蓬': { wuxing: '水', gua: '坎', meaning: '智慧、谋略、暗昧、欺诈' },
+            '天芮': { wuxing: '土', gua: '坤', meaning: '疾病、问题、学习、合作' },
+            '天冲': { wuxing: '木', gua: '震', meaning: '冲动、进取、竞争、变动' },
+            '天辅': { wuxing: '木', gua: '巽', meaning: '辅助、学业、文书、贵人' },
+            '天禽': { wuxing: '土', gua: '中', meaning: '中正、稳重、诚信、中心' },
+            '天心': { wuxing: '金', gua: '乾', meaning: '心愿、医疗、领导、谋划' },
+            '天柱': { wuxing: '金', gua: '兑', meaning: '支撑、破坏、变革、口舌' },
+            '天任': { wuxing: '土', gua: '艮', meaning: '责任、担当、稳定、保守' },
+            '天英': { wuxing: '火', gua: '离', meaning: '名声、才华、火灾、血光' }
+        };
+
+        // 八门
+        const BAMEN = ['休门', '生门', '伤门', '杜门', '景门', '死门', '惊门', '开门'];
+        const BAMEN_EN = ['Xiumen', 'Shengmen', 'Shangmen', 'Dumen', 'Jingmen', 'Simen', 'Jingmen', 'Kaimen'];
+        const BAMEN_ATTR = {
+            '休门': { wuxing: '水', gua: '坎', meaning: '休息、养蓄、等待、平和', luck: '吉' },
+            '生门': { wuxing: '土', gua: '艮', meaning: '生发、财富、新生、机遇', luck: '吉' },
+            '伤门': { wuxing: '木', gua: '震', meaning: '伤害、竞争、变动、进取', luck: '凶' },
+            '杜门': { wuxing: '木', gua: '巽', meaning: '阻碍、隐藏、修炼、技术', luck: '中' },
+            '景门': { wuxing: '火', gua: '离', meaning: '景象、文书、计划、虚幻', luck: '中' },
+            '死门': { wuxing: '土', gua: '坤', meaning: '终结、闭塞、固执、老旧', luck: '凶' },
+            '惊门': { wuxing: '金', gua: '兑', meaning: '惊恐、口舌、官非、变动', luck: '凶' },
+            '开门': { wuxing: '金', gua: '乾', meaning: '开放、事业、开创、通达', luck: '吉' }
+        };
+
+        // 八神（阳遁顺排）
+        const BASHEN_YANG = ['值符', '螣蛇', '太阴', '六合', '白虎', '玄武', '九地', '九天'];
+        const BASHEN_YIN = ['值符', '九天', '九地', '玄武', '白虎', '六合', '太阴', '螣蛇'];
+        const BASHEN_ATTR = {
+            '值符': { meaning: '领袖、贵人、权威、吉祥' },
+            '螣蛇': { meaning: '虚惊、怪异、缠绕、变化' },
+            '太阴': { meaning: '隐秘、阴谋、女性、暗事' },
+            '六合': { meaning: '合作、婚姻、中介、和合' },
+            '白虎': { meaning: '凶煞、血光、道路、阻力' },
+            '玄武': { meaning: '盗贼、欺诈、暧昧、小人' },
+            '九地': { meaning: '低潜、稳固、防守、囤积' },
+            '九天': { meaning: '高远、进取、张扬、出征' }
+        };
+
+        // 奇门格局
+        const QIMEN_GJ = {
+            '青龙返首': { meaning: '大吉，凡事顺遂，贵人相助', condition: '天盘甲戊加地盘丙奇' },
+            '飞鸟跌穴': { meaning: '大吉，百事皆宜，求财得财', condition: '天盘丙奇加地盘甲戊' },
+            '玉女守门': { meaning: '吉，利于婚姻、阴私之事', condition: '丁奇临开门' },
+            '天遁': { meaning: '吉，利于升迁、出行', condition: '天盘丙奇加地盘开门加生门' },
+            '地遁': { meaning: '吉，利于藏匿、伏击', condition: '天盘乙奇加地盘开门' },
+            '人遁': { meaning: '吉，利于谈判、和谈', condition: '太阴加休门' },
+            '神遁': { meaning: '吉，利于祭祀、祈祷', condition: '九天加生门' },
+            '鬼遁': { meaning: '吉，利于侦探、刺探', condition: '九地加杜门' },
+            '龙遁': { meaning: '吉，利于水利工程', condition: '乙奇加坎宫' },
+            '虎遁': { meaning: '吉，利于军事行动', condition: '乙奇加兑宫' },
+            '风遁': { meaning: '吉，利于传播、宣传', condition: '乙奇加巽宫' },
+            '云遁': { meaning: '吉，利于隐匿、防守', condition: '乙奇加乾宫' },
+            '三奇得使': { meaning: '大吉，贵人扶持', condition: '三奇临三吉门' },
+            '乙丙丁三奇': { meaning: '吉，贵人运势强', condition: '乙丙丁三奇同宫' },
+            '奇仪相合': { meaning: '吉，利于合作', condition: '天盘地盘干相合' },
+            '伏吟': { meaning: '凶，停滞不前，宜静不宜动', condition: '天盘地盘相同' },
+            '反吟': { meaning: '凶，反复无常，事多波折', condition: '天盘地盘对冲' },
+            '入墓': { meaning: '凶，能力受限，诸事不顺', condition: '奇仪入墓库' },
+            '击刑': { meaning: '凶，遭受打击，多有损伤', condition: '甲子戊加卯' },
+            '青龙逃走': { meaning: '凶，财散人离', condition: '天盘乙加地盘辛' },
+            '白虎猖狂': { meaning: '凶，官非口舌', condition: '天盘辛加地盘乙' },
+            '螣蛇夭矫': { meaning: '凶，虚惊怪异', condition: '天盘癸加地盘丁' },
+            '朱雀投江': { meaning: '凶，文书是非', condition: '天盘丁加地盘癸' },
+            '太白入荧': { meaning: '凶，贼来侵害', condition: '天盘庚加地盘丙' },
+            '荧入太白': { meaning: '凶，火克金，破财', condition: '天盘丙加地盘庚' }
+        };
+
+        // 六十四用神（主要用神）
+        const YONGSHEN = {
+            '求财': { star: '生门', god: '六合', note: '生门旺相则财旺' },
+            '求职': { star: '开门', god: '值符', note: '开门遇吉神则工作顺利' },
+            '考试': { star: '景门', god: '天辅', note: '景门遇三奇则考运佳' },
+            '婚姻': { star: '六合', god: '太阴', note: '六合临吉门则婚事成' },
+            '疾病': { star: '天芮', god: '天心', note: '天芮落宫看病情，天心为医' },
+            '出行': { star: '休门', god: '九天', note: '休门遇吉神则出行顺利' },
+            '官司': { star: '惊门', god: '值符', note: '惊门遇凶则官非重' },
+            '失物': { star: '玄武', god: '九地', note: '玄武落宫可寻失物' },
+            '寻人': { star: '六合', god: '九天', note: '六合临宫看人在何处' },
+            '合作': { star: '六合', god: '值符', note: '六合遇吉门则合作顺利' },
+            '投资': { star: '生门', god: '太阴', note: '生门旺相有利投资' },
+            '搬家': { star: '开门', god: '九地', note: '开门遇吉则搬家顺利' },
+            '创业': { star: '开门', god: '值符', note: '开门旺相遇吉神则创业有成' },
+            '财运': { star: '生门', god: '天任', note: '生门落宫看财源方位' },
+            '事业': { star: '开门', god: '天心', note: '开门遇三奇则事业顺' },
+            '学业': { star: '景门', god: '天辅', note: '景门临吉则学业有成' },
+            '感情': { star: '六合', god: '太阴', note: '六合遇吉门则感情顺' },
+            '健康': { star: '天芮', god: '天心', note: '天芮落宫休囚则病情轻' },
+            '诉讼': { star: '惊门', god: '值符', note: '惊门遇吉神则诉讼有利' },
+            '签约': { star: '六合', god: '值符', note: '六合临吉门则签约顺利' }
+        };
+
+        // 天干五行与方位
+        const TIANGAN_WUXING = {
+            '甲': { wuxing: '木', direction: '东', yinYang: '阳' },
+            '乙': { wuxing: '木', direction: '东', yinYang: '阴' },
+            '丙': { wuxing: '火', direction: '南', yinYang: '阳' },
+            '丁': { wuxing: '火', direction: '南', yinYang: '阴' },
+            '戊': { wuxing: '土', direction: '中', yinYang: '阳' },
+            '己': { wuxing: '土', direction: '中', yinYang: '阴' },
+            '庚': { wuxing: '金', direction: '西', yinYang: '阳' },
+            '辛': { wuxing: '金', direction: '西', yinYang: '阴' },
+            '壬': { wuxing: '水', direction: '北', yinYang: '阳' },
+            '癸': { wuxing: '水', direction: '北', yinYang: '阴' }
+        };
+
+        // 地盘布局（阳遁一局为基准）
+        const BASE_DIPAN = ['戊', '己', '庚', '辛', '壬', '癸', '丁', '丙', '乙'];
+
+        // 计算奇门遁甲排盘
+        function calculateQimenDunjia(year, month, day, hour, minute) {
+            // 计算四柱
+            const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+            const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            
+            const yearGan = tiangan[(year - 4) % 10];
+            const yearZhi = dizhi[(year - 4) % 12];
+            const monthZhi = dizhi[(month + 1) % 12];
+            const monthGan = tiangan[(year * 12 + month + 3) % 10];
+            const baseDate = new Date(1900, 0, 31);
+            const dayDiff = Math.floor((new Date(year, month - 1, day) - baseDate) / (24 * 60 * 60 * 1000));
+            const dayGan = tiangan[dayDiff % 10];
+            const dayZhi = dizhi[dayDiff % 12];
+            const hourZhi = dizhi[Math.floor((hour + 1) / 2) % 12];
+            const hourGan = tiangan[(tiangan.indexOf(dayGan) * 2 + Math.floor((hour + 1) / 2)) % 10];
+            
+            // 判断阴阳遁
+            const jieqi = getJieqi(month, day);
+            const yangDun = [1, 2, 3, 4, 5, 6].includes(month) || (month === 11 && day >= 22) || (month === 12 && day < 22);
+            
+            // 计算局数
+            const juNum = calculateJuNumber(dayGan, dayZhi, yangDun);
+            
+            // 地盘布局
+            const dipan = buildDipan(juNum, yangDun);
+            
+            // 天盘布局
+            const tianpan = buildTianpan(dipan, hourGan);
+            
+            // 八门布局
+            const bamen = buildBamen(dayGan, hourZhi, yangDun, juNum);
+            
+            // 九星布局
+            const jiuxing = buildJiuxing(hourGan, hourZhi);
+            
+            // 八神布局
+            const bashen = buildBashen(hourGan, yangDun);
+            
+            // 判断格局
+            const geju = analyzeGeju(tianpan, dipan, bamen, jiuxing, bashen);
+            
+            // 日干时干落宫
+            const riGanLuogong = findLuogong(dayGan, tianpan, dipan);
+            const shiGanLuogong = findLuogong(hourGan, tianpan, dipan);
+            
+            return {
+                bazi: {
+                    year: `${yearGan}${yearZhi}`,
+                    month: `${monthGan}${monthZhi}`,
+                    day: `${dayGan}${dayZhi}`,
+                    hour: `${hourGan}${hourZhi}`
+                },
+                ju: {
+                    yinYang: yangDun ? '阳遁' : '阴遁',
+                    number: juNum,
+                    name: `${yangDun ? '阳' : '阴'}遁${juNum}局`
+                },
+                jieqi: jieqi,
+                dipan: dipan,
+                tianpan: tianpan,
+                bamen: bamen,
+                jiuxing: jiuxing,
+                bashen: bashen,
+                geju: geju,
+                riGanLuogong: riGanLuogong,
+                shiGanLuogong: shiGanLuogong
+            };
+        }
+
+        // 获取节气
+        function getJieqi(month, day) {
+            const jieqiList = [
+                '小寒', '大寒', '立春', '雨水', '惊蛰', '春分',
+                '清明', '谷雨', '立夏', '小满', '芒种', '夏至',
+                '小暑', '大暑', '立秋', '处暑', '白露', '秋分',
+                '寒露', '霜降', '立冬', '小雪', '大雪', '冬至'
+            ];
+            const jieqiDays = [6, 20, 4, 19, 6, 21, 5, 20, 6, 21, 6, 22, 7, 23, 8, 23, 8, 23, 8, 24, 8, 22, 7, 22];
+            const idx = (month - 1) * 2 + (day >= jieqiDays[(month - 1) * 2 + 1] ? 1 : 0);
+            return jieqiList[Math.min(idx, 23)];
+        }
+
+        // 计算局数
+        function calculateJuNumber(dayGan, dayZhi, yangDun) {
+            // 简化算法：根据日干支计算
+            const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+            const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            const ganIdx = tiangan.indexOf(dayGan);
+            const zhiIdx = dizhi.indexOf(dayZhi);
+            
+            // 六仪遁甲
+            const liuyi = ['戊', '己', '庚', '辛', '壬', '癸'];
+            const xun = Math.floor((ganIdx - zhiIdx + 12) % 12 / 2);
+            
+            // 根据元（上中下）确定局数
+            const yuan = zhiIdx % 3; // 0=上元, 1=中元, 2=下元
+            const baseJu = [1, 7, 4, 1, 7, 4][xun]; // 简化映射
+            
+            return yangDun ? (baseJu + yuan - 1) % 9 + 1 : (baseJu - yuan + 9) % 9 || 9;
+        }
+
+        // 构建地盘
+        function buildDipan(juNum, yangDun) {
+            // 九宫顺序：坎一、坤二、震三、巽四、中五、乾六、兑七、艮八、离九
+            const palaces = ['坎一宫', '坤二宫', '震三宫', '巽四宫', '中五宫', '乾六宫', '兑七宫', '艮八宫', '离九宫'];
+            const liuyi = ['戊', '己', '庚', '辛', '壬', '癸', '丁', '丙', '乙'];
+            
+            const dipan = {};
+            const startIdx = juNum - 1;
+            
+            palaces.forEach((palace, idx) => {
+                const liuyiIdx = yangDun 
+                    ? (idx - startIdx + 9) % 9 
+                    : (startIdx - idx + 9) % 9;
+                dipan[palace] = liuyi[liuyiIdx];
+            });
+            
+            return dipan;
+        }
+
+        // 构建天盘
+        function buildTianpan(dipan, hourGan) {
+            // 天盘：时干加临地盘时干之上
+            const tianpan = {};
+            const liuyi = ['戊', '己', '庚', '辛', '壬', '癸', '丁', '丙', '乙'];
+            
+            // 找到时干在地盘的位置
+            let hourGanPalace = null;
+            for (const [palace, gan] of Object.entries(dipan)) {
+                if (gan === hourGan) {
+                    hourGanPalace = palace;
+                    break;
+                }
+            }
+            
+            // 天盘旋转
+            const palaces = ['坎一宫', '坤二宫', '震三宫', '巽四宫', '中五宫', '乾六宫', '兑七宫', '艮八宫', '离九宫'];
+            const hourIdx = palaces.indexOf(hourGanPalace);
+            
+            palaces.forEach((palace, idx) => {
+                const sourceIdx = (idx - hourIdx + 9) % 9;
+                const sourcePalace = palaces[sourceIdx];
+                tianpan[palace] = dipan[sourcePalace];
+            });
+            
+            return tianpan;
+        }
+
+        // 构建八门
+        function buildBamen(dayGan, hourZhi, yangDun, juNum) {
+            const bamenOrder = ['休门', '生门', '伤门', '杜门', '景门', '死门', '惊门', '开门'];
+            const palaces = ['坎一宫', '坤二宫', '震三宫', '巽四宫', '中五宫', '乾六宫', '兑七宫', '艮八宫', '离九宫'];
+            
+            // 值使门
+            const zhishi = ['休门', '生门', '伤门', '杜门', '景门', '死门', '惊门', '开门'][(juNum - 1) % 8];
+            
+            // 时支定落宫
+            const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            const hourIdx = dizhi.indexOf(hourZhi);
+            
+            const bamen = {};
+            const startIdx = bamenOrder.indexOf(zhishi);
+            
+            // 八门落宫（简化算法）
+            const bamenPalaces = ['坎一宫', '艮八宫', '震三宫', '巽四宫', '离九宫', '坤二宫', '兑七宫', '乾六宫'];
+            bamenOrder.forEach((men, idx) => {
+                bamen[bamenPalaces[idx]] = men;
+            });
+            
+            return bamen;
+        }
+
+        // 构建九星
+        function buildJiuxing(hourGan, hourZhi) {
+            const jiuxingOrder = ['天蓬', '天芮', '天冲', '天辅', '天禽', '天心', '天柱', '天任', '天英'];
+            const palaces = ['坎一宫', '坤二宫', '震三宫', '巽四宫', '中五宫', '乾六宫', '兑七宫', '艮八宫', '离九宫'];
+            
+            const jiuxing = {};
+            jiuxingOrder.forEach((star, idx) => {
+                jiuxing[palaces[idx]] = star;
+            });
+            
+            return jiuxing;
+        }
+
+        // 构建八神
+        function buildBashen(hourGan, yangDun) {
+            const bashenOrder = yangDun 
+                ? ['值符', '螣蛇', '太阴', '六合', '白虎', '玄武', '九地', '九天']
+                : ['值符', '九天', '九地', '玄武', '白虎', '六合', '太阴', '螣蛇'];
+            
+            const palaces = ['坎一宫', '坤二宫', '震三宫', '巽四宫', '中五宫', '乾六宫', '兑七宫', '艮八宫', '离九宫'];
+            
+            const bashen = {};
+            bashenOrder.forEach((shen, idx) => {
+                bashen[palaces[idx]] = shen;
+            });
+            
+            return bashen;
+        }
+
+        // 分析格局
+        function analyzeGeju(tianpan, dipan, bamen, jiuxing, bashen) {
+            const geju = [];
+            
+            for (const [palace, tianGan] of Object.entries(tianpan)) {
+                const diGan = dipan[palace];
+                const men = bamen[palace];
+                const star = jiuxing[palace];
+                const shen = bashen[palace];
+                
+                // 检查伏吟
+                if (tianGan === diGan && !geju.includes('伏吟')) {
+                    geju.push('伏吟');
+                }
+                
+                // 检查三奇得使
+                if (['乙', '丙', '丁'].includes(tianGan) && ['开门', '休门', '生门'].includes(men)) {
+                    geju.push('三奇得使');
+                }
+                
+                // 检查吉格
+                if (tianGan === '丙' && diGan === '戊') {
+                    geju.push('飞鸟跌穴');
+                }
+                if (tianGan === '戊' && diGan === '丙') {
+                    geju.push('青龙返首');
+                }
+            }
+            
+            return geju.length > 0 ? geju : ['普通格局'];
+        }
+
+        // 查找落宫
+        function findLuogong(gan, tianpan, dipan) {
+            for (const [palace, tianGan] of Object.entries(tianpan)) {
+                if (tianGan === gan) {
+                    return palace;
+                }
+            }
+            return '中五宫';
+        }
+
+        // 构建奇门遁甲提示词
         function buildQimenPrompt(question) {
             const now = new Date();
             const timezone = document.getElementById('timezoneSelect').value;
@@ -3186,41 +3611,87 @@
             const hour = localTime.getHours();
             const minute = localTime.getMinutes();
             
-            // 天干地支计算
-            const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
-            const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            // 计算奇门遁甲盘
+            const qimen = calculateQimenDunjia(year, month, day, hour, minute);
             
-            const yearGan = tiangan[(year - 4) % 10];
-            const yearZhi = dizhi[(year - 4) % 12];
-            const monthZhi = dizhi[(month + 1) % 12];
-            const monthGan = tiangan[(year * 12 + month + 3) % 10];
-            const baseDate = new Date(1900, 0, 31);
-            const dayDiff = Math.floor((localTime - baseDate) / (24 * 60 * 60 * 1000));
-            const dayGan = tiangan[dayDiff % 10];
-            const dayZhi = dizhi[dayDiff % 12];
-            const hourZhi = dizhi[Math.floor((hour + 1) / 2) % 12];
-            const hourGan = tiangan[(tiangan.indexOf(dayGan) * 2 + Math.floor((hour + 1) / 2)) % 10];
-            
-            const bazi = `${yearGan}${yearZhi}年 ${monthGan}${monthZhi}月 ${dayGan}${dayZhi}日 ${hourGan}${hourZhi}时`;
             const timeStr = `${year}年${month}月${day}日 ${hour}:${minute.toString().padStart(2, '0')}`;
+            const baziStr = `${qimen.bazi.year}年 ${qimen.bazi.month}月 ${qimen.bazi.day}日 ${qimen.bazi.hour}时`;
             
-            return `你是小卜（Oraculum），一位专业的奇门遁甲顾问。
+            // 识别用户咨询中的关键词，确定用神
+            let yongshen = '求财';
+            const yongshenKeys = Object.keys(YONGSHEN);
+            for (const key of yongshenKeys) {
+                if (question.includes(key)) {
+                    yongshen = key;
+                    break;
+                }
+            }
+            
+            // 用神信息
+            const ysInfo = YONGSHEN[yongshen] || YONGSHEN['求财'];
+            
+            return `你是小卜（Oraculum），一位精通奇门遁甲的专业顾问。
 
 【用户咨询】${question}
 【场景】${currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn}
+【节气】${qimen.jieqi}
 【起局时间】${timeStr}
-【四柱干支】${bazi}
+【四柱干支】${baziStr}
+【局数】${qimen.ju.name}
+
+【奇门盘面信息】
+一、四柱分析
+- 年柱${qimen.bazi.year}：代表根基与外部环境
+- 月柱${qimen.bazi.month}：代表当前形势与机遇
+- 日柱${qimen.bazi.day}：代表求测者本人（日干为体）
+- 时柱${qimen.bazi.hour}：代表所问之事（时干为用）
+
+二、日干落宫
+- 日干${qimen.bazi.day[0]}落${qimen.riGanLuogong}
+- 该宫五行：${TIANGAN_WUXING[qimen.bazi.day[0]].wuxing}，方位：${TIANGAN_WUXING[qimen.bazi.day[0]].direction}
+
+三、时干落宫
+- 时干${qimen.bazi.hour[0]}落${qimen.shiGanLuogong}
+- 时干为用神，主事体吉凶
+
+四、主要格局
+${qimen.geju.map(g => `- ${g}：${QIMEN_GJ[g]?.meaning || '详见分析'}`).join('\n')}
+
+五、用神参考（${yongshen}）
+- 主用神：${ysInfo.star}
+- 辅助神：${ysInfo.god}
+- 说明：${ysInfo.note}
+
+六、地理方位参考
+- 北京：坎一宫，正北，属坎卦
+- 上海：震三宫，正东，属震卦
+- 广州/深圳：离九宫，正南，属离卦
+- 成都/重庆：坤二宫，西南，属坤卦
+- 西安：乾六宫，西北，属乾卦
+- 杭州/南京：震三宫，正东，属震卦
+- 武汉：中五宫，中宫
+- 青岛/大连：艮八宫，东北，属艮卦
+- 厦门/福州：巽四宫，东南，属巽卦
+- 昆明/贵阳：坤二宫，西南，属坤卦
 
 【回答要求】
 1. 必须用${currentLang === 'zh' ? '中文' : 'English'}回答
-2. 开头必须先显示"📅 起局时间：${timeStr}"和"🔮 四柱：${bazi}"（英文界面显示 "📅 Time: ..." 和 "🔮 BaZi: ..."）
-3. 然后给出核心结论（简洁有力）
-4. 再用通俗语言解释奇门依据（用神落宫、星门等）
-5. 分点建议时必须换行，直接用数字或文字描述
-6. 用🧭👕⏰💰等emoji点缀建议
-7. 风险提醒要一针见血
-8. 情绪价值温暖收尾
-9. 回答长度200-300字`;
+2. 开头显示：📅 起局时间：${timeStr}，🔮 四柱：${baziStr}，🎯 ${qimen.ju.name}
+3. 核心结论放最前面，简洁有力（不超过两句话）
+4. 多维度分析（不低于三个维度）：
+   - 日干与时干的关系（体用关系）
+   - 格局吉凶（${qimen.geju.join('、')}）
+   - 用神落宫旺衰（${ysInfo.star}落何宫）
+   - 八门吉凶（开门、生门、休门为吉门）
+   - 九星状态（天辅、天心为吉星）
+   - 八神影响（值符、六合为吉神）
+5. 分点建议用数字或文字描述，换行清晰
+6. 用 🧭👕⏰💰📍 等emoji点缀
+7. 地理方位建议要具体（如：往东走有利、避开北方等）
+8. 风险提醒一针见血
+9. 温暖收尾，给予情绪价值
+10. 禁止使用星号符号
+11. 回答长度250-350字`;
         }
 
         // 输入框事件
