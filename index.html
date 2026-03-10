@@ -4136,17 +4136,19 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
             
             // 显示加载状态
             document.getElementById('chartBirthInfo').innerHTML = '<div style="text-align:center; padding:20px;"><div class="loading"></div><div style="margin-top:12px; color:var(--color-text-mid);">Calculating your chart...</div></div>';
-            document.getElementById('chartPalacesList').innerHTML = '';
+            document.getElementById('chartWheel').innerHTML = '<div style="text-align:center; padding:40px; color:var(--color-text-mid);">正在排盘...</div>';
             
             try {
                 // 先计算本地命盘获取星曜
                 const chartResult = calculateZiweiChart(year, month, day, hour, gender);
+                console.log('排盘结果:', chartResult);
                 
-                // 调用API获取解读
-                const interpretations = await getChartInterpretation(chartResult, year, month, day, hour, gender);
+                if (!chartResult || !chartResult.palaces) {
+                    throw new Error('排盘计算失败');
+                }
                 
-                // 渲染简化版命盘
-                renderSimplifiedChart(chartResult, interpretations, year, month, day);
+                // 渲染命盘（不再调用API，直接渲染）
+                renderSimplifiedChart(chartResult, null, year, month, day);
             } catch (error) {
                 console.error('排盘错误:', error);
                 document.getElementById('chartBirthInfo').innerHTML = '<div style="text-align:center; color:var(--color-danger);">Calculation error. Please try again.</div>';
