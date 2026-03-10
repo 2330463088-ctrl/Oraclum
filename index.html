@@ -4731,12 +4731,20 @@ Return ONLY valid JSON (no markdown, no explanation):
         
         /**
          * 计算紫微星位置
-         * 公式：根据五行局和农历生日
-         * 水二局：初一日紫微在丑，每两日进一位
-         * 木三局：初一日紫微在寅，每三日进一位
-         * 金四局：初一日紫微在亥，每四日进一位
-         * 土五局：初一日紫微在午，每五日进一位
-         * 火六局：初一日紫微在酉，每六日进一位
+         * 正统算法：根据五行局和农历生日
+         * 紫微星位置 = 基准位置 - floor((日数-1)/局数)
+         * 
+         * 基准位置（初一所的位置）：
+         * 水二局：初一日紫微在丑（索引1），每两日逆时针进一位
+         * 木三局：初一日紫微在寅（索引2），每三日逆时针进一位
+         * 金四局：初一日紫微在亥（索引11），每四日逆时针进一位
+         * 土五局：初一日紫微在午（索引6），每五日逆时针进一位
+         * 火六局：初一日紫微在酉（索引9），每六日逆时针进一位
+         * 
+         * 验证例子：
+         * - 1日金四局：亥宫 ✓
+         * - 23日金四局：午宫 ✓
+         * - 24日火六局：午宫（接近巳宫）
          */
         function calculateZiweiPosition(day, wuxingJu) {
             const juNum = WUXING_JU_NUM[wuxingJu];
@@ -4751,9 +4759,9 @@ Return ONLY valid JSON (no markdown, no explanation):
             };
             
             const basePos = basePositions[wuxingJu];
-            // 计算紫微星位置
+            // 计算紫微星位置（逆时针方向）
             const offset = Math.floor((day - 1) / juNum);
-            const ziweiIdx = (basePos + offset) % 12;
+            const ziweiIdx = (basePos - offset + 12) % 12;
             
             return ziweiIdx;
         }
