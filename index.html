@@ -2579,9 +2579,9 @@
                 </p>
                 
                 <!-- 八卦图 -->
-                <div id="baguaCompass" style="position: relative; width: 100%; max-width: 320px; margin: 0 auto 24px;">
+                <div id="baguaCompass" style="position: relative; width: 100%; max-width: 280px; margin: 0 auto 24px; aspect-ratio: 1;">
                     <!-- 中心太极 -->
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: linear-gradient(135deg, var(--color-bg) 50%, var(--color-primary) 50%); border-radius: 50%; border: 2px solid var(--color-border); z-index: 10;"></div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-bg) 50%, var(--color-primary) 50%); border-radius: 50%; border: 2px solid var(--color-border); z-index: 10;"></div>
                     <!-- 八卦方位将用JS生成 -->
                 </div>
                 
@@ -4369,7 +4369,7 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
             const size = container.offsetWidth;
             const centerX = size / 2;
             const centerY = size / 2;
-            const radius = size * 0.42;
+            const radius = size * 0.38;
             
             // Direction positions (angles in degrees, starting from North at top)
             const directions = [
@@ -4391,8 +4391,9 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
             // Add direction buttons
             directions.forEach(dir => {
                 const data = BAGUA_DIRECTIONS.find(d => d.id === dir.id);
-                const x = centerX + dir.x * radius - 25;
-                const y = centerY + dir.y * radius - 25;
+                const btnSize = 44;
+                const x = centerX + dir.x * radius - btnSize / 2;
+                const y = centerY + dir.y * radius - btnSize / 2;
                 
                 const btn = document.createElement('button');
                 btn.className = 'bagua-direction-btn';
@@ -4400,8 +4401,8 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
                     position: absolute;
                     left: ${x}px;
                     top: ${y}px;
-                    width: 50px;
-                    height: 50px;
+                    width: ${btnSize}px;
+                    height: ${btnSize}px;
                     background: white;
                     border: 2px solid var(--color-border);
                     border-radius: 50%;
@@ -4412,10 +4413,11 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
                     justify-content: center;
                     transition: all 0.2s;
                     z-index: 5;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
                 `;
                 btn.innerHTML = `
-                    <span style="font: 600 16px/1 var(--font-stack); color: var(--color-primary);">${data.trigramZh}</span>
-                    <span style="font: 400 9px/1 var(--font-stack); color: var(--color-text-mid);">${isZh ? data.nameZh : data.nameEn}</span>
+                    <span style="font: 600 15px/1 var(--font-stack); color: var(--color-primary);">${data.trigramZh}</span>
+                    <span style="font: 400 8px/1 var(--font-stack); color: var(--color-text-mid);">${isZh ? data.nameZh : data.nameEn}</span>
                 `;
                 btn.onmouseenter = () => {
                     btn.style.borderColor = 'var(--color-primary)';
@@ -4425,7 +4427,7 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
                 btn.onmouseleave = () => {
                     btn.style.borderColor = 'var(--color-border)';
                     btn.style.transform = 'scale(1)';
-                    btn.style.boxShadow = 'none';
+                    btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
                 };
                 btn.onclick = () => showBaguaDirectionDetail(dir.id);
                 
