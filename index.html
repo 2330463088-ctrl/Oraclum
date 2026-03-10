@@ -2696,66 +2696,522 @@
             color: var(--color-text-light);
         }
 
-        /* ===== 术语高亮 ===== */
-        .term-highlight {
+        /* ===== Learn Qimen Page ===== */
+        .learn-content {
+            background: linear-gradient(to bottom, var(--color-bg) 0%, #F8F6F3 100%);
+            padding-bottom: 100px;
+        }
+
+        .learn-hero {
+            text-align: center;
+            padding: 40px 20px 30px;
+        }
+
+        .learn-hero-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--color-primary), #7D6E5A);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(155, 125, 95, 0.25);
+        }
+
+        .learn-hero-icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .learn-hero-title {
+            font: 600 26px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .learn-hero-subtitle {
+            font: 400 15px/1.5 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .learn-progress {
+            padding: 0 20px 20px;
+        }
+
+        .progress-track {
+            height: 4px;
+            background: var(--color-divider);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), #8B7355);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font: 500 13px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .learn-lessons {
+            padding: 0 16px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: none;
+        }
+
+        .lesson-card.active {
+            display: block;
+        }
+
+        .lesson-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--color-primary), #7D6E5A);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 700 16px/1 var(--font-stack);
+            margin-bottom: 16px;
+        }
+
+        .lesson-title {
+            font: 600 20px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 16px;
+        }
+
+        .lesson-intro {
+            font: 400 15px/1.7 var(--font-stack);
+            color: var(--color-text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .lesson-analogy {
+            display: flex;
+            gap: 14px;
+            padding: 16px;
+            background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .analogy-icon {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .analogy-icon i {
+            font-size: 20px;
             color: var(--color-primary);
-            text-decoration: underline;
-            text-decoration-style: dotted;
+        }
+
+        .analogy-content h4 {
+            font: 600 14px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 6px;
+        }
+
+        .analogy-content p {
+            font: 400 13px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .lesson-key-points h4 {
+            font: 600 14px/1 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .lesson-key-points ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .lesson-key-points li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font: 400 14px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .lesson-key-points li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .doors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .door-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--color-card);
+        }
+
+        .door-item.door-auspicious {
+            background: linear-gradient(135deg, #F0F7F0 0%, #E8F3E8 100%);
+        }
+
+        .door-item.door-neutral {
+            background: linear-gradient(135deg, #F8F6F0 0%, #F2F0EA 100%);
+        }
+
+        .door-item.door-caution {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFF5E8 100%);
+        }
+
+        .door-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .door-icon i {
+            font-size: 16px;
+            color: var(--color-primary);
+        }
+
+        .door-info h5 {
+            font: 600 13px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 2px;
+        }
+
+        .door-info p {
+            font: 400 11px/1.3 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .stars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .star-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 12px;
+            background: var(--color-card);
+        }
+
+        .star-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .star-icon.star-good {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+        }
+
+        .star-icon.star-neutral {
+            background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);
+        }
+
+        .star-icon.star-caution {
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+        }
+
+        .star-icon i {
+            font-size: 18px;
+        }
+
+        .star-icon.star-good i { color: #4CAF50; }
+        .star-icon.star-neutral i { color: #757575; }
+        .star-icon.star-caution i { color: #F57C00; }
+
+        .star-info h5 {
+            font: 600 14px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .star-info p {
+            font: 400 13px/1.5 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .palaces-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: 24px auto;
+            max-width: 320px;
+        }
+
+        .palace-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        .palace-item {
+            flex: 1;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            background: var(--color-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .palace-item:hover {
+            transform: scale(1.02);
+            background: #F5F0EB;
+        }
+
+        .palace-center {
+            background: linear-gradient(145deg, var(--color-primary), #7D6E5A);
+            color: white;
+        }
+
+        .palace-dir {
+            font: 700 11px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .palace-name {
+            font: 600 12px/1 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .palace-aspect {
+            font: 400 10px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .palace-center .palace-name,
+        .palace-center .palace-aspect {
+            color: white;
+        }
+
+        .lesson-tip {
+            display: flex;
+            gap: 10px;
+            padding: 14px;
+            background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .lesson-tip i {
+            color: var(--color-primary);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .lesson-tip span {
+            font: 400 13px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 14px;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 700 14px/1 var(--font-stack);
+            flex-shrink: 0;
+        }
+
+        .step-content h5 {
+            font: 600 15px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font: 400 13px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .lesson-cta {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);
+            border-radius: 16px;
+        }
+
+        .lesson-cta h4 {
+            font: 600 16px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 12px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(145deg, var(--color-primary), #7D6E5A);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font: 600 15px/1 var(--font-stack);
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(155, 125, 95, 0.3);
+        }
+
+        .lesson-next {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font: 600 15px/1 var(--font-stack);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-next:hover {
+            background: #7D6E5A;
+        }
+
+        .lesson-complete {
+            background: linear-gradient(145deg, #5D9C59, #4A8B46);
+        }
+
+        /* ===== 术语高亮 ===== */
+        .term-highlight {
+            color: var(--color-primary);
+            text-decoration: underline;
+            text-decoration-color: var(--color-primary);
+            text-decoration-style: wavy;
+            text-underline-offset: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 0 2px;
+        }
+
         .term-highlight:hover {
-            background: var(--color-primary-light);
-            border-radius: 3px;
+            background: rgba(155, 125, 95, 0.1);
+            border-radius: 4px;
         }
 
         .term-tooltip {
             position: fixed;
-            width: 260px;
+            width: 300px;
+            max-width: calc(100vw - 32px);
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.05);
+            z-index: 10000;
             overflow: hidden;
-            animation: tooltipFadeIn 0.2s ease;
+            animation: tooltipFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes tooltipFadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .tooltip-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 14px;
-            background: var(--color-primary);
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #7D6E5A 100%);
             color: white;
         }
 
         .tooltip-term {
-            font: 600 14px/1 var(--font-stack);
+            font: 600 15px/1 var(--font-stack);
+            letter-spacing: 0.3px;
         }
 
         .tooltip-close {
-            background: none;
+            background: rgba(255,255,255,0.15);
             border: none;
             color: white;
             cursor: pointer;
-            padding: 4px;
-            opacity: 0.8;
+            padding: 6px;
+            border-radius: 8px;
+            opacity: 0.9;
+            transition: all 0.15s ease;
         }
 
         .tooltip-close:hover {
             opacity: 1;
+            background: rgba(255,255,255,0.25);
         }
 
         .tooltip-body {
-            padding: 12px 14px;
-            font: 400 13px/1.6 var(--font-stack);
+            padding: 14px 16px;
+            font: 400 13px/1.65 var(--font-stack);
             color: var(--color-text-secondary);
+            background: linear-gradient(to bottom, #FAFAF8, white);
         }
 
         /* ===== 免费试用卡片 ===== */
@@ -3314,6 +3770,15 @@
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
+                    <div class="menu-card" onclick="showLearnQimen()" style="background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);">
+                        <div class="menu-icon" style="background: var(--color-primary); color: white;">
+                            <i class="fa-regular fa-graduation-cap"></i>
+                        </div>
+                        <span class="menu-label" data-i18n="menu_learn_qimen">奇门入门</span>
+                        <span class="menu-value" style="color: var(--color-primary); font-weight: 600;">Learn Qimen</span>
+                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                    </div>
+                    
                     <div class="menu-card" onclick="showAbout()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-circle-info"></i>
@@ -3510,6 +3975,321 @@
                             <div class="expert-title">北京大学中国哲学研究所</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== Learn Qimen Page ===== -->
+    <div class="fullscreen-page" id="learnQimenPage">
+        <header class="page-header">
+            <button class="chat-back" onclick="closeLearnQimen()">
+                <i class="fa-regular fa-arrow-left"></i>
+            </button>
+            <div class="chat-title" data-i18n="learn_qimen_title">Learn Qimen · 奇门入门</div>
+            <div style="width:44px;"></div>
+        </header>
+        
+        <main class="fullscreen-content learn-content">
+            <!-- Hero Section -->
+            <div class="learn-hero">
+                <div class="learn-hero-icon">
+                    <i class="fa-regular fa-book-open"></i>
+                </div>
+                <h1 class="learn-hero-title" data-i18n="learn_hero_title">Your Journey Begins Here</h1>
+                <p class="learn-hero-subtitle" data-i18n="learn_hero_subtitle">
+                    Understand the ancient art of strategic timing in 5 simple lessons
+                </p>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="learn-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" id="learnProgress" style="width: 20%;"></div>
+                </div>
+                <div class="progress-text" data-i18n="progress_text">Lesson 1 of 5</div>
+            </div>
+            
+            <!-- Lesson Content -->
+            <div class="learn-lessons">
+                <!-- Lesson 1: What is Qimen? -->
+                <div class="lesson-card active" id="lesson1">
+                    <div class="lesson-number">1</div>
+                    <h2 class="lesson-title" data-i18n="lesson1_title">What is Qimen Dunjia?</h2>
+                    <div class="lesson-body">
+                        <p class="lesson-intro" data-i18n="lesson1_intro">
+                            Imagine having a cosmic GPS that tells you the best time and direction for important decisions. That's Qimen Dunjia.
+                        </p>
+                        
+                        <div class="lesson-analogy">
+                            <div class="analogy-icon">
+                                <i class="fa-regular fa-route"></i>
+                            </div>
+                            <div class="analogy-content">
+                                <h4 data-i18n="analogy_title">Think of it like this:</h4>
+                                <p data-i18n="lesson1_analogy">
+                                    Just as a GPS considers traffic, road conditions, and your destination to find the best route, Qimen Dunjia considers cosmic timing, directional energies, and your specific question to reveal optimal conditions for success.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-key-points">
+                            <h4 data-i18n="key_points">Key Points:</h4>
+                            <ul>
+                                <li data-i18n="lesson1_point1">Over 3,000 years old, used by Chinese emperors and generals</li>
+                                <li data-i18n="lesson1_point2">Combines astronomy, geography, and time cycles</li>
+                                <li data-i18n="lesson1_point3">Helps identify favorable timing and directions</li>
+                                <li data-i18n="lesson1_point4">Not fortune-telling — strategic planning with cosmic awareness</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="lesson-next" onclick="nextLesson(1)" data-i18n="next_lesson">
+                        Next: The Eight Doors →
+                    </button>
+                </div>
+                
+                <!-- Lesson 2: Eight Doors -->
+                <div class="lesson-card" id="lesson2">
+                    <div class="lesson-number">2</div>
+                    <h2 class="lesson-title" data-i18n="lesson2_title">The Eight Doors · 八门</h2>
+                    <div class="lesson-body">
+                        <p class="lesson-intro" data-i18n="lesson2_intro">
+                            The Eight Doors are portals of opportunity. Each door represents a different type of energy that influences your situation.
+                        </p>
+                        
+                        <div class="doors-grid">
+                            <div class="door-item door-auspicious">
+                                <div class="door-icon"><i class="fa-regular fa-leaf"></i></div>
+                                <div class="door-info">
+                                    <h5>Door of Life</h5>
+                                    <p>生门 · Growth & Profit</p>
+                                </div>
+                            </div>
+                            <div class="door-item door-auspicious">
+                                <div class="door-icon"><i class="fa-regular fa-door-open"></i></div>
+                                <div class="door-info">
+                                    <h5>Door of Openness</h5>
+                                    <p>开门 · Career & New Paths</p>
+                                </div>
+                            </div>
+                            <div class="door-item door-neutral">
+                                <div class="door-icon"><i class="fa-regular fa-bed"></i></div>
+                                <div class="door-info">
+                                    <h5>Door of Rest</h5>
+                                    <p>休门 · Wellness & Relationships</p>
+                                </div>
+                            </div>
+                            <div class="door-item door-neutral">
+                                <div class="door-icon"><i class="fa-regular fa-sun"></i></div>
+                                <div class="door-info">
+                                    <h5>Door of Scenery</h5>
+                                    <p>景门 · Communication & Fame</p>
+                                </div>
+                            </div>
+                            <div class="door-item door-caution">
+                                <div class="door-icon"><i class="fa-regular fa-bolt"></i></div>
+                                <div class="door-info">
+                                    <h5>Door of Injury</h5>
+                                    <p>伤门 · Competition & Conflict</p>
+                                </div>
+                            </div>
+                            <div class="door-item door-caution">
+                                <div class="door-icon"><i class="fa-regular fa-bell"></i></div>
+                                <div class="door-info">
+                                    <h5>Door of Alarm</h5>
+                                    <p>惊门 · Unexpected Changes</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-tip">
+                            <i class="fa-regular fa-lightbulb"></i>
+                            <span data-i18n="lesson2_tip">
+                                Tip: When reading your chart, focus on where the auspicious doors (Life, Openness) appear — these are your areas of opportunity.
+                            </span>
+                        </div>
+                    </div>
+                    <button class="lesson-next" onclick="nextLesson(2)" data-i18n="next_lesson">
+                        Next: The Nine Stars →
+                    </button>
+                </div>
+                
+                <!-- Lesson 3: Nine Stars -->
+                <div class="lesson-card" id="lesson3">
+                    <div class="lesson-number">3</div>
+                    <h2 class="lesson-title" data-i18n="lesson3_title">The Nine Stars · 九星</h2>
+                    <div class="lesson-body">
+                        <p class="lesson-intro" data-i18n="lesson3_intro">
+                            The Nine Stars are celestial influences that affect the energy of different directions. Think of them as cosmic weather patterns.
+                        </p>
+                        
+                        <div class="stars-list">
+                            <div class="star-item">
+                                <div class="star-icon star-good"><i class="fa-regular fa-star"></i></div>
+                                <div class="star-info">
+                                    <h5>Tian Fu Star · 天辅</h5>
+                                    <p>Wisdom, assistance, learning. Excellent for study and seeking help.</p>
+                                </div>
+                            </div>
+                            <div class="star-item">
+                                <div class="star-icon star-good"><i class="fa-regular fa-heart"></i></div>
+                                <div class="star-info">
+                                    <h5>Tian Xin Star · 天心</h5>
+                                    <p>Healing, spirituality, compassion. Good for health matters.</p>
+                                </div>
+                            </div>
+                            <div class="star-item">
+                                <div class="star-icon star-good"><i class="fa-regular fa-shield"></i></div>
+                                <div class="star-info">
+                                    <h5>Tian Ren Star · 天任</h5>
+                                    <p>Loyalty, stability, reliability. Great for partnerships.</p>
+                                </div>
+                            </div>
+                            <div class="star-item">
+                                <div class="star-icon star-neutral"><i class="fa-regular fa-circle"></i></div>
+                                <div class="star-info">
+                                    <h5>Tian Qin Star · 天禽</h5>
+                                    <p>Balance, centeredness, neutrality. Stability and peace.</p>
+                                </div>
+                            </div>
+                            <div class="star-item">
+                                <div class="star-icon star-caution"><i class="fa-regular fa-exclamation-triangle"></i></div>
+                                <div class="star-info">
+                                    <h5>Tian Rui Star · 天芮</h5>
+                                    <p>Illness, problems. Indicates areas needing caution.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="lesson-next" onclick="nextLesson(3)" data-i18n="next_lesson">
+                        Next: Directions →
+                    </button>
+                </div>
+                
+                <!-- Lesson 4: Directions -->
+                <div class="lesson-card" id="lesson4">
+                    <div class="lesson-number">4</div>
+                    <h2 class="lesson-title" data-i18n="lesson4_title">The Nine Palaces · 九宫</h2>
+                    <div class="lesson-body">
+                        <p class="lesson-intro" data-i18n="lesson4_intro">
+                            The Nine Palaces divide space into eight directions plus center. Each direction has specific associations and energies.
+                        </p>
+                        
+                        <div class="palaces-diagram">
+                            <div class="palace-row">
+                                <div class="palace-item palace-sw">
+                                    <span class="palace-dir">SW</span>
+                                    <span class="palace-name">Kun</span>
+                                    <span class="palace-aspect">Relationships</span>
+                                </div>
+                                <div class="palace-item palace-s">
+                                    <span class="palace-dir">S</span>
+                                    <span class="palace-name">Li</span>
+                                    <span class="palace-aspect">Fame</span>
+                                </div>
+                                <div class="palace-item palace-se">
+                                    <span class="palace-dir">SE</span>
+                                    <span class="palace-name">Xun</span>
+                                    <span class="palace-aspect">Wealth</span>
+                                </div>
+                            </div>
+                            <div class="palace-row">
+                                <div class="palace-item palace-w">
+                                    <span class="palace-dir">W</span>
+                                    <span class="palace-name">Dui</span>
+                                    <span class="palace-aspect">Joy</span>
+                                </div>
+                                <div class="palace-item palace-center">
+                                    <span class="palace-name">Center</span>
+                                    <span class="palace-aspect">You</span>
+                                </div>
+                                <div class="palace-item palace-e">
+                                    <span class="palace-dir">E</span>
+                                    <span class="palace-name">Zhen</span>
+                                    <span class="palace-aspect">Family</span>
+                                </div>
+                            </div>
+                            <div class="palace-row">
+                                <div class="palace-item palace-nw">
+                                    <span class="palace-dir">NW</span>
+                                    <span class="palace-name">Qian</span>
+                                    <span class="palace-aspect">Mentors</span>
+                                </div>
+                                <div class="palace-item palace-n">
+                                    <span class="palace-dir">N</span>
+                                    <span class="palace-name">Kan</span>
+                                    <span class="palace-aspect">Career</span>
+                                </div>
+                                <div class="palace-item palace-ne">
+                                    <span class="palace-dir">NE</span>
+                                    <span class="palace-name">Gen</span>
+                                    <span class="palace-aspect">Education</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-tip">
+                            <i class="fa-regular fa-compass"></i>
+                            <span data-i18n="lesson4_tip">
+                                When your reading mentions "sitting in the East," it means positioning yourself in the eastern part of a room or building to tap into that direction's energy.
+                            </span>
+                        </div>
+                    </div>
+                    <button class="lesson-next" onclick="nextLesson(4)" data-i18n="next_lesson">
+                        Next: How to Use →
+                    </button>
+                </div>
+                
+                <!-- Lesson 5: How to Use -->
+                <div class="lesson-card" id="lesson5">
+                    <div class="lesson-number">5</div>
+                    <h2 class="lesson-title" data-i18n="lesson5_title">How to Use Oraculum</h2>
+                    <div class="lesson-body">
+                        <p class="lesson-intro" data-i18n="lesson5_intro">
+                            You're ready! Here's how to get the most from your readings.
+                        </p>
+                        
+                        <div class="steps-list">
+                            <div class="step-item">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h5 data-i18n="step1_title">Choose Your Question</h5>
+                                    <p data-i18n="step1_desc">Be specific. "Should I accept this job offer?" is better than "Will I find work?"</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h5 data-i18n="step2_title">Select the Right Time Zone</h5>
+                                    <p data-i18n="step2_desc">Accurate timing is essential. Choose your current location's time zone.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h5 data-i18n="step3_title">Read with an Open Mind</h5>
+                                    <p data-i18n="step3_desc">The reading offers guidance, not predictions. Use it as one input among many in your decision-making.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h5 data-i18n="step4_title">Apply the Advice</h5>
+                                    <p data-i18n="step4_desc">Notice specific directions, colors, and timing suggestions. These are practical steps you can take.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-cta">
+                            <h4 data-i18n="ready_title">Ready to try?</h4>
+                            <button class="cta-button" onclick="closeLearnQimen(); showChat('career');" data-i18n="start_consultation">
+                                Start Your First Consultation
+                            </button>
+                        </div>
+                    </div>
+                    <button class="lesson-next lesson-complete" onclick="closeLearnQimen()" data-i18n="complete_lesson">
+                        ✓ Complete & Return
+                    </button>
                 </div>
             </div>
         </main>
@@ -4301,6 +5081,7 @@
                 menu_language: '语言',
                 menu_about: '关于我们',
                 menu_about_qimen: '关于奇门',
+                menu_learn_qimen: '奇门入门',
                 about_qimen_title: '关于奇门 · About Qimen',
                 qimen_page_title: '奇门遁甲',
                 qimen_core_concept: '时空全息原理',
@@ -4398,6 +5179,42 @@
                 bagua_suitable: '宜',
                 bagua_avoid: '忌',
                 fengshui_knowledge: '风水小知识',
+                // Learn Qimen Page
+                learn_qimen_title: 'Learn Qimen · 奇门入门',
+                learn_hero_title: '开启你的奇门之旅',
+                learn_hero_subtitle: '5节课带你入门奇门遁甲',
+                progress_text: '第 1 课，共 5 课',
+                lesson1_title: '什么是奇门遁甲？',
+                lesson1_intro: '想象有一个宇宙GPS，告诉你做重要决定的最佳时机和方向。这就是奇门遁甲。',
+                analogy_title: '可以这样理解：',
+                lesson1_analogy: '就像GPS会考虑交通、路况和目的地来规划最佳路线，奇门遁甲会考虑宇宙时机、方向能量和你的具体问题，揭示成功的最佳条件。',
+                key_points: '关键要点：',
+                lesson1_point1: '已有3000多年历史，曾被中国帝王将相使用',
+                lesson1_point2: '结合天文、地理和时间周期',
+                lesson1_point3: '帮助识别有利的时机和方位',
+                lesson1_point4: '不是算命——而是带着宇宙意识的战略规划',
+                lesson2_title: '八门 · The Eight Doors',
+                lesson2_intro: '八门是机遇之门。每扇门代表不同类型的能量，影响你的情况。',
+                lesson2_tip: '提示：阅读卦象时，关注吉门（生门、开门）出现的位置——这些是你的机遇所在。',
+                lesson3_title: '九星 · The Nine Stars',
+                lesson3_intro: '九星是影响不同方向能量的天体影响因素。可以把它们想象成宇宙天气模式。',
+                lesson4_title: '九宫 · The Nine Palaces',
+                lesson4_intro: '九宫将空间分为八个方向加中心。每个方向都有特定的关联和能量。',
+                lesson4_tip: '当解读提到"坐东"，意味着你要在房间或建筑的东部位置，以利用那个方向的能量。',
+                lesson5_title: '如何使用 Oraculum',
+                lesson5_intro: '你准备好了！以下是如何从解读中获得最大收益。',
+                step1_title: '选择你的问题',
+                step1_desc: '要具体。"我应该接受这份工作吗？"比"我会找到工作吗？"更好。',
+                step2_title: '选择正确的时区',
+                step2_desc: '准确的时间至关重要。选择你当前位置的时区。',
+                step3_title: '以开放的心态阅读',
+                step3_desc: '解读提供指导，而非预测。将它作为决策的参考之一。',
+                step4_title: '应用建议',
+                step4_desc: '注意具体的方向、颜色和时机建议。这些都是你可以采取的实际行动。',
+                ready_title: '准备好了吗？',
+                start_consultation: '开始你的第一次咨询',
+                next_lesson: '下一课 →',
+                complete_lesson: '✓ 完成并返回',
             },
             en: {
                 brand_name: '小卜',
@@ -4406,19 +5223,19 @@
                 learn_more: 'Learn more',
                 intro_content: 'Oraculum integrates 3,000 years of Chinese strategic wisdom into your daily life',
                 concepts_title: 'Core Concepts · 核心概念',
-                concepts_subtitle: 'Tap to expand and learn the basics of Qimen Dunjia',
-                qimen_brief: 'Ancient Chinese strategic art, a spacetime model fusing astronomy and geography',
-                yinyang_brief: 'Two polar forces of the universe, wisdom of dynamic balance',
-                five_brief: 'Metal, Wood, Water, Fire, Earth - cycles of creation and control',
-                eight_brief: 'Rest, Life, Injury, Concealment, Scenery, Death, Alarm, Opening',
-                nine_brief: 'Nine cosmic energy fields: Tianpeng, Tianren, Tianchong, etc.',
-                bagua_brief: 'Qian, Kun, Zhen, Xun, Kan, Li, Gen, Dui - eight universal patterns',
-                qimen_detail: 'Qimen Dunjia is the highest level of ancient Chinese strategic divination, originating from the legendary battle between Huangdi and Chiyou. It arranges elements like Heavenly Stems, Earthly Branches, Nine Stars, Eight Doors, and Eight Spirits according to spacetime principles, creating a holographic model of universal operation. Through Qimen Dunjia, one can calculate the energy distribution in specific time and space to choose the optimal timing and direction for actions.',
-                yinyang_detail: 'Yin-Yang is the core concept of Chinese philosophy, describing two opposing yet complementary forces in all things. Yang represents light, positivity, strength, and ascent; Yin represents darkness, negativity, softness, and descent. They are not absolute opposites but constantly transform and depend on each other, with dynamic balance being the optimal state.',
-                five_detail: 'The Five Elements are Metal, Wood, Water, Fire, and Earth, representing five types of energy with different properties. Creation cycle: Wood creates Fire, Fire creates Earth, Earth creates Metal, Metal creates Water, Water creates Wood. Control cycle: Wood controls Earth, Earth controls Water, Water controls Fire, Fire controls Metal, Metal controls Wood. Understanding these relationships helps grasp the intrinsic laws of development.',
-                eight_detail: 'The Eight Doors refer to Rest, Life, Injury, Concealment, Scenery, Death, Alarm, and Opening, representing eight different energy portals. Each door has its specific meaning: Rest door is good for rest and wellness, Life door for wealth and business, Opening door for travel and job seeking, Injury door for competition and debt collection. The positions vary across different times and spaces, affecting fortune.',
-                nine_detail: 'The Nine Stars are Tianpeng, Tianren, Tianchong, Tianfu, Tianqin, Tianxin, Tianzhu, Tianren, and Tianying, representing nine cosmic energy fields. Each occupies its position in the Qimen Dunjia chart. The auspicious or inauspicious nature of the stars affects the energy characteristics of that direction and is an important reference for decision-making.',
-                bagua_detail: 'The Eight Trigrams are Qian, Kun, Zhen, Xun, Kan, Li, Gen, and Dui, representing eight fundamental phenomena of heaven and earth: Sky, Earth, Thunder, Wind, Water, Fire, Mountain, and Lake. When combined, they form the 64 hexagrams, encompassing the patterns of all changes in the universe. The Later Heaven arrangement is the foundational spatial model in Qimen Dunjia.',
+                concepts_subtitle: 'Tap any card to explore ancient wisdom',
+                qimen_brief: 'Ancient decision-making system that reveals optimal timing and direction',
+                yinyang_brief: 'Two complementary forces behind all change in the universe',
+                five_brief: 'Wood, Fire, Earth, Metal, Water — five elemental energies in constant interaction',
+                eight_brief: 'Eight energy portals: Life, Openness, Rest, Scenery, and more',
+                nine_brief: 'Nine celestial influences: Tian Fu (Wisdom), Tian Xin (Healing), etc.',
+                bagua_brief: 'Eight fundamental patterns representing all cosmic phenomena',
+                qimen_detail: 'Qimen Dunjia is like a cosmic GPS that helps you find the best timing and direction for important decisions. Developed over 3,000 years ago, it combines astronomy, geography, and time cycles to reveal favorable conditions for your actions. Think of it as having a wise advisor who can see the invisible patterns of opportunity.',
+                yinyang_detail: 'Yin-Yang describes the two complementary forces present in everything — light/dark, active/passive, hot/cold. Like day turning into night, these forces are constantly flowing into each other. Understanding Yin-Yang helps you find the right balance: knowing when to act (Yang) and when to rest (Yin).',
+                five_detail: 'The Five Elements represent five types of energy that constantly interact: Wood (growth), Fire (transformation), Earth (stability), Metal (structure), and Water (adaptability). They create and control each other in cycles, just like nature\'s seasons. Understanding these relationships reveals the hidden dynamics of any situation.',
+                eight_detail: 'The Eight Doors are like portals of opportunity. Each door represents a different type of energy: Door of Life (growth and profit), Door of Openness (career and new paths), Door of Rest (healing and relationships), Door of Scenery (communication and fame). Where these doors appear in your chart reveals favorable opportunities.',
+                nine_detail: 'The Nine Stars are celestial influences that affect the energy of different directions. For example, Tian Fu Star brings wisdom and assistance, Tian Xin Star supports healing and spirituality, while Tian Rui Star suggests caution for health matters. These stars guide you toward supportive energies.',
+                bagua_detail: 'The Eight Trigrams represent eight fundamental patterns of reality: Heaven, Earth, Thunder, Wind, Water, Fire, Mountain, and Lake. Each corresponds to a direction and life area. The South (Fire) relates to recognition, the North (Water) to wisdom, the East (Thunder) to new beginnings, and so on. Together, they form a complete map of cosmic forces.',
                 compass_title: 'Later Heaven Compass · Today\'s Energy',
                 spin: 'Spin',
                 click_direction: 'Click a direction for details',
@@ -4437,18 +5254,18 @@
                 select_scene: 'Select Scenario',
                 scroll_hint: 'Scroll down for more ↓',
                 five_arts: 'Five Arts',
-                wushu_slogan: 'Mountain · Medicine · Fate · Physiognomy · Divination',
-                wushu_intro: 'Five Arts guide you to harmony between heaven, earth, and humanity',
+                wushu_slogan: 'Five Pathways to Ancient Wisdom',
+                wushu_intro: 'Discover the Five Arts — your guide to harmony and clarity',
                 wushu_mountain: 'Mountain',
-                wushu_mountain_desc: 'Self-cultivation & wellness practices',
+                wushu_mountain_desc: 'Self-cultivation, meditation, and inner peace',
                 wushu_medicine: 'Medicine',
-                wushu_medicine_desc: 'TCM wellness & health balance',
+                wushu_medicine_desc: 'Traditional Chinese wellness and body constitution',
                 wushu_fate: 'Fate',
-                wushu_fate_desc: 'Ziwei Doushu astrology',
-                wushu_physiognomy: 'Physiognomy · Fengshui',
-                wushu_physiognomy_desc: 'Environmental harmony & remedies',
+                wushu_fate_desc: 'Ziwei Doushu birth chart analysis',
+                wushu_physiognomy: 'Physiognomy',
+                wushu_physiognomy_desc: 'Fengshui and environmental harmony',
                 wushu_divination: 'Divination',
-                wushu_divination_desc: 'I-Ching hexagram divination',
+                wushu_divination_desc: 'I-Ching hexagram wisdom',
                 nav_home: 'Home',
                 nav_wushu: 'Five Arts',
                 nav_my: 'Profile',
@@ -4461,6 +5278,7 @@
                 menu_language: 'Language',
                 menu_about: 'About',
                 menu_about_qimen: 'About Qimen',
+                menu_learn_qimen: 'Learn Qimen',
                 about_qimen_title: 'About Qimen · 关于奇门',
                 qimen_page_title: 'Qimen Dunjia',
                 qimen_core_concept: 'Spacetime Holographic Principle',
@@ -4536,14 +5354,14 @@
                 stop: 'Stop',
                 related_decision: 'Related to your current decision',
                 // Direction descriptions
-                dir_north: 'Kan Water - North: Wisdom and career development',
-                dir_south: 'Li Fire - South: Fame and social activities',
-                dir_east: 'Zhen Wood - East: Health and new beginnings',
-                dir_west: 'Dui Metal - West: Wealth and harvest',
-                dir_northeast: 'Gen Earth - Northeast: Stability and studies',
-                dir_northwest: 'Qian Metal - Northwest: Mentors and leadership',
-                dir_southeast: 'Xun Wood - Southeast: Opportunities and noble people',
-                dir_southwest: 'Kun Earth - Southwest: Family and harmony',
+                dir_north: 'North: Wisdom and career growth',
+                dir_south: 'South: Recognition and social connections',
+                dir_east: 'East: Health and fresh starts',
+                dir_west: 'West: Financial gains and completion',
+                dir_northeast: 'Northeast: Stability and learning',
+                dir_northwest: 'Northwest: Mentor support and leadership',
+                dir_southeast: 'Southeast: New opportunities',
+                dir_southwest: 'Southwest: Relationships and harmony',
                 // Fengshui page
                 fengshui_intro: 'Environmental harmony for better living.',
                 daily_tip: 'Today\'s Fengshui Tip',
@@ -4558,6 +5376,42 @@
                 bagua_suitable: 'Suitable',
                 bagua_avoid: 'Avoid',
                 fengshui_knowledge: 'Fengshui Basics',
+                // Learn Qimen Page
+                learn_qimen_title: 'Learn Qimen · 奇门入门',
+                learn_hero_title: 'Your Journey Begins Here',
+                learn_hero_subtitle: 'Understand Qimen Dunjia in 5 simple lessons',
+                progress_text: 'Lesson 1 of 5',
+                lesson1_title: 'What is Qimen Dunjia?',
+                lesson1_intro: 'Imagine having a cosmic GPS that tells you the best time and direction for important decisions. That\'s Qimen Dunjia.',
+                analogy_title: 'Think of it like this:',
+                lesson1_analogy: 'Just as a GPS considers traffic, road conditions, and your destination to find the best route, Qimen Dunjia considers cosmic timing, directional energies, and your specific question to reveal optimal conditions for success.',
+                key_points: 'Key Points:',
+                lesson1_point1: 'Over 3,000 years old, used by Chinese emperors and generals',
+                lesson1_point2: 'Combines astronomy, geography, and time cycles',
+                lesson1_point3: 'Helps identify favorable timing and directions',
+                lesson1_point4: 'Not fortune-telling — strategic planning with cosmic awareness',
+                lesson2_title: 'The Eight Doors · 八门',
+                lesson2_intro: 'The Eight Doors are portals of opportunity. Each door represents a different type of energy that influences your situation.',
+                lesson2_tip: 'Tip: When reading your chart, focus on where the auspicious doors (Life, Openness) appear — these are your areas of opportunity.',
+                lesson3_title: 'The Nine Stars · 九星',
+                lesson3_intro: 'The Nine Stars are celestial influences that affect the energy of different directions. Think of them as cosmic weather patterns.',
+                lesson4_title: 'The Nine Palaces · 九宫',
+                lesson4_intro: 'The Nine Palaces divide space into eight directions plus center. Each direction has specific associations and energies.',
+                lesson4_tip: 'When your reading mentions "sitting in the East," it means positioning yourself in the eastern part of a room or building to tap into that direction\'s energy.',
+                lesson5_title: 'How to Use Oraculum',
+                lesson5_intro: 'You\'re ready! Here\'s how to get the most from your readings.',
+                step1_title: 'Choose Your Question',
+                step1_desc: 'Be specific. "Should I accept this job offer?" is better than "Will I find work?"',
+                step2_title: 'Select the Right Time Zone',
+                step2_desc: 'Accurate timing is essential. Choose your current location\'s time zone.',
+                step3_title: 'Read with an Open Mind',
+                step3_desc: 'The reading offers guidance, not predictions. Use it as one input among many in your decision-making.',
+                step4_title: 'Apply the Advice',
+                step4_desc: 'Notice specific directions, colors, and timing suggestions. These are practical steps you can take.',
+                ready_title: 'Ready to try?',
+                start_consultation: 'Start Your First Consultation',
+                next_lesson: 'Next Lesson →',
+                complete_lesson: '✓ Complete & Return',
             }
         };
 
@@ -4835,86 +5689,110 @@
         ];
 
         // ===== 术语库（用于AI回复高亮） =====
-        const TERMINOLOGY = {
-            zh: {
-                '值符': '值符是奇门遁甲中最吉利的神，代表天时之助、贵人相助。',
-                '值使': '值使是执行命令的使者，代表行动的方向和执行力。',
-                '三奇': '乙、丙、丁为三奇，代表特殊的吉利能量。',
-                '六仪': '戊、己、庚、辛、壬、癸为六仪，代表常规的能量状态。',
-                '开门': '开门主事业、出行、求职，代表新的开始和机遇。',
-                '休门': '休门主休息、养生、调理，代表休养生息。',
-                '生门': '生门主财运、生意、生产，代表生机和发展。',
-                '伤门': '伤门主竞技、讨债、变动，代表破坏和变革。',
-                '杜门': '杜门主躲藏、修炼、等待，代表隐藏和潜伏。',
-                '景门': '景门主文书、考试、宣传，代表光明和展示。',
-                '死门': '死门主结束、埋葬、断绝，代表终结和静止。',
-                '惊门': '惊门主惊恐、诉讼、争议，代表不安和动荡。',
-                '天蓬': '天蓬星主水事、盗贼、阴谋，宜静不宜动。',
-                '天任': '天任星主忠诚、踏实、稳定，适合守成。',
-                '天冲': '天冲星主冲动、竞争、快速，宜主动出击。',
-                '天辅': '天辅星主智慧、辅佐、文化，适合学习和规划。',
-                '天英': '天英星主光明、名声、礼仪，适合公开活动。',
-                '天芮': '天芮星主疾病、问题、学习，需谨慎行事。',
-                '天柱': '天柱星主支撑、隐居、中正，适合坚持原则。',
-                '天心': '天心星主医药、心理、精神，适合疗愈活动。',
-                '天禽': '天禽星主稳定、中正、和平，适合稳健发展。',
-                '九天': '九天主远行、高升、传播，适合向上发展。',
-                '九地': '九地主伏藏、低调、积蓄，适合低调行事。',
-                '太阴': '太阴主隐秘、阴私、贵人，适合暗中谋划。',
-                '六合': '六合主人际、合作、和谐，适合团队协作。',
-                '白虎': '白虎主凶险、争斗、血光，需特别谨慎。',
-                '玄武': '玄武主欺诈、盗贼、阴谋，需防范小人。',
-                '螣蛇': '螣蛇主变化、怪异、缠绕，需灵活应对。',
-                '勾陈': '勾陈主田土、牢狱、迟滞，需耐心等待。',
-                '朱雀': '朱雀主口舌、文书、信息，适合沟通表达。'
-            },
-            en: {
-                'Zhifu': 'Zhifu is the most auspicious deity in Qimen Dunjia, representing heavenly assistance and noble help.',
-                'Zhishi': 'Zhishi is the messenger executing commands, representing direction of action and execution.',
-                'Sanqi': 'Sanqi (Three Wonders) are Yi, Bing, Ding, representing special auspicious energies.',
-                'Liuyi': 'Liuyi (Six Instruments) are Wu, Ji, Geng, Xin, Ren, Gui, representing regular energy states.',
-                'Kaimen': 'Opening Door governs career, travel, job seeking, representing new beginnings and opportunities.',
-                'Xiumen': 'Rest Door governs rest, wellness, recuperation, representing restoration.',
-                'Shengmen': 'Life Door governs wealth, business, production, representing growth.',
-                'Shangmen': 'Injury Door governs competition, debt collection, change, representing disruption.',
-                'Dumen': 'Concealment Door governs hiding, cultivation, waiting, representing concealment.',
-                'Jingmen': 'Scenery Door governs documents, exams, publicity, representing brightness.',
-                'Simen': 'Death Door governs endings, burial, separation, representing finality.',
-                'Jingmen2': 'Alarm Door governs fear, litigation, disputes, representing unrest.',
-                'Tianpeng': 'Tianpeng Star governs water, theft, conspiracy, better to stay still.',
-                'Tianren': 'Tianren Star governs loyalty, stability, steadiness, suitable for maintaining.',
-                'Tianchong': 'Tianchong Star governs impulse, competition, speed, suitable for action.',
-                'Tianfu': 'Tianfu Star governs wisdom, assistance, culture, suitable for learning.',
-                'Tianying': 'Tianying Star governs brightness, fame, etiquette, suitable for public activities.',
-                'Tianrui': 'Tianrui Star governs illness, problems, learning, requires caution.',
-                'Tianzhu': 'Tianzhu Star governs support, seclusion, integrity, suitable for principles.',
-                'Tianxin': 'Tianxin Star governs medicine, psychology, spirit, suitable for healing.',
-                'Tianqin': 'Tianqin Star governs stability, justice, peace, suitable for steady development.'
-            }
+        // 统一术语定义：英文术语为key，包含中文名和解释
+        const TERM_DEFINITIONS = {
+            // 核心概念
+            'Qimen Dunjia': { zh: '奇门遁甲', en: 'Ancient Chinese strategic system that analyzes time and space to guide decisions - like a cosmic GPS for optimal timing and direction.' },
+            'Yin-Yang': { zh: '阴阳', en: 'Two opposing but complementary forces (dark/light, passive/active) that govern all change in the universe.' },
+            'Five Elements': { zh: '五行', en: 'Wood, Fire, Earth, Metal, Water – five fundamental energies in constant interaction, creating all phenomena.' },
+            'Eight Trigrams': { zh: '八卦', en: 'Eight fundamental patterns (Qian, Kun, Zhen, Xun, Kan, Li, Gen, Dui) representing all cosmic phenomena.' },
+            'Heavenly Stems': { zh: '天干', en: 'Ten celestial markers (Jia, Yi, Bing, Ding, Wu, Ji, Geng, Xin, Ren, Gui) used to mark days and years.' },
+            'Earthly Branches': { zh: '地支', en: 'Twelve earthly markers corresponding to the Chinese zodiac animals and time cycles.' },
+            
+            // 八门 - Eight Doors
+            'Door of Life': { zh: '生门', en: 'Represents vitality, growth, profit and new opportunities. Most auspicious for business and wealth.' },
+            'Door of Openness': { zh: '开门', en: 'Symbolizes career advancement, new beginnings, and success in public endeavors.' },
+            'Door of Rest': { zh: '休门', en: 'Governs relaxation, wellness, and recovery. Good for rest and relationship building.' },
+            'Door of Injury': { zh: '伤门', en: 'Associated with competition, sports, and necessary conflicts. Use cautiously.' },
+            'Door of Concealment': { zh: '杜门', en: 'Represents hiding, meditation, and strategic patience. Good for planning.' },
+            'Door of Scenery': { zh: '景门', en: 'Governs communication, fame, and public display. Favorable for performances and presentations.' },
+            'Door of Death': { zh: '死门', en: 'Represents endings and stagnation. Generally inauspicious, but can mean removing obstacles.' },
+            'Door of Alarm': { zh: '惊门', en: 'Associated with anxiety, disputes, and unexpected changes. Proceed with caution.' },
+            
+            // 九星 - Nine Stars
+            'Tian Peng Star': { zh: '天蓬星', en: 'Star of boldness and risk. Can indicate ambitious endeavors or potential deception.' },
+            'Tian Ren Star': { zh: '天任星', en: 'Star of loyalty and stability. Good for steady progress and reliable partnerships.' },
+            'Tian Chong Star': { zh: '天冲星', en: 'Star of action and competition. Favorable for quick decisions and bold moves.' },
+            'Tian Fu Star': { zh: '天辅星', en: 'Star of wisdom and assistance. Excellent for learning and receiving help from others.' },
+            'Tian Ying Star': { zh: '天英星', en: 'Star of fame and brightness. Good for public recognition and leadership.' },
+            'Tian Rui Star': { zh: '天芮星', en: 'Star of illness and problems. Indicates need for caution and health attention.' },
+            'Tian Zhu Star': { zh: '天柱星', en: 'Star of support and integrity. Good for maintaining principles and seeking justice.' },
+            'Tian Xin Star': { zh: '天心星', en: 'Star of healing and spirituality. Favorable for medical and psychological matters.' },
+            'Tian Qin Star': { zh: '天禽星', en: 'Star of stability and peace. Neutral, representing balance and centeredness.' },
+            
+            // 八神 - Eight Deities
+            'Value Symbol': { zh: '值符', en: 'The most auspicious deity, representing heavenly assistance and noble help.' },
+            'Value Messenger': { zh: '值使', en: 'The deity of execution and direction, guiding the implementation of plans.' },
+            'Nine Heavens': { zh: '九天', en: 'Deity of expansion, travel, and high aspirations. Good for ambitious goals.' },
+            'Nine Earths': { zh: '九地', en: 'Deity of concealment, patience, and accumulation. Good for hidden preparation.' },
+            'Great Yin': { zh: '太阴', en: 'Deity of secrets and hidden support. Favorable for behind-the-scenes planning.' },
+            'Six Harmonies': { zh: '六合', en: 'Deity of relationships and cooperation. Excellent for partnerships and negotiations.' },
+            'White Tiger': { zh: '白虎', en: 'Deity of danger and conflict. Requires extra caution but can bring swift resolution.' },
+            'Black Tortoise': { zh: '玄武', en: 'Deity of deception and hidden matters. Watch for dishonesty and illusions.' },
+            
+            // 紫微斗数术语
+            'Ziwei Star': { zh: '紫微星', en: 'Emperor Star in Ziwei Doushu, symbolizing leadership, authority, and nobility.' },
+            'Life Palace': { zh: '命宫', en: 'The most important palace in a birth chart, representing core personality and destiny.' },
+            'Wealth Palace': { zh: '财帛宫', en: 'Palace governing financial fortune and sources of income.' },
+            'Career Palace': { zh: '官禄宫', en: 'Palace governing career path, professional success, and public status.' },
+            'Siblings Palace': { zh: '兄弟宫', en: 'Palace representing relationships with siblings and peers.' },
+            'Spouse Palace': { zh: '夫妻宫', en: 'Palace governing marriage and romantic relationships.' },
+            
+            // 时间相关
+            'Lucky Hour': { zh: '吉时', en: 'Auspicious time periods for taking action, calculated based on Qimen principles.' },
+            'Lucky Direction': { zh: '吉方', en: 'Auspicious directions for movement, facing, or locating activities.' },
+            'Auspicious': { zh: '吉', en: 'Favorable, bringing good fortune and positive outcomes.' },
+            'Inauspicious': { zh: '凶', en: 'Unfavorable, indicating potential obstacles or negative outcomes.' },
+            
+            // 宫位
+            'Qian Palace': { zh: '乾宫', en: 'Northwest direction, associated with leadership, heaven, and father figures.' },
+            'Kun Palace': { zh: '坤宫', en: 'Southwest direction, associated with receptivity, earth, and mother figures.' },
+            'Zhen Palace': { zh: '震宫', en: 'East direction, associated with thunder, awakening, and growth.' },
+            'Xun Palace': { zh: '巽宫', en: 'Southeast direction, associated with wind, gentleness, and communication.' },
+            'Kan Palace': { zh: '坎宫', en: 'North direction, associated with water, danger, and hidden depths.' },
+            'Li Palace': { zh: '离宫', en: 'South direction, associated with fire, clarity, and visibility.' },
+            'Gen Palace': { zh: '艮宫', en: 'Northeast direction, associated with mountains, stillness, and meditation.' },
+            'Dui Palace': { zh: '兑宫', en: 'West direction, associated with lake, joy, and communication.' }
         };
 
-        // 高亮术语并添加tooltip
+        // 中文到英文的映射（用于中文模式高亮）
+        const ZH_TO_EN_TERMS = {};
+        Object.keys(TERM_DEFINITIONS).forEach(enTerm => {
+            ZH_TO_EN_TERMS[TERM_DEFINITIONS[enTerm].zh] = enTerm;
+        });
+
+        // 高亮术语并添加tooltip（支持中英文双向匹配）
         function highlightTerms(text) {
-            const terms = TERMINOLOGY[currentLang] || TERMINOLOGY.zh;
             let result = text;
             
-            // 按术语长度降序排序，避免短术语影响长术语的匹配
-            const sortedTerms = Object.keys(terms).sort((a, b) => b.length - a.length);
-            
-            for (const term of sortedTerms) {
-                const regex = new RegExp(term, 'g');
-                const replacement = `<span class="term-highlight" onclick="showTermTooltip(event, '${term}')">${term}</span>`;
-                result = result.replace(regex, replacement);
+            if (currentLang === 'en') {
+                // 英文模式：匹配英文术语
+                const sortedTerms = Object.keys(TERM_DEFINITIONS).sort((a, b) => b.length - a.length);
+                for (const term of sortedTerms) {
+                    const regex = new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+                    result = result.replace(regex, `<span class="term-highlight" data-term="${term}" onclick="showTermTooltip(event, '${term}')">${term}</span>`);
+                }
+            } else {
+                // 中文模式：匹配中文术语
+                const sortedTerms = Object.keys(ZH_TO_EN_TERMS).sort((a, b) => b.length - a.length);
+                for (const zhTerm of sortedTerms) {
+                    const enTerm = ZH_TO_EN_TERMS[zhTerm];
+                    result = result.replace(new RegExp(zhTerm, 'g'), 
+                        `<span class="term-highlight" data-term="${enTerm}" onclick="showTermTooltip(event, '${enTerm}')">${zhTerm}</span>`);
+                }
             }
             
             return result;
         }
 
         // 显示术语提示
-        function showTermTooltip(event, term) {
+        function showTermTooltip(event, enTerm) {
             event.stopPropagation();
-            const terms = TERMINOLOGY[currentLang] || TERMINOLOGY.zh;
-            const definition = terms[term] || '暂无解释 / No definition available';
+            const termData = TERM_DEFINITIONS[enTerm];
+            if (!termData) return;
+            
+            const definition = currentLang === 'en' ? termData.en : `${termData.zh}：${termData.en}`;
+            const displayTerm = currentLang === 'en' ? `${enTerm} (${termData.zh})` : `${termData.zh} (${enTerm})`;
             
             // 移除已有的tooltip
             const existingTooltip = document.querySelector('.term-tooltip');
@@ -4925,7 +5803,7 @@
             tooltip.className = 'term-tooltip';
             tooltip.innerHTML = `
                 <div class="tooltip-header">
-                    <span class="tooltip-term">${term}</span>
+                    <span class="tooltip-term">${displayTerm}</span>
                     <button class="tooltip-close" onclick="this.parentElement.parentElement.remove()">
                         <i class="fa-regular fa-xmark"></i>
                     </button>
@@ -5903,6 +6781,8 @@
 
         // 构建奇门遁甲提示词
         function buildQimenPrompt(question) {
+            const isZh = currentLang === 'zh';
+            
             // 使用UTC时间+用户选择的时区偏移
             const now = new Date();
             const timezone = document.getElementById('timezoneSelect').value;
@@ -5929,11 +6809,39 @@
             // 计算奇门遁甲盘
             const qimen = calculateQimenDunjia(year, month, day, hour, minute);
             
-            const timeStr = `${year}年${month}月${day}日 ${hour}:${minute.toString().padStart(2, '0')}`;
+            // 术语映射
+            const termMap = {
+                doors: {
+                    '开门': 'Door of Openness', '休门': 'Door of Rest', '生门': 'Door of Life',
+                    '伤门': 'Door of Injury', '杜门': 'Door of Concealment', '景门': 'Door of Scenery',
+                    '死门': 'Door of Death', '惊门': 'Door of Alarm'
+                },
+                stars: {
+                    '天蓬': 'Tian Peng Star', '天任': 'Tian Ren Star', '天冲': 'Tian Chong Star',
+                    '天辅': 'Tian Fu Star', '天英': 'Tian Ying Star', '天芮': 'Tian Rui Star',
+                    '天柱': 'Tian Zhu Star', '天心': 'Tian Xin Star', '天禽': 'Tian Qin Star'
+                },
+                deities: {
+                    '值符': 'Value Symbol', '值使': 'Value Messenger', '九天': 'Nine Heavens',
+                    '九地': 'Nine Earths', '太阴': 'Great Yin', '六合': 'Six Harmonies',
+                    '白虎': 'White Tiger', '玄武': 'Black Tortoise'
+                },
+                palaces: {
+                    '坎一宫': 'Kan Palace (North)', '坤二宫': 'Kun Palace (Southwest)', 
+                    '震三宫': 'Zhen Palace (East)', '巽四宫': 'Xun Palace (Southeast)',
+                    '中五宫': 'Center Palace', '乾六宫': 'Qian Palace (Northwest)',
+                    '兑七宫': 'Dui Palace (West)', '艮八宫': 'Gen Palace (Northeast)',
+                    '离九宫': 'Li Palace (South)'
+                }
+            };
+            
+            const timeStr = isZh 
+                ? `${year}年${month}月${day}日 ${hour}:${minute.toString().padStart(2, '0')}`
+                : `${year}-${month}-${day} ${hour}:${minute.toString().padStart(2, '0')}`;
             const baziStr = `${qimen.bazi.year}年 ${qimen.bazi.month}月 ${qimen.bazi.day}日 ${qimen.bazi.hour}时`;
             
             // 识别用户咨询中的关键词，确定用神
-            let yongshen = '求财';
+            let yongshen = isZh ? '求财' : 'Wealth';
             const yongshenKeys = Object.keys(YONGSHEN);
             for (const key of yongshenKeys) {
                 if (question.includes(key)) {
@@ -5964,7 +6872,7 @@
             const liunianStar = qimen.jiuxing[liunianLuogong] || '天心';
             
             // 从用户问题中提取出生年份（如果有）- 这才是年命
-            const birthYearMatch = question.match(/(\d{4})\s*(年|出生)/);
+            const birthYearMatch = question.match(/(\d{4})\s*(年|born|birth|year)/i);
             let nianmingGan = null;
             let nianmingLuogong = null;
             let nianmingMen = null;
@@ -5980,15 +6888,25 @@
             }
             
             // 判断是否为大事情
-            const bigMatters = ['婚姻', '结婚', '生子', '怀孕', '疾病', '生病', '手术', '生死', '大财运', '投资', '买房', '卖房', '离婚', '官司', '诉讼'];
-            const isBigMatter = bigMatters.some(m => question.includes(m));
+            const bigMatters = isZh 
+                ? ['婚姻', '结婚', '生子', '怀孕', '疾病', '生病', '手术', '生死', '大财运', '投资', '买房', '卖房', '离婚', '官司', '诉讼']
+                : ['marriage', 'wedding', 'pregnancy', 'baby', 'disease', 'surgery', 'investment', 'house', 'divorce', 'lawsuit', 'court'];
+            const isBigMatter = bigMatters.some(m => question.toLowerCase().includes(m.toLowerCase()));
             
-            return `【格式禁止】输出中不能有星号，用中文数字列表。
+            // 术语转换函数
+            const getTerm = (zhTerm, category) => {
+                if (isZh) return zhTerm;
+                return termMap[category]?.[zhTerm] || zhTerm;
+            };
+
+            if (isZh) {
+                // 中文提示词
+                return `【格式禁止】输出中不能有星号，用中文数字列表。
 
 你是小卜，奇门遁甲实战派顾问。
 
 【用户问题】${question}
-【场景】${currentLang === 'zh' ? currentScene.nameZh : currentScene.nameEn}
+【场景】${currentScene.nameZh}
 【时间】${timeStr} ${qimen.shichenName}
 【四柱】${baziStr}
 【局】${qimen.ju.name}（${qimen.jieqi}）
@@ -6039,11 +6957,116 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
 语气温柔，态度坚定
 结尾暖心：「XX是死的，人是活的，XX也别慌」
 
-六、字数400-600字
+六、字数400-600字`;
+            } else {
+                // 英文提示词 - 使用通俗易懂的术语解释
+                return `【FORMAT RULES】No asterisks in output. Use numbered lists.
 
-【示例】
-问：后天下午2点和合作伙伴谈合同条款，能帮我分析吗？
-答：盘面上显示，你的用神落兑七宫，开门临玄武，说明对方心里有小算盘，想在条款里藏点东西，不过天柱星当值，你脑子清醒，能抓住关键漏洞。要注意的是，惊门在乾宫，白虎压着，签之前务必把违约条款和付款周期盯死，容易在这两块出幺蛾子。建议你谈的时候坐会议室的西边位置，兑宫主口舌，坐那儿能压住场；穿件白色或浅金色衬衫，金气能助你逻辑不乱。开口前先喝两口水，下午2点属未时，火土旺，补水能防急躁。重点咬住甲方延迟交付时单方解约这一条，盘上显示这是他们的软肋。合同是死的，人是活的，谈崩了也别慌。`;
+You are Xiao Bu (Little Oracle), a Qimen Dunjia consultant making ancient Chinese wisdom accessible to everyone.
+
+【User Question】${question}
+【Context】${currentScene.nameEn}
+【Time】${timeStr} ${qimen.shichenName} (Chinese Hour)
+【Four Pillars】${baziStr}
+【Pattern】${qimen.ju.name} (${qimen.jieqi} Season)
+
+【Chart Analysis Data】
+Day Stem ${qimen.bazi.day[0]} sits in ${getTerm(riPalace, 'palaces')}, with ${getTerm(riMen, 'doors')}, ${getTerm(riStar, 'stars')}, ${getTerm(riShen, 'deities')}
+Hour Stem ${qimen.bazi.hour[0]} sits in ${getTerm(shiPalace, 'palaces')}, with ${getTerm(shiMen, 'doors')}, ${getTerm(shiStar, 'stars')}, ${getTerm(shiShen, 'deities')}
+Year Stem ${liunianGan} sits in ${getTerm(liunianLuogong, 'palaces')}, with ${getTerm(liunianMen, 'doors')}, ${getTerm(liunianStar, 'stars')}
+${nianmingGan ? `Birth Year Stem ${nianmingGan} sits in ${getTerm(nianmingLuogong, 'palaces')}, with ${getTerm(nianmingMen, 'doors')}, ${getTerm(nianmingStar, 'stars')}` : ''}
+Formation: ${qimen.geju.join(', ') || 'Standard'}
+Focus Area: ${yongshen}
+Major Life Decision: ${isBigMatter ? 'Yes - requires birth year analysis' : 'No - standard analysis'}
+
+【KEY TERMS EXPLAINED FOR ENGLISH READERS】
+• Eight Doors (Ba Men): Energy portals in the chart that influence different life areas
+  - Door of Life: Growth, profit, new opportunities (most auspicious)
+  - Door of Openness: Career advancement, new beginnings
+  - Door of Rest: Relaxation, wellness, relationships
+  - Door of Scenery: Communication, fame, presentations
+  - Door of Injury: Competition, necessary conflicts
+  - Door of Concealment: Strategic patience, meditation
+  - Door of Death: Endings, removing obstacles (use cautiously)
+  - Door of Alarm: Anxiety, unexpected changes (proceed with caution)
+
+• Nine Stars (Jiu Xing): Celestial influences affecting the situation
+  - Tian Fu Star: Wisdom, assistance, learning
+  - Tian Xin Star: Healing, spirituality
+  - Tian Ren Star: Loyalty, stability
+  - Tian Chong Star: Action, bold moves
+  - Tian Ying Star: Fame, leadership
+  - Tian Zhu Star: Integrity, justice
+  - Tian Peng Star: Boldness, risk-taking
+  - Tian Rui Star: Illness, problems (caution needed)
+  - Tian Qin Star: Balance, centeredness
+
+• Eight Deities (Ba Shen): Spiritual forces in the reading
+  - Value Symbol: Most auspicious, heavenly assistance
+  - Six Harmonies: Partnerships, cooperation
+  - Great Yin: Hidden support, behind-the-scenes help
+  - Nine Heavens: Expansion, high aspirations
+  - Nine Earths: Patience, accumulation
+  - White Tiger: Danger, conflict (caution required)
+  - Black Tortoise: Deception, illusions (watch carefully)
+
+• Palaces (Gong): Nine directional sectors in the chart
+  - Kan (North), Li (South), Zhen (East), Dui (West)
+  - Qian (Northwest), Kun (Southwest), Gen (Northeast), Xun (Southeast)
+  - Center Palace
+
+【GEOGRAPHIC DIRECTIONS】
+Beijing: North | Shanghai: East | Guangzhou/Shenzhen: South
+Chengdu/Chongqing: Southwest | Xi'an: Northwest | Wuhan: Center
+
+【RESPONSE GUIDELINES】
+
+1. Opening Line
+Start directly with analysis. NO statements like "will succeed" or "success rate."
+Use: "The chart reveals..." or "Looking at the current energy pattern..."
+
+2. For Major Life Decisions
+Current question is ${isBigMatter ? 'a major decision' : 'a regular matter'}.
+If major and birth year not provided, ask: "This is a significant life decision. To give you the most accurate reading, may I ask what year you were born?"
+Then analyze the birth year stem position.
+
+3. Analysis Framework
+a) Key Position Analysis: Where the focus point lands, which Door/Star/Deity influences it
+b) Supportive Energies: Auspicious Doors, Stars, Deities helping
+c) Risk Factors: Challenging elements to watch for
+d) Birth Year Analysis (if major): How it affects the person specifically
+
+4. Practical Recommendations (MUST include)
+a) Direction: Where to sit, where to go, what to avoid
+b) Timing: Best hours for taking action
+c) Color: What to wear for supportive energy
+d) Actions: Specific things to do, watch, or double-check
+e) Focus: Key clauses or details that need attention
+
+5. Communication Style
+• Use 30% technical terms + 70% plain English
+• Always explain terms when first used: "Door of Life (representing growth and opportunity)"
+• Be specific and actionable in advice
+• Warm but confident tone
+• End with encouragement: "The chart is a guide, but you have the power to shape outcomes"
+
+6. Length: 300-500 words
+
+【EXAMPLE RESPONSE】
+Question: I have a contract negotiation tomorrow afternoon. What should I watch for?
+
+Answer: The chart reveals that your focus point sits in the West (Dui Palace), with the Door of Openness alongside the Black Tortoise. This combination suggests your counterpart may have hidden intentions not immediately visible. However, the Tian Zhu Star (integrity) is present, meaning if you stay sharp and principled, you can navigate through.
+
+The Door of Alarm in the Northwest sector indicates some tension around payment terms or delivery timelines. Before signing, carefully review any clauses about late delivery penalties and termination conditions—these are potential friction points.
+
+Practical recommendations:
+• Position: Sit on the west side of the meeting room for clarity
+• Color: Wear white or silver tones to enhance your negotiating energy
+• Timing: The 3-5 PM window shows the clearest energy for decision-making
+• Focus: Pay special attention to any "force majeure" clauses and dispute resolution terms
+
+The chart shows favorable winds for your position if you remain patient and detail-oriented. Trust your instincts on any terms that feel rushed or unclear.`;
+            }
         }
 
         // 输入框事件
@@ -8790,6 +9813,58 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
 
         function closeAboutQimen() {
             document.getElementById('aboutQimenPage').classList.remove('active');
+        }
+
+        // ===== Learn Qimen Page Functions =====
+        let currentLesson = 1;
+        
+        function showLearnQimen() {
+            document.getElementById('learnQimenPage').classList.add('active');
+            currentLesson = 1;
+            updateLessonProgress();
+        }
+
+        function closeLearnQimen() {
+            document.getElementById('learnQimenPage').classList.remove('active');
+        }
+
+        function nextLesson(current) {
+            // Hide current lesson
+            const currentCard = document.getElementById(`lesson${current}`);
+            if (currentCard) {
+                currentCard.classList.remove('active');
+                currentCard.style.opacity = '0';
+                currentCard.style.transform = 'translateX(-20px)';
+            }
+            
+            // Show next lesson
+            const nextCard = document.getElementById(`lesson${current + 1}`);
+            if (nextCard) {
+                setTimeout(() => {
+                    nextCard.classList.add('active');
+                    nextCard.style.opacity = '1';
+                    nextCard.style.transform = 'translateX(0)';
+                }, 200);
+                currentLesson = current + 1;
+                updateLessonProgress();
+            }
+        }
+
+        function updateLessonProgress() {
+            const progress = (currentLesson / 5) * 100;
+            const progressFill = document.getElementById('learnProgress');
+            const progressText = document.querySelector('.progress-text');
+            
+            if (progressFill) {
+                progressFill.style.width = `${progress}%`;
+            }
+            
+            if (progressText) {
+                const isZh = currentLang === 'zh';
+                progressText.textContent = isZh 
+                    ? `第 ${currentLesson} 课，共 5 课` 
+                    : `Lesson ${currentLesson} of 5`;
+            }
         }
 
         function showFeedback() {
