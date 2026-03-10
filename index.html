@@ -1021,6 +1021,837 @@
             padding: 20px var(--spacing-page) 100px;
         }
 
+        /* ===== 山·修身 - 金花课程 ===== */
+        .mountain-content {
+            background: linear-gradient(to bottom, var(--color-bg) 0%, #F8F6F3 100%);
+            min-height: 100vh;
+        }
+
+        .golden-flower-intro {
+            text-align: center;
+            padding: 30px 0 24px;
+        }
+
+        .gf-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--color-primary), #7D6E5A);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(155, 125, 95, 0.25);
+        }
+
+        .gf-icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .gf-title {
+            font: 600 24px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 6px;
+        }
+
+        .gf-subtitle {
+            font: 400 13px/1.5 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-bottom: 12px;
+        }
+
+        .gf-desc {
+            font: 400 14px/1.7 var(--font-stack);
+            color: var(--color-text-secondary);
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        /* 打卡进度卡片 */
+        .practice-progress-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .progress-ring-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .progress-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-bg {
+            fill: none;
+            stroke: var(--color-divider);
+            stroke-width: 6;
+        }
+
+        .progress-ring-fill {
+            fill: none;
+            stroke: var(--color-primary);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 264;
+            stroke-dashoffset: 264;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-ring-text span {
+            font: 700 24px/1 var(--font-stack);
+            color: var(--color-primary);
+        }
+
+        .progress-ring-text small {
+            display: block;
+            font: 400 11px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .progress-stats {
+            flex: 1;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font: 700 20px/1 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .stat-label {
+            display: block;
+            font: 400 11px/1 var(--font-stack);
+            color: var(--color-text-light);
+            margin-top: 4px;
+        }
+
+        /* 课程区块 */
+        .course-section, .jung-section, .advanced-section, .recommendation-section, .classic-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font: 600 18px/1.3 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .section-tag {
+            font: 500 11px/1 var(--font-stack);
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+        }
+
+        .jung-tag {
+            background: #E8F0FE;
+            color: #1967D2;
+        }
+
+        .advanced-tag {
+            background: #FEF0E8;
+            color: #D35400;
+        }
+
+        .section-desc {
+            font: 400 13px/1.5 var(--font-stack);
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* 课程卡片横向滑动 */
+        .course-cards-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px 0 12px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .course-cards-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .course-card {
+            flex: 0 0 140px;
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            scroll-snap-align: start;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .course-card.completed {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, #F8F4F0 0%, #F5F0EB 100%);
+        }
+
+        .course-card-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-divider);
+        }
+
+        .course-card.completed .course-card-status {
+            background: var(--color-primary);
+        }
+
+        .course-card.completed .course-card-status::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .course-day {
+            font: 500 11px/1 var(--font-stack);
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .course-title {
+            font: 600 15px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .course-subtitle {
+            font: 400 11px/1.3 var(--font-stack);
+            color: var(--color-text-light);
+            margin-bottom: 8px;
+        }
+
+        .course-duration {
+            font: 400 11px/1 var(--font-stack);
+            color: var(--color-text-mid);
+        }
+
+        .course-duration i {
+            margin-right: 4px;
+        }
+
+        /* 荣格心理学卡片 */
+        .jung-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .jung-card {
+            display: flex;
+            gap: 14px;
+            padding: 14px;
+            background: linear-gradient(135deg, #F5F8FE 0%, #EDF2FC 100%);
+            border-radius: 14px;
+        }
+
+        .jung-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .jung-icon i {
+            font-size: 18px;
+            color: #1967D2;
+        }
+
+        .jung-title {
+            font: 600 14px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 6px;
+        }
+
+        .jung-text {
+            font: 400 12px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        /* 进阶阶段卡片 */
+        .stage-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stage-card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .stage-card:not(.locked):hover {
+            background: #F5F0EB;
+        }
+
+        .stage-card.locked {
+            opacity: 0.6;
+        }
+
+        .stage-lock {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--color-divider);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stage-lock i {
+            font-size: 12px;
+            color: var(--color-text-light);
+        }
+
+        .stage-card:not(.locked) .stage-lock {
+            display: none;
+        }
+
+        .stage-week {
+            font: 500 11px/1 var(--font-stack);
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .stage-title {
+            font: 600 15px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .stage-desc {
+            font: 400 12px/1.4 var(--font-stack);
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .stage-quote {
+            font: italic 400 12px/1.4 var(--font-stack);
+            color: var(--color-primary);
+            padding: 8px 12px;
+            background: rgba(155, 125, 95, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .stage-unlock {
+            font: 400 11px/1 var(--font-stack);
+            color: var(--color-text-light);
+            margin-top: 8px;
+        }
+
+        .stage-card:not(.locked) .stage-unlock {
+            display: none;
+        }
+
+        /* 百日筑基 */
+        .hundred-days-section {
+            background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .hundred-days-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .hd-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hd-icon i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .hd-title {
+            font: 600 16px/1.3 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .hd-desc {
+            font: 400 12px/1 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .hundred-days-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hd-progress-bar {
+            flex: 1;
+            height: 8px;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .hd-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), #8B7355);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .hd-stats {
+            font: 600 14px/1 var(--font-stack);
+            color: var(--color-primary);
+            white-space: nowrap;
+        }
+
+        /* 推荐区块 */
+        .recommendation-card {
+            display: flex;
+            gap: 14px;
+            padding: 16px;
+            background: linear-gradient(135deg, #F8F4F0 0%, #F5F0EB 100%);
+            border-radius: 14px;
+        }
+
+        .rec-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rec-icon i {
+            font-size: 18px;
+            color: white;
+        }
+
+        .rec-title {
+            font: 600 14px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .rec-text {
+            font: 400 12px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        /* 经典原文 */
+        .quotes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quote-card {
+            padding: 14px;
+            background: var(--color-card);
+            border-radius: 12px;
+        }
+
+        .quote-text {
+            font: 500 14px/1.7 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .quote-trans {
+            font: italic 400 12px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        /* ===== 练习页面 ===== */
+        .practice-content {
+            background: linear-gradient(to bottom, #1a1816 0%, #2d2825 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .practice-phase-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0 30px;
+        }
+
+        .phase-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .phase-dot.active {
+            background: var(--color-primary);
+            box-shadow: 0 0 12px rgba(155, 125, 95, 0.6);
+        }
+
+        .phase-line {
+            width: 40px;
+            height: 2px;
+            background: rgba(255,255,255,0.2);
+            margin: 0 8px;
+        }
+
+        .practice-guide {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .practice-guide h2 {
+            font: 500 22px/1.5 var(--font-stack);
+            margin-bottom: 16px;
+        }
+
+        .practice-guide p {
+            font: 400 15px/1.8 var(--font-stack);
+            color: rgba(255,255,255,0.8);
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .practice-quote {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .practice-quote p {
+            font: 400 14px/1.7 var(--font-stack);
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .practice-timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .timer-ring {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .timer-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .timer-ring-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.1);
+            stroke-width: 6;
+        }
+
+        .timer-ring-fill {
+            fill: none;
+            stroke: var(--color-primary);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-dasharray: 565;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        .timer-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .timer-display span {
+            font: 300 42px/1 var(--font-stack);
+            color: white;
+        }
+
+        .timer-colon {
+            margin: 0 4px;
+            opacity: 0.5;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .timer-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 30px;
+            border: none;
+            font: 600 15px/1 var(--font-stack);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .timer-start {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .timer-start:hover {
+            background: #8B7355;
+        }
+
+        .timer-reset {
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+        }
+
+        .jung-tip-card {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px;
+            margin-top: 20px;
+        }
+
+        .jung-tip-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: rgba(25, 103, 210, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .jung-tip-icon i {
+            font-size: 16px;
+            color: #8AB4F8;
+        }
+
+        .jung-tip-content h5 {
+            font: 600 13px/1 var(--font-stack);
+            color: #8AB4F8;
+            margin-bottom: 4px;
+        }
+
+        .jung-tip-content p {
+            font: 400 12px/1.6 var(--font-stack);
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* 完成弹窗 */
+        .practice-complete-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .practice-complete-modal.active {
+            display: flex;
+        }
+
+        .complete-modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 32px 24px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+        }
+
+        .complete-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #4CAF50, #45a049);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .complete-icon i {
+            font-size: 32px;
+            color: white;
+        }
+
+        .complete-title {
+            font: 600 22px/1.3 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .complete-time {
+            font: 400 14px/1 var(--font-stack);
+            color: var(--color-text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .experience-input {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .experience-input h4 {
+            font: 600 14px/1 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 12px;
+        }
+
+        .experience-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .exp-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px;
+            background: var(--color-card);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .exp-option:hover {
+            background: #F5F0EB;
+        }
+
+        .exp-option.selected {
+            border-color: var(--color-primary);
+            background: rgba(155, 125, 95, 0.1);
+        }
+
+        .exp-option i {
+            font-size: 20px;
+            color: var(--color-primary);
+        }
+
+        .exp-option span {
+            font: 500 12px/1 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .experience-notes {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--color-divider);
+            border-radius: 12px;
+            font: 400 13px/1.5 var(--font-stack);
+            resize: none;
+            min-height: 60px;
+        }
+
+        .complete-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+        }
+
         /* ===== 冥想计时 ===== */
         .meditation-overlay {
             position: fixed;
@@ -4345,93 +5176,354 @@
             </button>
             <div class="wushu-detail-title" data-i18n="wushu_mountain">山·修身</div>
         </header>
-        <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
-                山术，五术之首，包含养生、健身、修炼等方法，旨在强健体魄、净化心灵。
-            </p>
-
-            <!-- 今日修习 -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title" data-i18n="today_practice">今日修习</div>
-                        <div class="card-subtitle">Today's Practice</div>
-                    </div>
-                    <span class="tag">5 min / 5分钟</span>
+        <div class="wushu-detail-content mountain-content">
+            <!-- 金花课程介绍 -->
+            <div class="golden-flower-intro">
+                <div class="gf-icon">
+                    <i class="fa-regular fa-spa"></i>
                 </div>
-                <p style="font: 500 16px/1.4 var(--font-stack); color: var(--color-text);">今日冥想·回光调息法</p>
-                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">Today's Meditation: Backlight Breathing<br>5分钟静心，适合面试前练习。回光者，回其阳神也。</p>
-                <button class="btn btn-primary" style="margin-top: 16px; width: 100%;" onclick="startMeditation()" data-i18n="start_meditation">开始冥想</button>
-            </div>
-
-            <!-- 冥想打卡 -->
-            <div class="card">
-                <div class="card-title" data-i18n="meditation_total">冥想打卡累计</div>
-                <p style="font: 600 32px/1 var(--font-stack); color: var(--color-primary); margin-top: 8px;">
-                    <span id="meditationCount">0</span> 
-                    <span style="font-size: 16px; color: var(--color-text-mid);" data-i18n="times">次</span>
+                <h1 class="gf-title" data-i18n="gf_title">金花冥想课程</h1>
+                <p class="gf-subtitle" data-i18n="gf_subtitle">Golden Flower Meditation · Based on Taiyi Jinhua Zongzhi</p>
+                <p class="gf-desc" data-i18n="gf_desc">
+                    基于《太乙金华宗旨》，道家内丹修炼经典。荣格曾为此书作序，认为它与西方心理学的"集体潜意识""曼陀罗"等概念相通。
                 </p>
-                <button class="btn btn-outline" style="margin-top: 16px; width: 100%;" onclick="completeMeditation()" data-i18n="complete_checkin">完成冥想打卡</button>
-                <p style="font: var(--font-hint); color: var(--color-text-light); margin-top: 12px;" data-i18n="unlock_hint">再打卡 3 次解锁新课程</p>
             </div>
 
-            <!-- 本周推荐 -->
-            <div class="card">
-                <div class="card-title" style="margin-bottom: 16px;" data-i18n="weekly_picks">本周推荐</div>
-                <div class="scroll-container">
-                    <div class="scroll-card">
-                        <div class="scroll-card-title">静坐入门</div>
-                        <div class="scroll-card-desc">基础呼吸法</div>
-                        <div class="scroll-card-meta">5 min</div>
+            <!-- 打卡进度 -->
+            <div class="practice-progress-card">
+                <div class="progress-ring-container">
+                    <svg class="progress-ring" viewBox="0 0 100 100">
+                        <circle class="progress-ring-bg" cx="50" cy="50" r="42"/>
+                        <circle class="progress-ring-fill" cx="50" cy="50" r="42" id="meditationProgressRing"/>
+                    </svg>
+                    <div class="progress-ring-text">
+                        <span id="totalPracticeDays">0</span>
+                        <small data-i18n="days_practiced">天</small>
                     </div>
-                    <div class="scroll-card">
-                        <div class="scroll-card-title">观呼吸</div>
-                        <div class="scroll-card-desc">专注力训练</div>
-                        <div class="scroll-card-meta">8 min</div>
+                </div>
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalMinutes">0</span>
+                        <span class="stat-label" data-i18n="total_minutes">总分钟</span>
                     </div>
-                    <div class="scroll-card">
-                        <div class="scroll-card-title">回光法</div>
-                        <div class="scroll-card-desc">《太乙金华宗旨》</div>
-                        <div class="scroll-card-meta">5 min</div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="currentStreak">0</span>
+                        <span class="stat-label" data-i18n="current_streak">连续天</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="currentStage">1</span>
+                        <span class="stat-label" data-i18n="current_stage">当前阶段</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 太乙金华宗旨 -->
-            <div class="card">
-                <div class="collapsible" onclick="toggleCollapsible(this)">
-                    <div class="collapsible-header">
-                        <span class="collapsible-title">《太乙金华宗旨》/ Learn more</span>
-                        <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+            <!-- 七日入门课程 -->
+            <div class="course-section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="seven_day_course">七日入门课程</h2>
+                    <span class="section-tag" data-i18n="beginner">入门</span>
+                </div>
+                <p class="section-desc" data-i18n="seven_day_desc">从零开始，循序渐进体验道家修炼精髓</p>
+                
+                <div class="course-cards-container" id="sevenDayCourses">
+                    <!-- 第1天 -->
+                    <div class="course-card" data-day="1" onclick="openPracticePage(1)">
+                        <div class="course-card-status" id="day1Status"></div>
+                        <div class="course-day">Day 1</div>
+                        <div class="course-title" data-i18n="day1_title">静坐入门</div>
+                        <div class="course-subtitle">坐如山，心如水</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 5 min</div>
+                        <div class="course-progress" id="day1Progress"></div>
                     </div>
-                    <div class="collapsible-content">
-                        <div class="collapsible-body">
-                            <p style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text-mid);">
-                                <strong>原文：</strong><br>
-                                "回光者，非回一身之精华，直回天地造化之阳神也。"<br><br>
-                                <strong>白话解读：</strong><br>
-                                回光不是简单地收回身体的精气，而是收回天地间造化的阳神。这是一种将注意力转向内在，达到与宇宙合一的修炼方法。<br><br>
-                                <strong>一周冥想计划：</strong><br>
-                                周一：静坐入门 5分钟<br>
-                                周二：观呼吸 8分钟<br>
-                                周三：回光法 5分钟<br>
-                                周四：静坐入门 5分钟<br>
-                                周五：观呼吸 8分钟<br>
-                                周六：回光法 5分钟<br>
-                                周日：综合练习 10分钟
-                            </p>
+                    <!-- 第2天 -->
+                    <div class="course-card" data-day="2" onclick="openPracticePage(2)">
+                        <div class="course-card-status" id="day2Status"></div>
+                        <div class="course-day">Day 2</div>
+                        <div class="course-title" data-i18n="day2_title">数息法</div>
+                        <div class="course-subtitle">一呼一吸，一数一念</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 8 min</div>
+                        <div class="course-progress" id="day2Progress"></div>
+                    </div>
+                    <!-- 第3天 -->
+                    <div class="course-card" data-day="3" onclick="openPracticePage(3)">
+                        <div class="course-card-status" id="day3Status"></div>
+                        <div class="course-day">Day 3</div>
+                        <div class="course-title" data-i18n="day3_title">听息法</div>
+                        <div class="course-subtitle">听其无声，心息相依</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 8 min</div>
+                        <div class="course-progress" id="day3Progress"></div>
+                    </div>
+                    <!-- 第4天 -->
+                    <div class="course-card" data-day="4" onclick="openPracticePage(4)">
+                        <div class="course-card-status" id="day4Status"></div>
+                        <div class="course-day">Day 4</div>
+                        <div class="course-title" data-i18n="day4_title">观鼻法</div>
+                        <div class="course-subtitle">垂帘观鼻，回光初探</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 10 min</div>
+                        <div class="course-progress" id="day4Progress"></div>
+                    </div>
+                    <!-- 第5天 -->
+                    <div class="course-card" data-day="5" onclick="openPracticePage(5)">
+                        <div class="course-card-status" id="day5Status"></div>
+                        <div class="course-day">Day 5</div>
+                        <div class="course-title" data-i18n="day5_title">天心守中</div>
+                        <div class="course-subtitle">意守天心，神光内敛</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 10 min</div>
+                        <div class="course-progress" id="day5Progress"></div>
+                    </div>
+                    <!-- 第6天 -->
+                    <div class="course-card" data-day="6" onclick="openPracticePage(6)">
+                        <div class="course-card-status" id="day6Status"></div>
+                        <div class="course-day">Day 6</div>
+                        <div class="course-title" data-i18n="day6_title">金华乍吐</div>
+                        <div class="course-subtitle">光之初现，静待花开</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 12 min</div>
+                        <div class="course-progress" id="day6Progress"></div>
+                    </div>
+                    <!-- 第7天 -->
+                    <div class="course-card" data-day="7" onclick="openPracticePage(7)">
+                        <div class="course-card-status" id="day7Status"></div>
+                        <div class="course-day">Day 7</div>
+                        <div class="course-title" data-i18n="day7_title">小结复盘</div>
+                        <div class="course-subtitle">温故知新，规划前行</div>
+                        <div class="course-duration"><i class="fa-regular fa-clock"></i> 15 min</div>
+                        <div class="course-progress" id="day7Progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 荣格心理学解读 -->
+            <div class="jung-section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="jung_perspective">荣格心理学视角</h2>
+                    <span class="section-tag jung-tag">Psychology</span>
+                </div>
+                
+                <div class="jung-cards">
+                    <div class="jung-card">
+                        <div class="jung-icon"><i class="fa-regular fa-brain"></i></div>
+                        <h3 class="jung-title" data-i18n="jung_mindfulness">正念与觉察</h3>
+                        <p class="jung-text" data-i18n="jung_mindfulness_text">
+                            荣格认为，静坐时的"观息"类似于心理学的"正念观察"，是培养觉察力的基础。东方修炼的本质是让意识与潜意识重新连接。
+                        </p>
+                    </div>
+                    <div class="jung-card">
+                        <div class="jung-icon"><i class="fa-regular fa-sun"></i></div>
+                        <h3 class="jung-title" data-i18n="jung_mandala">曼陀罗与光</h3>
+                        <p class="jung-text" data-i18n="jung_mandala_text">
+                            眼前的"光"可被理解为"曼陀罗"的雏形——潜意识通过光的象征向意识传递信息。这是人类共通的深层心理现象。
+                        </p>
+                    </div>
+                    <div class="jung-card">
+                        <div class="jung-icon"><i class="fa-regular fa-infinity"></i></div>
+                        <h3 class="jung-title" data-i18n="jung_self">元神与自性</h3>
+                        <p class="jung-text" data-i18n="jung_self_text">
+                            "元神"类似于荣格所说的"自性"——人格的整体性与中心。当元神显现，意味着意识与潜意识达成和解，这就是"个性化"过程。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 进阶课程 -->
+            <div class="advanced-section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="advanced_course">进阶修炼</h2>
+                    <span class="section-tag advanced-tag" data-i18n="advanced">进阶</span>
+                </div>
+                
+                <div class="stage-cards">
+                    <!-- 第2周 -->
+                    <div class="stage-card" id="stage2Card">
+                        <div class="stage-lock" id="stage2Lock"><i class="fa-regular fa-lock"></i></div>
+                        <div class="stage-content">
+                            <div class="stage-week" data-i18n="week2">第2周</div>
+                            <h3 class="stage-title" data-i18n="stage2_title">回光守中专修</h3>
+                            <p class="stage-desc" data-i18n="stage2_desc">专注于天心，让光自然回转</p>
+                            <div class="stage-quote">"回光守中，纯气纯想。"</div>
+                            <div class="stage-unlock" data-i18n="unlock_7days">完成7日课程解锁</div>
+                        </div>
+                    </div>
+                    <!-- 第3周 -->
+                    <div class="stage-card locked" id="stage3Card">
+                        <div class="stage-lock"><i class="fa-regular fa-lock"></i></div>
+                        <div class="stage-content">
+                            <div class="stage-week" data-i18n="week3">第3周</div>
+                            <h3 class="stage-title" data-i18n="stage3_title">回光调息深化</h3>
+                            <p class="stage-desc" data-i18n="stage3_desc">心息相依，呼吸与意念合一</p>
+                            <div class="stage-quote">"心息相依，是为真息。"</div>
+                            <div class="stage-unlock" data-i18n="unlock_14days">完成14天练习解锁</div>
+                        </div>
+                    </div>
+                    <!-- 第4周 -->
+                    <div class="stage-card locked" id="stage4Card">
+                        <div class="stage-lock"><i class="fa-regular fa-lock"></i></div>
+                        <div class="stage-content">
+                            <div class="stage-week" data-i18n="week4">第4周</div>
+                            <h3 class="stage-title" data-i18n="stage4_title">光气合一</h3>
+                            <p class="stage-desc" data-i18n="stage4_desc">将眉心的光引向下丹田</p>
+                            <div class="stage-quote">"神照下田，如日临大荒。"</div>
+                            <div class="stage-unlock" data-i18n="unlock_21days">完成21天练习解锁</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 百日筑基 -->
+                <div class="hundred-days-section">
+                    <div class="hundred-days-header">
+                        <div class="hd-icon"><i class="fa-regular fa-mountain-sun"></i></div>
+                        <div>
+                            <h3 class="hd-title" data-i18n="hundred_days">百日筑基</h3>
+                            <p class="hd-desc" data-i18n="hundred_days_desc">需行百日，其光乃真</p>
+                        </div>
+                    </div>
+                    <div class="hundred-days-progress">
+                        <div class="hd-progress-bar">
+                            <div class="hd-progress-fill" id="hundredDaysProgress"></div>
+                        </div>
+                        <div class="hd-stats">
+                            <span id="hundredDaysCount">0</span> / 100 <span data-i18n="days">天</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 与当前决策相关 -->
-            <div class="card">
-                <div class="card-title" data-i18n="related_decision">与你的当前决策相关</div>
-                <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 8px;">
-                    基于您的命盘（木旺），建议多练习'回光法'平衡情绪。
-                </p>
-                <button class="btn btn-outline" style="margin-top: 16px;" onclick="alert(currentLang === 'zh' ? '已应用至面试建议' : 'Applied to interview advice')">应用至面试建议</button>
+            <!-- 命盘联动推荐 -->
+            <div class="recommendation-section" id="meditationRecommendation">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="personalized_practice">个性化修习</h2>
+                </div>
+                <div class="recommendation-card">
+                    <div class="rec-icon"><i class="fa-regular fa-star"></i></div>
+                    <div class="rec-content">
+                        <h4 class="rec-title" data-i18n="based_on_chart">基于您的命盘</h4>
+                        <p class="rec-text" id="meditationRecText" data-i18n="complete_chart_first">
+                            完成紫微斗数排盘后，将根据五行配置推荐最适合您的冥想方向。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 原文精选 -->
+            <div class="classic-section">
+                <div class="section-header">
+                    <h2 class="section-title" data-i18n="classic_quotes">经典原文</h2>
+                    <span class="section-tag">《太乙金华宗旨》</span>
+                </div>
+                <div class="quotes-container">
+                    <div class="quote-card">
+                        <p class="quote-text">"回光者，非回一身之精华，直回天地造化之阳神也。"</p>
+                        <p class="quote-trans" data-i18n="quote1_trans">"Returning the light is not merely gathering the body's essence—it is summoning the creative Yang Spirit of heaven and earth itself."</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"心易走，即以气纯之；气易粗，即以心细之。"</p>
+                        <p class="quote-trans" data-i18n="quote2_trans">"When the mind wanders, use the breath to steady it. When the breath grows rough, use the mind to refine it."</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"光是易散难聚的，心是易动难定。需行百日，其光乃真。"</p>
+                        <p class="quote-trans" data-i18n="quote3_trans">"Light easily scatters and is hard to gather; the mind easily moves and is hard to still. Practice for a hundred days, and the light becomes true."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 练习页面 -->
+    <div class="fullscreen-page" id="practicePage">
+        <header class="page-header practice-header">
+            <button class="chat-back" onclick="closePracticePage()">
+                <i class="fa-regular fa-arrow-left"></i>
+            </button>
+            <div class="chat-title" id="practiceTitle">静坐入门</div>
+            <div style="width:44px;"></div>
+        </header>
+        
+        <main class="fullscreen-content practice-content">
+            <!-- 练习阶段指示 -->
+            <div class="practice-phase-indicator">
+                <div class="phase-dot active" data-phase="1"></div>
+                <div class="phase-line"></div>
+                <div class="phase-dot" data-phase="2"></div>
+                <div class="phase-line"></div>
+                <div class="phase-dot" data-phase="3"></div>
+            </div>
+
+            <!-- 引导内容 -->
+            <div class="practice-guide" id="practiceGuide">
+                <!-- 动态加载 -->
+            </div>
+
+            <!-- 原文选读 -->
+            <div class="practice-quote" id="practiceQuote">
+                <!-- 动态加载 -->
+            </div>
+
+            <!-- 计时器 -->
+            <div class="practice-timer-container">
+                <div class="timer-ring">
+                    <svg viewBox="0 0 200 200">
+                        <circle class="timer-ring-bg" cx="100" cy="100" r="90"/>
+                        <circle class="timer-ring-fill" cx="100" cy="100" r="90" id="timerProgress"/>
+                    </svg>
+                    <div class="timer-display">
+                        <span id="timerMinutes">05</span>
+                        <span class="timer-colon">:</span>
+                        <span id="timerSeconds">00</span>
+                    </div>
+                </div>
+                <div class="timer-controls">
+                    <button class="timer-btn timer-start" id="timerStartBtn" onclick="toggleTimer()">
+                        <i class="fa-regular fa-play"></i>
+                        <span data-i18n="start">开始</span>
+                    </button>
+                    <button class="timer-btn timer-reset" onclick="resetTimer()">
+                        <i class="fa-regular fa-rotate-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 心理视角卡片 -->
+            <div class="jung-tip-card" id="jungTipCard">
+                <div class="jung-tip-icon"><i class="fa-regular fa-lightbulb"></i></div>
+                <div class="jung-tip-content">
+                    <h5 data-i18n="psychological_perspective">心理学视角</h5>
+                    <p id="jungTipText"></p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 完成弹窗 -->
+        <div class="practice-complete-modal" id="practiceCompleteModal">
+            <div class="complete-modal-content">
+                <div class="complete-icon"><i class="fa-regular fa-check-circle"></i></div>
+                <h2 class="complete-title" data-i18n="practice_complete">练习完成</h2>
+                <p class="complete-time" id="completeTime">练习时长：5分钟</p>
+                
+                <div class="experience-input">
+                    <h4 data-i18n="record_experience">记录你的体验</h4>
+                    <div class="experience-options">
+                        <button class="exp-option" onclick="selectExperience('calm')" data-exp="calm">
+                            <i class="fa-regular fa-face-smile"></i>
+                            <span data-i18n="exp_calm">平静</span>
+                        </button>
+                        <button class="exp-option" onclick="selectExperience('distracted')" data-exp="distracted">
+                            <i class="fa-regular fa-face-meh"></i>
+                            <span data-i18n="exp_distracted">分心</span>
+                        </button>
+                        <button class="exp-option" onclick="selectExperience('light')" data-exp="light">
+                            <i class="fa-regular fa-sun"></i>
+                            <span data-i18n="exp_light">见光</span>
+                        </button>
+                        <button class="exp-option" onclick="selectExperience('warmth')" data-exp="warmth">
+                            <i class="fa-regular fa-fire"></i>
+                            <span data-i18n="exp_warmth">温热</span>
+                        </button>
+                    </div>
+                    <textarea class="experience-notes" placeholder="其他感受（可选）..." id="experienceNotes"></textarea>
+                </div>
+                
+                <button class="btn btn-primary complete-btn" onclick="savePractice()">
+                    <span data-i18n="save_and_exit">保存并退出</span>
+                </button>
             </div>
         </div>
     </div>
@@ -5121,6 +6213,65 @@
                 complete_checkin: '完成冥想打卡',
                 unlock_hint: '再打卡 3 次解锁新课程',
                 weekly_picks: '本周推荐',
+                // 金花课程
+                gf_title: '金花冥想课程',
+                gf_subtitle: 'Golden Flower Meditation · Based on Taiyi Jinhua Zongzhi',
+                gf_desc: '基于《太乙金华宗旨》，道家内丹修炼经典。荣格曾为此书作序，认为它与西方心理学的"集体潜意识""曼陀罗"等概念相通。',
+                days_practiced: '天',
+                total_minutes: '总分钟',
+                current_streak: '连续天',
+                current_stage: '当前阶段',
+                seven_day_course: '七日入门课程',
+                beginner: '入门',
+                seven_day_desc: '从零开始，循序渐进体验道家修炼精髓',
+                day1_title: '静坐入门',
+                day2_title: '数息法',
+                day3_title: '听息法',
+                day4_title: '观鼻法',
+                day5_title: '天心守中',
+                day6_title: '金华乍吐',
+                day7_title: '小结复盘',
+                jung_perspective: '荣格心理学视角',
+                jung_mindfulness: '正念与觉察',
+                jung_mindfulness_text: '荣格认为，静坐时的"观息"类似于心理学的"正念观察"，是培养觉察力的基础。东方修炼的本质是让意识与潜意识重新连接。',
+                jung_mandala: '曼陀罗与光',
+                jung_mandala_text: '眼前的"光"可被理解为"曼陀罗"的雏形——潜意识通过光的象征向意识传递信息。这是人类共通的深层心理现象。',
+                jung_self: '元神与自性',
+                jung_self_text: '"元神"类似于荣格所说的"自性"——人格的整体性与中心。当元神显现，意味着意识与潜意识达成和解，这就是"个性化"过程。',
+                advanced_course: '进阶修炼',
+                advanced: '进阶',
+                week2: '第2周',
+                week3: '第3周',
+                week4: '第4周',
+                stage2_title: '回光守中专修',
+                stage2_desc: '专注于天心，让光自然回转',
+                stage3_title: '回光调息深化',
+                stage3_desc: '心息相依，呼吸与意念合一',
+                stage4_title: '光气合一',
+                stage4_desc: '将眉心的光引向下丹田',
+                unlock_7days: '完成7日课程解锁',
+                unlock_14days: '完成14天练习解锁',
+                unlock_21days: '完成21天练习解锁',
+                hundred_days: '百日筑基',
+                hundred_days_desc: '需行百日，其光乃真',
+                days: '天',
+                personalized_practice: '个性化修习',
+                based_on_chart: '基于您的命盘',
+                complete_chart_first: '完成紫微斗数排盘后，将根据五行配置推荐最适合您的冥想方向。',
+                classic_quotes: '经典原文',
+                quote1_trans: '"Returning the light is not merely gathering the body\'s essence—it is summoning the creative Yang Spirit of heaven and earth itself."',
+                quote2_trans: '"When the mind wanders, use the breath to steady it. When the breath grows rough, use the mind to refine it."',
+                quote3_trans: '"Light easily scatters and is hard to gather; the mind easily moves and is hard to still. Practice for a hundred days, and the light becomes true."',
+                // 练习页面
+                start: '开始',
+                practice_complete: '练习完成',
+                record_experience: '记录你的体验',
+                exp_calm: '平静',
+                exp_distracted: '分心',
+                exp_light: '见光',
+                exp_warmth: '温热',
+                save_and_exit: '保存并退出',
+                psychological_perspective: '心理学视角',
                 view_recipe: '查看做法',
                 body_quiz: '体质测试',
                 start_quiz: '开始测试',
@@ -5318,6 +6469,65 @@
                 complete_checkin: 'Complete Check-in',
                 unlock_hint: '3 more sessions to unlock new courses',
                 weekly_picks: 'Weekly Picks',
+                // Golden Flower Course
+                gf_title: 'Golden Flower Meditation',
+                gf_subtitle: 'Based on Taiyi Jinhua Zongzhi · The Secret of the Golden Flower',
+                gf_desc: 'Based on the Taoist classic "The Secret of the Golden Flower." Carl Jung wrote the introduction, finding parallels with "collective unconscious" and "mandala" concepts.',
+                days_practiced: 'days',
+                total_minutes: 'Total min',
+                current_streak: 'Streak',
+                current_stage: 'Stage',
+                seven_day_course: '7-Day Intro Course',
+                beginner: 'Beginner',
+                seven_day_desc: 'Step by step, experience the essence of Taoist cultivation',
+                day1_title: 'Sitting Still',
+                day2_title: 'Counting Breaths',
+                day3_title: 'Listening to Breath',
+                day4_title: 'Gazing at Nose',
+                day5_title: 'Heavenly Heart',
+                day6_title: 'Golden Flower',
+                day7_title: 'Review & Plan',
+                jung_perspective: 'Jung\'s Perspective',
+                jung_mindfulness: 'Mindfulness & Awareness',
+                jung_mindfulness_text: 'Jung viewed breath observation as similar to "mindfulness" in psychology — the foundation of awareness. Eastern practice reconnects consciousness with the unconscious.',
+                jung_mandala: 'Mandala & Light',
+                jung_mandala_text: 'The "light" seen in meditation can be understood as a nascent mandala — the unconscious communicating through symbolic light. A universal deep psychological phenomenon.',
+                jung_self: 'Original Spirit & Self',
+                jung_self_text: 'The "Original Spirit" (Yuanshen) parallels Jung\'s concept of the "Self" — the wholeness and center of personality. Its emergence signifies the integration of consciousness and unconscious — the "individuation" process.',
+                advanced_course: 'Advanced Practice',
+                advanced: 'Advanced',
+                week2: 'Week 2',
+                week3: 'Week 3',
+                week4: 'Week 4',
+                stage2_title: 'Returning Light',
+                stage2_desc: 'Focus on Heavenly Heart, let light return naturally',
+                stage3_title: 'Mind-Breath Union',
+                stage3_desc: 'Mind and breath become one',
+                stage4_title: 'Light & Qi Union',
+                stage4_desc: 'Guide light from brow to lower dantian',
+                unlock_7days: 'Complete 7-day course to unlock',
+                unlock_14days: 'Complete 14 days to unlock',
+                unlock_21days: 'Complete 21 days to unlock',
+                hundred_days: '100-Day Foundation',
+                hundred_days_desc: 'Practice 100 days for true light',
+                days: 'days',
+                personalized_practice: 'Personalized Practice',
+                based_on_chart: 'Based on Your Chart',
+                complete_chart_first: 'Complete a Ziwei Doushu chart to get meditation recommendations based on your elemental balance.',
+                classic_quotes: 'Classic Texts',
+                quote1_trans: '"回光者，非回一身之精华，直回天地造化之阳神也。"',
+                quote2_trans: '"心易走，即以气纯之；气易粗，即以心细之。"',
+                quote3_trans: '"光是易散难聚的，心是易动难定。需行百日，其光乃真。"',
+                // Practice Page
+                start: 'Start',
+                practice_complete: 'Practice Complete',
+                record_experience: 'Record Your Experience',
+                exp_calm: 'Calm',
+                exp_distracted: 'Distracted',
+                exp_light: 'Saw Light',
+                exp_warmth: 'Warmth',
+                save_and_exit: 'Save & Exit',
+                psychological_perspective: 'Psychological View',
                 view_recipe: 'View Recipe',
                 body_quiz: 'Body Constitution Quiz',
                 start_quiz: 'Start Quiz',
@@ -7095,6 +8305,14 @@ The chart shows favorable winds for your position if you remain patient and deta
             if (type === 'divination') {
                 initDivinationPage();
             }
+            if (type === 'mountain') {
+                initMountainPage();
+            }
+        }
+
+        function initMountainPage() {
+            updatePracticeProgress();
+            updateCourseCards();
         }
 
         function closeWushuDetail() {
@@ -7243,32 +8461,390 @@ The chart shows favorable winds for your position if you remain patient and deta
         }
 
         // ===== 冥想功能 =====
+        
+        // 课程数据
+        const PRACTICE_COURSES = {
+            1: {
+                titleZh: '静坐入门', titleEn: 'Sitting Still',
+                duration: 5,
+                phases: [
+                    { titleZh: '调身', titleEn: 'Posture', descZh: '选择舒适的坐姿，身体中正，眼帘低垂。像坐在湖边看水面，不打扰它，只是看着。', descEn: 'Find a comfortable seated position. Sit upright, lower your eyelids. Like sitting by a lake, watching the surface — don\'t disturb it, just observe.' },
+                    { titleZh: '调息', titleEn: 'Breathing', descZh: '自然呼吸，只是观察呼吸的进出。不控制，只是观察。', descEn: 'Breathe naturally, simply observe the breath flowing in and out. Don\'t control, just observe.' },
+                    { titleZh: '静心', titleEn: 'Settling', descZh: '让心慢慢安静下来，不需要用力，只是放松。', descEn: 'Let your mind gradually settle. No effort needed, just relax.' }
+                ],
+                quote: { zh: '"坐如山，心如水。"', en: '"Sit like a mountain, let your mind be like water."' },
+                jungTip: { zh: '荣格视角：静坐时的"观息"类似于心理学的"正念观察"，是培养觉察力的基础。', en: 'Jung\'s view: Observing the breath is similar to "mindfulness" in psychology — the foundation of awareness.' }
+            },
+            2: {
+                titleZh: '数息法', titleEn: 'Counting Breaths',
+                duration: 8,
+                phases: [
+                    { titleZh: '调身', titleEn: 'Posture', descZh: '坐姿端正，身体放松。', descEn: 'Sit upright, body relaxed.' },
+                    { titleZh: '数息', titleEn: 'Counting', descZh: '从1数到10，只数呼气。忘记就从1重新开始。', descEn: 'Count from 1 to 10, counting only exhales. If you lose count, start over.' },
+                    { titleZh: '专注', titleEn: 'Focus', descZh: '数息让心念集中在呼吸上，散乱减少。', descEn: 'Counting anchors the mind to the breath, reducing scattered thoughts.' }
+                ],
+                quote: { zh: '"心易走，即以气纯之；气易粗，即以心细之。"', en: '"When the mind wanders, use the breath to steady it. When the breath grows rough, use the mind to refine it."' },
+                jungTip: { zh: '荣格视角：数息法帮助建立心理结构的秩序感，是整合意识的有效工具。', en: 'Jung\'s view: Counting breaths helps establish psychological order — an effective tool for integrating consciousness.' }
+            },
+            3: {
+                titleZh: '听息法', titleEn: 'Listening to Breath',
+                duration: 8,
+                phases: [
+                    { titleZh: '调息', titleEn: 'Breathing', descZh: '自然呼吸，不用刻意调整。', descEn: 'Breathe naturally, no deliberate adjustment.' },
+                    { titleZh: '听息', titleEn: 'Listening', descZh: '耳朵听自己的呼吸，但不让耳朵听到呼吸声——"听其无声"。像深夜听远处的水声，若有若无。', descEn: 'Listen to your breath with your ears, but without hearing the sound — "listen to the silence." Like hearing distant water at night, barely perceptible.' },
+                    { titleZh: '心息相依', titleEn: 'Union', descZh: '心念与呼吸渐渐合一，不再分离。', descEn: 'Mind and breath gradually become one, no longer separate.' }
+                ],
+                quote: { zh: '"听其无声，则神凝。"', en: '"Listen to the silence, and the spirit gathers."' },
+                jungTip: { zh: '荣格视角：听息是一种"积极想象"的练习，让潜意识的内容自然浮现。', en: 'Jung\'s view: Listening to breath is a form of "active imagination," allowing unconscious contents to surface naturally.' }
+            },
+            4: {
+                titleZh: '观鼻法', titleEn: 'Gazing at Nose',
+                duration: 10,
+                phases: [
+                    { titleZh: '垂帘', titleEn: 'Lowering Eyelids', descZh: '眼帘低垂至恰好看到鼻尖。', descEn: 'Lower your eyelids until you can just see the tip of your nose.' },
+                    { titleZh: '观鼻', titleEn: 'Gazing', descZh: '轻轻记住鼻尖的位置，然后放下。不需要一直盯着。', descEn: 'Gently note the position of your nose tip, then let go. No need to keep staring.' },
+                    { titleZh: '回光', titleEn: 'Returning Light', descZh: '这是"回光"的第一个方法——将目光收回，转向内在。', descEn: 'This is the first method of "Returning the Light" — turning your gaze inward.' }
+                ],
+                quote: { zh: '"坐时用目垂帘后，定个准则，便放下。"', en: '"After lowering your eyelids, set a point of focus, then let go."' },
+                jungTip: { zh: '荣格视角：观鼻是注意力内化的过程，类似于冥想中的"一点聚焦"。', en: 'Jung\'s view: Gazing at the nose internalizes attention, similar to "one-pointed focus" in meditation.' }
+            },
+            5: {
+                titleZh: '天心守中', titleEn: 'Heavenly Heart',
+                duration: 10,
+                phases: [
+                    { titleZh: '认识天心', titleEn: 'Finding Heavenly Heart', descZh: '天心位置：两眉之间与眼球齐平处，即"天眼"。', descEn: 'Heavenly Heart location: Between the eyebrows, level with the eyes — the "third eye."' },
+                    { titleZh: '意守', titleEn: 'Resting Attention', descZh: '将观鼻的意念轻轻移至天心，似观非观。像把注意力放在额头，但不使劲盯着。', descEn: 'Gently move your attention from the nose to the Heavenly Heart. Rest it there softly, without strain.' },
+                    { titleZh: '守中', titleEn: 'Holding Center', descZh: '意念守在天心，让光自然凝聚。', descEn: 'Rest attention at the Heavenly Heart, let the light gather naturally.' }
+                ],
+                quote: { zh: '"天心者，三才同禀。"', en: '"The Heavenly Heart is where heaven, earth, and humanity meet."' },
+                jungTip: { zh: '荣格视角：天心类似于"自性"的象征位置，是人格整合的中心点。', en: 'Jung\'s view: The Heavenly Heart symbolizes the location of the "Self" — the center of personality integration.' }
+            },
+            6: {
+                titleZh: '金华乍吐', titleEn: 'Golden Flower Blooms',
+                duration: 12,
+                phases: [
+                    { titleZh: '静待', titleEn: 'Waiting', descZh: '继续意守天心，保持放松。', descEn: 'Continue resting attention at the Heavenly Heart, stay relaxed.' },
+                    { titleZh: '光现', titleEn: 'Light Appears', descZh: '眼前可能出现微弱的光感、光点。这是修炼入门的标志，不要追求，只是观察。', descEn: 'You may see faint light or spots. This is a sign of progress — don\'t chase it, just observe.' },
+                    { titleZh: '金华', titleEn: 'Golden Flower', descZh: '"金华乍吐"——内在的光芒开始绽放。', descEn: '"The Golden Flower begins to bloom" — the inner light starts to unfold.' }
+                ],
+                quote: { zh: '"入静之初——金华乍吐。"', en: '"At the beginning of stillness — the Golden Flower begins to bloom."' },
+                jungTip: { zh: '荣格视角：眼前的"光"可被理解为"曼陀罗"的雏形——潜意识通过光的象征向意识传递信息。', en: 'Jung\'s view: The "light" can be understood as a nascent mandala — the unconscious communicating through symbolic light.' }
+            },
+            7: {
+                titleZh: '小结复盘', titleEn: 'Review & Plan',
+                duration: 15,
+                phases: [
+                    { titleZh: '回顾', titleEn: 'Review', descZh: '回顾一周的练习体验，哪种方法最适合你？', descEn: 'Review your week of practice. Which method suits you best?' },
+                    { titleZh: '选择', titleEn: 'Choose', descZh: '选择最适合自己的方法（数息/听息/观鼻/守中），作为日常练习。', descEn: 'Choose your preferred method (counting, listening, gazing, or centering) for daily practice.' },
+                    { titleZh: '规划', titleEn: 'Plan', descZh: '设置下周目标，持续精进。', descEn: 'Set goals for next week, continue your journey.' }
+                ],
+                quote: { zh: '"需行百日，其光乃真。"', en: '"Practice for a hundred days, and the light becomes true."' },
+                jungTip: { zh: '荣格视角：持续的修炼是"个性化"过程的核心，让意识与潜意识达成和解。', en: 'Jung\'s view: Consistent practice is central to "individuation" — achieving harmony between consciousness and the unconscious.' }
+            }
+        };
+
+        // 命盘五行推荐
+        const ELEMENT_MEDITATION_MAP = {
+            '木旺': { recZh: '疏肝解郁，推荐"听息法"', recEn: 'Soothing the liver — recommended: Listening to Breath', courseId: 3 },
+            '木弱': { recZh: '培养生机，推荐"天心守中"', recEn: 'Cultivating vitality — recommended: Heavenly Heart', courseId: 5 },
+            '火旺': { recZh: '清心降火，推荐"数息法"', recEn: 'Calming the heart — recommended: Counting Breaths', courseId: 2 },
+            '火弱': { recZh: '补火助阳，推荐"观鼻法"', recEn: 'Warming the spirit — recommended: Gazing at Nose', courseId: 4 },
+            '土弱': { recZh: '稳定心神，推荐"数息法"', recEn: 'Grounding the mind — recommended: Counting Breaths', courseId: 2 },
+            '金弱': { recZh: '增强决断，推荐"天心守中"', recEn: 'Strengthening will — recommended: Heavenly Heart', courseId: 5 },
+            '水弱': { recZh: '补肾纳气，推荐"引光入丹田"', recEn: 'Nourishing essence — recommended: Light to Dantian', courseId: 5 }
+        };
+
+        // 练习相关变量
+        let currentPracticeDay = 1;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let timerRunning = false;
+        let selectedExperience = null;
+
         function startMeditation() {
-            document.getElementById('meditationOverlay').classList.add('active');
-            meditationSeconds = 300;
-            updateMeditationTime();
-            meditationTimer = setInterval(() => {
-                meditationSeconds--;
-                updateMeditationTime();
-                if (meditationSeconds <= 0) {
-                    clearInterval(meditationTimer);
-                    alert(currentLang === 'zh' ? '冥想完成！' : 'Meditation complete!');
-                    meditationCount++;
-                    localStorage.setItem('oraculum_meditation', meditationCount);
-                    updateMeditationCount();
+            openPracticePage(1);
+        }
+
+        function openPracticePage(day) {
+            currentPracticeDay = day;
+            const course = PRACTICE_COURSES[day];
+            const isZh = currentLang === 'zh';
+            
+            // 设置标题
+            document.getElementById('practiceTitle').textContent = isZh ? course.titleZh : course.titleEn;
+            
+            // 设置时长
+            timerSeconds = course.duration * 60;
+            updateTimerDisplay();
+            
+            // 加载第一阶段引导
+            loadPracticePhase(0);
+            
+            // 设置原文
+            document.getElementById('practiceQuote').innerHTML = `
+                <p>${isZh ? course.quote.zh : course.quote.en}</p>
+            `;
+            
+            // 设置心理学提示
+            document.getElementById('jungTipText').textContent = isZh ? course.jungTip.zh : course.jungTip.en;
+            
+            // 显示页面
+            document.getElementById('practicePage').classList.add('active');
+            
+            // 重置状态
+            timerRunning = false;
+            selectedExperience = null;
+            updatePhaseIndicator(1);
+        }
+
+        function loadPracticePhase(phaseIndex) {
+            const course = PRACTICE_COURSES[currentPracticeDay];
+            const phase = course.phases[phaseIndex];
+            const isZh = currentLang === 'zh';
+            
+            if (!phase) return;
+            
+            document.getElementById('practiceGuide').innerHTML = `
+                <h2>${isZh ? phase.titleZh : phase.titleEn}</h2>
+                <p>${isZh ? phase.descZh : phase.descEn}</p>
+            `;
+        }
+
+        function updatePhaseIndicator(currentPhase) {
+            document.querySelectorAll('.practice-phase-indicator .phase-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index < currentPhase);
+            });
+        }
+
+        function closePracticePage() {
+            if (timerRunning) {
+                toggleTimer();
+            }
+            document.getElementById('practicePage').classList.remove('active');
+            document.getElementById('practiceCompleteModal').classList.remove('active');
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timerStartBtn');
+            
+            if (timerRunning) {
+                // 暂停
+                clearInterval(timerInterval);
+                timerRunning = false;
+                btn.innerHTML = '<i class="fa-regular fa-play"></i><span>' + (currentLang === 'zh' ? '继续' : 'Resume') + '</span>';
+            } else {
+                // 开始
+                timerRunning = true;
+                btn.innerHTML = '<i class="fa-regular fa-pause"></i><span>' + (currentLang === 'zh' ? '暂停' : 'Pause') + '</span>';
+                
+                const course = PRACTICE_COURSES[currentPracticeDay];
+                const totalSeconds = course.duration * 60;
+                const phaseInterval = totalSeconds / 3;
+                let currentPhase = 1;
+                
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                    updateTimerProgress(totalSeconds);
+                    
+                    // 更新阶段
+                    const elapsed = totalSeconds - timerSeconds;
+                    const newPhase = Math.min(3, Math.floor(elapsed / phaseInterval) + 1);
+                    if (newPhase !== currentPhase) {
+                        currentPhase = newPhase;
+                        updatePhaseIndicator(currentPhase);
+                        loadPracticePhase(currentPhase - 1);
+                    }
+                    
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        showPracticeComplete(course.duration);
+                    }
+                }, 1000);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timerMinutes').textContent = mins.toString().padStart(2, '0');
+            document.getElementById('timerSeconds').textContent = secs.toString().padStart(2, '0');
+        }
+
+        function updateTimerProgress(totalSeconds) {
+            const progress = document.getElementById('timerProgress');
+            const circumference = 2 * Math.PI * 90;
+            const offset = circumference * (1 - timerSeconds / totalSeconds);
+            progress.style.strokeDasharray = circumference;
+            progress.style.strokeDashoffset = offset;
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            const course = PRACTICE_COURSES[currentPracticeDay];
+            timerSeconds = course.duration * 60;
+            updateTimerDisplay();
+            updateTimerProgress(course.duration * 60);
+            updatePhaseIndicator(1);
+            loadPracticePhase(0);
+            
+            const btn = document.getElementById('timerStartBtn');
+            btn.innerHTML = '<i class="fa-regular fa-play"></i><span>' + (currentLang === 'zh' ? '开始' : 'Start') + '</span>';
+        }
+
+        function showPracticeComplete(duration) {
+            const isZh = currentLang === 'zh';
+            document.getElementById('completeTime').textContent = isZh 
+                ? `练习时长：${duration}分钟` 
+                : `Practice duration: ${duration} minutes`;
+            document.getElementById('practiceCompleteModal').classList.add('active');
+        }
+
+        function selectExperience(exp) {
+            selectedExperience = exp;
+            document.querySelectorAll('.exp-option').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.exp === exp);
+            });
+        }
+
+        function savePractice() {
+            const course = PRACTICE_COURSES[currentPracticeDay];
+            
+            // 更新练习数据
+            let practiceData = JSON.parse(localStorage.getItem('oraculum_practice') || '{}');
+            
+            if (!practiceData.days) practiceData.days = {};
+            if (!practiceData.days[currentPracticeDay]) {
+                practiceData.days[currentPracticeDay] = { completed: false, sessions: 0 };
+            }
+            
+            practiceData.days[currentPracticeDay].completed = true;
+            practiceData.days[currentPracticeDay].sessions++;
+            practiceData.days[currentPracticeDay].lastExperience = selectedExperience;
+            practiceData.days[currentPracticeDay].notes = document.getElementById('experienceNotes').value;
+            
+            practiceData.totalMinutes = (practiceData.totalMinutes || 0) + course.duration;
+            practiceData.totalSessions = (practiceData.totalSessions || 0) + 1;
+            
+            // 计算连续天数
+            const today = new Date().toDateString();
+            if (practiceData.lastPracticeDate !== today) {
+                if (practiceData.lastPracticeDate === new Date(Date.now() - 86400000).toDateString()) {
+                    practiceData.streak = (practiceData.streak || 0) + 1;
+                } else {
+                    practiceData.streak = 1;
                 }
-            }, 1000);
+                practiceData.lastPracticeDate = today;
+            }
+            
+            localStorage.setItem('oraculum_practice', JSON.stringify(practiceData));
+            
+            // 更新UI
+            updatePracticeProgress();
+            updateCourseCards();
+            
+            closePracticePage();
         }
 
+        function updatePracticeProgress() {
+            const practiceData = JSON.parse(localStorage.getItem('oraculum_practice') || '{}');
+            
+            const totalDays = Object.values(practiceData.days || {}).filter(d => d.completed).length;
+            const totalMinutes = practiceData.totalMinutes || 0;
+            const streak = practiceData.streak || 0;
+            
+            document.getElementById('totalPracticeDays').textContent = totalDays;
+            document.getElementById('totalMinutes').textContent = totalMinutes;
+            document.getElementById('currentStreak').textContent = streak;
+            
+            // 更新进度环
+            const progress = Math.min(100, (totalDays / 100) * 100);
+            const ring = document.getElementById('meditationProgressRing');
+            if (ring) {
+                const circumference = 2 * Math.PI * 42;
+                ring.style.strokeDasharray = circumference;
+                ring.style.strokeDashoffset = circumference * (1 - progress / 100);
+            }
+            
+            // 更新百日筑基进度
+            const hdProgress = document.getElementById('hundredDaysProgress');
+            if (hdProgress) {
+                hdProgress.style.width = `${Math.min(100, totalDays)}%`;
+            }
+            document.getElementById('hundredDaysCount').textContent = totalDays;
+            
+            // 更新当前阶段
+            let stage = 1;
+            if (totalDays >= 21) stage = 4;
+            else if (totalDays >= 14) stage = 3;
+            else if (totalDays >= 7) stage = 2;
+            document.getElementById('currentStage').textContent = stage;
+            
+            // 解锁进阶课程
+            updateStageUnlock(totalDays);
+        }
+
+        function updateCourseCards() {
+            const practiceData = JSON.parse(localStorage.getItem('oraculum_practice') || '{}');
+            
+            for (let day = 1; day <= 7; day++) {
+                const card = document.querySelector(`.course-card[data-day="${day}"]`);
+                const status = document.getElementById(`day${day}Status`);
+                
+                if (practiceData.days && practiceData.days[day] && practiceData.days[day].completed) {
+                    card?.classList.add('completed');
+                    if (status) status.classList.add('completed');
+                }
+            }
+        }
+
+        function updateStageUnlock(totalDays) {
+            // 第2周解锁
+            if (totalDays >= 7) {
+                const stage2Card = document.getElementById('stage2Card');
+                const stage2Lock = document.getElementById('stage2Lock');
+                stage2Card?.classList.remove('locked');
+                if (stage2Lock) stage2Lock.style.display = 'none';
+            }
+            
+            // 第3周解锁
+            if (totalDays >= 14) {
+                const stage3Card = document.getElementById('stage3Card');
+                stage3Card?.classList.remove('locked');
+            }
+            
+            // 第4周解锁
+            if (totalDays >= 21) {
+                const stage4Card = document.getElementById('stage4Card');
+                stage4Card?.classList.remove('locked');
+            }
+        }
+
+        function updateMeditationRecommendation(chartResult) {
+            if (!chartResult || !chartResult.mainStar) return;
+            
+            // 根据命盘主星推断五行
+            const starElementMap = {
+                '紫微': '土', '天机': '木', '太阳': '火', '武曲': '金', '天同': '水',
+                '廉贞': '火', '天府': '土', '太阴': '水', '贪狼': '水', '巨门': '土',
+                '天相': '水', '天梁': '土', '七杀': '金', '破军': '水'
+            };
+            
+            const element = starElementMap[chartResult.mainStar] || '土';
+            const recKey = element + '旺';
+            const rec = ELEMENT_MEDITATION_MAP[recKey] || ELEMENT_MEDITATION_MAP['土弱'];
+            
+            const recText = document.getElementById('meditationRecText');
+            if (recText) {
+                recText.textContent = currentLang === 'zh' ? rec.recZh : rec.recEn;
+            }
+        }
+
+        // 旧功能保留兼容
         function stopMeditation() {
-            clearInterval(meditationTimer);
-            document.getElementById('meditationOverlay').classList.remove('active');
-        }
-
-        function updateMeditationTime() {
-            const mins = Math.floor(meditationSeconds / 60);
-            const secs = meditationSeconds % 60;
-            document.getElementById('meditationTime').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+            closePracticePage();
         }
 
         function completeMeditation() {
@@ -7280,6 +8856,7 @@ The chart shows favorable winds for your position if you remain patient and deta
 
         function updateMeditationCount() {
             document.getElementById('meditationCount').textContent = meditationCount;
+            updatePracticeProgress();
         }
 
         // ===== 体质测试 =====
