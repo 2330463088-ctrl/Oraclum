@@ -341,11 +341,13 @@
         .compass-sector:hover {
             background: white;
             box-shadow: var(--shadow-hover);
+            transform: scale(1.15);
         }
 
         .compass-sector.active {
             background: white;
             box-shadow: var(--shadow-hover);
+            transform: scale(1.15);
         }
 
         .compass-sector.active .chinese {
@@ -816,6 +818,63 @@
             background: var(--color-text-light);
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* 加载动画 */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .loading-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--color-ai-bubble);
+            border-radius: var(--radius-bubble);
+            font: 400 14px/1.4 var(--font-stack);
+            color: var(--color-text-mid);
+        }
+
+        .typing-indicator .dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .typing-indicator .dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-text-light);
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-indicator .dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator .dots span:nth-child(2) { animation-delay: -0.16s; }
+        .typing-indicator .dots span:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+            40% { transform: translateY(-4px); opacity: 1; }
         }
 
         .chat-stop {
@@ -1731,6 +1790,38 @@
             box-shadow: 0 4px 16px rgba(139, 126, 108, 0.3);
         }
 
+        /* 保存和分享按钮 */
+        .result-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn-result {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px;
+            background: white;
+            color: var(--color-primary);
+            border: 1.5px solid var(--color-primary);
+            border-radius: 12px;
+            font: 500 14px/1 var(--font-stack);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-result:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-result i {
+            font-size: 14px;
+        }
+
         /* 解读结果 */
         .interpret-result {
             margin-top: 20px;
@@ -2159,6 +2250,88 @@
             padding: 16px 0;
         }
 
+        /* ===== 核心概念卡片 ===== */
+        .collapsible-card {
+            background: #F9F9F9;
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .collapsible-card .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .collapsible-card .collapsible-content {
+            padding-top: 16px;
+        }
+
+        .collapsible-card.open .collapsible-content {
+            max-height: 2000px;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .concept-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            background: white;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .concept-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .concept-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--color-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .concept-icon i {
+            font-size: 18px;
+            color: var(--color-primary);
+        }
+
+        .concept-info {
+            flex: 1;
+        }
+
+        .concept-name {
+            font: 600 15px/1.3 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .concept-name-en {
+            font: 400 12px/1 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-left: 6px;
+        }
+
+        .concept-brief {
+            font: 400 13px/1.5 var(--font-stack);
+            color: var(--color-text-light);
+            margin-top: 4px;
+        }
+
         /* ===== 弹窗 ===== */
         .modal {
             position: fixed;
@@ -2264,6 +2437,437 @@
                 height: 90px;
             }
         }
+
+        /* ===== 关于奇门页面 ===== */
+        .fullscreen-page {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 300;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .fullscreen-page.active {
+            display: flex;
+        }
+
+        .fullscreen-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 var(--spacing-page) 100px;
+        }
+
+        .qimen-hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .qimen-symbol {
+            margin-bottom: 20px;
+        }
+
+        .qimen-bagua {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--color-primary), #6B5F4C);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qimen-bagua i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .qimen-title {
+            font: 700 32px/1.2 var(--font-stack);
+            color: var(--color-text);
+            letter-spacing: -0.02em;
+        }
+
+        .qimen-subtitle {
+            font: 400 14px/1.6 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-top: 8px;
+        }
+
+        .qimen-section {
+            margin-bottom: 32px;
+        }
+
+        .qimen-section-title {
+            font: 600 20px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-divider);
+        }
+
+        .qimen-text {
+            font: 400 15px/1.8 var(--font-stack);
+            color: var(--color-text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .qimen-diagram {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 24px auto;
+        }
+
+        .diagram-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 600 14px/1 var(--font-stack);
+        }
+
+        .diagram-ring {
+            position: absolute;
+            inset: 0;
+            border: 2px dashed var(--color-primary-light);
+            border-radius: 50%;
+        }
+
+        .diagram-point {
+            position: absolute;
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--color-primary);
+            border-radius: 8px;
+            font: 500 12px/1 var(--font-stack);
+            color: var(--color-primary);
+        }
+
+        .point-n { top: -10px; left: 50%; transform: translateX(-50%); }
+        .point-s { bottom: -10px; left: 50%; transform: translateX(-50%); }
+        .point-e { right: -20px; top: 50%; transform: translateY(-50%); }
+        .point-w { left: -20px; top: 50%; transform: translateY(-50%); }
+
+        .diagram-label {
+            text-align: center;
+            margin-top: 220px;
+            font: 400 13px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .element-card {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: var(--color-card);
+            border-radius: var(--radius-small);
+            margin-bottom: 12px;
+        }
+
+        .element-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--color-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .element-icon i {
+            font-size: 18px;
+            color: var(--color-primary);
+        }
+
+        .element-content h3 {
+            font: 600 15px/1.4 var(--font-stack);
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .element-content p {
+            font: 400 13px/1.6 var(--font-stack);
+            color: var(--color-text-mid);
+        }
+
+        .application-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 8px;
+            background: var(--color-card);
+            border-radius: var(--radius-small);
+            text-align: center;
+        }
+
+        .app-item i {
+            font-size: 20px;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .app-item span {
+            font: 500 12px/1.3 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        .expert-section {
+            background: var(--color-card);
+            border-radius: var(--radius-card);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .expert-quote {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-divider);
+        }
+
+        .expert-quote:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .expert-quote .fa-quote-left {
+            font-size: 20px;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .quote-text {
+            font: italic 400 14px/1.8 var(--font-stack);
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .expert-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .expert-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .expert-avatar i {
+            font-size: 18px;
+            color: var(--color-primary);
+        }
+
+        .expert-name {
+            font: 600 14px/1.4 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .expert-title {
+            font: 400 12px/1.4 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        /* ===== 术语高亮 ===== */
+        .term-highlight {
+            color: var(--color-primary);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .term-highlight:hover {
+            background: var(--color-primary-light);
+            border-radius: 3px;
+        }
+
+        .term-tooltip {
+            position: fixed;
+            width: 260px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            overflow: hidden;
+            animation: tooltipFadeIn 0.2s ease;
+        }
+
+        @keyframes tooltipFadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tooltip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .tooltip-term {
+            font: 600 14px/1 var(--font-stack);
+        }
+
+        .tooltip-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.8;
+        }
+
+        .tooltip-close:hover {
+            opacity: 1;
+        }
+
+        .tooltip-body {
+            padding: 12px 14px;
+            font: 400 13px/1.6 var(--font-stack);
+            color: var(--color-text-secondary);
+        }
+
+        /* ===== 免费试用卡片 ===== */
+        .trial-card {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #6B5F4C 100%);
+            color: white;
+        }
+
+        .trial-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .trial-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trial-icon i {
+            font-size: 18px;
+            color: white;
+        }
+
+        .trial-info {
+            flex: 1;
+        }
+
+        .trial-title {
+            font: 600 16px/1.3 var(--font-stack);
+            color: white;
+        }
+
+        .trial-desc {
+            font: 400 12px/1.4 var(--font-stack);
+            color: rgba(255,255,255,0.8);
+            margin-top: 2px;
+        }
+
+        .trial-count {
+            text-align: center;
+        }
+
+        .trial-count span:first-child {
+            font: 700 28px/1 var(--font-stack);
+            color: white;
+        }
+
+        .trial-unit {
+            display: block;
+            font: 400 12px/1 var(--font-stack);
+            color: rgba(255,255,255,0.8);
+        }
+
+        .btn-trial {
+            width: 100%;
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-trial:hover {
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* ===== 邮件订阅 ===== */
+        .subscribe-card {
+            background: var(--color-card);
+        }
+
+        .subscribe-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .subscribe-header i {
+            font-size: 20px;
+            color: var(--color-primary);
+        }
+
+        .subscribe-title {
+            font: 600 15px/1.3 var(--font-stack);
+            color: var(--color-text);
+        }
+
+        .subscribe-desc {
+            font: 400 12px/1.4 var(--font-stack);
+            color: var(--color-text-light);
+            margin-top: 2px;
+        }
+
+        .subscribe-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscribe-input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid var(--color-divider);
+            border-radius: var(--radius-btn);
+            font: 400 14px/1 var(--font-stack);
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .subscribe-input:focus {
+            border-color: var(--color-primary);
+        }
+
+        .subscribe-btn {
+            padding: 12px 20px;
+        }
     </style>
 </head>
 <body>
@@ -2302,6 +2906,63 @@
                         </div>
                     </div>
                     <p class="card-subtitle" data-i18n="intro_content">Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活</p>
+                </div>
+
+                <!-- 核心概念 - 术语解释卡片 -->
+                <div class="card collapsible-card" id="conceptsCard">
+                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                        <div>
+                            <div class="card-title" data-i18n="concepts_title">核心概念 · Core Concepts</div>
+                            <div class="card-subtitle" data-i18n="concepts_subtitle">点击展开，了解奇门遁甲基础知识</div>
+                        </div>
+                        <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="concept-grid">
+                            <div class="concept-item" onclick="showConceptDetail('qimen')">
+                                <div class="concept-icon"><i class="fa-regular fa-compass"></i></div>
+                                <div class="concept-info">
+                                    <div class="concept-name">奇门遁甲 <span class="concept-name-en">Qimen Dunjia</span></div>
+                                    <div class="concept-brief" data-i18n="qimen_brief">中国古代最高决策术，融合天文地理的时空模型</div>
+                                </div>
+                            </div>
+                            <div class="concept-item" onclick="showConceptDetail('yinyang')">
+                                <div class="concept-icon"><i class="fa-regular fa-circle-half-stroke"></i></div>
+                                <div class="concept-info">
+                                    <div class="concept-name">阴阳 <span class="concept-name-en">Yin-Yang</span></div>
+                                    <div class="concept-brief" data-i18n="yinyang_brief">宇宙万物的两极力量，动态平衡的智慧</div>
+                                </div>
+                            </div>
+                            <div class="concept-item" onclick="showConceptDetail('five')">
+                                <div class="concept-icon"><i class="fa-regular fa-star"></i></div>
+                                <div class="concept-info">
+                                    <div class="concept-name">五行 <span class="concept-name-en">Five Elements</span></div>
+                                    <div class="concept-brief" data-i18n="five_brief">金木水火土，相生相克的能量循环</div>
+                                </div>
+                            </div>
+                            <div class="concept-item" onclick="showConceptDetail('eight')">
+                                <div class="concept-icon"><i class="fa-regular fa-door-open"></i></div>
+                                <div class="concept-info">
+                                    <div class="concept-name">八门 <span class="concept-name-en">Eight Doors</span></div>
+                                    <div class="concept-brief" data-i18n="eight_brief">休生伤杜景死惊开，八种能量门户</div>
+                                </div>
+                            </div>
+                            <div class="concept-item" onclick="showConceptDetail('nine')">
+                                <div class="concept-icon"><i class="fa-regular fa-sparkles"></i></div>
+                                <div class="concept-info">
+                                    <div class="concept-name">九星 <span class="concept-name-en">Nine Stars</span></div>
+                                    <div class="concept-brief" data-i18n="nine_brief">天蓬天任天冲等，九种宇宙能量</div>
+                                </div>
+                            </div>
+                            <div class="concept-item" onclick="showConceptDetail('bagua')">
+                                <div class="concept-icon"><i class="fa-regular fa-circle-nodes"></i></div>
+                                <div class="concept-info">
+                                    <div class="concept-name">八卦 <span class="concept-name-en">Eight Trigrams</span></div>
+                                    <div class="concept-brief" data-i18n="bagua_brief">乾坤震巽坎离艮兑，宇宙八种基本模式</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 后天八卦罗盘 -->
@@ -2578,6 +3239,27 @@
                     </div>
                 </div>
 
+                <!-- 免费试用卡片 -->
+                <div class="card trial-card">
+                    <div class="trial-header">
+                        <div class="trial-icon">
+                            <i class="fa-regular fa-gift"></i>
+                        </div>
+                        <div class="trial-info">
+                            <div class="trial-title" data-i18n="free_trial">免费试用 · Free Trial</div>
+                            <div class="trial-desc" data-i18n="trial_desc">剩余免费占卜次数</div>
+                        </div>
+                        <div class="trial-count">
+                            <span id="freeCount">3</span>
+                            <span class="trial-unit" data-i18n="times">次</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-trial" onclick="showSubscription()">
+                        <span data-i18n="upgrade_now">立即升级</span>
+                        <i class="fa-regular fa-arrow-right"></i>
+                    </button>
+                </div>
+
                 <!-- 菜单列表 -->
                 <div class="card" style="padding: 0;">
                     <div class="menu-card" onclick="showSubscription()">
@@ -2606,12 +3288,21 @@
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
-                    <div class="menu-card" onclick="toggleLanguage()">
+                    <div class="menu-card" onclick="showLanguage()">
                         <div class="menu-icon">
                             <i class="fa-regular fa-globe"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_language">语言</span>
                         <span class="menu-value" id="currentLangDisplay">中文</span>
+                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showAboutQimen()">
+                        <div class="menu-icon">
+                            <i class="fa-regular fa-yin-yang"></i>
+                        </div>
+                        <span class="menu-label" data-i18n="menu_about_qimen">关于奇门</span>
+                        <span class="menu-value">About Qimen</span>
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                     
@@ -2630,6 +3321,23 @@
                         </div>
                         <span class="menu-label">Feedback</span>
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- 邮件订阅 -->
+                <div class="card subscribe-card">
+                    <div class="subscribe-header">
+                        <i class="fa-regular fa-envelope"></i>
+                        <div>
+                            <div class="subscribe-title" data-i18n="subscribe_title">订阅邮件 · Subscribe</div>
+                            <div class="subscribe-desc" data-i18n="subscribe_desc">获取最新资讯和专属优惠</div>
+                        </div>
+                    </div>
+                    <div class="subscribe-input-group">
+                        <input type="email" class="subscribe-input" placeholder="your@email.com" id="emailInput">
+                        <button class="btn btn-primary subscribe-btn" onclick="subscribeEmail()">
+                            <span data-i18n="subscribe_btn">订阅</span>
+                        </button>
                     </div>
                 </div>
 
@@ -2659,6 +3367,146 @@
         </nav>
     </div>
 
+    <!-- ===== 关于奇门页面 ===== -->
+    <div class="fullscreen-page" id="aboutQimenPage">
+        <header class="page-header">
+            <button class="chat-back" onclick="closeAboutQimen()">
+                <i class="fa-regular fa-arrow-left"></i>
+            </button>
+            <div class="chat-title" data-i18n="about_qimen_title">关于奇门 · About Qimen</div>
+            <div style="width:44px;"></div>
+        </header>
+        
+        <main class="fullscreen-content">
+            <!-- 标题区域 -->
+            <div class="qimen-hero">
+                <div class="qimen-symbol">
+                    <div class="qimen-bagua">
+                        <i class="fa-regular fa-yin-yang"></i>
+                    </div>
+                </div>
+                <h1 class="qimen-title" data-i18n="qimen_page_title">奇门遁甲</h1>
+                <p class="qimen-subtitle">Qimen Dunjia · The Art of Strategic Timing</p>
+            </div>
+            
+            <!-- 核心理念 -->
+            <div class="qimen-section">
+                <h2 class="qimen-section-title" data-i18n="qimen_core_concept">时空全息原理</h2>
+                <p class="qimen-text" data-i18n="qimen_core_text">
+                    "时间是流动的空间，空间是凝固的时间。"——《神奇之门》
+                </p>
+                <p class="qimen-text" data-i18n="qimen_core_text2">
+                    奇门遁甲将时间与空间视为一个统一的能量场。在特定的时空点上，宇宙能量呈现出特定的分布模式。通过解读这个模式，我们可以把握行动的最佳时机与方位。
+                </p>
+                
+                <!-- 示意图 -->
+                <div class="qimen-diagram">
+                    <div class="diagram-center">
+                        <span data-i18n="you">你</span>
+                    </div>
+                    <div class="diagram-ring ring-outer">
+                        <div class="diagram-point point-n" data-i18n="north">北</div>
+                        <div class="diagram-point point-s" data-i18n="south">南</div>
+                        <div class="diagram-point point-e" data-i18n="east">东</div>
+                        <div class="diagram-point point-w" data-i18n="west">西</div>
+                    </div>
+                    <div class="diagram-label" data-i18n="spacetime_field">时空能量场</div>
+                </div>
+            </div>
+            
+            <!-- 三大要素 -->
+            <div class="qimen-section">
+                <h2 class="qimen-section-title" data-i18n="three_elements">三大核心要素</h2>
+                
+                <div class="element-card">
+                    <div class="element-icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="element-content">
+                        <h3 data-i18n="element_time">时间 · Time</h3>
+                        <p data-i18n="element_time_desc">天干地支纪时，捕捉宇宙周期节律，找到最佳行动时机。</p>
+                    </div>
+                </div>
+                
+                <div class="element-card">
+                    <div class="element-icon"><i class="fa-regular fa-compass"></i></div>
+                    <div class="element-content">
+                        <h3 data-i18n="element_space">空间 · Space</h3>
+                        <p data-i18n="element_space_desc">九宫八卦方位，解读不同方向的能量属性，选择有利方位。</p>
+                    </div>
+                </div>
+                
+                <div class="element-card">
+                    <div class="element-icon"><i class="fa-regular fa-sparkles"></i></div>
+                    <div class="element-content">
+                        <h3 data-i18n="element_energy">能量 · Energy</h3>
+                        <p data-i18n="element_energy_desc">九星八门八神，模拟宇宙能量场的流动与分布。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 现代应用 -->
+            <div class="qimen-section">
+                <h2 class="qimen-section-title" data-i18n="modern_application">现代应用场景</h2>
+                <div class="application-grid">
+                    <div class="app-item">
+                        <i class="fa-regular fa-briefcase"></i>
+                        <span data-i18n="app_business">商业决策</span>
+                    </div>
+                    <div class="app-item">
+                        <i class="fa-regular fa-user-tie"></i>
+                        <span data-i18n="app_career">职业规划</span>
+                    </div>
+                    <div class="app-item">
+                        <i class="fa-regular fa-heart"></i>
+                        <span data-i18n="app_relationship">感情关系</span>
+                    </div>
+                    <div class="app-item">
+                        <i class="fa-regular fa-chart-line"></i>
+                        <span data-i18n="app_investment">投资理财</span>
+                    </div>
+                    <div class="app-item">
+                        <i class="fa-regular fa-plane"></i>
+                        <span data-i18n="app_travel">出行规划</span>
+                    </div>
+                    <div class="app-item">
+                        <i class="fa-regular fa-home"></i>
+                        <span data-i18n="app_home">居家风水</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 专家推荐 -->
+            <div class="qimen-section expert-section">
+                <div class="expert-quote">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p class="quote-text">"A brilliant fusion of ancient wisdom and modern technology. Qimen Dunjia offers a unique perspective on decision-making that bridges millennia of Chinese philosophy with contemporary needs."</p>
+                    <div class="expert-info">
+                        <div class="expert-avatar">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <div class="expert-detail">
+                            <div class="expert-name">Dr. Alan Smith</div>
+                            <div class="expert-title">Professor of East Asian Studies, Harvard University</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="expert-quote">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p class="quote-text">"奇门遁甲不仅是一门预测术，更是一种战略思维模式。它教会我们在正确的时间、正确的地点，做正确的事情。"</p>
+                    <div class="expert-info">
+                        <div class="expert-avatar">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                        <div class="expert-detail">
+                            <div class="expert-name">李明道 教授</div>
+                            <div class="expert-title">北京大学中国哲学研究所</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <!-- ===== 对话页面 ===== -->
     <div class="chat-page" id="chatPage">
         <header class="chat-header">
@@ -2668,9 +3516,20 @@
             <div class="chat-title" id="chatSceneTitle">面试求职</div>
             <select class="chat-timezone" id="timezoneSelect">
                 <option value="8">北京 UTC+8</option>
+                <option value="8">上海 UTC+8</option>
+                <option value="9">东京 UTC+9</option>
+                <option value="9">首尔 UTC+9</option>
+                <option value="8">新加坡 UTC+8</option>
+                <option value="7">曼谷 UTC+7</option>
+                <option value="5.5">孟买 UTC+5:30</option>
+                <option value="2">柏林 UTC+2</option>
+                <option value="2">巴黎 UTC+2</option>
+                <option value="1">伦敦 UTC+1</option>
                 <option value="-5">纽约 UTC-5</option>
-                <option value="0">伦敦 UTC+0</option>
+                <option value="-6">芝加哥 UTC-6</option>
+                <option value="-8">洛杉矶 UTC-8</option>
                 <option value="11">悉尼 UTC+11</option>
+                <option value="12">奥克兰 UTC+12</option>
             </select>
         </header>
 
@@ -3294,6 +4153,18 @@
                     <span data-i18n="interpret_hexagram">AI 解卦</span>
                 </button>
 
+                <!-- 保存和分享按钮 -->
+                <div class="result-actions">
+                    <button class="btn-result" onclick="saveHexagramResult()">
+                        <i class="fa-regular fa-bookmark"></i>
+                        <span data-i18n="save_result">保存卦象</span>
+                    </button>
+                    <button class="btn-result" onclick="shareHexagramResult()">
+                        <i class="fa-regular fa-share-nodes"></i>
+                        <span data-i18n="share_result">分享结果</span>
+                    </button>
+                </div>
+
                 <!-- AI解读结果 -->
                 <div class="interpret-result" id="interpretResult" style="display: none;">
                     <div class="interpret-header">
@@ -3366,6 +4237,20 @@
                 intro_title: '什么是 Oraculum?',
                 learn_more: '了解更多',
                 intro_content: 'Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活',
+                concepts_title: '核心概念 · Core Concepts',
+                concepts_subtitle: '点击展开，了解奇门遁甲基础知识',
+                qimen_brief: '中国古代最高决策术，融合天文地理的时空模型',
+                yinyang_brief: '宇宙万物的两极力量，动态平衡的智慧',
+                five_brief: '金木水火土，相生相克的能量循环',
+                eight_brief: '休生伤杜景死惊开，八种能量门户',
+                nine_brief: '天蓬天任天冲等，九种宇宙能量',
+                bagua_brief: '乾坤震巽坎离艮兑，宇宙八种基本模式',
+                qimen_detail: '奇门遁甲是中国古代最高层次的决策术数，起源于黄帝战蚩尤的传说。它将天干、地支、九星、八门、八神等要素，按照时空规律排布，形成了一个模拟宇宙运行的全息模型。通过奇门遁甲，可以推算出特定时空中能量分布的状态，从而选择最佳的行动时机和方位。',
+                yinyang_detail: '阴阳是中国哲学的核心概念，描述了宇宙万物中两种相对而又互补的力量。阳代表光明、积极、刚强、上升；阴代表黑暗、消极、柔弱、下降。阴阳并非绝对对立，而是不断转化、相互依存，达到动态平衡才是最佳状态。',
+                five_detail: '五行是金、木、水、火、土五种基本元素的统称，代表五种不同性质的能量。相生关系：木生火、火生土、土生金、金生水、水生木；相克关系：木克土、土克水、水克火、火克金、金克木。理解五行关系，可以把握事物发展的内在规律。',
+                eight_detail: '八门指休门、生门、伤门、杜门、景门、死门、惊门、开门，代表八种不同的能量门户。每门都有其特定含义：休门宜休息养生，生门宜求财开业，开门宜出行求职，伤门宜竞技讨债等。不同时空中八门的位置不同，影响运势吉凶。',
+                nine_detail: '九星是天蓬、天任、天冲、天辅、天禽、天心、天柱、天任、天英九颗星宿。它们代表宇宙中的九种能量场，在奇门遁甲盘中各有其位。九星的吉凶属性会影响该方位的能量特征，是决策时的重要参考。',
+                bagua_detail: '八卦是乾、坤、震、巽、坎、离、艮、兑八个符号，代表天地间的八种基本现象：天、地、雷、风、水、火、山、泽。八卦两两相重，形成六十四卦，涵盖宇宙万物变化的规律。后天八卦是奇门遁甲的基础空间模型。',
                 compass_title: '后天罗盘 · 今日能量',
                 spin: '旋转',
                 click_direction: '点击方位查看详情',
@@ -3407,7 +4292,39 @@
                 menu_settings: '账号设置',
                 menu_language: '语言',
                 menu_about: '关于我们',
+                menu_about_qimen: '关于奇门',
+                about_qimen_title: '关于奇门 · About Qimen',
+                qimen_page_title: '奇门遁甲',
+                qimen_core_concept: '时空全息原理',
+                qimen_core_text: '"时间是流动的空间，空间是凝固的时间。"——《神奇之门》',
+                qimen_core_text2: '奇门遁甲将时间与空间视为一个统一的能量场。在特定的时空点上，宇宙能量呈现出特定的分布模式。通过解读这个模式，我们可以把握行动的最佳时机与方位。',
+                spacetime_field: '时空能量场',
+                three_elements: '三大核心要素',
+                element_time: '时间 · Time',
+                element_time_desc: '天干地支纪时，捕捉宇宙周期节律，找到最佳行动时机。',
+                element_space: '空间 · Space',
+                element_space_desc: '九宫八卦方位，解读不同方向的能量属性，选择有利方位。',
+                element_energy: '能量 · Energy',
+                element_energy_desc: '九星八门八神，模拟宇宙能量场的流动与分布。',
+                modern_application: '现代应用场景',
+                app_business: '商业决策',
+                app_career: '职业规划',
+                app_relationship: '感情关系',
+                app_investment: '投资理财',
+                app_travel: '出行规划',
+                app_home: '居家风水',
+                you: '你',
+                north: '北',
+                south: '南',
+                east: '东',
+                west: '西',
                 calibration: 'Oraculum使用真太阳时校准，确保全球用户精准排盘。',
+                free_trial: '免费试用 · Free Trial',
+                trial_desc: '剩余免费占卜次数',
+                upgrade_now: '立即升级',
+                subscribe_title: '订阅邮件 · Subscribe',
+                subscribe_desc: '获取最新资讯和专属优惠',
+                subscribe_btn: '订阅',
                 today_practice: '今日修习',
                 start_meditation: '开始冥想',
                 meditation_total: '冥想打卡累计',
@@ -3438,6 +4355,8 @@
                 reset_toss: '重新摇卦',
                 hexagram_text: '卦辞',
                 interpret_hexagram: 'AI 解卦',
+                save_result: '保存卦象',
+                share_result: '分享结果',
                 interpretation: '卦象解读',
                 hexagram_gallery: '六十四卦速览',
                 divination_history: '占卜记录',
@@ -3478,6 +4397,20 @@
                 intro_title: 'What is Oraculum?',
                 learn_more: 'Learn more',
                 intro_content: 'Oraculum integrates 3,000 years of Chinese strategic wisdom into your daily life',
+                concepts_title: 'Core Concepts · 核心概念',
+                concepts_subtitle: 'Tap to expand and learn the basics of Qimen Dunjia',
+                qimen_brief: 'Ancient Chinese strategic art, a spacetime model fusing astronomy and geography',
+                yinyang_brief: 'Two polar forces of the universe, wisdom of dynamic balance',
+                five_brief: 'Metal, Wood, Water, Fire, Earth - cycles of creation and control',
+                eight_brief: 'Rest, Life, Injury, Concealment, Scenery, Death, Alarm, Opening',
+                nine_brief: 'Nine cosmic energy fields: Tianpeng, Tianren, Tianchong, etc.',
+                bagua_brief: 'Qian, Kun, Zhen, Xun, Kan, Li, Gen, Dui - eight universal patterns',
+                qimen_detail: 'Qimen Dunjia is the highest level of ancient Chinese strategic divination, originating from the legendary battle between Huangdi and Chiyou. It arranges elements like Heavenly Stems, Earthly Branches, Nine Stars, Eight Doors, and Eight Spirits according to spacetime principles, creating a holographic model of universal operation. Through Qimen Dunjia, one can calculate the energy distribution in specific time and space to choose the optimal timing and direction for actions.',
+                yinyang_detail: 'Yin-Yang is the core concept of Chinese philosophy, describing two opposing yet complementary forces in all things. Yang represents light, positivity, strength, and ascent; Yin represents darkness, negativity, softness, and descent. They are not absolute opposites but constantly transform and depend on each other, with dynamic balance being the optimal state.',
+                five_detail: 'The Five Elements are Metal, Wood, Water, Fire, and Earth, representing five types of energy with different properties. Creation cycle: Wood creates Fire, Fire creates Earth, Earth creates Metal, Metal creates Water, Water creates Wood. Control cycle: Wood controls Earth, Earth controls Water, Water controls Fire, Fire controls Metal, Metal controls Wood. Understanding these relationships helps grasp the intrinsic laws of development.',
+                eight_detail: 'The Eight Doors refer to Rest, Life, Injury, Concealment, Scenery, Death, Alarm, and Opening, representing eight different energy portals. Each door has its specific meaning: Rest door is good for rest and wellness, Life door for wealth and business, Opening door for travel and job seeking, Injury door for competition and debt collection. The positions vary across different times and spaces, affecting fortune.',
+                nine_detail: 'The Nine Stars are Tianpeng, Tianren, Tianchong, Tianfu, Tianqin, Tianxin, Tianzhu, Tianren, and Tianying, representing nine cosmic energy fields. Each occupies its position in the Qimen Dunjia chart. The auspicious or inauspicious nature of the stars affects the energy characteristics of that direction and is an important reference for decision-making.',
+                bagua_detail: 'The Eight Trigrams are Qian, Kun, Zhen, Xun, Kan, Li, Gen, and Dui, representing eight fundamental phenomena of heaven and earth: Sky, Earth, Thunder, Wind, Water, Fire, Mountain, and Lake. When combined, they form the 64 hexagrams, encompassing the patterns of all changes in the universe. The Later Heaven arrangement is the foundational spatial model in Qimen Dunjia.',
                 compass_title: 'Later Heaven Compass · Today\'s Energy',
                 spin: 'Spin',
                 click_direction: 'Click a direction for details',
@@ -3519,7 +4452,39 @@
                 menu_settings: 'Settings',
                 menu_language: 'Language',
                 menu_about: 'About',
+                menu_about_qimen: 'About Qimen',
+                about_qimen_title: 'About Qimen · 关于奇门',
+                qimen_page_title: 'Qimen Dunjia',
+                qimen_core_concept: 'Spacetime Holographic Principle',
+                qimen_core_text: '"Time is flowing space, space is frozen time." — The Magical Gate',
+                qimen_core_text2: 'Qimen Dunjia views time and space as a unified energy field. At specific spacetime points, cosmic energy presents specific distribution patterns. By interpreting these patterns, we can grasp the optimal timing and direction for action.',
+                spacetime_field: 'Spacetime Energy Field',
+                three_elements: 'Three Core Elements',
+                element_time: 'Time · 时间',
+                element_time_desc: 'Heavenly Stems and Earthly Branches timing captures cosmic rhythms to find optimal moments for action.',
+                element_space: 'Space · 空间',
+                element_space_desc: 'Nine Palaces and Eight Trigrams directions reveal energy attributes of different orientations.',
+                element_energy: 'Energy · 能量',
+                element_energy_desc: 'Nine Stars, Eight Doors, and Eight Spirits simulate the flow and distribution of cosmic energy.',
+                modern_application: 'Modern Applications',
+                app_business: 'Business',
+                app_career: 'Career',
+                app_relationship: 'Relationship',
+                app_investment: 'Investment',
+                app_travel: 'Travel',
+                app_home: 'Home Feng Shui',
+                you: 'You',
+                north: 'N',
+                south: 'S',
+                east: 'E',
+                west: 'W',
                 calibration: 'Oraculum uses true solar time calibration for accurate readings worldwide.',
+                free_trial: 'Free Trial · 免费试用',
+                trial_desc: 'Remaining free divinations',
+                upgrade_now: 'Upgrade Now',
+                subscribe_title: 'Subscribe · 订阅邮件',
+                subscribe_desc: 'Get latest news and exclusive offers',
+                subscribe_btn: 'Subscribe',
                 today_practice: 'Today\'s Practice',
                 start_meditation: 'Start Meditation',
                 meditation_total: 'Total Meditation Sessions',
@@ -3550,6 +4515,8 @@
                 reset_toss: 'Reset',
                 hexagram_text: 'Hexagram Text',
                 interpret_hexagram: 'AI Interpretation',
+                save_result: 'Save Hexagram',
+                share_result: 'Share Result',
                 interpretation: 'Interpretation',
                 hexagram_gallery: '64 Hexagrams Gallery',
                 divination_history: 'Divination History',
@@ -3858,6 +4825,122 @@
                 number: 2
             }
         ];
+
+        // ===== 术语库（用于AI回复高亮） =====
+        const TERMINOLOGY = {
+            zh: {
+                '值符': '值符是奇门遁甲中最吉利的神，代表天时之助、贵人相助。',
+                '值使': '值使是执行命令的使者，代表行动的方向和执行力。',
+                '三奇': '乙、丙、丁为三奇，代表特殊的吉利能量。',
+                '六仪': '戊、己、庚、辛、壬、癸为六仪，代表常规的能量状态。',
+                '开门': '开门主事业、出行、求职，代表新的开始和机遇。',
+                '休门': '休门主休息、养生、调理，代表休养生息。',
+                '生门': '生门主财运、生意、生产，代表生机和发展。',
+                '伤门': '伤门主竞技、讨债、变动，代表破坏和变革。',
+                '杜门': '杜门主躲藏、修炼、等待，代表隐藏和潜伏。',
+                '景门': '景门主文书、考试、宣传，代表光明和展示。',
+                '死门': '死门主结束、埋葬、断绝，代表终结和静止。',
+                '惊门': '惊门主惊恐、诉讼、争议，代表不安和动荡。',
+                '天蓬': '天蓬星主水事、盗贼、阴谋，宜静不宜动。',
+                '天任': '天任星主忠诚、踏实、稳定，适合守成。',
+                '天冲': '天冲星主冲动、竞争、快速，宜主动出击。',
+                '天辅': '天辅星主智慧、辅佐、文化，适合学习和规划。',
+                '天英': '天英星主光明、名声、礼仪，适合公开活动。',
+                '天芮': '天芮星主疾病、问题、学习，需谨慎行事。',
+                '天柱': '天柱星主支撑、隐居、中正，适合坚持原则。',
+                '天心': '天心星主医药、心理、精神，适合疗愈活动。',
+                '天禽': '天禽星主稳定、中正、和平，适合稳健发展。',
+                '九天': '九天主远行、高升、传播，适合向上发展。',
+                '九地': '九地主伏藏、低调、积蓄，适合低调行事。',
+                '太阴': '太阴主隐秘、阴私、贵人，适合暗中谋划。',
+                '六合': '六合主人际、合作、和谐，适合团队协作。',
+                '白虎': '白虎主凶险、争斗、血光，需特别谨慎。',
+                '玄武': '玄武主欺诈、盗贼、阴谋，需防范小人。',
+                '螣蛇': '螣蛇主变化、怪异、缠绕，需灵活应对。',
+                '勾陈': '勾陈主田土、牢狱、迟滞，需耐心等待。',
+                '朱雀': '朱雀主口舌、文书、信息，适合沟通表达。'
+            },
+            en: {
+                'Zhifu': 'Zhifu is the most auspicious deity in Qimen Dunjia, representing heavenly assistance and noble help.',
+                'Zhishi': 'Zhishi is the messenger executing commands, representing direction of action and execution.',
+                'Sanqi': 'Sanqi (Three Wonders) are Yi, Bing, Ding, representing special auspicious energies.',
+                'Liuyi': 'Liuyi (Six Instruments) are Wu, Ji, Geng, Xin, Ren, Gui, representing regular energy states.',
+                'Kaimen': 'Opening Door governs career, travel, job seeking, representing new beginnings and opportunities.',
+                'Xiumen': 'Rest Door governs rest, wellness, recuperation, representing restoration.',
+                'Shengmen': 'Life Door governs wealth, business, production, representing growth.',
+                'Shangmen': 'Injury Door governs competition, debt collection, change, representing disruption.',
+                'Dumen': 'Concealment Door governs hiding, cultivation, waiting, representing concealment.',
+                'Jingmen': 'Scenery Door governs documents, exams, publicity, representing brightness.',
+                'Simen': 'Death Door governs endings, burial, separation, representing finality.',
+                'Jingmen2': 'Alarm Door governs fear, litigation, disputes, representing unrest.',
+                'Tianpeng': 'Tianpeng Star governs water, theft, conspiracy, better to stay still.',
+                'Tianren': 'Tianren Star governs loyalty, stability, steadiness, suitable for maintaining.',
+                'Tianchong': 'Tianchong Star governs impulse, competition, speed, suitable for action.',
+                'Tianfu': 'Tianfu Star governs wisdom, assistance, culture, suitable for learning.',
+                'Tianying': 'Tianying Star governs brightness, fame, etiquette, suitable for public activities.',
+                'Tianrui': 'Tianrui Star governs illness, problems, learning, requires caution.',
+                'Tianzhu': 'Tianzhu Star governs support, seclusion, integrity, suitable for principles.',
+                'Tianxin': 'Tianxin Star governs medicine, psychology, spirit, suitable for healing.',
+                'Tianqin': 'Tianqin Star governs stability, justice, peace, suitable for steady development.'
+            }
+        };
+
+        // 高亮术语并添加tooltip
+        function highlightTerms(text) {
+            const terms = TERMINOLOGY[currentLang] || TERMINOLOGY.zh;
+            let result = text;
+            
+            // 按术语长度降序排序，避免短术语影响长术语的匹配
+            const sortedTerms = Object.keys(terms).sort((a, b) => b.length - a.length);
+            
+            for (const term of sortedTerms) {
+                const regex = new RegExp(term, 'g');
+                const replacement = `<span class="term-highlight" onclick="showTermTooltip(event, '${term}')">${term}</span>`;
+                result = result.replace(regex, replacement);
+            }
+            
+            return result;
+        }
+
+        // 显示术语提示
+        function showTermTooltip(event, term) {
+            event.stopPropagation();
+            const terms = TERMINOLOGY[currentLang] || TERMINOLOGY.zh;
+            const definition = terms[term] || '暂无解释 / No definition available';
+            
+            // 移除已有的tooltip
+            const existingTooltip = document.querySelector('.term-tooltip');
+            if (existingTooltip) existingTooltip.remove();
+            
+            // 创建tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'term-tooltip';
+            tooltip.innerHTML = `
+                <div class="tooltip-header">
+                    <span class="tooltip-term">${term}</span>
+                    <button class="tooltip-close" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fa-regular fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="tooltip-body">${definition}</div>
+            `;
+            
+            // 定位tooltip
+            document.body.appendChild(tooltip);
+            const rect = event.target.getBoundingClientRect();
+            tooltip.style.left = Math.min(rect.left, window.innerWidth - 280) + 'px';
+            tooltip.style.top = (rect.bottom + 10) + 'px';
+            
+            // 点击其他地方关闭
+            setTimeout(() => {
+                document.addEventListener('click', function closeTooltip(e) {
+                    if (!tooltip.contains(e.target)) {
+                        tooltip.remove();
+                        document.removeEventListener('click', closeTooltip);
+                    }
+                });
+            }, 100);
+        }
 
         // ===== 六十四卦完整数据 =====
         const HEXAGRAMS = {
@@ -4281,12 +5364,17 @@
             }
         }
 
-        // 格式化消息（支持换行）
+        // 格式化消息（支持换行和术语高亮）
         function formatMessage(text) {
-            return text
+            let result = text
                 .replace(/\n/g, '<br>')
                 .replace(/(一、|二、|三、|四、|五、|六、|七、|八、|九、|十、)/g, '<strong>$1</strong>')
                 .replace(/(首先|其次|再次|最后|第一|第二|第三|第四|第五)/g, '<strong>$1</strong>');
+            
+            // 添加术语高亮
+            result = highlightTerms(result);
+            
+            return result;
         }
 
         function stopGeneration() {
@@ -7391,6 +8479,77 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
             }
         }
 
+        // 保存卦象结果
+        function saveHexagramResult() {
+            const binary = hexagramLines.join('');
+            const hexagram = HEXAGRAMS[binary];
+            if (!hexagram) return;
+            
+            const isZh = currentLang === 'zh';
+            const now = new Date();
+            const timeStr = now.toLocaleString(isZh ? 'zh-CN' : 'en-US');
+            
+            const record = {
+                binary: binary,
+                nameZh: hexagram.nameZh,
+                nameEn: hexagram.nameEn,
+                textZh: hexagram.textZh,
+                textEn: hexagram.textEn,
+                time: timeStr,
+                timestamp: Date.now()
+            };
+            
+            // 保存到历史
+            let savedResults = JSON.parse(localStorage.getItem('oraculum_saved_hexagrams') || '[]');
+            savedResults.unshift(record);
+            if (savedResults.length > 10) {
+                savedResults = savedResults.slice(0, 10);
+            }
+            localStorage.setItem('oraculum_saved_hexagrams', JSON.stringify(savedResults));
+            
+            alert(isZh ? '卦象已保存！' : 'Hexagram saved!');
+        }
+
+        // 分享卦象结果
+        function shareHexagramResult() {
+            const binary = hexagramLines.join('');
+            const hexagram = HEXAGRAMS[binary];
+            if (!hexagram) return;
+            
+            const isZh = currentLang === 'zh';
+            const shareText = isZh 
+                ? `【小卜·Oraculum】我的卦象：${hexagram.nameZh}\n卦辞：${hexagram.textZh}\n\n在 Oraculum 探索你的命运 →`
+                : `【Oraculum】My Hexagram: ${hexagram.nameEn}\nText: ${hexagram.textEn}\n\nExplore your destiny with Oraculum →`;
+            
+            // 尝试使用Web Share API
+            if (navigator.share) {
+                navigator.share({
+                    title: isZh ? '我的卦象' : 'My Hexagram',
+                    text: shareText
+                }).catch(() => {
+                    copyToClipboard(shareText);
+                });
+            } else {
+                copyToClipboard(shareText);
+            }
+        }
+
+        // 复制到剪贴板
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(currentLang === 'zh' ? '结果已复制到剪贴板！' : 'Result copied to clipboard!');
+            }).catch(() => {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert(currentLang === 'zh' ? '结果已复制到剪贴板！' : 'Result copied to clipboard!');
+            });
+        }
+
         // 重置摇卦
         function resetDivination() {
             throwCount = 0;
@@ -7506,6 +8665,44 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
             el.classList.toggle('open');
         }
 
+        // 显示概念详情
+        function showConceptDetail(concept) {
+            const isZh = currentLang === 'zh';
+            const concepts = {
+                qimen: {
+                    title: isZh ? '奇门遁甲 Qimen Dunjia' : 'Qimen Dunjia 奇门遁甲',
+                    content: isZh ? translations.zh.qimen_detail : translations.en.qimen_detail
+                },
+                yinyang: {
+                    title: isZh ? '阴阳 Yin-Yang' : 'Yin-Yang 阴阳',
+                    content: isZh ? translations.zh.yinyang_detail : translations.en.yinyang_detail
+                },
+                five: {
+                    title: isZh ? '五行 Five Elements' : 'Five Elements 五行',
+                    content: isZh ? translations.zh.five_detail : translations.en.five_detail
+                },
+                eight: {
+                    title: isZh ? '八门 Eight Doors' : 'Eight Doors 八门',
+                    content: isZh ? translations.zh.eight_detail : translations.en.eight_detail
+                },
+                nine: {
+                    title: isZh ? '九星 Nine Stars' : 'Nine Stars 九星',
+                    content: isZh ? translations.zh.nine_detail : translations.en.nine_detail
+                },
+                bagua: {
+                    title: isZh ? '八卦 Eight Trigrams' : 'Eight Trigrams 八卦',
+                    content: isZh ? translations.zh.bagua_detail : translations.en.bagua_detail
+                }
+            };
+            
+            const data = concepts[concept];
+            if (data) {
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalBody').innerHTML = `<p style="line-height:1.8;color:#333;">${data.content}</p>`;
+                document.getElementById('modal').classList.add('active');
+            }
+        }
+
         function showModal(title, body) {
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalBody').textContent = body;
@@ -7546,7 +8743,23 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
         }
 
         function showSubscription() {
-            alert(currentLang === 'zh' ? '订阅商店功能开发中...' : 'Subscription feature coming soon...');
+            const isZh = currentLang === 'zh';
+            const message = isZh 
+                ? `🌟 高级会员权益\n\n✨ 无限占卜次数\n✨ 深度AI分析报告\n✨ 完整历史记录\n✨ 专属每周运势报告\n✨ 优先客服支持\n\n💰 月度订阅：¥28/月\n💰 年度订阅：¥268/年（省¥68）\n\n功能开发中，敬请期待！`
+                : `🌟 Premium Benefits\n\n✨ Unlimited Divinations\n✨ In-depth AI Analysis\n✨ Full History Records\n✨ Exclusive Weekly Reports\n✨ Priority Support\n\n💰 Monthly: $4.99/mo\n💰 Yearly: $49.99/yr (Save $10)\n\nComing soon!`;
+            alert(message);
+        }
+
+        function subscribeEmail() {
+            const email = document.getElementById('emailInput').value;
+            if (!email || !email.includes('@')) {
+                alert(currentLang === 'zh' ? '请输入有效的邮箱地址' : 'Please enter a valid email address');
+                return;
+            }
+            alert(currentLang === 'zh' 
+                ? '感谢订阅！功能开发中，敬请期待。' 
+                : 'Thanks for subscribing! Coming soon.');
+            document.getElementById('emailInput').value = '';
         }
 
         function showHistory() {
@@ -7561,6 +8774,14 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
 
         function showAbout() {
             alert('小卜 · Oraculum v1.0.0\n\n基于奇门遁甲的智能决策助手\nIntelligent decision assistant based on Qimen Dunjia\n\n© 2025 Oraculum');
+        }
+
+        function showAboutQimen() {
+            document.getElementById('aboutQimenPage').classList.add('active');
+        }
+
+        function closeAboutQimen() {
+            document.getElementById('aboutQimenPage').classList.remove('active');
         }
 
         function showFeedback() {
