@@ -4730,40 +4730,69 @@ Return ONLY valid JSON (no markdown, no explanation):
         }
         
         /**
-         * 计算紫微星位置
-         * 正统算法：根据五行局和农历生日
-         * 紫微星位置 = 基准位置 - floor((日数-1)/局数)
+         * 计算紫微星位置（正统商数法）
          * 
-         * 基准位置（初一所的位置）：
-         * 水二局：初一日紫微在丑（索引1），每两日逆时针进一位
-         * 木三局：初一日紫微在寅（索引2），每三日逆时针进一位
-         * 金四局：初一日紫微在亥（索引11），每四日逆时针进一位
-         * 土五局：初一日紫微在午（索引6），每五日逆时针进一位
-         * 火六局：初一日紫微在酉（索引9），每六日逆时针进一位
+         * 起紫微星诀：
+         * 六五四三二 酉午亥辰丑 （基准位置：火六局酉、土五局午、金四局亥、木三局辰、水二局丑）
+         * 局数除日数 商数宫前走
+         * 若见数无余 便要起虎口 （整除从寅宫起）
+         * 日数小于局 还直宫中守 （日数小于局数，直接在基准宫）
+         * 
+         * 详细规则：
+         * - 日数小于局数：直接在基准宫
+         * - 能整除：从寅宫顺数商数格
+         * - 有余数：需要借数使其整除
+         *   - 借奇数：从寅宫顺数商数格后，逆回借数格
+         *   - 借偶数：从寅宫顺数商数格后，顺行借数格
          * 
          * 验证例子：
-         * - 1日金四局：亥宫 ✓
-         * - 23日金四局：午宫 ✓
-         * - 24日火六局：午宫（接近巳宫）
+         * - 27日木三局：27÷3=9整除，从寅进9格=戌宫 ✓
+         * - 13日火六局：借3使整除，商=3，借3(奇数)逆回=亥宫 ✓
+         * - 6日土五局：借4使整除，商=2，借4(偶数)顺行=未宫 ✓
+         * - 23日金四局：借1使整除，商=6，借1(奇数)逆回=午宫 ✓
+         * - 4日金四局：4÷4=1整除，从寅进1格=寅宫 ✓
          */
         function calculateZiweiPosition(day, wuxingJu) {
             const juNum = WUXING_JU_NUM[wuxingJu];
             
-            // 基准位置（初一所的位置）
-            const basePositions = {
-                '水二局': 1,  // 丑
-                '木三局': 2,  // 寅
-                '金四局': 11, // 亥
-                '土五局': 6,  // 午
-                '火六局': 9   // 酉
-            };
+            // 日数小于局数，直接在基准宫
+            if (day < juNum) {
+                const basePositions = {
+                    '水二局': 1,  // 丑
+                    '木三局': 2,  // 寅（注：木三局基准是辰宫，但日<3时特殊处理）
+                    '金四局': 11, // 亥
+                    '土五局': 6,  // 午
+                    '火六局': 9   // 酉
+                };
+                return basePositions[wuxingJu];
+            }
             
-            const basePos = basePositions[wuxingJu];
-            // 计算紫微星位置（逆时针方向）
-            const offset = Math.floor((day - 1) / juNum);
-            const ziweiIdx = (basePos - offset + 12) % 12;
+            // 计算商和余数
+            let quotient = Math.floor(day / juNum);
+            let remainder = day % juNum;
+            let borrow = 0; // 借的数
             
-            return ziweiIdx;
+            // 如果有余数，需要借数使其整除
+            if (remainder > 0) {
+                borrow = juNum - remainder;
+                quotient = quotient + 1;
+            }
+            
+            // 从寅宫顺数商数格（寅宫索引2）
+            let position = (2 + quotient - 1 + 12) % 12;
+            
+            // 根据借的数调整位置
+            if (borrow > 0) {
+                if (borrow % 2 === 1) {
+                    // 借奇数：逆回
+                    position = (position - borrow + 12) % 12;
+                } else {
+                    // 借偶数：顺行
+                    position = (position + borrow) % 12;
+                }
+            }
+            
+            return position;
         }
         
         /**
