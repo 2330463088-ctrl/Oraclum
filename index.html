@@ -2266,11 +2266,19 @@
         }
 
         .collapsible-card .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .collapsible-header.open + .collapsible-content {
+            max-height: 2000px;
             padding-top: 16px;
         }
 
-        .collapsible-card.open .collapsible-content {
-            max-height: 2000px;
+        .collapsible-header.open .collapsible-icon {
+            transform: rotate(180deg);
         }
 
         .concept-grid {
