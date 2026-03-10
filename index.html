@@ -1534,7 +1534,7 @@
             border-radius: 3px;
         }
 
-        .yao-row.active .yao-line {
+        .yao-row.active .yao-line:not(.broken) {
             background: #8B7E6C;
         }
 
@@ -1624,15 +1624,38 @@
         }
 
         .hexagram-symbol {
-            width: 64px;
-            height: 64px;
+            min-width: 64px;
+            min-height: 64px;
+            padding: 12px;
             background: linear-gradient(145deg, #8B7E6C 0%, #6B5F4C 100%);
             border-radius: 16px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font: 600 32px/1 var(--font-stack);
-            color: white;
+            gap: 4px;
+        }
+
+        .hexagram-symbol .result-yao {
+            width: 40px;
+            height: 5px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .hexagram-symbol .result-yao.broken {
+            display: flex;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .hexagram-symbol .result-yao.broken::before,
+        .hexagram-symbol .result-yao.broken::after {
+            content: '';
+            width: 17px;
+            height: 5px;
+            background: white;
+            border-radius: 2px;
         }
 
         .hexagram-info {
@@ -1777,8 +1800,33 @@
         }
 
         .gallery-item .symbol {
-            font: 600 20px/1 var(--font-stack);
-            color: #8B7E6C;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            margin-bottom: 2px;
+        }
+
+        .gallery-item .symbol .yao-line {
+            width: 28px;
+            height: 4px;
+            background: #8B7E6C;
+            border-radius: 1px;
+        }
+
+        .gallery-item .symbol .yao-line.broken {
+            display: flex;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .gallery-item .symbol .yao-line.broken::before,
+        .gallery-item .symbol .yao-line.broken::after {
+            content: '';
+            width: 11px;
+            height: 4px;
+            background: #8B7E6C;
+            border-radius: 1px;
         }
 
         .gallery-item .name {
@@ -1842,13 +1890,36 @@
         .history-symbol {
             width: 36px;
             height: 36px;
+            padding: 4px;
             background: #8B7E6C;
             border-radius: 8px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
-            font: 600 16px/1 var(--font-stack);
+            gap: 2px;
+        }
+
+        .history-symbol .hist-yao {
+            width: 24px;
+            height: 3px;
+            background: white;
+            border-radius: 1px;
+        }
+
+        .history-symbol .hist-yao.broken {
+            display: flex;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .history-symbol .hist-yao.broken::before,
+        .history-symbol .hist-yao.broken::after {
+            content: '';
+            width: 10px;
+            height: 3px;
+            background: white;
+            border-radius: 1px;
         }
 
         .history-info {
@@ -7077,12 +7148,19 @@ Return ONLY valid JSON (no markdown, no explanation):
             const isZh = currentLang === 'zh';
             const items = Object.entries(HEXAGRAMS).slice(0, 16); // 显示前16个
             
-            gallery.innerHTML = items.map(([binary, data]) => `
+            gallery.innerHTML = items.map(([binary, data]) => {
+                // 渲染爻线图形（从上爻到初爻）
+                let yaoLines = '';
+                for (let i = 5; i >= 0; i--) {
+                    const isYang = binary[i] === '1';
+                    yaoLines += `<div class="yao-line${isYang ? '' : ' broken'}"></div>`;
+                }
+                return `
                 <div class="gallery-item" onclick="showHexagramDetail('${binary}')">
-                    <div class="symbol">${data.symbol}</div>
+                    <div class="symbol">${yaoLines}</div>
                     <div class="name">${isZh ? data.nameZh : data.nameEn.split(' - ')[0]}</div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // 显示卦象详情
@@ -7091,10 +7169,22 @@ Return ONLY valid JSON (no markdown, no explanation):
             if (!data) return;
             
             const isZh = currentLang === 'zh';
-            showModal(
-                isZh ? data.nameZh : data.nameEn,
-                isZh ? data.textZh : data.textEn
-            );
+            
+            // 渲染爻线图形
+            let yaoLines = '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:16px;">';
+            for (let i = 5; i >= 0; i--) {
+                const isYang = binary[i] === '1';
+                if (isYang) {
+                    yaoLines += '<div style="width:60px;height:6px;background:#8B7E6C;border-radius:2px;"></div>';
+                } else {
+                    yaoLines += '<div style="width:60px;height:6px;display:flex;justify-content:space-between;"><div style="width:26px;height:6px;background:#8B7E6C;border-radius:2px;"></div><div style="width:26px;height:6px;background:#8B7E6C;border-radius:2px;"></div></div>';
+                }
+            }
+            yaoLines += '</div>';
+            
+            document.getElementById('modalTitle').textContent = isZh ? data.nameZh : data.nameEn;
+            document.getElementById('modalBody').innerHTML = yaoLines + '<p style="text-align:center;color:#666;line-height:1.6;">' + (isZh ? data.textZh : data.textEn) + '</p>';
+            document.getElementById('modal').classList.add('active');
         }
 
         // 摇卦
@@ -7205,8 +7295,13 @@ Return ONLY valid JSON (no markdown, no explanation):
             const isZh = currentLang === 'zh';
             const resultCard = document.getElementById('hexagramResultCard');
             
-            // 更新卦象信息
-            document.getElementById('hexagramSymbol').textContent = hexagram.symbol;
+            // 渲染爻线图形（从上爻到初爻）
+            let yaoHtml = '';
+            for (let i = 5; i >= 0; i--) {
+                const isYang = binary[i] === '1';
+                yaoHtml += `<div class="result-yao${isYang ? '' : ' broken'}"></div>`;
+            }
+            document.getElementById('hexagramSymbol').innerHTML = yaoHtml;
             document.getElementById('hexagramNameZh').textContent = hexagram.nameZh;
             document.getElementById('hexagramNameEn').textContent = hexagram.nameEn;
             document.getElementById('hexagramTextZh').textContent = hexagram.textZh;
@@ -7376,15 +7471,22 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
             historyCard.style.display = 'block';
             const isZh = currentLang === 'zh';
             
-            historyList.innerHTML = divinationHistory.slice(0, 3).map(record => `
+            historyList.innerHTML = divinationHistory.slice(0, 3).map(record => {
+                // 渲染爻线图形
+                let yaoHtml = '';
+                for (let i = 5; i >= 0; i--) {
+                    const isYang = record.binary[i] === '1';
+                    yaoHtml += `<div class="hist-yao${isYang ? '' : ' broken'}"></div>`;
+                }
+                return `
                 <div class="history-item" onclick="showHistoryDetail('${record.binary}')">
-                    <div class="history-symbol">${record.symbol}</div>
+                    <div class="history-symbol">${yaoHtml}</div>
                     <div class="history-info">
                         <div class="history-name">${isZh ? record.nameZh : record.nameEn.split(' - ')[0]}</div>
                         <div class="history-time">${record.time}</div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // 显示历史详情
