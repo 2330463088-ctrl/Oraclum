@@ -2385,19 +2385,34 @@
             <!-- 命盘结果 - 简化版四宫 -->
             <div class="card" id="chartResultCard" style="display: none;">
                 <!-- 标题区 -->
-                <div style="margin-bottom: 24px;">
-                    <div style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text);">Your Chart Snapshot</div>
-                    <div style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">命盘简析</div>
+                <div id="chartTitleArea" style="margin-bottom: 20px;">
+                    <!-- 由JS填充：主星坐命标题 -->
                 </div>
                 
-                <!-- 出生日期信息 -->
-                <div id="chartBirthInfo" style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--color-divider);">
+                <!-- 日期信息 -->
+                <div id="chartBirthInfo" style="text-align: center; margin-bottom: 20px;">
                     <!-- 由JS填充 -->
                 </div>
                 
-                <!-- 四宫卡片列表 -->
-                <div id="chartPalacesList" style="display: flex; flex-direction: column; gap: 16px;">
-                    <!-- 由JS动态生成 -->
+                <!-- 环形星盘 -->
+                <div id="chartWheelContainer" style="position: relative; width: 100%; padding-top: 100%; margin-bottom: 16px;">
+                    <div id="chartWheel" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                        <!-- 由JS动态生成12宫位 -->
+                    </div>
+                </div>
+                
+                <!-- 提示文字 -->
+                <div style="text-align: center; font: 400 12px/1.5 var(--font-stack); color: var(--color-text-light); margin-bottom: 16px;">
+                    Click any palace to see details · 点击宫位查看详情
+                </div>
+                
+                <!-- 宫位详情弹窗 -->
+                <div id="palaceDetailModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+                    <div style="background: var(--color-card); border-radius: 16px; padding: 24px; max-width: 320px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                        <div id="palaceDetailContent"></div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 16px;" onclick="closePalaceDetail()">关闭</button>
+                    </div>
+                </div>
                 </div>
 
                 <button class="btn btn-primary" style="width: 100%; margin-top: 24px;" onclick="showChartInput()">
@@ -4220,61 +4235,128 @@ Return ONLY valid JSON (no markdown, no explanation):
             };
         }
 
-        // 渲染简化版命盘
+        // 渲染环形星盘
         function renderSimplifiedChart(chartResult, interpretations, year, month, day) {
-            // 出生日期信息
-            const birthInfoHtml = `
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font: 600 15px/1.3 var(--font-stack); color: var(--color-text);">${year}.${month}.${day}</div>
-                        <div style="font: 400 12px/1.3 var(--font-stack); color: var(--color-text-light);">${chartResult.lunarDate} · ${chartResult.shichen}</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font: 500 13px/1.3 var(--font-stack); color: var(--color-primary);">${chartResult.wuxingJu}</div>
-                        <div style="font: 400 11px/1.3 var(--font-stack); color: var(--color-text-light);">${chartResult.yearGanZhi} Year</div>
-                    </div>
+            const isZh = currentLang === 'zh';
+            
+            // 标题区：命宫主星坐命
+            const mainStar = chartResult.mainStar || '空宫';
+            const mainStarEn = mainStar.split(' ').map(s => STAR_EN_NAMES[s] || s).join(', ');
+            const titleHtml = `
+                <div style="text-align: center;">
+                    <div style="font: 600 22px/1.3 var(--font-stack); color: var(--color-text);">${mainStar}坐命</div>
+                    <div style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">${mainStarEn} in Life Palace</div>
                 </div>
+            `;
+            document.getElementById('chartTitleArea').innerHTML = titleHtml;
+            
+            // 日期信息
+            const birthInfoHtml = `
+                <div style="font: 500 14px/1.5 var(--font-stack); color: var(--color-text);">公历 ${year}-${month}-${day}</div>
+                <div style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light);">农历 ${chartResult.lunarDate}</div>
             `;
             document.getElementById('chartBirthInfo').innerHTML = birthInfoHtml;
 
-            // 四宫卡片
-            const palaces = [
-                { key: 'ming', titleEn: 'Life Palace', titleCn: '命宫', icon: 'fa-solid fa-sun', interpretation: interpretations.ming },
-                { key: 'guanlu', titleEn: 'Career Palace', titleCn: '官禄宫', icon: 'fa-solid fa-briefcase', interpretation: interpretations.guanlu },
-                { key: 'caibo', titleEn: 'Wealth Palace', titleCn: '财帛宫', icon: 'fa-solid fa-coins', interpretation: interpretations.caibo },
-                { key: 'qianyi', titleEn: 'Travel Palace', titleCn: '迁移宫', icon: 'fa-solid fa-plane', interpretation: interpretations.qianyi }
-            ];
-
-            let cardsHtml = '';
-            const isZh = currentLang === 'zh';
-            palaces.forEach(palace => {
-                const interp = palace.interpretation || { star: '空宫', starEn: 'Empty', desc: isZh ? '无限可能，静待花开。' : 'Open to infinite possibilities.' };
-                // 根据语言决定标题和星名的显示顺序
-                const primaryTitle = isZh ? palace.titleCn : palace.titleEn;
-                const secondaryTitle = isZh ? palace.titleEn : palace.titleCn;
-                const primaryStar = isZh ? interp.star : interp.starEn;
-                const secondaryStar = isZh ? interp.starEn : interp.star;
-                cardsHtml += `
-                    <div class="palace-card">
-                        <div class="palace-card-header">
-                            <div class="palace-card-title">
-                                <div class="palace-card-title-en">
-                                    <i class="${palace.icon}" style="margin-right: 8px; color: var(--color-primary); opacity: 0.7;"></i>
-                                    ${primaryTitle}
-                                </div>
-                                <div class="palace-card-title-cn">${secondaryTitle}</div>
-                            </div>
-                            <div class="palace-card-star">
-                                <div class="palace-card-star-cn">${primaryStar}</div>
-                                <div class="palace-card-star-en">${secondaryStar}</div>
-                            </div>
+            // 环形星盘布局 - 圆形排列
+            // 宫位顺序：命宫在顶部，顺时针排列（兄弟在右上）
+            // 使用三角函数计算圆形位置
+            const radius = 38; // 百分比半径
+            const centerX = 50;
+            const centerY = 50;
+            const positions = [];
+            for (let i = 0; i < 12; i++) {
+                // 从顶部开始，顺时针
+                const angle = (-90 - i * 30) * Math.PI / 180; // -90度从顶部开始，顺时针
+                const left = centerX + radius * Math.cos(angle);
+                const top = centerY + radius * Math.sin(angle);
+                positions.push({ top: `${top}%`, left: `${left}%` });
+            }
+            
+            // 中心紫微
+            const centerHtml = `
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                    width: 60px; height: 60px; border-radius: 50%; background: var(--color-primary); 
+                    display: flex; flex-direction: column; justify-content: center; align-items: center;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                    <div style="font: 500 10px/1.2 var(--font-stack); color: white;">Ziwei</div>
+                    <div style="font: 600 12px/1.2 var(--font-stack); color: white;">紫微</div>
+                </div>
+            `;
+            
+            // 12宫位
+            let palacesHtml = '';
+            chartResult.palaces.forEach((palace, i) => {
+                const pos = positions[i];
+                const stars = palace.stars || [];
+                const starText = stars.length > 0 ? stars.join('、') : '';
+                const isMingGong = i === 0; // 命宫高亮
+                
+                palacesHtml += `
+                    <div onclick="showPalaceDetail(${i}, '${starText}', '${palace.nameEn}')"
+                        style="position: absolute; top: ${pos.top}; left: ${pos.left}; 
+                        transform: translate(-50%, -50%);
+                        width: 72px; height: 72px; border-radius: 50%; 
+                        background: ${isMingGong ? 'var(--color-primary-light)' : 'var(--color-card)'};
+                        border: 2px solid ${isMingGong ? 'var(--color-primary)' : 'var(--color-divider)'};
+                        display: flex; flex-direction: column; justify-content: center; align-items: center;
+                        cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.transform='translate(-50%, -50%) scale(1.08)'"
+                        onmouseout="this.style.transform='translate(-50%, -50%)'">
+                        <div style="font: 400 9px/1.2 var(--font-stack); color: var(--color-text-light); margin-bottom: 2px;">${palace.nameEn}</div>
+                        <div style="font: 500 10px/1.3 var(--font-stack); color: var(--color-text); text-align: center; max-width: 60px; overflow: hidden; text-overflow: ellipsis;">
+                            ${starText || '&nbsp;'}
                         </div>
-                        <div class="palace-card-desc">${interp.desc}</div>
                     </div>
                 `;
             });
-
-            document.getElementById('chartPalacesList').innerHTML = cardsHtml;
+            
+            document.getElementById('chartWheel').innerHTML = centerHtml + palacesHtml;
+        }
+        
+        // 显示宫位详情
+        function showPalaceDetail(index, stars, palaceNameEn) {
+            const isZh = currentLang === 'zh';
+            const palaceNames = ['命宫', '兄弟', '夫妻', '子女', '财帛', '疾厄', '迁移', '仆役', '官禄', '田宅', '福德', '父母'];
+            const palaceNamesEn = ['Life', 'Siblings', 'Spouse', 'Children', 'Wealth', 'Health', 'Travel', 'Servants', 'Career', 'Property', 'Fortune', 'Parents'];
+            
+            const title = isZh ? palaceNames[index] : palaceNamesEn[index];
+            const subtitle = isZh ? palaceNamesEn[index] : palaceNames[index];
+            
+            // 星曜解读
+            let desc = '';
+            if (stars) {
+                const starList = stars.split('、');
+                const starDescObj = isZh ? STAR_PERSONALITY_ZH : STAR_PERSONALITY_EN;
+                starList.forEach(star => {
+                    if (starDescObj[star]) {
+                        desc += `<p style="margin: 8px 0; font: 400 13px/1.6 var(--font-stack); color: var(--color-text-mid);"><strong>${star}</strong>：${starDescObj[star]}</p>`;
+                    }
+                });
+            }
+            
+            if (!desc) {
+                desc = isZh ? '<p style="color: var(--color-text-light);">此宫无主星，对宫星曜会影响此宫。</p>' : '<p style="color: var(--color-text-light);">No main stars in this palace.</p>';
+            }
+            
+            const content = `
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <div style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text);">${title}</div>
+                    <div style="font: 400 13px/1.5 var(--font-stack); color: var(--color-text-light);">${subtitle}</div>
+                </div>
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <span style="display: inline-block; padding: 6px 12px; background: var(--color-primary-light); border-radius: 8px; font: 500 14px/1.3 var(--font-stack); color: var(--color-primary);">
+                        ${stars || (isZh ? '空宫' : 'Empty')}
+                    </span>
+                </div>
+                ${desc}
+            `;
+            
+            document.getElementById('palaceDetailContent').innerHTML = content;
+            document.getElementById('palaceDetailModal').style.display = 'flex';
+        }
+        
+        function closePalaceDetail() {
+            document.getElementById('palaceDetailModal').style.display = 'none';
         }
 
         function showChartInput() {
