@@ -5802,117 +5802,161 @@
             <div class="wushu-detail-title" data-i18n="wushu_physiognomy">相·风水</div>
         </header>
         <div class="wushu-detail-content">
-            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;" data-i18n="fengshui_intro">
-                环境调理，趋吉避凶。
-            </p>
+            <!-- 页面介绍 -->
+            <div style="text-align: center; margin-bottom: 28px;">
+                <h2 style="font: 600 22px/1.3 var(--font-stack); color: var(--color-text); margin: 0;">相·风水</h2>
+                <p style="font: 400 14px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">Physiognomy · Fengshui</p>
+                <p style="font: 400 12px/1.6 var(--font-stack); color: var(--color-text-light); margin-top: 8px;" data-i18n="fengshui_intro">环境调理，趋吉避凶</p>
+            </div>
 
-            <!-- 每日风水小贴士 -->
-            <div class="card" id="fengshuiDailyTipCard">
+            <!-- 模块一：风水经典格言 -->
+            <div class="card" id="fengshuiQuoteCard">
                 <div class="card-title">
-                    <i class="fa-regular fa-lightbulb" style="margin-right: 8px; color: var(--color-primary);"></i>
-                    <span data-i18n="daily_tip">今日风水小贴士</span>
+                    <i class="fa-regular fa-quote-left" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <span data-i18n="fengshui_quote">风水经典格言</span>
                 </div>
-                <div style="margin-top: 16px; padding: 20px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-small); border-left: 3px solid var(--color-primary);">
-                    <p id="dailyTipZh" style="font: 400 15px/1.7 var(--font-stack); color: var(--color-text); margin: 0;"></p>
-                    <p id="dailyTipEn" style="font: 400 13px/1.6 var(--font-stack); color: var(--color-text-mid); margin-top: 12px; font-style: italic;"></p>
+                <div style="margin-top: 16px; padding: 24px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border-left: 3px solid var(--color-primary); position: relative;">
+                    <div id="fengshuiQuoteZh" style="font: 400 16px/1.8 var(--font-stack); color: var(--color-text); margin: 0;"></div>
+                    <div id="fengshuiQuoteSource" style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 12px; text-align: right;"></div>
+                    <div id="fengshuiQuoteEn" style="font: 400 13px/1.6 var(--font-stack); color: var(--color-text-mid); margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border); font-style: italic;"></div>
                 </div>
-                <button onclick="refreshDailyTip()" style="margin-top: 16px; padding: 8px 16px; font: 500 13px/1 var(--font-stack); color: var(--color-primary); background: rgba(212, 175, 55, 0.1); border: none; border-radius: var(--radius-small); cursor: pointer; transition: all 0.2s;">
-                    <i class="fa-regular fa-rotate" style="margin-right: 6px;"></i><span data-i18n="refresh_tip">换一条</span>
+                <button onclick="refreshFengshuiQuote()" style="margin-top: 16px; padding: 8px 16px; font: 500 13px/1 var(--font-stack); color: var(--color-primary); background: rgba(212, 175, 55, 0.1); border: none; border-radius: var(--radius-small); cursor: pointer; transition: all 0.2s;">
+                    <i class="fa-regular fa-rotate" style="margin-right: 6px;"></i><span data-i18n="refresh_quote">换一条</span>
                 </button>
             </div>
 
-            <!-- 风水问答 -->
-            <div class="card">
-                <div class="card-title" style="margin-bottom: 8px;">
-                    <i class="fa-regular fa-comments" style="margin-right: 8px; color: var(--color-primary);"></i>
-                    <span data-i18n="fengshui_qa">风水问答</span>
+            <!-- 模块二：七日风水入门课程 -->
+            <div class="card" id="fengshuiCourseCard">
+                <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <i class="fa-regular fa-graduation-cap" style="margin-right: 8px; color: var(--color-primary);"></i>
+                        <span data-i18n="fengshui_course">七日风水入门</span>
+                    </div>
+                    <span id="fengshuiCourseProgress" style="font: 500 12px/1 var(--font-stack); color: var(--color-primary); background: rgba(212, 175, 55, 0.1); padding: 4px 10px; border-radius: 20px;"></span>
                 </div>
-                <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;" data-i18n="fengshui_qa_desc">
-                    点击问题查看解答 / Click to see answer
+                <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin: 12px 0 16px;" data-i18n="fengshui_course_desc">
+                    从零开始，七日掌握风水基础
                 </p>
-                <div id="fengshuiQAContainer"></div>
+                <!-- 课程进度环 -->
+                <div id="fengshuiCourseProgressRing" style="display: flex; justify-content: center; margin-bottom: 20px;"></div>
+                <!-- 课程列表 -->
+                <div id="fengshuiCourseList"></div>
             </div>
 
-            <!-- 八卦方位探索 -->
+            <!-- 模块三：八卦方位探索 -->
             <div class="card">
                 <div class="card-title" style="margin-bottom: 8px;">
                     <i class="fa-regular fa-compass" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="bagua_explore">八卦方位探索</span>
-            </div>
-            <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 20px;" data-i18n="bagua_explore_desc">
-                点击方位查看详情 / Tap a direction to explore
-            </p>
-            
-            <!-- 八卦罗盘 - 与主页相同的布局 -->
-            <div class="compass-container" id="fengshuiCompass">
-                <div class="compass-ring"></div>
+                </div>
+                <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 20px;" data-i18n="bagua_explore_desc">
+                    点击方位查看详情
+                </p>
                 
-                <!-- 八方扇区 - 后天八卦传统布局：上南下北，左东右西 -->
-                <div class="compass-sector south" data-direction="south" onclick="showBaguaDirectionDetail('south')">
-                    <span class="chinese">离</span>
-                    <span class="english">S</span>
+                <!-- 八卦罗盘 -->
+                <div class="compass-container" id="fengshuiCompass">
+                    <div class="compass-ring"></div>
+                    <div class="compass-sector south" data-direction="south" onclick="showBaguaDirectionDetail('south')">
+                        <span class="chinese">离</span>
+                        <span class="english">S</span>
+                    </div>
+                    <div class="compass-sector southwest" data-direction="southwest" onclick="showBaguaDirectionDetail('southwest')">
+                        <span class="chinese">坤</span>
+                        <span class="english">SW</span>
+                    </div>
+                    <div class="compass-sector west" data-direction="west" onclick="showBaguaDirectionDetail('west')">
+                        <span class="chinese">兑</span>
+                        <span class="english">W</span>
+                    </div>
+                    <div class="compass-sector northwest" data-direction="northwest" onclick="showBaguaDirectionDetail('northwest')">
+                        <span class="chinese">乾</span>
+                        <span class="english">NW</span>
+                    </div>
+                    <div class="compass-sector north" data-direction="north" onclick="showBaguaDirectionDetail('north')">
+                        <span class="chinese">坎</span>
+                        <span class="english">N</span>
+                    </div>
+                    <div class="compass-sector northeast" data-direction="northeast" onclick="showBaguaDirectionDetail('northeast')">
+                        <span class="chinese">艮</span>
+                        <span class="english">NE</span>
+                    </div>
+                    <div class="compass-sector east" data-direction="east" onclick="showBaguaDirectionDetail('east')">
+                        <span class="chinese">震</span>
+                        <span class="english">E</span>
+                    </div>
+                    <div class="compass-sector southeast" data-direction="southeast" onclick="showBaguaDirectionDetail('southeast')">
+                        <span class="chinese">巽</span>
+                        <span class="english">SE</span>
+                    </div>
                 </div>
-                <div class="compass-sector southwest" data-direction="southwest" onclick="showBaguaDirectionDetail('southwest')">
-                    <span class="chinese">坤</span>
-                    <span class="english">SW</span>
-                </div>
-                <div class="compass-sector west" data-direction="west" onclick="showBaguaDirectionDetail('west')">
-                    <span class="chinese">兑</span>
-                    <span class="english">W</span>
-                </div>
-                <div class="compass-sector northwest" data-direction="northwest" onclick="showBaguaDirectionDetail('northwest')">
-                    <span class="chinese">乾</span>
-                    <span class="english">NW</span>
-                </div>
-                <div class="compass-sector north" data-direction="north" onclick="showBaguaDirectionDetail('north')">
-                    <span class="chinese">坎</span>
-                    <span class="english">N</span>
-                </div>
-                <div class="compass-sector northeast" data-direction="northeast" onclick="showBaguaDirectionDetail('northeast')">
-                    <span class="chinese">艮</span>
-                    <span class="english">NE</span>
-                </div>
-                <div class="compass-sector east" data-direction="east" onclick="showBaguaDirectionDetail('east')">
-                    <span class="chinese">震</span>
-                    <span class="english">E</span>
-                </div>
-                <div class="compass-sector southeast" data-direction="southeast" onclick="showBaguaDirectionDetail('southeast')">
-                    <span class="chinese">巽</span>
-                    <span class="english">SE</span>
-                </div>
+                
+                <!-- 方位详情卡片 -->
+                <div id="baguaDirectionDetail" style="display: none; padding: 20px; background: white; border-radius: var(--radius-medium); border: 1px solid var(--color-border); margin-top: 16px;"></div>
             </div>
-            
-            <!-- 方位详情卡片 -->
-            <div id="baguaDirectionDetail" style="display: none; padding: 20px; background: white; border-radius: var(--radius-medium); border: 1px solid var(--color-border); margin-top: 16px;">
-            </div>
-        </div>
 
-            <!-- 风水小知识 -->
-            <div class="card">
+            <!-- 模块四：五行测试与联动 -->
+            <div class="card" id="wuxingTestCard">
+                <div class="card-title">
+                    <i class="fa-regular fa-yin-yang" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <span data-i18n="wuxing_test">五行环境测试</span>
+                </div>
+                <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin: 12px 0 16px;" data-i18n="wuxing_test_desc">
+                    了解你的居住环境五行配置，获取个性化建议
+                </p>
+                
+                <!-- 五行测试问题 -->
+                <div id="wuxingTestQuestions"></div>
+                
+                <!-- 测试结果 -->
+                <div id="wuxingTestResult" style="display: none;"></div>
+                
+                <!-- 与命盘联动 -->
+                <div id="wuxingMingpanLink" style="display: none; margin-top: 16px; padding: 16px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-medium); border: 1px solid rgba(212, 175, 55, 0.2);"></div>
+            </div>
+
+            <!-- 模块五：案例故事与经典选读 -->
+            <div class="card" id="fengshuiStoriesCard">
                 <div class="card-title" style="margin-bottom: 16px;">
                     <i class="fa-regular fa-book-open" style="margin-right: 8px; color: var(--color-primary);"></i>
-                    <span data-i18n="fengshui_knowledge">风水小知识</span>
+                    <span data-i18n="fengshui_stories">案例故事与经典</span>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                    <div style="padding: 16px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-small); text-align: center;">
-                        <div style="font: 500 28px/1 var(--font-stack); color: var(--color-primary);">乾</div>
-                        <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">西北·金<br>事业贵人</div>
-                    </div>
-                    <div style="padding: 16px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-small); text-align: center;">
-                        <div style="font: 500 28px/1 var(--font-stack); color: var(--color-primary);">坤</div>
-                        <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">西南·土<br>家庭和谐</div>
-                    </div>
-                    <div style="padding: 16px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-small); text-align: center;">
-                        <div style="font: 500 28px/1 var(--font-stack); color: var(--color-primary);">离</div>
-                        <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">南·火<br>名声成就</div>
-                    </div>
-                    <div style="padding: 16px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-small); text-align: center;">
-                        <div style="font: 500 28px/1 var(--font-stack); color: var(--color-primary);">坎</div>
-                        <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">北·水<br>事业贵人</div>
-                    </div>
+                
+                <!-- 案例故事 -->
+                <div style="margin-bottom: 20px;">
+                    <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;" data-i18n="fengshui_cases">经典案例</div>
+                    <div id="fengshuiCasesList"></div>
+                </div>
+                
+                <!-- 经典选读 -->
+                <div>
+                    <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;" data-i18n="fengshui_classics">经典选读</div>
+                    <div id="fengshuiClassicsList"></div>
                 </div>
             </div>
+
+            <!-- 风水问答（保留原有功能） -->
+            <div class="card">
+                <div class="card-title" style="margin-bottom: 8px;">
+                    <i class="fa-regular fa-comments" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <span data-i18n="fengshui_qa">常见问题</span>
+                </div>
+                <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;" data-i18n="fengshui_qa_desc">
+                    点击问题查看解答
+                </p>
+                <div id="fengshuiQAContainer"></div>
+            </div>
         </div>
+    </div>
+
+    <!-- 风水课程详情页 -->
+    <div class="wushu-detail-page" id="fengshuiLessonPage">
+        <header class="wushu-detail-header">
+            <button class="chat-back" onclick="closeFengshuiLesson()">
+                <i class="fa-regular fa-arrow-left"></i>
+            </button>
+            <div class="wushu-detail-title" id="fengshuiLessonTitle">风水课程</div>
+        </header>
+        <div class="wushu-detail-content" id="fengshuiLessonContent"></div>
     </div>
 
     <!-- 卜·占卜 -->
@@ -6330,6 +6374,29 @@
                 bagua_suitable: '宜',
                 bagua_avoid: '忌',
                 fengshui_knowledge: '风水小知识',
+                // Fengshui Page - New
+                fengshui_quote: '风水经典格言',
+                refresh_quote: '换一条',
+                fengshui_course: '七日风水入门',
+                fengshui_course_desc: '从零开始，七日掌握风水基础',
+                fengshui_course_progress: '学习进度',
+                fengshui_lesson_complete: '完成本课',
+                fengshui_lesson_locked: '完成前一课后解锁',
+                wuxing_test: '五行环境测试',
+                wuxing_test_desc: '了解你的居住环境五行配置，获取个性化建议',
+                wuxing_result: '测试结果',
+                wuxing_dominant: '主导元素',
+                wuxing_distribution: '五行分布',
+                wuxing_tips: '调理建议',
+                wuxing_mingpan_link: '命盘联动',
+                wuxing_view_destiny: '查看命盘',
+                fengshui_stories: '案例故事与经典',
+                fengshui_cases: '经典案例',
+                fengshui_classics: '经典选读',
+                fengshui_case_person: '人物',
+                fengshui_case_problem: '问题',
+                fengshui_case_solution: '方案',
+                fengshui_case_result: '结果',
                 // Learn Qimen Page
                 learn_qimen_title: 'Learn Qimen · 奇门入门',
                 learn_hero_title: '开启你的奇门之旅',
@@ -6586,6 +6653,29 @@
                 bagua_suitable: 'Suitable',
                 bagua_avoid: 'Avoid',
                 fengshui_knowledge: 'Fengshui Basics',
+                // Fengshui Page - New
+                fengshui_quote: 'Classic Fengshui Wisdom',
+                refresh_quote: 'Refresh',
+                fengshui_course: '7-Day Fengshui Introduction',
+                fengshui_course_desc: 'Master Fengshui basics in 7 days',
+                fengshui_course_progress: 'Progress',
+                fengshui_lesson_complete: 'Complete Lesson',
+                fengshui_lesson_locked: 'Complete previous lesson to unlock',
+                wuxing_test: 'Five Elements Environment Test',
+                wuxing_test_desc: 'Discover your home\'s elemental balance and get personalized advice',
+                wuxing_result: 'Test Results',
+                wuxing_dominant: 'Dominant Element',
+                wuxing_distribution: 'Element Distribution',
+                wuxing_tips: 'Balancing Tips',
+                wuxing_mingpan_link: 'Destiny Connection',
+                wuxing_view_destiny: 'View Destiny',
+                fengshui_stories: 'Cases & Classics',
+                fengshui_cases: 'Classic Cases',
+                fengshui_classics: 'Classic Readings',
+                fengshui_case_person: 'Person',
+                fengshui_case_problem: 'Problem',
+                fengshui_case_solution: 'Solution',
+                fengshui_case_result: 'Result',
                 // Learn Qimen Page
                 learn_qimen_title: 'Learn Qimen · 奇门入门',
                 learn_hero_title: 'Your Journey Begins Here',
@@ -6895,6 +6985,434 @@
                 avoidZh: '不宜放置过多木元素。',
                 avoidEn: 'Avoid excessive wood elements.',
                 number: 2
+            }
+        ];
+
+        // ===== 风水经典格言 =====
+        const FENGSHUI_QUOTES = [
+            {
+                zh: '气乘风则散，界水则止。古人聚之使不散，行之使有止，故谓之风水。',
+                source: '《葬书》· 郭璞',
+                en: 'Qi scatters when it meets wind, and stops when it meets water. The ancients gathered it to prevent scattering and guided it to flow. Hence the name Fengshui (Wind-Water).'
+            },
+            {
+                zh: '宅以形势为身体，以泉水为血脉，以土地为皮肉，以草木为毛发，以舍屋为衣服，以门户为冠带。',
+                source: '《黄帝宅经》',
+                en: 'A house takes its terrain as body, springs as blood, earth as skin, plants as hair, structure as clothes, and doors as accessories.'
+            },
+            {
+                zh: '福元之位，取宅之吉方，坐向分明，合于生旺，则福禄自至。',
+                source: '《阳宅三要》',
+                en: 'The position of fortune comes from auspicious directions. Clear orientation combined with vital energy brings blessings naturally.'
+            },
+            {
+                zh: '明堂如锅底，富贵无休止。明堂如掌心，家富斗量金。',
+                source: '民间风水谚语',
+                en: 'A courtyard shaped like a pot bottom brings endless wealth. Like a palm center, it measures gold by the bushel.'
+            },
+            {
+                zh: '山管人丁水管财，山水有情富贵来。',
+                source: '风水经典',
+                en: 'Mountains govern people, waters govern wealth. When landscape shows affection, prosperity arrives.'
+            },
+            {
+                zh: '左青龙右白虎，前朱雀后玄武，此四灵之位也。',
+                source: '《阳宅大全》',
+                en: 'Azure Dragon on the left, White Tiger on the right, Vermilion Bird in front, Black Tortoise behind — these are the positions of the four celestial guardians.'
+            },
+            {
+                zh: '水聚天心，财源广进。水穿堂过，财去人愁。',
+                source: '风水谚语',
+                en: 'Water gathering at the heart brings abundant wealth. Water rushing through the hall takes wealth and brings worry.'
+            },
+            {
+                zh: '宅大人少，耗损元气。宅小人多，生气蓬勃。',
+                source: '《黄帝宅经》',
+                en: 'A large house with few people depletes vital energy. A small house with many people is vibrant with life.'
+            },
+            {
+                zh: '门对门，口对口，是非争端不可免。',
+                source: '民间风水谚语',
+                en: 'Door facing door, mouth facing mouth — conflicts and disputes are unavoidable.'
+            },
+            {
+                zh: '天圆地方，圆主动，方主静。动者为阳，静者为阴。',
+                source: '《周易》',
+                en: 'Heaven is round, Earth is square. Round represents motion, square represents stillness. Motion is Yang, stillness is Yin.'
+            },
+            {
+                zh: '藏风聚气，得水为上。故古人首重水法。',
+                source: '《地理五诀》',
+                en: 'Hiding wind and gathering qi, obtaining water is supreme. Thus the ancients prioritized water methods.'
+            },
+            {
+                zh: '曲则有情，直则无情。水流宜曲不宜直，路行宜曲不宜直。',
+                source: '风水经典',
+                en: 'Curved paths show affection, straight paths show none. Water and roads should curve, not run straight.'
+            }
+        ];
+
+        // ===== 七日风水课程 =====
+        const FENGSHUI_COURSE = [
+            {
+                day: 1,
+                titleZh: '风水之源：气的流动',
+                titleEn: 'Source of Fengshui: Flow of Qi',
+                icon: 'fa-wind',
+                duration: '15分钟',
+                contentZh: [
+                    { type: 'intro', text: '风水的核心在于"气"的流动。气是一种无形的能量，如同水流，会沿着特定的路径流动。好的风水就是让气顺畅流动，聚集在适当的位置。' },
+                    { type: 'concept', title: '气的特性', items: ['气乘风则散 - 风会吹散气', '气界水则止 - 水能让气停聚', '气喜曲忌直 - 弯曲的路径更能聚气', '气喜聚忌散 - 需要适当的围合'] },
+                    { type: 'practice', title: '观察练习', text: '观察你家中的气流：站在门口，感受风的流向。哪些角落风大？哪些角落安静？安静的角落往往是气聚集的地方。' },
+                    { type: 'tip', text: '吉位：气流缓慢、温和；凶位：气流急促、直冲' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'The core of Fengshui lies in the flow of "Qi" (energy). Qi is invisible energy that flows like water along specific paths. Good Fengshui means allowing Qi to flow smoothly and gather in appropriate places.' },
+                    { type: 'concept', title: 'Characteristics of Qi', items: ['Qi scatters when meeting wind', 'Qi stops when meeting water', 'Qi prefers curved paths over straight ones', 'Qi prefers gathering over dispersing'] },
+                    { type: 'practice', title: 'Observation Exercise', text: 'Observe airflow in your home: Stand at the entrance and feel the wind direction. Which corners are windy? Which are calm? Calm corners are often where Qi gathers.' },
+                    { type: 'tip', text: 'Auspicious: Slow, gentle airflow; Inauspicious: Rapid, rushing airflow' }
+                ]
+            },
+            {
+                day: 2,
+                titleZh: '阴阳平衡：空间的两极',
+                titleEn: 'Yin-Yang Balance: Two Poles of Space',
+                icon: 'fa-yin-yang',
+                duration: '15分钟',
+                contentZh: [
+                    { type: 'intro', text: '阴阳是万物的基本属性。在家居风水中，阴阳的平衡至关重要。过于阴或过于阳的空间，都会影响居住者的身心健康。' },
+                    { type: 'concept', title: '阴阳在家居中的体现', items: ['阳：明亮、温暖、开阔、高、动', '阴：昏暗、凉爽、封闭、低、静', '客厅宜阳：活跃、社交', '卧室宜阴：休息、恢复'] },
+                    { type: 'practice', title: '检测练习', text: '用手背感受不同房间的温度和光线。记录哪些房间偏阳（温暖明亮），哪些偏阴（凉爽昏暗）。与房间功能是否匹配？' },
+                    { type: 'tip', text: '卧室过阳：睡眠质量差；客厅过阴：人气不旺' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'Yin-Yang are fundamental properties of all things. In home Fengshui, balancing Yin and Yang is crucial. Spaces that are too Yin or too Yang affect physical and mental health.' },
+                    { type: 'concept', title: 'Yin-Yang in Home', items: ['Yang: Bright, warm, open, high, active', 'Yin: Dim, cool, enclosed, low, quiet', 'Living room prefers Yang: Active, social', 'Bedroom prefers Yin: Rest, recovery'] },
+                    { type: 'practice', title: 'Detection Exercise', text: 'Feel temperature and light in different rooms. Note which rooms are Yang (warm and bright) and which are Yin (cool and dim). Does this match the room\'s function?' },
+                    { type: 'tip', text: 'Bedroom too Yang: Poor sleep; Living room too Yin: Low energy' }
+                ]
+            },
+            {
+                day: 3,
+                titleZh: '五行生克：环境的能量',
+                titleEn: 'Five Elements: Energy of Environment',
+                icon: 'fa-star',
+                duration: '20分钟',
+                contentZh: [
+                    { type: 'intro', text: '五行是木、火、土、金、水五种基本能量。它们相互生发、相互制约，构成了万物运行的基本规律。了解五行，才能理解风水的深层逻辑。' },
+                    { type: 'concept', title: '五行相生', items: ['木生火：木材燃烧', '火生土：火烧成灰', '土生金：矿藏于土', '金生水：金属凝结水珠', '水生木：水滋养植物'] },
+                    { type: 'concept', title: '五行相克', items: ['木克土：树根穿土', '土克水：堤坝挡水', '水克火：水灭火', '火克金：火熔金属', '金克木：斧砍树'] },
+                    { type: 'practice', title: '识别练习', text: '观察家中的物品，按五行分类：木（植物、木质家具）、火（灯具、红色物品）、土（陶瓷、石材）、金（金属饰品、白色物品）、水（鱼缸、黑色物品）。哪种元素最多？' },
+                    { type: 'tip', text: '五行平衡是理想状态，但可依据个人命理适当增补' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'Five Elements are Wood, Fire, Earth, Metal, Water — five fundamental energies. They generate and control each other, forming the basic laws of all phenomena.' },
+                    { type: 'concept', title: 'Generating Cycle', items: ['Wood generates Fire: Wood burns', 'Fire generates Earth: Ash from fire', 'Earth generates Metal: Ore in earth', 'Metal generates Water: Condensation', 'Water generates Wood: Plants need water'] },
+                    { type: 'concept', title: 'Controlling Cycle', items: ['Wood controls Earth: Roots penetrate', 'Earth controls Water: Dams block water', 'Water controls Fire: Water extinguishes', 'Fire controls Metal: Fire melts', 'Metal controls Wood: Axe cuts tree'] },
+                    { type: 'practice', title: 'Identification Exercise', text: 'Categorize home items by element: Wood (plants, wooden furniture), Fire (lights, red items), Earth (ceramics, stone), Metal (metal decor, white items), Water (fish tank, black items). Which element is most common?' },
+                    { type: 'tip', text: 'Balance is ideal, but adjust based on personal destiny' }
+                ]
+            },
+            {
+                day: 4,
+                titleZh: '八卦方位：空间的密码',
+                titleEn: 'Eight Trigrams: Code of Space',
+                icon: 'fa-compass',
+                duration: '20分钟',
+                contentZh: [
+                    { type: 'intro', text: '八卦是八个基本方位的象征，每个方位对应不同的生活领域。后天八卦将八卦与方位对应，是风水布局的重要依据。' },
+                    { type: 'concept', title: '八卦与方位', items: ['离（南）：名声、事业、火', '坎（北）：智慧、事业、水', '震（东）：健康、新开始、木', '兑（西）：财运、收获、金', '乾（西北）：贵人、领导、金', '坤（西南）：家庭、和谐、土', '艮（东北）：学业、稳定、土', '巽（东南）：机遇、财运、木'] },
+                    { type: 'practice', title: '定位练习', text: '用手机指南针确定你家八个方位。在纸上画出户型图，标注各方位。哪个方位是你最关注的领域？' },
+                    { type: 'tip', text: '根据八卦方位调整房间功能，事半功倍' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'Eight Trigrams symbolize eight directions, each corresponding to different life areas. Later Heaven Trigrams align them with directions — a key basis for Fengshui layout.' },
+                    { type: 'concept', title: 'Trigrams and Directions', items: ['Li (South): Fame, career, Fire', 'Kan (North): Wisdom, career, Water', 'Zhen (East): Health, new beginnings, Wood', 'Dui (West): Wealth, harvest, Metal', 'Qian (NW): Mentors, leadership, Metal', 'Kun (SW): Family, harmony, Earth', 'Gen (NE): Studies, stability, Earth', 'Xun (SE): Opportunities, wealth, Wood'] },
+                    { type: 'practice', title: 'Positioning Exercise', text: 'Use your phone compass to identify eight directions. Draw your floor plan and mark each direction. Which direction relates to your focus area?' },
+                    { type: 'tip', text: 'Align room functions with trigram directions for better results' }
+                ]
+            },
+            {
+                day: 5,
+                titleZh: '玄关大门：气的入口',
+                titleEn: 'Entrance: Gateway of Qi',
+                icon: 'fa-door-open',
+                duration: '15分钟',
+                contentZh: [
+                    { type: 'intro', text: '大门是气的入口，如同人的嘴巴，决定了一个家能量摄入的质量。大门风水的好坏，直接影响全家运势。' },
+                    { type: 'concept', title: '大门宜忌', items: ['宜：宽敞明亮、干净整洁、气流温和', '宜：门前开阔、有良好视野', '忌：正对楼梯、电梯、厕所门', '忌：正对镜子、尖锐物品', '忌：门与门相对（穿堂煞）'] },
+                    { type: 'practice', title: '检查练习', text: '站在你家的玄关，检查：光线是否充足？有无杂物堆积？门打开后是否直冲其他门或窗？如有问题，如何调整？' },
+                    { type: 'tip', text: '玄关放置绿色植物或屏风，可化解穿堂煞' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'The main door is the entrance of Qi, like a person\'s mouth, determining the quality of energy intake. Door Fengshui directly affects the whole family\'s fortune.' },
+                    { type: 'concept', title: 'Door Do\'s and Don\'ts', items: ['Good: Spacious, bright, clean, gentle airflow', 'Good: Open view ahead', 'Avoid: Facing stairs, elevator, toilet', 'Avoid: Facing mirror, sharp objects', 'Avoid: Door directly facing another door/window'] },
+                    { type: 'practice', title: 'Inspection Exercise', text: 'Stand at your entrance and check: Is there enough light? Any clutter? Does opening the door create a straight path to another door or window? How to fix issues?' },
+                    { type: 'tip', text: 'Place plants or screens at entrance to mitigate rushing Qi' }
+                ]
+            },
+            {
+                day: 6,
+                titleZh: '卧室安床：休息的能量',
+                titleEn: 'Bedroom: Energy of Rest',
+                icon: 'fa-bed',
+                duration: '15分钟',
+                contentZh: [
+                    { type: 'intro', text: '人的一生有三分之一在床上度过。卧室风水直接影响睡眠质量和健康状况。安床是卧室风水的核心。' },
+                    { type: 'concept', title: '床位宜忌', items: ['宜：床头靠墙，有靠山之感', '宜：床头朝向本命吉方', '忌：床头靠窗，不安稳', '忌：镜子正对床，影响睡眠', '忌：横梁压床，压力重', '忌：床头正对厕所门'] },
+                    { type: 'practice', title: '床铺检查', text: '检查你的床：床头是否靠墙？有无横梁或吊灯在床上方？镜子是否对着床？如有问题，考虑调整位置或使用化解方法。' },
+                    { type: 'tip', text: '床两侧留出通道，象征双方平等；使用柔和的暖色调床品' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'We spend one-third of our lives in bed. Bedroom Fengshui directly affects sleep quality and health. Bed placement is the core.' },
+                    { type: 'concept', title: 'Bed Placement Rules', items: ['Good: Headboard against wall for support', 'Good: Head points to auspicious direction', 'Avoid: Headboard against window', 'Avoid: Mirror facing bed', 'Avoid: Beam above bed', 'Avoid: Head pointing to bathroom door'] },
+                    { type: 'practice', title: 'Bed Inspection', text: 'Check your bed: Is the headboard against a wall? Any beams or lights above? Mirrors facing the bed? Consider adjusting or using remedies.' },
+                    { type: 'tip', text: 'Leave space on both sides for equality; use soft warm-toned bedding' }
+                ]
+            },
+            {
+                day: 7,
+                titleZh: '客厅布局：家的心脏',
+                titleEn: 'Living Room: Heart of Home',
+                icon: 'fa-couch',
+                duration: '15分钟',
+                contentZh: [
+                    { type: 'intro', text: '客厅是家庭活动的中心，也是接待客人的场所。客厅风水影响家庭和睦、事业运势和人际关系。' },
+                    { type: 'concept', title: '客厅布局要点', items: ['沙发宜背靠实墙，有靠山', '沙发宜呈U形或L形，聚气', '电视背景墙不宜过于花哨', '财位宜干净明亮，可放招财物', '客厅宜方正，忌三角或不规则'] },
+                    { type: 'practice', title: '客厅评估', text: '观察你的客厅：沙发背后是否有靠？整体格局是否方正？财位（进门对角线）是否整洁？有无杂物堆积？' },
+                    { type: 'tip', text: '客厅保持整洁明亮，常通风换气，让正能量流通' },
+                    { type: 'summary', title: '七日小结', text: '恭喜你完成了七日风水入门！你已经掌握了：气的流动、阴阳平衡、五行生克、八卦方位、玄关大门、卧室安床、客厅布局。接下来，继续深入学习，将风水智慧融入生活。' }
+                ],
+                contentEn: [
+                    { type: 'intro', text: 'The living room is the center of family activities and guest reception. Living room Fengshui affects family harmony, career, and relationships.' },
+                    { type: 'concept', title: 'Living Room Layout', items: ['Sofa should back against solid wall', 'Sofa in U or L shape gathers Qi', 'TV wall should not be too busy', 'Wealth corner should be clean and bright', 'Living room should be square, avoid irregular shapes'] },
+                    { type: 'practice', title: 'Living Room Assessment', text: 'Observe your living room: Does the sofa have backing? Is the shape regular? Is the wealth corner (diagonal from entrance) clean and clutter-free?' },
+                    { type: 'tip', text: 'Keep living room clean and bright, ventilate regularly for positive energy flow' },
+                    { type: 'summary', title: 'Seven-Day Summary', text: 'Congratulations on completing the 7-day Fengshui introduction! You\'ve learned: Qi flow, Yin-Yang balance, Five Elements, Eight Trigrams, Entrance, Bedroom, and Living Room. Continue learning and integrate Fengshui wisdom into daily life.' }
+                ]
+            }
+        ];
+
+        // ===== 五行测试问题 =====
+        const WUXING_TEST_QUESTIONS = [
+            {
+                id: 'light',
+                questionZh: '你家的整体采光如何？',
+                questionEn: 'How is the overall lighting in your home?',
+                options: [
+                    { value: 'fire', textZh: '非常明亮，阳光充足', textEn: 'Very bright, abundant sunlight' },
+                    { value: 'wood', textZh: '明亮，有自然光', textEn: 'Bright with natural light' },
+                    { value: 'earth', textZh: '适中，主要靠灯光', textEn: 'Moderate, mainly artificial light' },
+                    { value: 'water', textZh: '偏暗，光线不足', textEn: 'Somewhat dim, insufficient light' }
+                ]
+            },
+            {
+                id: 'plants',
+                questionZh: '你家的绿植情况如何？',
+                questionEn: 'What about plants in your home?',
+                options: [
+                    { value: 'wood', textZh: '有很多绿植，生机勃勃', textEn: 'Many plants, full of life' },
+                    { value: 'earth', textZh: '有一些绿植', textEn: 'Some plants' },
+                    { value: 'fire', textZh: '主要是开花植物', textEn: 'Mainly flowering plants' },
+                    { value: 'metal', textZh: '很少或没有绿植', textEn: 'Few or no plants' }
+                ]
+            },
+            {
+                id: 'furniture',
+                questionZh: '你家的家具材质主要是？',
+                questionEn: 'What is the main material of your furniture?',
+                options: [
+                    { value: 'wood', textZh: '实木为主', textEn: 'Mainly solid wood' },
+                    { value: 'metal', textZh: '金属或玻璃为主', textEn: 'Mainly metal or glass' },
+                    { value: 'earth', textZh: '布艺或皮质为主', textEn: 'Mainly fabric or leather' },
+                    { value: 'water', textZh: '混合材质', textEn: 'Mixed materials' }
+                ]
+            },
+            {
+                id: 'color',
+                questionZh: '你家的主色调是？',
+                questionEn: 'What is the dominant color scheme?',
+                options: [
+                    { value: 'earth', textZh: '暖色调（黄、棕、米）', textEn: 'Warm tones (yellow, brown, beige)' },
+                    { value: 'water', textZh: '冷色调（蓝、黑、灰）', textEn: 'Cool tones (blue, black, gray)' },
+                    { value: 'fire', textZh: '鲜艳色调（红、橙、紫）', textEn: 'Vibrant tones (red, orange, purple)' },
+                    { value: 'metal', textZh: '淡雅色调（白、银、金）', textEn: 'Elegant tones (white, silver, gold)' }
+                ]
+            },
+            {
+                id: 'water',
+                questionZh: '你家有水元素装饰吗？',
+                questionEn: 'Do you have water element decorations?',
+                options: [
+                    { value: 'water', textZh: '有鱼缸或水景', textEn: 'Fish tank or water feature' },
+                    { value: 'wood', textZh: '有小型的水景画', textEn: 'Small water-themed art' },
+                    { value: 'fire', textZh: '有水景但已停用', textEn: 'Water feature but not in use' },
+                    { value: 'earth', textZh: '没有水元素', textEn: 'No water elements' }
+                ]
+            },
+            {
+                id: 'space',
+                questionZh: '你家的空间感受如何？',
+                questionEn: 'How does your home feel spatially?',
+                options: [
+                    { value: 'metal', textZh: '开阔通透', textEn: 'Open and airy' },
+                    { value: 'earth', textZh: '温馨舒适', textEn: 'Cozy and comfortable' },
+                    { value: 'wood', textZh: '自然放松', textEn: 'Natural and relaxed' },
+                    { value: 'water', textZh: '私密安静', textEn: 'Private and quiet' }
+                ]
+            }
+        ];
+
+        // 五行解释
+        const WUXING_EXPLANATIONS = {
+            wood: {
+                nameZh: '木',
+                nameEn: 'Wood',
+                color: '#22c55e',
+                traitsZh: '生长、创造、活力',
+                traitsEn: 'Growth, Creativity, Vitality',
+                tipsZh: '建议：增加一些金属元素来修剪过旺的木气，如白色装饰或金属饰品。',
+                tipsEn: 'Suggestion: Add metal elements to balance excess wood energy, such as white decor or metal accessories.'
+            },
+            fire: {
+                nameZh: '火',
+                nameEn: 'Fire',
+                color: '#ef4444',
+                traitsZh: '热情、表达、转化',
+                traitsEn: 'Passion, Expression, Transformation',
+                tipsZh: '建议：增加一些水元素来调和火气，如深色装饰或小型水景。',
+                tipsEn: 'Suggestion: Add water elements to harmonize fire energy, such as dark decor or small water features.'
+            },
+            earth: {
+                nameZh: '土',
+                nameEn: 'Earth',
+                color: '#a16207',
+                traitsZh: '稳定、包容、滋养',
+                traitsEn: 'Stability, Nurturing, Grounding',
+                tipsZh: '建议：增加一些木元素来激活土气，如绿植或木质家具。',
+                tipsEn: 'Suggestion: Add wood elements to activate earth energy, such as plants or wooden furniture.'
+            },
+            metal: {
+                nameZh: '金',
+                nameEn: 'Metal',
+                color: '#eab308',
+                traitsZh: '收敛、清晰、决断',
+                traitsEn: 'Focus, Clarity, Decisiveness',
+                tipsZh: '建议：增加一些火元素来温暖金气，如红色装饰或暖光灯具。',
+                tipsEn: 'Suggestion: Add fire elements to warm metal energy, such as red decor or warm lighting.'
+            },
+            water: {
+                nameZh: '水',
+                nameEn: 'Water',
+                color: '#3b82f6',
+                traitsZh: '智慧、流动、适应',
+                traitsEn: 'Wisdom, Flow, Adaptability',
+                tipsZh: '建议：增加一些土元素来承载水气，如陶瓷或黄色装饰。',
+                tipsEn: 'Suggestion: Add earth elements to contain water energy, such as ceramics or yellow decor.'
+            }
+        };
+
+        // ===== 案例故事 =====
+        const FENGSHUI_CASES = [
+            {
+                id: 1,
+                titleZh: '办公室财运提升',
+                titleEn: 'Office Wealth Enhancement',
+                personZh: '张先生',
+                personEn: 'Mr. Zhang',
+                locationZh: '上海',
+                locationEn: 'Shanghai',
+                problemZh: '生意一直不温不火，感觉缺少突破的机会。',
+                problemEn: 'Business was lukewarm, lacking breakthrough opportunities.',
+                solutionZh: '在办公室东南方放置鱼缸，西北方增加金属装饰。调整办公桌朝向，背靠实墙。',
+                solutionEn: 'Placed fish tank in southeast, added metal decor in northwest. Adjusted desk orientation with solid wall backing.',
+                resultZh: '三个月后成功签下大客户，业务量增长40%。',
+                resultEn: 'Three months later, secured major client, business grew 40%.',
+                icon: 'fa-briefcase'
+            },
+            {
+                id: 2,
+                titleZh: '家庭和睦改善',
+                titleEn: 'Family Harmony Improvement',
+                personZh: '李女士',
+                personEn: 'Ms. Li',
+                locationZh: '北京',
+                locationEn: 'Beijing',
+                problemZh: '家庭矛盾频发，与丈夫常因小事争吵。',
+                problemEn: 'Frequent family conflicts, arguments with husband over small matters.',
+                solutionZh: '在西南方放置粉色水晶和陶瓷摆件，客厅沙发重新摆成U形，增加团聚感。',
+                solutionEn: 'Placed pink crystals and ceramics in southwest. Rearranged sofa into U-shape to enhance togetherness.',
+                resultZh: '家庭氛围明显改善，沟通更加顺畅，关系回暖。',
+                resultEn: 'Family atmosphere improved significantly, better communication, relationship restored.',
+                icon: 'fa-home'
+            },
+            {
+                id: 3,
+                titleZh: '学业进步案例',
+                titleEn: 'Academic Progress Case',
+                personZh: '王同学',
+                personEn: 'Student Wang',
+                locationZh: '广州',
+                locationEn: 'Guangzhou',
+                problemZh: '高三学生，成绩一直徘徊在中游，难以突破。',
+                problemEn: 'Senior high student, grades stuck in the middle, hard to improve.',
+                solutionZh: '书桌移至东北方位，放置文昌塔。卧室减少电子产品，增加绿色植物。',
+                solutionEn: 'Moved desk to northeast, placed Wen Chang pagoda. Reduced electronics in bedroom, added plants.',
+                resultZh: '高考超常发挥，被理想大学录取。',
+                resultEn: 'Performed exceptionally in college entrance exam, admitted to ideal university.',
+                icon: 'fa-graduation-cap'
+            }
+        ];
+
+        // ===== 经典选读 =====
+        const FENGSHUI_CLASSICS = [
+            {
+                id: 1,
+                titleZh: '《黄帝宅经》选读',
+                titleEn: 'Excerpt from Yellow Emperor\'s Dwelling Classic',
+                icon: 'fa-scroll',
+                passagesZh: [
+                    '夫宅者，乃是阴阳之枢纽，人伦之轨模。非夫博物明贤，无能悟斯道也。',
+                    '宅以形势为身体，以泉水为血脉，以土地为皮肉，以草木为毛发，以舍屋为衣服，以门户为冠带。',
+                    '宅有五虚，令人贫耗：宅大人少，一虚也；宅门大内小，二虚也；墙院不完，三虚也；井灶不处，四虚也；宅地多屋少，五虚也。'
+                ],
+                passagesEn: [
+                    'A dwelling is the hub of Yin-Yang, the model of human relations. Only the knowledgeable and wise can comprehend this way.',
+                    'A house takes terrain as body, springs as blood, earth as skin, plants as hair, structure as clothes, doors as accessories.',
+                    'Five emptinesses cause poverty: Large house with few people; large door but small interior; incomplete walls; misplaced well and stove; large land but few buildings.'
+                ]
+            },
+            {
+                id: 2,
+                titleZh: '《阳宅三要》选读',
+                titleEn: 'Excerpt from Three Essentials of Yang Dwelling',
+                icon: 'fa-book',
+                passagesZh: [
+                    '阳宅三要：门、主、灶。门为宅之咽喉，主为宅之心脏，灶为宅之命脉。',
+                    '门乃一家之枢机，祸福之门户。开须得法，不宜太大，不宜太小。',
+                    '厨房宜藏不宜露，宜静不宜动。灶口宜向吉方，不宜向凶方。'
+                ],
+                passagesEn: [
+                    'Three essentials of a dwelling: Door, Main room, Kitchen. Door is the throat, main room is the heart, kitchen is the lifeline.',
+                    'The door is the pivot of a household, the gateway of fortune. It must be properly sized — neither too large nor too small.',
+                    'Kitchen should be hidden not exposed, quiet not active. Stove should face auspicious directions, avoid inauspicious ones.'
+                ]
+            },
+            {
+                id: 3,
+                titleZh: '《葬书》选读',
+                titleEn: 'Excerpt from Book of Burial',
+                icon: 'fa-feather',
+                passagesZh: [
+                    '气乘风则散，界水则止。古人聚之使不散，行之使有止，故谓之风水。',
+                    '风水之法，得水为上，藏风次之。何以言之？气之盛，虽流行，而其余者犹有止。',
+                    '浅深得乘，风水自成。夫阴阳之气，噫而为风，升而为云，降而为雨，行乎地中而为生气。'
+                ],
+                passagesEn: [
+                    'Qi scatters when meeting wind, stops when meeting water. The ancients gathered it to prevent scattering, guided it to stop — hence Fengshui.',
+                    'In Fengshui, obtaining water is primary, hiding wind is secondary. Why? Even abundant Qi that flows still has places where it gathers.',
+                    'Proper depth brings natural Fengshui. Yin-Yang Qi becomes wind when exhaled, clouds when rising, rain when falling, and vital energy when moving underground.'
+                ]
             }
         ];
 
@@ -8325,25 +8843,398 @@ The chart shows favorable winds for your position if you remain patient and deta
         let currentDailyTipIndex = 0;
 
         function initFengshuiPage() {
-            // Initialize daily tip
-            refreshDailyTip();
+            // Initialize quote
+            refreshFengshuiQuote();
+            
+            // Initialize course
+            renderFengshuiCourse();
             
             // Initialize Q&A
             renderFengshuiQA();
+            
+            // Initialize wuxing test
+            renderWuxingTest();
+            
+            // Initialize stories
+            renderFengshuiStories();
         }
 
-        function refreshDailyTip() {
-            // Use date-based selection for consistent daily tip
+        function refreshFengshuiQuote() {
             const today = new Date();
             const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-            currentDailyTipIndex = dayOfYear % FENGSHUI_DAILY_TIPS.length;
+            const quoteIndex = dayOfYear % FENGSHUI_QUOTES.length;
             
-            // Or use random for variety
-            currentDailyTipIndex = Math.floor(Math.random() * FENGSHUI_DAILY_TIPS.length);
+            const quote = FENGSHUI_QUOTES[quoteIndex];
+            document.getElementById('fengshuiQuoteZh').textContent = quote.zh;
+            document.getElementById('fengshuiQuoteSource').textContent = '— ' + quote.source;
+            document.getElementById('fengshuiQuoteEn').textContent = quote.en;
+        }
+
+        function renderFengshuiCourse() {
+            const progress = getFengshuiCourseProgress();
+            const container = document.getElementById('fengshuiCourseList');
+            const progressText = document.getElementById('fengshuiCourseProgress');
+            const progressRing = document.getElementById('fengshuiCourseProgressRing');
             
-            const tip = FENGSHUI_DAILY_TIPS[currentDailyTipIndex];
-            document.getElementById('dailyTipZh').textContent = tip.tipZh;
-            document.getElementById('dailyTipEn').textContent = tip.tipEn;
+            if (!container) return;
+            
+            const isZh = currentLang === 'zh';
+            
+            // Update progress text
+            if (progressText) {
+                progressText.textContent = `${progress.completed}/${FENGSHUI_COURSE.length}`;
+            }
+            
+            // Render progress ring
+            if (progressRing) {
+                const percentage = (progress.completed / FENGSHUI_COURSE.length) * 100;
+                progressRing.innerHTML = `
+                    <div style="position: relative; width: 80px; height: 80px;">
+                        <svg viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="rgba(212, 175, 55, 0.2)" stroke-width="3"/>
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="var(--color-primary)" stroke-width="3"
+                                stroke-dasharray="${percentage}, 100"/>
+                        </svg>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                            <div style="font: 600 18px/1 var(--font-stack); color: var(--color-primary);">${progress.completed}</div>
+                            <div style="font: 400 10px/1 var(--font-stack); color: var(--color-text-mid);">${isZh ? '天' : 'days'}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Render course cards
+            container.innerHTML = FENGSHUI_COURSE.map((lesson, index) => {
+                const isCompleted = progress.completedDays.includes(lesson.day);
+                const isLocked = index > 0 && !progress.completedDays.includes(FENGSHUI_COURSE[index - 1].day);
+                
+                return `
+                    <div class="course-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}" 
+                         onclick="${isLocked ? '' : `openFengshuiLesson(${lesson.day})`}"
+                         style="display: flex; align-items: center; padding: 16px; margin-bottom: 12px; background: ${isCompleted ? 'rgba(34, 197, 94, 0.08)' : isLocked ? 'rgba(0,0,0,0.03)' : 'rgba(212, 175, 55, 0.05)'}; border-radius: var(--radius-medium); border: 1px solid ${isCompleted ? 'rgba(34, 197, 94, 0.2)' : isLocked ? 'var(--color-border)' : 'rgba(212, 175, 55, 0.15)'}; cursor: ${isLocked ? 'not-allowed' : 'pointer'}; transition: all 0.2s; opacity: ${isLocked ? '0.6' : '1'};">
+                        <div style="width: 44px; height: 44px; border-radius: 50%; background: ${isCompleted ? '#22c55e' : 'var(--color-primary)'}; display: flex; align-items: center; justify-content: center; margin-right: 14px; flex-shrink: 0;">
+                            ${isCompleted ? '<i class="fa-solid fa-check" style="color: white; font-size: 18px;"></i>' : `<i class="fa-regular ${lesson.icon}" style="color: white; font-size: 18px;"></i>`}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font: 500 15px/1.4 var(--font-stack); color: var(--color-text);">
+                                ${isZh ? `第${lesson.day}天：${lesson.titleZh}` : `Day ${lesson.day}: ${lesson.titleEn}`}
+                            </div>
+                            <div style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">
+                                ${lesson.duration}
+                            </div>
+                        </div>
+                        <div style="color: var(--color-text-mid);">
+                            ${isLocked ? '<i class="fa-regular fa-lock"></i>' : '<i class="fa-regular fa-chevron-right"></i>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getFengshuiCourseProgress() {
+            const stored = localStorage.getItem('fengshuiCourseProgress');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            return { completed: 0, completedDays: [] };
+        }
+
+        function saveFengshuiCourseProgress(day) {
+            const progress = getFengshuiCourseProgress();
+            if (!progress.completedDays.includes(day)) {
+                progress.completedDays.push(day);
+                progress.completed = progress.completedDays.length;
+                localStorage.setItem('fengshuiCourseProgress', JSON.stringify(progress));
+            }
+        }
+
+        function openFengshuiLesson(day) {
+            const lesson = FENGSHUI_COURSE.find(l => l.day === day);
+            if (!lesson) return;
+            
+            const isZh = currentLang === 'zh';
+            const content = isZh ? lesson.contentZh : lesson.contentEn;
+            
+            document.getElementById('fengshuiLessonTitle').textContent = isZh ? `第${day}天：${lesson.titleZh}` : `Day ${day}: ${lesson.titleEn}`;
+            
+            let html = `
+                <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid var(--color-border); margin-bottom: 24px;">
+                    <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+                        <i class="fa-regular ${lesson.icon}" style="color: white; font-size: 28px;"></i>
+                    </div>
+                    <div style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text);">${isZh ? lesson.titleZh : lesson.titleEn}</div>
+                    <div style="font: 400 13px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">${lesson.duration}</div>
+                </div>
+            `;
+            
+            content.forEach(section => {
+                if (section.type === 'intro') {
+                    html += `
+                        <div style="padding: 20px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-medium); margin-bottom: 16px; border-left: 3px solid var(--color-primary);">
+                            <p style="font: 400 15px/1.8 var(--font-stack); color: var(--color-text); margin: 0;">${section.text}</p>
+                        </div>
+                    `;
+                } else if (section.type === 'concept') {
+                    html += `
+                        <div style="margin-bottom: 20px;">
+                            <div style="font: 500 15px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">
+                                <i class="fa-regular fa-lightbulb" style="color: var(--color-primary); margin-right: 8px;"></i>${section.title}
+                            </div>
+                            <div style="padding: 16px; background: var(--color-background-alt); border-radius: var(--radius-small);">
+                                ${section.items.map(item => `
+                                    <div style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text-mid); padding: 4px 0; padding-left: 16px; position: relative;">
+                                        <span style="position: absolute; left: 0; color: var(--color-primary);">•</span>
+                                        ${item}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (section.type === 'practice') {
+                    html += `
+                        <div style="margin-bottom: 20px; padding: 16px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid rgba(59, 130, 246, 0.2);">
+                            <div style="font: 500 15px/1.4 var(--font-stack); color: #3b82f6; margin-bottom: 8px;">
+                                <i class="fa-regular fa-hand-point-right" style="margin-right: 8px;"></i>${section.title}
+                            </div>
+                            <p style="font: 400 14px/1.7 var(--font-stack); color: var(--color-text); margin: 0;">${section.text}</p>
+                        </div>
+                    `;
+                } else if (section.type === 'tip') {
+                    html += `
+                        <div style="margin-bottom: 20px; padding: 12px 16px; background: rgba(34, 197, 94, 0.08); border-radius: var(--radius-small); border-left: 3px solid #22c55e;">
+                            <span style="font: 500 13px/1.4 var(--font-stack); color: #22c55e;">
+                                <i class="fa-regular fa-check-circle" style="margin-right: 6px;"></i>${isZh ? '要点' : 'Key Point'}：
+                            </span>
+                            <span style="font: 400 13px/1.4 var(--font-stack); color: var(--color-text);">${section.text}</span>
+                        </div>
+                    `;
+                } else if (section.type === 'summary') {
+                    html += `
+                        <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%); border-radius: var(--radius-medium); text-align: center;">
+                            <div style="font: 600 16px/1.4 var(--font-stack); color: var(--color-primary); margin-bottom: 12px;">
+                                <i class="fa-regular fa-trophy" style="margin-right: 8px;"></i>${section.title}
+                            </div>
+                            <p style="font: 400 14px/1.7 var(--font-stack); color: var(--color-text); margin: 0;">${section.text}</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            html += `
+                <div style="margin-top: 24px;">
+                    <button onclick="completeFengshuiLesson(${day})" style="width: 100%; padding: 14px; font: 500 15px/1 var(--font-stack); color: white; background: var(--color-primary); border: none; border-radius: var(--radius-medium); cursor: pointer; transition: all 0.2s;">
+                        <i class="fa-regular fa-check" style="margin-right: 8px;"></i>${isZh ? '完成本课' : 'Complete Lesson'}
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('fengshuiLessonContent').innerHTML = html;
+            document.getElementById('fengshuiLessonPage').classList.add('active');
+        }
+
+        function completeFengshuiLesson(day) {
+            saveFengshuiCourseProgress(day);
+            closeFengshuiLesson();
+            renderFengshuiCourse();
+        }
+
+        function closeFengshuiLesson() {
+            document.getElementById('fengshuiLessonPage').classList.remove('active');
+        }
+
+        function renderWuxingTest() {
+            const container = document.getElementById('wuxingTestQuestions');
+            if (!container) return;
+            
+            const isZh = currentLang === 'zh';
+            
+            container.innerHTML = WUXING_TEST_QUESTIONS.map((q, qIndex) => `
+                <div style="margin-bottom: 20px;">
+                    <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 10px;">
+                        ${qIndex + 1}. ${isZh ? q.questionZh : q.questionEn}
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        ${q.options.map(opt => `
+                            <div class="wuxing-option" data-question="${q.id}" data-value="${opt.value}" onclick="selectWuxingOption(this)"
+                                 style="padding: 12px; background: var(--color-background-alt); border: 1px solid var(--color-border); border-radius: var(--radius-small); cursor: pointer; transition: all 0.2s; text-align: center;">
+                                <span style="font: 400 13px/1.4 var(--font-stack); color: var(--color-text-mid);">${isZh ? opt.textZh : opt.textEn}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('') + `
+                <button id="wuxingTestBtn" onclick="calculateWuxingResult()" style="width: 100%; padding: 14px; font: 500 15px/1 var(--font-stack); color: white; background: var(--color-primary); border: none; border-radius: var(--radius-medium); cursor: pointer; transition: all 0.2s; opacity: 0.5; pointer-events: none;">
+                    ${isZh ? '查看结果' : 'View Results'}
+                </button>
+            `;
+        }
+
+        function selectWuxingOption(el) {
+            // Remove selection from siblings
+            el.parentElement.querySelectorAll('.wuxing-option').forEach(opt => {
+                opt.style.background = 'var(--color-background-alt)';
+                opt.style.borderColor = 'var(--color-border)';
+                opt.querySelector('span').style.color = 'var(--color-text-mid)';
+            });
+            
+            // Add selection to clicked
+            el.style.background = 'rgba(212, 175, 55, 0.1)';
+            el.style.borderColor = 'var(--color-primary)';
+            el.querySelector('span').style.color = 'var(--color-primary)';
+            
+            // Check if all questions answered
+            const answered = document.querySelectorAll('.wuxing-option[style*="rgba(212, 175, 55, 0.1)"]').length;
+            const btn = document.getElementById('wuxingTestBtn');
+            if (answered === WUXING_TEST_QUESTIONS.length) {
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function calculateWuxingResult() {
+            const selections = [];
+            document.querySelectorAll('.wuxing-option').forEach(opt => {
+                if (opt.style.background.includes('rgba(212, 175, 55, 0.1)')) {
+                    selections.push(opt.dataset.value);
+                }
+            });
+            
+            // Count elements
+            const counts = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+            selections.forEach(s => counts[s]++);
+            
+            // Find dominant element
+            const dominant = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            const info = WUXING_EXPLANATIONS[dominant];
+            
+            const isZh = currentLang === 'zh';
+            const resultEl = document.getElementById('wuxingTestResult');
+            
+            resultEl.style.display = 'block';
+            resultEl.innerHTML = `
+                <div style="padding: 24px; background: linear-gradient(135deg, ${info.color}15 0%, ${info.color}05 100%); border-radius: var(--radius-medium); border: 1px solid ${info.color}30; text-align: center;">
+                    <div style="font: 600 32px/1 var(--font-stack); color: ${info.color}; margin-bottom: 8px;">${info.nameZh}</div>
+                    <div style="font: 400 14px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 12px;">${info.nameEn}</div>
+                    <div style="font: 400 14px/1.6 var(--font-stack); color: var(--color-text); margin-bottom: 16px;">${isZh ? info.traitsZh : info.traitsEn}</div>
+                    
+                    <!-- Element distribution -->
+                    <div style="display: flex; justify-content: center; gap: 16px; margin: 20px 0;">
+                        ${Object.keys(counts).map(key => {
+                            const elemInfo = WUXING_EXPLANATIONS[key];
+                            const percent = Math.round((counts[key] / WUXING_TEST_QUESTIONS.length) * 100);
+                            return `
+                                <div style="text-align: center;">
+                                    <div style="font: 500 18px/1 var(--font-stack); color: ${elemInfo.color};">${percent}%</div>
+                                    <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">${elemInfo.nameZh}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    
+                    <div style="padding: 12px 16px; background: rgba(255,255,255,0.8); border-radius: var(--radius-small); margin-top: 16px;">
+                        <p style="font: 400 13px/1.6 var(--font-stack); color: var(--color-text); margin: 0; text-align: left;">${isZh ? info.tipsZh : info.tipsEn}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Show mingpan link if user has destiny data
+            const mingpanLink = document.getElementById('wuxingMingpanLink');
+            const storedDestiny = localStorage.getItem('ziweiDestiny');
+            if (storedDestiny && mingpanLink) {
+                const destiny = JSON.parse(storedDestiny);
+                mingpanLink.style.display = 'block';
+                mingpanLink.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-regular fa-link" style="color: white;"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);">${isZh ? '命盘联动' : 'Destiny Link'}</div>
+                            <div style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">
+                                ${isZh ? `你的命盘主星：${destiny.mainStar || '未分析'}` : `Your main star: ${destiny.mainStar || 'Not analyzed'}`}
+                            </div>
+                        </div>
+                        <button onclick="openWushuDetail('fate')" style="padding: 8px 16px; font: 500 13px/1 var(--font-stack); color: var(--color-primary); background: rgba(212, 175, 55, 0.1); border: none; border-radius: var(--radius-small); cursor: pointer;">
+                            ${isZh ? '查看' : 'View'}
+                        </button>
+                    </div>
+                `;
+            }
+            
+            // Hide questions and show results
+            document.getElementById('wuxingTestQuestions').style.display = 'none';
+        }
+
+        function renderFengshuiStories() {
+            const casesContainer = document.getElementById('fengshuiCasesList');
+            const classicsContainer = document.getElementById('fengshuiClassicsList');
+            
+            const isZh = currentLang === 'zh';
+            
+            // Render cases
+            if (casesContainer) {
+                casesContainer.innerHTML = FENGSHUI_CASES.map(c => `
+                    <div class="collapsible" onclick="toggleCollapsible(this)">
+                        <div class="collapsible-header">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-regular ${c.icon}" style="color: var(--color-primary); font-size: 14px;"></i>
+                                </div>
+                                <span class="collapsible-title">${isZh ? c.titleZh : c.titleEn}</span>
+                            </div>
+                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="collapsible-body" style="padding: 16px;">
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font: 500 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 4px;">${isZh ? '人物' : 'Person'}</div>
+                                    <div style="font: 400 14px/1.4 var(--font-stack); color: var(--color-text);">${c.personZh} · ${c.locationZh}</div>
+                                </div>
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font: 500 12px/1.4 var(--font-stack); color: #ef4444; margin-bottom: 4px;">${isZh ? '问题' : 'Problem'}</div>
+                                    <div style="font: 400 14px/1.6 var(--font-stack); color: var(--color-text-mid);">${isZh ? c.problemZh : c.problemEn}</div>
+                                </div>
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font: 500 12px/1.4 var(--font-stack); color: #3b82f6; margin-bottom: 4px;">${isZh ? '方案' : 'Solution'}</div>
+                                    <div style="font: 400 14px/1.6 var(--font-stack); color: var(--color-text-mid);">${isZh ? c.solutionZh : c.solutionEn}</div>
+                                </div>
+                                <div>
+                                    <div style="font: 500 12px/1.4 var(--font-stack); color: #22c55e; margin-bottom: 4px;">${isZh ? '结果' : 'Result'}</div>
+                                    <div style="font: 400 14px/1.6 var(--font-stack); color: var(--color-text-mid);">${isZh ? c.resultZh : c.resultEn}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Render classics
+            if (classicsContainer) {
+                classicsContainer.innerHTML = FENGSHUI_CLASSICS.map(c => `
+                    <div class="collapsible" onclick="toggleCollapsible(this)">
+                        <div class="collapsible-header">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-regular ${c.icon}" style="color: var(--color-primary); font-size: 14px;"></i>
+                                </div>
+                                <span class="collapsible-title">${isZh ? c.titleZh : c.titleEn}</span>
+                            </div>
+                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="collapsible-body" style="padding: 16px;">
+                                ${(isZh ? c.passagesZh : c.passagesEn).map((p, i) => `
+                                    <div style="padding: 12px 16px; background: rgba(212, 175, 55, 0.05); border-radius: var(--radius-small); margin-bottom: 12px; border-left: 2px solid var(--color-primary);">
+                                        <p style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text); margin: 0;">${p}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
 
         function renderFengshuiQA() {
