@@ -2573,22 +2573,54 @@
                 <div class="card-title" style="margin-bottom: 8px;">
                     <i class="fa-regular fa-compass" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="bagua_explore">八卦方位探索</span>
-                </div>
-                <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 20px;" data-i18n="bagua_explore_desc">
-                    点击方位查看详情 / Tap a direction to explore
-                </p>
+            </div>
+            <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 20px;" data-i18n="bagua_explore_desc">
+                点击方位查看详情 / Tap a direction to explore
+            </p>
+            
+            <!-- 八卦罗盘 - 与主页相同的布局 -->
+            <div class="compass-container" id="fengshuiCompass">
+                <div class="compass-ring"></div>
                 
-                <!-- 八卦图 -->
-                <div id="baguaCompass" style="position: relative; width: 100%; max-width: 280px; margin: 0 auto 24px; aspect-ratio: 1;">
-                    <!-- 中心太极 -->
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-bg) 50%, var(--color-primary) 50%); border-radius: 50%; border: 2px solid var(--color-border); z-index: 10;"></div>
-                    <!-- 八卦方位将用JS生成 -->
+                <!-- 八方扇区 - 后天八卦传统布局：上南下北，左东右西 -->
+                <div class="compass-sector south" data-direction="south" onclick="showBaguaDirectionDetail('south')">
+                    <span class="chinese">离</span>
+                    <span class="english">S</span>
                 </div>
-                
-                <!-- 方位详情卡片 -->
-                <div id="baguaDirectionDetail" style="display: none; padding: 20px; background: white; border-radius: var(--radius-medium); border: 1px solid var(--color-border); margin-top: 16px;">
+                <div class="compass-sector southwest" data-direction="southwest" onclick="showBaguaDirectionDetail('southwest')">
+                    <span class="chinese">坤</span>
+                    <span class="english">SW</span>
+                </div>
+                <div class="compass-sector west" data-direction="west" onclick="showBaguaDirectionDetail('west')">
+                    <span class="chinese">兑</span>
+                    <span class="english">W</span>
+                </div>
+                <div class="compass-sector northwest" data-direction="northwest" onclick="showBaguaDirectionDetail('northwest')">
+                    <span class="chinese">乾</span>
+                    <span class="english">NW</span>
+                </div>
+                <div class="compass-sector north" data-direction="north" onclick="showBaguaDirectionDetail('north')">
+                    <span class="chinese">坎</span>
+                    <span class="english">N</span>
+                </div>
+                <div class="compass-sector northeast" data-direction="northeast" onclick="showBaguaDirectionDetail('northeast')">
+                    <span class="chinese">艮</span>
+                    <span class="english">NE</span>
+                </div>
+                <div class="compass-sector east" data-direction="east" onclick="showBaguaDirectionDetail('east')">
+                    <span class="chinese">震</span>
+                    <span class="english">E</span>
+                </div>
+                <div class="compass-sector southeast" data-direction="southeast" onclick="showBaguaDirectionDetail('southeast')">
+                    <span class="chinese">巽</span>
+                    <span class="english">SE</span>
                 </div>
             </div>
+            
+            <!-- 方位详情卡片 -->
+            <div id="baguaDirectionDetail" style="display: none; padding: 20px; background: white; border-radius: var(--radius-medium); border: 1px solid var(--color-border); margin-top: 16px;">
+            </div>
+        </div>
 
             <!-- 风水小知识 -->
             <div class="card">
@@ -3332,7 +3364,6 @@
             // Re-render fengshui components if the page is active
             if (document.getElementById('physiognomyPage').classList.contains('active')) {
                 renderFengshuiQA();
-                renderBaguaCompass();
             }
             
             document.documentElement.lang = currentLang;
@@ -4321,9 +4352,6 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
             
             // Initialize Q&A
             renderFengshuiQA();
-            
-            // Initialize Bagua compass
-            renderBaguaCompass();
         }
 
         function refreshDailyTip() {
@@ -4361,83 +4389,18 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
             `).join('');
         }
 
-        function renderBaguaCompass() {
-            const container = document.getElementById('baguaCompass');
-            if (!container) return;
-            
-            const isZh = currentLang === 'zh';
-            const size = container.offsetWidth;
-            const centerX = size / 2;
-            const centerY = size / 2;
-            const radius = size * 0.38;
-            
-            // Direction positions (angles in degrees, starting from North at top)
-            const directions = [
-                { id: 'north', angle: 0, x: 0, y: -1 },
-                { id: 'northeast', angle: 45, x: 0.707, y: -0.707 },
-                { id: 'east', angle: 90, x: 1, y: 0 },
-                { id: 'southeast', angle: 135, x: 0.707, y: 0.707 },
-                { id: 'south', angle: 180, x: 0, y: 1 },
-                { id: 'southwest', angle: 225, x: -0.707, y: 0.707 },
-                { id: 'west', angle: 270, x: -1, y: 0 },
-                { id: 'northwest', angle: 315, x: -0.707, y: -0.707 }
-            ];
-            
-            // Keep the taiji (yin-yang) center
-            const taiji = container.querySelector('div');
-            container.innerHTML = '';
-            container.appendChild(taiji);
-            
-            // Add direction buttons
-            directions.forEach(dir => {
-                const data = BAGUA_DIRECTIONS.find(d => d.id === dir.id);
-                const btnSize = 44;
-                const x = centerX + dir.x * radius - btnSize / 2;
-                const y = centerY + dir.y * radius - btnSize / 2;
-                
-                const btn = document.createElement('button');
-                btn.className = 'bagua-direction-btn';
-                btn.style.cssText = `
-                    position: absolute;
-                    left: ${x}px;
-                    top: ${y}px;
-                    width: ${btnSize}px;
-                    height: ${btnSize}px;
-                    background: white;
-                    border: 2px solid var(--color-border);
-                    border-radius: 50%;
-                    cursor: pointer;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.2s;
-                    z-index: 5;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-                `;
-                btn.innerHTML = `
-                    <span style="font: 600 15px/1 var(--font-stack); color: var(--color-primary);">${data.trigramZh}</span>
-                    <span style="font: 400 8px/1 var(--font-stack); color: var(--color-text-mid);">${isZh ? data.nameZh : data.nameEn}</span>
-                `;
-                btn.onmouseenter = () => {
-                    btn.style.borderColor = 'var(--color-primary)';
-                    btn.style.transform = 'scale(1.1)';
-                    btn.style.boxShadow = '0 4px 12px rgba(212, 175, 55, 0.3)';
-                };
-                btn.onmouseleave = () => {
-                    btn.style.borderColor = 'var(--color-border)';
-                    btn.style.transform = 'scale(1)';
-                    btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-                };
-                btn.onclick = () => showBaguaDirectionDetail(dir.id);
-                
-                container.appendChild(btn);
-            });
-        }
-
         function showBaguaDirectionDetail(directionId) {
             const data = BAGUA_DIRECTIONS.find(d => d.id === directionId);
             if (!data) return;
+            
+            // Update active state on compass sectors
+            document.querySelectorAll('#fengshuiCompass .compass-sector').forEach(sector => {
+                sector.classList.remove('active');
+            });
+            const selectedSector = document.querySelector(`#fengshuiCompass .compass-sector[data-direction="${directionId}"]`);
+            if (selectedSector) {
+                selectedSector.classList.add('active');
+            }
             
             const isZh = currentLang === 'zh';
             const detail = document.getElementById('baguaDirectionDetail');
@@ -4513,6 +4476,10 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}，临${nianmingMen}�
             if (detail) {
                 detail.style.display = 'none';
             }
+            // Remove active state from all sectors
+            document.querySelectorAll('#fengshuiCompass .compass-sector').forEach(sector => {
+                sector.classList.remove('active');
+            });
         }
 
         // ===== 冥想功能 =====
