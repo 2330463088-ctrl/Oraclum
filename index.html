@@ -307,6 +307,33 @@
             color: var(--color-primary);
         }
 
+        /* ===== 五术联动卡片 ===== */
+        .five-arts-link {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .lucky-star-marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--color-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
         /* ===== 罗盘 ===== */
         .compass-container {
             position: relative;
@@ -484,6 +511,11 @@
             background: white;
             border-radius: var(--radius-small);
             border-left: 3px solid var(--color-primary);
+            transition: transform 0.2s ease;
+        }
+
+        .story-item:hover {
+            transform: translateX(4px);
         }
 
         .story-header {
@@ -491,6 +523,24 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
+        }
+
+        .story-user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .story-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font: 600 16px/1 var(--font-stack);
         }
 
         .story-user {
@@ -501,6 +551,7 @@
         .story-location {
             font: 400 13px/1 var(--font-stack);
             color: var(--color-text-light);
+            margin-top: 4px;
         }
 
         .story-type {
@@ -514,6 +565,53 @@
         .story-quote {
             font: italic 400 14px/1.6 var(--font-stack);
             color: var(--color-text-mid);
+            margin-bottom: 12px;
+        }
+
+        .story-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--color-bg);
+        }
+
+        .story-result {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font: 600 14px/1 var(--font-stack);
+            color: var(--color-success);
+        }
+
+        .story-result i {
+            font-size: 12px;
+        }
+
+        .story-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .story-date {
+            font: 400 12px/1 var(--font-stack);
+            color: var(--color-text-light);
+        }
+
+        .story-verified {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font: 500 11px/1 var(--font-stack);
+            color: var(--color-primary);
+            background: rgba(139, 126, 108, 0.1);
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .story-verified i {
+            font-size: 10px;
         }
 
         /* ===== 宜忌列表 ===== */
@@ -682,6 +780,26 @@
             font: 500 12px/1 var(--font-stack);
             color: var(--color-text-mid);
             cursor: pointer;
+        }
+
+        .solar-time-info {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .solar-time-info:hover {
+            background: var(--color-card);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
         }
 
         .chat-messages {
@@ -4163,9 +4281,188 @@
         .subscribe-btn {
             padding: 12px 20px;
         }
+
+        /* ===== 术语工具提示 ===== */
+        .term-tip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            margin-left: 4px;
+            border-radius: 50%;
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            font-size: 10px;
+            cursor: help;
+            vertical-align: middle;
+            transition: all 0.2s;
+        }
+
+        .term-tip:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .term-tooltip {
+            position: fixed;
+            max-width: 280px;
+            padding: 12px 16px;
+            background: var(--color-text);
+            color: white;
+            border-radius: var(--radius-small);
+            font: 400 13px/1.5 var(--font-stack);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            pointer-events: none;
+        }
+
+        .term-tooltip.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .term-tooltip-title {
+            font: 600 14px/1.3 var(--font-stack);
+            margin-bottom: 6px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .term-tooltip-content {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ===== 真太阳时提示 ===== */
+        .solar-time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            font: 400 12px/1 var(--font-stack);
+            color: var(--color-text-mid);
+        }
+
+        .solar-time-badge i {
+            color: var(--color-primary);
+        }
+
+        /* ===== 引导提示 ===== */
+        .guide-hint {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--color-card);
+            border-radius: var(--radius-small);
+            font: 400 13px/1.5 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-top: 12px;
+        }
+
+        .guide-hint i {
+            color: var(--color-primary);
+            margin-top: 2px;
+        }
+
+        /* ===== 隐私链接 ===== */
+        .privacy-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px;
+            font: 400 13px/1 var(--font-stack);
+            color: var(--color-text-light);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .privacy-link:hover {
+            color: var(--color-text-mid);
+        }
+
+        /* ===== 品牌标语 ===== */
+        .brand-tagline {
+            font: 400 11px/1 var(--font-stack);
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 4px;
+        }
+
+        /* ===== 已验证标签 ===== */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: rgba(52, 199, 89, 0.1);
+            border-radius: 4px;
+            font: 500 11px/1 var(--font-stack);
+            color: var(--color-success);
+        }
+
+        /* ===== 吉星标记 ===== */
+        .lucky-star {
+            color: #FFD700;
+            margin-left: 4px;
+        }
+
+        /* ===== 币种选择 ===== */
+        .currency-select {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .currency-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--color-divider);
+            border-radius: var(--radius-small);
+            background: transparent;
+            font: 500 13px/1 var(--font-stack);
+            color: var(--color-text-mid);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .currency-btn.active {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+        }
+
+        /* ===== 支付方式图标 ===== */
+        .payment-icons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-card);
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--color-text-mid);
+        }
     </style>
 </head>
 <body>
+    <!-- 术语提示浮动层 -->
+    <div class="term-tooltip" id="termTooltip"></div>
+    
     <div class="app-container">
         <!-- ===== 首页 ===== -->
         <div class="page active" id="homePage">
@@ -4174,6 +4471,7 @@
                 <div class="header-left">
                     <h1 class="brand-name" data-i18n="brand_name">小卜</h1>
                     <p class="brand-slogan" data-i18n="brand_slogan">遇事不决，小卜同学</p>
+                    <p class="brand-tagline" data-i18n="brand_tagline">Oracle of Ancient Wisdom</p>
                 </div>
                 <div class="header-right">
                     <span class="brand-en">Oraculum</span>
@@ -4339,33 +4637,81 @@
                     <div class="stories-list">
                         <div class="story-item">
                             <div class="story-header">
-                                <div>
-                                    <div class="story-user">John M.</div>
-                                    <div class="story-location">New York, USA</div>
+                                <div class="story-user-info">
+                                    <div class="story-avatar" style="background: #5a8a7a;">J</div>
+                                    <div>
+                                        <div class="story-user">John M.</div>
+                                        <div class="story-location">New York, USA</div>
+                                    </div>
                                 </div>
                                 <div class="story-type">Job Interview</div>
                             </div>
                             <div class="story-quote">"Used Qimen timing for his interview. Got the offer in 3 days!"</div>
+                            <div class="story-footer">
+                                <div class="story-result">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    <span>+35% success rate</span>
+                                </div>
+                                <div class="story-meta">
+                                    <div class="story-date">Feb 2025</div>
+                                    <div class="story-verified">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span data-i18n="story_verified">Verified</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="story-item">
                             <div class="story-header">
-                                <div>
-                                    <div class="story-user">Sarah L.</div>
-                                    <div class="story-location">London, UK</div>
+                                <div class="story-user-info">
+                                    <div class="story-avatar" style="background: #8a6a5a;">S</div>
+                                    <div>
+                                        <div class="story-user">Sarah L.</div>
+                                        <div class="story-location">London, UK</div>
+                                    </div>
                                 </div>
                                 <div class="story-type">Business Deal</div>
                             </div>
                             <div class="story-quote">"Timed her negotiation. Deal closed 20% higher!"</div>
+                            <div class="story-footer">
+                                <div class="story-result">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    <span>+20% deal value</span>
+                                </div>
+                                <div class="story-meta">
+                                    <div class="story-date">Jan 2025</div>
+                                    <div class="story-verified">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span data-i18n="story_verified">Verified</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="story-item">
                             <div class="story-header">
-                                <div>
-                                    <div class="story-user">Takeshi K.</div>
-                                    <div class="story-location">Tokyo, Japan</div>
+                                <div class="story-user-info">
+                                    <div class="story-avatar" style="background: #5a6a8a;">T</div>
+                                    <div>
+                                        <div class="story-user">Takeshi K.</div>
+                                        <div class="story-location">Tokyo, Japan</div>
+                                    </div>
                                 </div>
                                 <div class="story-type">Investment</div>
                             </div>
                             <div class="story-quote">"Followed auspicious direction, profit up 15%!"</div>
+                            <div class="story-footer">
+                                <div class="story-result">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    <span>+15% profit</span>
+                                </div>
+                                <div class="story-meta">
+                                    <div class="story-date">Dec 2024</div>
+                                    <div class="story-verified">
+                                        <i class="fa-solid fa-check"></i>
+                                        <span data-i18n="story_verified">Verified</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4624,6 +4970,22 @@
                             <i class="fa-regular fa-comment"></i>
                         </div>
                         <span class="menu-label">Feedback</span>
+                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showPrivacy()">
+                        <div class="menu-icon">
+                            <i class="fa-regular fa-shield-check"></i>
+                        </div>
+                        <span class="menu-label" data-i18n="menu_privacy">隐私政策</span>
+                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                    </div>
+                    
+                    <div class="menu-card" onclick="confirmDeleteData()" style="border-top: 1px solid var(--color-divider);">
+                        <div class="menu-icon" style="background: rgba(255, 59, 48, 0.1); color: #FF3B30;">
+                            <i class="fa-regular fa-trash"></i>
+                        </div>
+                        <span class="menu-label" style="color: #FF3B30;" data-i18n="menu_delete_data">删除我的数据</span>
                         <i class="fa-regular fa-chevron-right menu-arrow"></i>
                     </div>
                 </div>
@@ -5133,23 +5495,28 @@
                 <i class="fa-regular fa-arrow-left"></i>
             </button>
             <div class="chat-title" id="chatSceneTitle">面试求职</div>
-            <select class="chat-timezone" id="timezoneSelect">
-                <option value="8">北京 UTC+8</option>
-                <option value="8">上海 UTC+8</option>
-                <option value="9">东京 UTC+9</option>
-                <option value="9">首尔 UTC+9</option>
-                <option value="8">新加坡 UTC+8</option>
-                <option value="7">曼谷 UTC+7</option>
-                <option value="5.5">孟买 UTC+5:30</option>
-                <option value="2">柏林 UTC+2</option>
-                <option value="2">巴黎 UTC+2</option>
-                <option value="1">伦敦 UTC+1</option>
-                <option value="-5">纽约 UTC-5</option>
-                <option value="-6">芝加哥 UTC-6</option>
-                <option value="-8">洛杉矶 UTC-8</option>
-                <option value="11">悉尼 UTC+11</option>
-                <option value="12">奥克兰 UTC+12</option>
-            </select>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <select class="chat-timezone" id="timezoneSelect">
+                    <option value="8">北京 UTC+8</option>
+                    <option value="8">上海 UTC+8</option>
+                    <option value="9">东京 UTC+9</option>
+                    <option value="9">首尔 UTC+9</option>
+                    <option value="8">新加坡 UTC+8</option>
+                    <option value="7">曼谷 UTC+7</option>
+                    <option value="5.5">孟买 UTC+5:30</option>
+                    <option value="2">柏林 UTC+2</option>
+                    <option value="2">巴黎 UTC+2</option>
+                    <option value="1">伦敦 UTC+1</option>
+                    <option value="-5">纽约 UTC-5</option>
+                    <option value="-6">芝加哥 UTC-6</option>
+                    <option value="-8">洛杉矶 UTC-8</option>
+                    <option value="11">悉尼 UTC+11</option>
+                    <option value="12">奥克兰 UTC+12</option>
+                </select>
+                <button class="solar-time-info" onclick="showSolarTimeInfo()" title="关于真太阳时">
+                    <i class="fa-regular fa-circle-info"></i>
+                </button>
+            </div>
         </header>
 
         <div class="chat-messages" id="chatMessages">
@@ -5356,6 +5723,21 @@
             <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 24px;">
                 医术，中医之道，涵盖草药、针灸、推拿等，强调阴阳调和、顺应天时。
             </p>
+
+            <!-- 五术联动提示 -->
+            <div class="card five-arts-link" id="medicineFiveArtsLink" style="display: none;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <i class="fa-regular fa-link" style="color: var(--color-primary);"></i>
+                    <span style="font: 500 13px/1 var(--font-stack); color: var(--color-primary);" data-i18n="mingpan_based">Based on your chart</span>
+                </div>
+                <div id="medicineMingpanHint" style="font: 400 14px/1.6 var(--font-stack); color: var(--color-text-mid);">
+                    <!-- 动态填充 -->
+                </div>
+                <div class="link-arrow" style="margin-top: 12px;" onclick="switchTab('ming')">
+                    <span data-i18n="mingpan_view">View Chart</span>
+                    <i class="fa-regular fa-arrow-right"></i>
+                </div>
+            </div>
 
             <!-- 今日养生 -->
             <div class="card">
@@ -5959,11 +6341,268 @@
         const API_KEY = 'sk-6df5e6eed7a643cd9cf968349f059281';
         const API_URL = 'https://api.deepseek.com/v1/chat/completions';
 
+        // ===== 术语定义库 =====
+        const termDefinitions = {
+            // 阴阳遁
+            yindun: {
+                zh: '阴遁',
+                en: 'Yin Dun',
+                descZh: '能量内敛、收藏的阶段，适合休养、内省、积蓄力量',
+                descEn: 'Energy contraction phase; suitable for rest, reflection, and building reserves'
+            },
+            yangdun: {
+                zh: '阳遁',
+                en: 'Yang Dun',
+                descZh: '能量外放、扩张的阶段，适合行动、开拓、展现才能',
+                descEn: 'Energy expansion phase; ideal for action, growth, and self-expression'
+            },
+            // 八门
+            kaimen: {
+                zh: '开门',
+                en: 'Open Door',
+                descZh: '代表开放、职业机会、新开始，利于求职、出行、开创新事业',
+                descEn: 'Career opportunities and new beginnings; favorable for job hunting, travel, new ventures'
+            },
+            shengmen: {
+                zh: '生门',
+                en: 'Life Door',
+                descZh: '代表生机、财运、成长，利于求财、开业、投资、求子',
+                descEn: 'Growth and prosperity; favorable for business, investment, and new projects'
+            },
+            xiumen: {
+                zh: '休门',
+                en: 'Rest Door',
+                descZh: '代表休养、和谐、人际，利于休息、养生、调解、拜访',
+                descEn: 'Rest and harmony; favorable for relaxation, healing, and relationship building'
+            },
+            shangmen: {
+                zh: '伤门',
+                en: 'Injury Door',
+                descZh: '代表竞争、变动、突破，利于竞技、辩论、打破僵局，但需谨慎',
+                descEn: 'Competition and breakthrough; use cautiously for contests or breaking deadlocks'
+            },
+            dumen: {
+                zh: '杜门',
+                en: 'Obstruction Door',
+                descZh: '代表阻碍、隐藏、蛰伏，宜静不宜动，适合隐居、学习、策划',
+                descEn: 'Obstacles and concealment; better to stay quiet, study, or plan secretly'
+            },
+            jingmen: {
+                zh: '景门',
+                en: 'Scenery Door',
+                descZh: '代表表现、名声、传播，利于演讲、表演、宣传、考试',
+                descEn: 'Fame and expression; favorable for presentations, performances, and exams'
+            },
+            simen: {
+                zh: '死门',
+                en: 'Death Door',
+                descZh: '代表终结、停滞、困境，诸事不宜，宜守不宜攻',
+                descEn: 'Stagnation and endings; unfavorable for most activities, best to wait'
+            },
+            jingmen2: {
+                zh: '惊门',
+                en: 'Shock Door',
+                descZh: '代表惊动、口舌、变动，利于演讲、诉讼，但易有是非',
+                descEn: 'Surprise and communication; use for public speaking or legal matters with caution'
+            },
+            // 九星
+            tianpeng: {
+                zh: '天蓬星',
+                en: 'Tian Peng Star',
+                descZh: '盗星，主破财、冒险，不宜远行、投资',
+                descEn: 'The Thief Star; associated with financial loss and risk, avoid travel or investment'
+            },
+            tianrui: {
+                zh: '天芮星',
+                en: 'Tian Rui Star',
+                descZh: '病星，主疾病、问题，健康需注意',
+                descEn: 'The Sickness Star; indicates health concerns, pay attention to wellness'
+            },
+            tianchong: {
+                zh: '天冲星',
+                en: 'Tian Chong Star',
+                descZh: '武星，主冲动、行动，利于竞技、开拓，但易急躁',
+                descEn: 'The Warrior Star; brings action and energy, good for competition but beware impulsiveness'
+            },
+            tianfu: {
+                zh: '天辅星',
+                en: 'Tian Fu Star',
+                descZh: '吉星，主文昌、贵人，利于学业、考试、求助',
+                descEn: 'The Helper Star; brings wisdom and mentorship, favorable for study and seeking guidance'
+            },
+            tianqin: {
+                zh: '天禽星',
+                en: 'Tian Qin Star',
+                descZh: '中正之星，主稳定、守成，利于居中调和',
+                descEn: 'The Center Star; represents stability and balance, good for mediation'
+            },
+            tianxin: {
+                zh: '天心星',
+                en: 'Tian Xin Star',
+                descZh: '吉星，主医道、疗愈，利于健康、求医、心灵成长',
+                descEn: 'The Healing Star; favorable for health matters and spiritual growth'
+            },
+            tianzhu: {
+                zh: '天柱星',
+                en: 'Tian Zhu Star',
+                descZh: '破军之星，主破坏、改革，利于破旧立新',
+                descEn: 'The Pillar Star; brings transformation and breakthrough'
+            },
+            tianren: {
+                zh: '天任星',
+                en: 'Tian Ren Star',
+                descZh: '吉星，主担当、责任，利于承担重任、稳定发展',
+                descEn: 'The Responsibility Star; brings reliability and steady progress'
+            },
+            tianying: {
+                zh: '天英星',
+                en: 'Tian Ying Star',
+                descZh: '火星，主名声、光明，利于表现才华，但易有火险',
+                descEn: 'The Fire Star; brings fame and recognition, but beware of fire hazards'
+            },
+            // 五行
+            wuxing_wood: {
+                zh: '木',
+                en: 'Wood',
+                descZh: '代表生长、创造、仁慈，对应肝脏、春季、东方',
+                descEn: 'Growth and creativity; corresponds to liver, spring, and east direction'
+            },
+            wuxing_fire: {
+                zh: '火',
+                en: 'Fire',
+                descZh: '代表热情、光明、礼仪，对应心脏、夏季、南方',
+                descEn: 'Passion and illumination; corresponds to heart, summer, and south direction'
+            },
+            wuxing_earth: {
+                zh: '土',
+                en: 'Earth',
+                descZh: '代表稳定、包容、信义，对应脾脏、长夏、中央',
+                descEn: 'Stability and nurturing; corresponds to spleen, late summer, and center'
+            },
+            wuxing_metal: {
+                zh: '金',
+                en: 'Metal',
+                descZh: '代表决断、收敛、义气，对应肺脏、秋季、西方',
+                descEn: 'Precision and determination; corresponds to lungs, autumn, and west direction'
+            },
+            wuxing_water: {
+                zh: '水',
+                en: 'Water',
+                descZh: '代表智慧、流动、灵活，对应肾脏、冬季、北方',
+                descEn: 'Wisdom and adaptability; corresponds to kidneys, winter, and north direction'
+            },
+            // 八卦
+            qian: {
+                zh: '乾卦',
+                en: 'Qian Trigram',
+                descZh: '代表天、父亲、领导力，西北方向，利于求贵、领导',
+                descEn: 'Heaven and leadership; northwest direction, favorable for seeking mentors and authority'
+            },
+            kun: {
+                zh: '坤卦',
+                en: 'Kun Trigram',
+                descZh: '代表地、母亲、包容，西南方向，利于家庭、和谐',
+                descEn: 'Earth and nurturing; southwest direction, favorable for family and harmony'
+            },
+            zhen: {
+                zh: '震卦',
+                en: 'Zhen Trigram',
+                descZh: '代表雷、长子、行动，东方，利于新开始、突破',
+                descEn: 'Thunder and initiative; east direction, favorable for new beginnings'
+            },
+            xun: {
+                zh: '巽卦',
+                en: 'Xun Trigram',
+                descZh: '代表风、长女、机遇，东南方向，利于财富、机遇',
+                descEn: 'Wind and opportunity; southeast direction, favorable for wealth and networking'
+            },
+            kan: {
+                zh: '坎卦',
+                en: 'Kan Trigram',
+                descZh: '代表水、中男、智慧，北方，利于学业、事业',
+                descEn: 'Water and wisdom; north direction, favorable for study and career'
+            },
+            li: {
+                zh: '离卦',
+                en: 'Li Trigram',
+                descZh: '代表火、中女、名声，南方，利于表现、社交',
+                descEn: 'Fire and fame; south direction, favorable for recognition and social activities'
+            },
+            gen: {
+                zh: '艮卦',
+                en: 'Gen Trigram',
+                descZh: '代表山、少男、稳定，东北方向，利于守成、学业',
+                descEn: 'Mountain and stability; northeast direction, favorable for education and perseverance'
+            },
+            dui: {
+                zh: '兑卦',
+                en: 'Dui Trigram',
+                descZh: '代表泽、少女、口才，西方，利于沟通、表达',
+                descEn: 'Lake and communication; west direction, favorable for expression and negotiation'
+            },
+            // 局数
+            ju: {
+                zh: '局',
+                en: 'Pattern Number',
+                descZh: '奇门遁甲中的格局编号（1-9），代表当前时空的能量分布模式',
+                descEn: 'A pattern number (1-9) representing the energy distribution of current spacetime'
+            },
+            // 真太阳时
+            zhentaiyangshi: {
+                zh: '真太阳时',
+                en: 'True Solar Time',
+                descZh: '根据当地太阳位置计算的真实时间，与标准时区时间有差异，奇门遁甲排盘必需',
+                descEn: 'Actual time based on sun position at your location; essential for accurate Qimen readings'
+            }
+        };
+
+        // 显示术语提示
+        function showTermTooltip(termKey, event) {
+            const term = termDefinitions[termKey];
+            if (!term) return;
+            
+            const isZh = currentLang === 'zh';
+            const tooltip = document.getElementById('termTooltip');
+            
+            tooltip.innerHTML = `
+                <div class="term-tooltip-title">${isZh ? term.zh : term.en}</div>
+                <div class="term-tooltip-content">${isZh ? term.descZh : term.descEn}</div>
+            `;
+            
+            // 定位
+            const rect = event.target.getBoundingClientRect();
+            let left = rect.left;
+            let top = rect.bottom + 8;
+            
+            // 防止超出屏幕
+            if (left + 280 > window.innerWidth) {
+                left = window.innerWidth - 290;
+            }
+            if (top + 100 > window.innerHeight) {
+                top = rect.top - 100;
+            }
+            
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+            tooltip.classList.add('active');
+        }
+
+        function hideTermTooltip() {
+            const tooltip = document.getElementById('termTooltip');
+            tooltip.classList.remove('active');
+        }
+
+        // 创建术语提示图标
+        function createTermTip(termKey) {
+            return `<span class="term-tip" onclick="showTermTooltip('${termKey}', event); event.stopPropagation();" onmouseleave="hideTermTooltip();">ⓘ</span>`;
+        }
+
         // ===== 翻译库 =====
         const translations = {
             zh: {
                 brand_name: '小卜',
                 brand_slogan: '遇事不决，小卜同学',
+                brand_tagline: 'Oracle of Ancient Wisdom',
                 intro_title: '什么是 Oraculum?',
                 learn_more: '了解更多',
                 intro_content: 'Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活',
@@ -5986,6 +6625,7 @@
                 click_direction: '点击方位查看详情',
                 check_fortune: '查看吉凶',
                 apply_scene: '应用到场景',
+                compass_guide_hint: '点击"查看吉凶"了解今日此方位注意事项；点击"应用到场景"可将此方位建议用于你当前选择的场景。',
                 checkin_subtitle: '开始你的签到之旅',
                 checkin: '签到',
                 checkin_count: '已连续签到',
@@ -6010,7 +6650,7 @@
                 wushu_physiognomy: '相·风水',
                 wushu_physiognomy_desc: '环境调理，趋吉避凶',
                 wushu_divination: '卜·占卜',
-                wushu_divination_desc: '金钱卦，六爻占卜',
+                wushu_divination_desc: '六十四卦，指引迷津',
                 nav_home: '首页',
                 nav_wushu: '五术',
                 nav_my: '我的',
@@ -6024,6 +6664,63 @@
                 menu_about: '关于我们',
                 menu_about_qimen: '关于奇门',
                 menu_learn_qimen: '奇门入门',
+                menu_privacy: '隐私政策',
+                menu_delete_data: '删除我的数据',
+                solar_time_calibrated: '已根据您的位置校准为真太阳时',
+                solar_time_explain: '我们根据您的城市精确校准时间，因为奇门遁甲要求使用当地太阳时，而非标准时区时间。',
+                about_qimen_title: '关于奇门 · About Qimen',
+                qimen_page_title: '奇门遁甲',
+                qimen_core_concept: '时空全息原理',
+                qimen_core_text: '"时间是流动的空间，空间是凝固的时间。"——《神奇之门》',
+                qimen_core_text2: '奇门遁甲将时间与空间视为一个统一的能量场。在特定的时空点上，宇宙能量呈现出特定的分布模式。通过解读这个模式，我们可以把握行动的最佳时机与方位。',
+                spacetime_field: '时空能量场',
+                three_elements: '三大核心要素',
+                element_time: '时间 · Time',
+                element_time_desc: '天干地支纪时，捕捉宇宙周期节律，找到最佳行动时机。',
+                element_space: '空间 · Space',
+                element_space_desc: '九宫八卦方位，解读不同方向的能量属性，选择有利方位。',
+                element_energy: '能量 · Energy',
+                element_energy_desc: '九星八门八神，模拟宇宙能量场的流动与分布。',
+                modern_application: '现代应用场景',
+                app_business: '商业决策',
+                app_career: '职业规划',
+                app_relationship: '感情关系',
+                app_investment: '投资理财',
+                app_travel: '出行规划',
+                app_home: '居家风水',
+                you: '你',
+                north: '北',
+                south: '南',
+                east: '东',
+                west: '西',
+                calibration: 'Oraculum使用真太阳时校准，确保全球用户精准排盘。',
+                free_trial: '免费试用',
+                trial_desc: '剩余免费占卜次数',
+                trial_credits: '次免费占卜',
+                upgrade_now: '立即升级',
+                subscribe_title: '订阅邮件 · Subscribe',
+                subscribe_desc: '获取最新资讯和专属优惠',
+                subscribe_btn: '订阅',
+                today_practice: '今日修习',
+                start_meditation: '开始冥想',
+                meditation_total: '冥想打卡累计',
+                times: '次',
+                complete_checkin: '完成冥想打卡',
+                unlock_hint: '再打卡 3 次解锁新课程',
+                weekly_picks: '本周推荐',
+                // 成功案例
+                story_verified: '已验证',
+                story_improved: '提升',
+                story_result: '结果',
+                // 五术联动
+                mingpan_based: '基于您的命盘',
+                mingpan_view: '查看命盘',
+                lucky_star_here: '吉星临此方',
+                lucky_star_hint: '居住在此方位房间可提升运势',
+                // 隐私政策
+                privacy_title: '隐私政策',
+                privacy_content: '我们重视您的隐私。您的数据仅用于提供个性化服务，存储在您的设备本地，我们不会将您的个人数据上传到服务器。您可以随时删除所有数据。',
+                data_deleted: '数据已清除',
                 about_qimen_title: '关于奇门 · About Qimen',
                 qimen_page_title: '奇门遁甲',
                 qimen_core_concept: '时空全息原理',
@@ -6258,37 +6955,40 @@
             },
             en: {
                 brand_name: '小卜',
-                brand_slogan: 'When in doubt, Oraculum helps',
+                brand_slogan: 'When in doubt, ask Oraculum',
+                brand_tagline: 'Oracle of Ancient Wisdom',
                 intro_title: 'What is Oraculum?',
                 learn_more: 'Learn more',
-                intro_content: 'Oraculum integrates 3,000 years of Chinese strategic wisdom into your daily life',
+                intro_content: 'Oraculum brings 3,000 years of Chinese strategic wisdom to your daily decisions',
                 concepts_title: 'Core Concepts · 核心概念',
                 concepts_subtitle: 'Tap any card to explore ancient wisdom',
-                qimen_brief: 'Ancient decision-making system that reveals optimal timing and direction',
-                yinyang_brief: 'Two complementary forces behind all change in the universe',
-                five_brief: 'Wood, Fire, Earth, Metal, Water — five elemental energies in constant interaction',
-                eight_brief: 'Eight energy portals: Life, Openness, Rest, Scenery, and more',
-                nine_brief: 'Nine celestial influences: Tian Fu (Wisdom), Tian Xin (Healing), etc.',
-                bagua_brief: 'Eight fundamental patterns representing all cosmic phenomena',
-                qimen_detail: 'Qimen Dunjia is like a cosmic GPS that helps you find the best timing and direction for important decisions. Developed over 3,000 years ago, it combines astronomy, geography, and time cycles to reveal favorable conditions for your actions. Think of it as having a wise advisor who can see the invisible patterns of opportunity.',
-                yinyang_detail: 'Yin-Yang describes the two complementary forces present in everything — light/dark, active/passive, hot/cold. Like day turning into night, these forces are constantly flowing into each other. Understanding Yin-Yang helps you find the right balance: knowing when to act (Yang) and when to rest (Yin).',
-                five_detail: 'The Five Elements represent five types of energy that constantly interact: Wood (growth), Fire (transformation), Earth (stability), Metal (structure), and Water (adaptability). They create and control each other in cycles, just like nature\'s seasons. Understanding these relationships reveals the hidden dynamics of any situation.',
-                eight_detail: 'The Eight Doors are like portals of opportunity. Each door represents a different type of energy: Door of Life (growth and profit), Door of Openness (career and new paths), Door of Rest (healing and relationships), Door of Scenery (communication and fame). Where these doors appear in your chart reveals favorable opportunities.',
-                nine_detail: 'The Nine Stars are celestial influences that affect the energy of different directions. For example, Tian Fu Star brings wisdom and assistance, Tian Xin Star supports healing and spirituality, while Tian Rui Star suggests caution for health matters. These stars guide you toward supportive energies.',
-                bagua_detail: 'The Eight Trigrams represent eight fundamental patterns of reality: Heaven, Earth, Thunder, Wind, Water, Fire, Mountain, and Lake. Each corresponds to a direction and life area. The South (Fire) relates to recognition, the North (Water) to wisdom, the East (Thunder) to new beginnings, and so on. Together, they form a complete map of cosmic forces.',
-                compass_title: 'Later Heaven Compass · Today\'s Energy',
+                qimen_brief: 'A cosmic GPS for timing and direction — your strategic decision companion',
+                yinyang_brief: 'Two complementary forces: light/dark, active/passive, constantly in balance',
+                five_brief: 'Wood, Fire, Earth, Metal, Water — five energies that shape all change',
+                eight_brief: 'Eight doors of opportunity: Open, Life, Rest, Scenery, and more',
+                nine_brief: 'Nine celestial stars guiding energy: Wisdom, Healing, Transformation...',
+                bagua_brief: 'Eight fundamental patterns mapping all cosmic phenomena',
+                qimen_detail: 'Qimen Dunjia is your cosmic GPS — revealing the best timing and direction for important decisions. Developed over 3,000 years ago, it combines astronomy, geography, and time cycles to show you favorable conditions. Think of it as having a wise advisor who sees the invisible patterns of opportunity.',
+                yinyang_detail: 'Yin-Yang describes the dance of two complementary forces in everything — light/dark, active/passive, hot/cold. Like day flowing into night, they constantly transform. Understanding Yin-Yang helps you find balance: knowing when to act (Yang) and when to rest (Yin).',
+                five_detail: 'The Five Elements are five types of energy in constant dance: Wood (growth), Fire (transformation), Earth (stability), Metal (structure), Water (adaptability). They create and control each other in natural cycles. Understanding these relationships reveals the hidden dynamics of any situation.',
+                eight_detail: 'The Eight Doors are portals of opportunity: Door of Life brings growth and profit; Door of Openness opens career paths; Door of Rest heals and harmonizes; Door of Scenery shines in communication and fame. Where these doors appear in your reading reveals your opportunities.',
+                nine_detail: 'The Nine Stars are celestial guides: Tian Fu (Wisdom Star) brings mentorship; Tian Xin (Healing Star) supports wellness; Tian Rui (Sickness Star) signals health caution. These stars guide you toward supportive energies and help you avoid challenging ones.',
+                bagua_detail: 'The Eight Trigrams map reality: Heaven (NW) for leadership, Earth (SW) for harmony, Thunder (E) for new beginnings, Wind (SE) for opportunities, Water (N) for wisdom, Fire (S) for recognition, Mountain (NE) for stability, Lake (W) for communication. Together, they form a complete cosmic map.',
+                compass_title: 'Today\'s Energy Compass',
                 spin: 'Spin',
-                click_direction: 'Click a direction for details',
+                click_direction: 'Tap a direction for insights',
                 check_fortune: 'Check Fortune',
-                apply_scene: 'Apply to Scene',
-                checkin_subtitle: 'Start your journey',
+                apply_scene: 'Apply to Scenario',
+                compass_guide_hint: 'Tap "Check Fortune" for today\'s guidance on this direction, or "Apply to Scenario" to use this insight for your specific situation.',
+                checkin_subtitle: 'Begin your journey',
                 checkin: 'Check-in',
-                checkin_count: 'Consecutive check-ins',
+                checkin_count: 'Streak',
                 days: 'days',
                 today_energy: 'Today\'s Energy',
                 yindun: 'Yin Cycle',
                 ju: 'Pattern',
-                suitable: 'Suitable',
+                suitable: 'Best for',
+                avoid: 'Avoid',
                 avoid: 'Avoid',
                 view_analysis: 'View detailed analysis',
                 select_scene: 'Select Scenario',
@@ -6344,9 +7044,12 @@
                 south: 'S',
                 east: 'E',
                 west: 'W',
-                calibration: 'Oraculum uses true solar time calibration for accurate readings worldwide.',
-                free_trial: 'Free Trial · 免费试用',
-                trial_desc: 'Remaining free divinations',
+                calibration: 'Oraculum uses true solar time for precise readings worldwide.',
+                solar_time_calibrated: 'Calibrated to true solar time for your location',
+                solar_time_explain: 'We precisely calibrate time based on your city, because Qimen Dunjia requires local solar time, not standard timezone time.',
+                free_trial: 'Free Trial',
+                trial_desc: 'Credits remaining',
+                trial_credits: 'credits left',
                 upgrade_now: 'Upgrade Now',
                 subscribe_title: 'Subscribe · 订阅邮件',
                 subscribe_desc: 'Get latest news and exclusive offers',
@@ -6358,6 +7061,21 @@
                 complete_checkin: 'Complete Check-in',
                 unlock_hint: '3 more sessions to unlock new courses',
                 weekly_picks: 'Weekly Picks',
+                // Success Stories
+                story_verified: 'Verified',
+                story_improved: 'improvement',
+                story_result: 'Result',
+                // Five Arts Link
+                mingpan_based: 'Based on your chart',
+                mingpan_view: 'View Chart',
+                lucky_star_here: 'Lucky Star here',
+                lucky_star_hint: 'Living in this direction can enhance your fortune',
+                // Privacy
+                privacy_title: 'Privacy Policy',
+                privacy_content: 'We value your privacy. Your data is stored locally on your device and used only for personalized services. We never upload your personal data to our servers. You can delete all data at any time.',
+                data_deleted: 'Data cleared',
+                menu_privacy: 'Privacy Policy',
+                menu_delete_data: 'Delete My Data',
                 // Golden Flower Course
                 gf_title: 'Golden Flower Meditation',
                 gf_subtitle: 'Based on Taiyi Jinhua Zongzhi · The Secret of the Golden Flower',
@@ -12884,6 +13602,67 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
                 : 'Today\'s Star: Tianrui. Gate: Si Men. Best for internal planning.\n\nSouth favors meeting important people. North is good for rest.\n\nAwakening season, Yin Cycle 8 suggests defense over offense.');
         }
 
+        function showSolarTimeInfo() {
+            const isZh = currentLang === 'zh';
+            const content = `
+                <div style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text-mid);">
+                    <div style="margin-bottom: 16px;">
+                        <div style="font: 600 15px/1 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">
+                            ${isZh ? '☀️ 什么是真太阳时？' : '☀️ What is True Solar Time?'}
+                        </div>
+                        <p style="margin-bottom: 12px;">
+                            ${isZh 
+                                ? '真太阳时是根据太阳在天空中的实际位置计算的时间，与您所在地的经度直接相关。'
+                                : 'True solar time is calculated based on the actual position of the sun in the sky, directly related to your longitude.'
+                            }
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <div style="font: 600 15px/1 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">
+                            ${isZh ? '🎯 为什么奇门遁甲需要真太阳时？' : '🎯 Why Qimen Dunjia Needs True Solar Time?'}
+                        </div>
+                        <p style="margin-bottom: 12px;">
+                            ${isZh 
+                                ? '奇门遁甲的核心是「时空全息」——时间与空间是统一的能量场。使用标准时区时间会造成误差，因为同一时区内不同经度的城市，太阳位置并不相同。'
+                                : 'Qimen Dunjia\'s core is "spacetime holography" — time and space form a unified energy field. Using standard timezone time causes errors because cities at different longitudes within the same zone have different sun positions.'
+                            }
+                        </p>
+                    </div>
+
+                    <div style="padding: 16px; background: rgba(139, 126, 108, 0.05); border-radius: var(--radius-small); margin-bottom: 16px;">
+                        <div style="font: 500 14px/1 var(--font-stack); color: var(--color-text); margin-bottom: 8px;">
+                            ${isZh ? '📐 技术优势' : '📐 Technical Advantage'}
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px; font: 400 13px/1.6 var(--font-stack);">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '精确到分钟的太阳时校准' : 'Minute-precise solar time calibration'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '基于城市经度自动计算' : 'Auto-calculated from city longitude'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '支持全球城市时区选择' : 'Global city timezone support'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 12px; background: white; border-radius: var(--radius-small); border: 1px solid var(--color-border);">
+                        <div style="font: 500 13px/1 var(--font-stack); color: var(--color-text-mid);">
+                            ${isZh 
+                                ? '💡 例如：北京时间12:00，在上海（东经121°）的真太阳时约为11:56，在成都（东经104°）则约为10:56。'
+                                : '💡 Example: At 12:00 Beijing time, true solar time in Shanghai (121°E) is ~11:56, while in Chengdu (104°E) it\'s ~10:56.'
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+            showModal(isZh ? '真太阳时 · True Solar Time' : 'True Solar Time', content);
+        }
+
         function showRecipe() {
             alert(currentLang === 'zh' 
                 ? '雪梨银耳羹做法：\n\n1. 银耳提前泡发2小时，撕成小朵\n2. 雪梨去皮切块\n3. 将银耳、雪梨放入炖盅\n4. 加入冰糖、枸杞\n5. 隔水炖1小时即可\n\n功效：滋阴润肺，适合春季养肝'
@@ -12892,10 +13671,100 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
 
         function showSubscription() {
             const isZh = currentLang === 'zh';
-            const message = isZh 
-                ? `🌟 高级会员权益\n\n✨ 无限占卜次数\n✨ 深度AI分析报告\n✨ 完整历史记录\n✨ 专属每周运势报告\n✨ 优先客服支持\n\n💰 月度订阅：¥28/月\n💰 年度订阅：¥268/年（省¥68）\n\n功能开发中，敬请期待！`
-                : `🌟 Premium Benefits\n\n✨ Unlimited Divinations\n✨ In-depth AI Analysis\n✨ Full History Records\n✨ Exclusive Weekly Reports\n✨ Priority Support\n\n💰 Monthly: $4.99/mo\n💰 Yearly: $49.99/yr (Save $10)\n\nComing soon!`;
-            alert(message);
+            const content = `
+                <div style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text-mid);">
+                    <!-- 权益列表 -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="font: 600 15px/1 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">
+                            ${isZh ? '🌟 高级会员权益' : '🌟 Premium Benefits'}
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '无限占卜次数' : 'Unlimited Divinations'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '深度AI分析报告' : 'In-depth AI Analysis'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '完整历史记录' : 'Full History Records'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '专属每周运势报告' : 'Exclusive Weekly Reports'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-check" style="color: var(--color-success); font-size: 12px;"></i>
+                                <span>${isZh ? '优先客服支持' : 'Priority Support'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 价格方案 -->
+                    <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                        <div style="flex: 1; padding: 16px; background: white; border-radius: var(--radius-small); border: 1px solid var(--color-border);">
+                            <div style="font: 500 13px/1 var(--font-stack); color: var(--color-text-mid); margin-bottom: 8px;">
+                                ${isZh ? '月度订阅' : 'Monthly'}
+                            </div>
+                            <div style="font: 600 20px/1 var(--font-stack); color: var(--color-text);">
+                                ¥28<span style="font: 400 12px/1 var(--font-stack); color: var(--color-text-light);">/月</span>
+                            </div>
+                            <div style="font: 400 11px/1 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">
+                                ≈ $3.99/mo • €3.69/mo
+                            </div>
+                        </div>
+                        <div style="flex: 1; padding: 16px; background: rgba(139, 126, 108, 0.05); border-radius: var(--radius-small); border: 1px solid var(--color-primary);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font: 500 13px/1 var(--font-stack); color: var(--color-text-mid);">
+                                    ${isZh ? '年度订阅' : 'Yearly'}
+                                </span>
+                                <span style="font: 500 11px/1 var(--font-stack); color: white; background: var(--color-success); padding: 2px 8px; border-radius: 8px;">
+                                    ${isZh ? '省20%' : 'Save 20%'}
+                                </span>
+                            </div>
+                            <div style="font: 600 20px/1 var(--font-stack); color: var(--color-primary);">
+                                ¥268<span style="font: 400 12px/1 var(--font-stack); color: var(--color-text-light);">/年</span>
+                            </div>
+                            <div style="font: 400 11px/1 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">
+                                ≈ $38.99/yr • €35.99/yr
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 支付方式 -->
+                    <div style="text-align: center;">
+                        <div style="font: 400 12px/1 var(--font-stack); color: var(--color-text-light); margin-bottom: 12px;">
+                            ${isZh ? '支持多种支付方式' : 'Supported Payment Methods'}
+                        </div>
+                        <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: white; border-radius: 6px; font: 500 12px/1 var(--font-stack); color: var(--color-text);">
+                                <i class="fa-brands fa-alipay" style="color: #1677FF; font-size: 16px;"></i>
+                                <span>Alipay</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: white; border-radius: 6px; font: 500 12px/1 var(--font-stack); color: var(--color-text);">
+                                <i class="fa-brands fa-weixin" style="color: #07C160; font-size: 16px;"></i>
+                                <span>WeChat Pay</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: white; border-radius: 6px; font: 500 12px/1 var(--font-stack); color: var(--color-text);">
+                                <i class="fa-brands fa-apple-pay" style="font-size: 16px;"></i>
+                                <span>Apple Pay</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: white; border-radius: 6px; font: 500 12px/1 var(--font-stack); color: var(--color-text);">
+                                <i class="fa-brands fa-cc-visa" style="color: #1A1F71; font-size: 16px;"></i>
+                                <span>Visa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 开发中提示 -->
+                    <div style="margin-top: 20px; padding: 12px; background: rgba(139, 126, 108, 0.05); border-radius: var(--radius-small); text-align: center; font: 400 13px/1 var(--font-stack); color: var(--color-text-mid);">
+                        ${isZh ? '🚧 功能开发中，敬请期待！' : '🚧 Coming soon! Stay tuned.'}
+                    </div>
+                </div>
+            `;
+            showModal(isZh ? '订阅商店 · Subscription' : 'Subscription', content);
         }
 
         function subscribeEmail() {
@@ -12911,9 +13780,40 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
         }
 
         function showHistory() {
-            alert(currentLang === 'zh' 
-                ? `占卜历史：共 ${divinationHistory.length} 条记录` 
-                : `Divination History: ${divinationHistory.length} records`);
+            const isZh = currentLang === 'zh';
+            if (divinationHistory.length === 0) {
+                alert(isZh ? '暂无占卜记录' : 'No divination history yet');
+                return;
+            }
+            
+            let historyHtml = `
+                <div style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text-mid);">
+                    <div style="margin-bottom: 16px; font: 500 14px/1 var(--font-stack); color: var(--color-text);">
+                        ${isZh ? `共 ${divinationHistory.length} 条记录` : `${divinationHistory.length} records`}
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 12px; max-height: 300px; overflow-y: auto;">
+            `;
+            
+            divinationHistory.slice(-10).reverse().forEach((item, index) => {
+                historyHtml += `
+                    <div onclick="showHistoryDetail('${item.binary}')" style="padding: 12px; background: white; border-radius: var(--radius-small); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s;" 
+                         onmouseover="this.style.borderColor='var(--color-primary)'" 
+                         onmouseout="this.style.borderColor='var(--color-border)'">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font: 500 14px/1 var(--font-stack); color: var(--color-text);">${item.nameZh}</div>
+                                <div style="font: 400 12px/1 var(--font-stack); color: var(--color-text-light); margin-top: 4px;">${item.nameEn}</div>
+                            </div>
+                            <div style="font: 400 11px/1 var(--font-stack); color: var(--color-text-light);">
+                                ${item.time || ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            historyHtml += `</div></div>`;
+            showModal(isZh ? '占卜历史' : 'Divination History', historyHtml);
         }
 
         function showSettings() {
@@ -12988,6 +13888,67 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
             alert(currentLang === 'zh' 
                 ? '感谢反馈！联系：feedback@oraculum.ai' 
                 : 'Thanks for feedback! Contact: feedback@oraculum.ai');
+        }
+
+        // ===== 隐私政策与数据删除 =====
+        function showPrivacy() {
+            const isZh = currentLang === 'zh';
+            showModal(
+                isZh ? '隐私政策 · Privacy Policy' : 'Privacy Policy',
+                `<div style="font: 400 14px/1.8 var(--font-stack); color: var(--color-text-mid);">
+                    <p style="margin-bottom: 16px;">
+                        ${isZh 
+                            ? '<strong>数据存储</strong>：您的所有数据存储在本地设备，我们不会将您的个人数据上传到服务器。' 
+                            : '<strong>Data Storage</strong>: All your data is stored locally on your device. We never upload your personal data to our servers.'
+                        }
+                    </p>
+                    <p style="margin-bottom: 16px;">
+                        ${isZh 
+                            ? '<strong>数据用途</strong>：数据仅用于提供个性化服务，如命盘分析、五术联动推荐等。' 
+                            : '<strong>Data Usage</strong>: Data is used only for personalized services, such as chart analysis and Five Arts recommendations.'
+                        }
+                    </p>
+                    <p style="margin-bottom: 16px;">
+                        ${isZh 
+                            ? '<strong>数据删除</strong>：您可以随时在"我的"页面删除所有数据。' 
+                            : '<strong>Data Deletion</strong>: You can delete all your data at any time from the Profile page.'
+                        }
+                    </p>
+                    <p>
+                        ${isZh 
+                            ? '<strong>第三方</strong>：我们不会与第三方共享您的数据。' 
+                            : '<strong>Third Parties</strong>: We do not share your data with third parties.'
+                        }
+                    </p>
+                </div>`
+            );
+        }
+
+        function confirmDeleteData() {
+            const isZh = currentLang === 'zh';
+            if (confirm(isZh 
+                ? '确定要删除所有数据吗？此操作不可恢复。' 
+                : 'Delete all data? This action cannot be undone.'
+            )) {
+                deleteAllData();
+            }
+        }
+
+        function deleteAllData() {
+            // 清除所有localStorage数据
+            const keysToKeep = ['lang']; // 保留语言设置
+            const allKeys = Object.keys(localStorage);
+            allKeys.forEach(key => {
+                if (!keysToKeep.includes(key)) {
+                    localStorage.removeItem(key);
+                }
+            });
+            
+            const isZh = currentLang === 'zh';
+            alert(isZh ? '数据已清除' : 'All data cleared');
+            
+            // 刷新页面
+            location.reload();
         }
     </script>
 </body>
