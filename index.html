@@ -9204,15 +9204,45 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}` : ''}
 用神：${yongshen}→${ysInfo.star}
 大事：${isBigMatter ? '是' : '否'}
 
-【八卦类象速查】
-乾西北：老父、领导、金玉、头、肺、白马、西北方、刚健
-坤西南：老母、群众、五谷、腹、脾、黄牛、西南方、柔顺
-震正东：长男、司机、警察、足、肝胆、龙蛇、正东方、震动
-巽东南：长女、商人、教师、股、气管、鸡蛇、东南方、渗透
-坎正北：中男、江湖人、盗贼、肾、耳、猪鼠、正北方、险阻
-离正南：中女、文人、演员、眼、心、雉凤、正南方、光明
-艮东北：少男、少年、守门人、鼻、背、狗虎、东北方、止
-兑正西：少女、歌者、讲师、口、肺、羊、正西方、喜悦
+【十天干类象】
+甲阳木：首领、主帅、栋梁、头、胆、青色，得令为栋梁失令为废材
+乙阴木：日奇、医生、女人、妻子、脖项肩、肝、碧色，柔顺依附
+丙阳火：月奇、权威、第三者男、肩额、小肠、紫赤，刚烈清廉
+丁阴火：星奇、玉女、第三者女、胸舌、心、淡红，温和有心计
+戊阳土：天门、资本、钱财、胁鼻、胃、深黄，刚烈暴躁
+己阴土：地户、坟墓、腹面、脾、浅黄，温顺沉静
+庚阳金：贼人、丈夫、仇人、公安、脐筋、大肠、白，刚健锐利
+辛阴金：罪人、犯错者、胸股、肺、浅白，忠诚爽柔
+壬阳水：流动事物、小腿、膀胱、深黑，柔而险可共忧患
+癸阴水：女性、性生活、足、肾、浅黑，阴柔浅露
+
+【五阳五阴】
+甲乙丙丁戊为五阳时，利客不利主，宜先动
+己庚辛壬癸为五阴时，利主不利客，宜后动
+
+【十干化合】
+甲己合土(中正合)、乙庚合金(仁义合)、丙辛合水(权威合)
+丁壬合木(淫荡合)、戊癸合火(无情合)
+
+【十二地支类象】
+子阳水：池塘沟河、妇女盗贼、燕子蝙蝠、聪明或淫佚
+丑阴土：桑园桥梁、贵人尊长、牛驴骡、喜庆或刑狱
+寅阳木：山林桥梁、丈夫女婿、虎豹猫、文书财帛或失财
+卯阴木：大街道路、兄弟妇女、兔、车船平安或官司
+辰阳土：高冈坟墓、僧道妇女、瓷器缸瓮、医生或争讼
+巳阴火：妇人乞丐、蛇蚯蚓蝉、书画花果、文书或疫病
+午阳火：大厅影院、僧人骑马人、电器书画、信息或惊疑
+未阴土：大院坟墓、老妇寡妇、羊鹰、酒食宴会或疾病
+申阳金：神堂佛堂、行人军徒、猿猴狮子、佳音或破财
+酉阴金：妇女少女、金银首饰、鸡、办事顺利或争斗牢狱
+戌阳土：寺庙高坡、僧道、狗狼、文书或虚诈
+亥阴水：江河湖海、小儿乞丐、鱼虾蟹、婚姻或争斗难产
+
+【地支刑冲害】
+相刑：子卯无礼刑、寅巳申无恩刑、丑未戌恃势刑、辰午酉亥自刑
+相冲：子午、卯酉、辰戌、巳亥、丑未、寅申
+相害：子未、丑午、寅巳、卯辰、申亥、酉戌
+三合：申子辰水、亥卯未木、寅午戌火、巳酉丑金
 
 【八门含义】
 开门：公开、创业、升迁、新开始
@@ -9234,6 +9264,9 @@ ${nianmingGan ? `年命${nianmingGan}落${nianmingLuogong}` : ''}
 天柱：正直、刚强、支撑、独断
 天心：医道、仁慈、心计、谋略
 天禽：中正、平衡、稳定、执掌
+
+【八卦方位】
+乾西北、坤西南、震正东、巽东南、坎正北、离正南、艮东北、兑正西
 
 【地理】北京坎北、上海震东、广深离南、成渝坤西南、西安乾西北、杭宁震东、武汉中宫
 
@@ -9263,15 +9296,43 @@ ${nianmingGan ? `Birth Stem ${nianmingGan} in ${getTerm(nianmingLuogong, 'palace
 Formation: ${qimen.geju.join(', ') || 'None'}
 Major Decision: ${isBigMatter ? 'Yes' : 'No'}
 
-【BAGUA REFERENCE】
-Qian(NW): Father, Leader, Gold, Head, Lungs, Horse, Strong
-Kun(SW): Mother, Masses, Grains, Abdomen, Spleen, Ox, Yielding
-Zhen(E): Eldest Son, Driver, Police, Feet, Liver, Dragon, Movement
-Xun(SE): Eldest Daughter, Merchant, Teacher, Thighs, Trachea, Chicken, Penetrating
-Kan(N): Middle Son, Wanderer, Thief, Kidneys, Ears, Pig, Dangerous
-Li(S): Middle Daughter, Writer, Actor, Eyes, Heart, Pheasant, Bright
-Gen(NE): Youngest Son, Guard, Youth, Nose, Back, Dog, Stillness
-Dui(W): Youngest Daughter, Singer, Speaker, Mouth, Lungs, Sheep, Joyful
+【TEN STEMS】
+Jia(Yang Wood): Leader, Commander, Head, Gallbladder, Green, Beam or waste
+Yi(Yin Wood): Sun Wonder, Doctor, Woman, Wife, Liver, Neck, Gentle
+Bing(Yang Fire): Moon Wonder, Authority, Third party man, Shoulder, Intestine, Bold
+Ding(Yin Fire): Star Wonder, Jade Lady, Third party woman, Chest, Heart, Gentle but calculating
+Wu(Yang Earth): Heaven Gate, Capital, Money, Ribs, Stomach, Dark yellow, Impulsive
+Ji(Yin Earth): Earth Gate, Grave, Abdomen, Spleen, Light yellow, Gentle
+Geng(Yang Metal): Thief, Husband, Enemy, Police, Navel, Intestine, White, Sharp
+Xin(Yin Metal): Criminal, Sinner, Chest, Lungs, Light white, Loyal
+Ren(Yang Water): Flowing things, Calf, Bladder, Dark black, Risky but reliable
+Gui(Yin Water): Female, Sexuality, Feet, Kidneys, Light black, Yin gentle
+
+【FIVE YANG/YIN】
+Jia-Yi-Bing-Ding-Wu = Yang hours, favor guest, act first
+Ji-Geng-Xin-Ren-Gui = Yin hours, favor host, wait and respond
+
+【STEM COMBINATIONS】
+Jia-Ji=Earth, Yi-Geng=Metal, Bing-Xin=Water, Ding-Ren=Wood, Wu-Gui=Fire
+
+【TWELVE BRANCHES】
+Zi(Yang Water): Ponds, Women, Thieves, Swallow, Clever or lewd
+Chou(Yin Earth): Bridges, Nobles, Cattle, Celebration or lawsuit
+Yin(Yang Wood): Mountains, Husbands, Tigers, Documents or loss
+Mao(Yin Wood): Roads, Siblings, Rabbits, Vehicles or disputes
+Chen(Yang Earth): Highlands, Monks, Pottery, Medicine or conflict
+Si(Yin Fire): Women, Beggars, Snakes, Documents or illness
+Wu(Yang Fire): Halls, Riders, Electronics, News or anxiety
+Wei(Yin Earth): Courtyards, Widows, Sheep, Feasts or disease
+Shen(Yang Metal): Temples, Travelers, Monkeys, Good news or loss
+You(Yin Metal): Young women, Jewelry, Chickens, Success or prison
+Xu(Yang Earth): Temples, Monks, Dogs, Documents or deception
+Hai(Yin Water): Rivers, Children, Fish, Marriage or conflict
+
+【BRANCH RELATIONS】
+Clash: Zi-Wu, Mao-You, Chen-Xu, Si-Hai, Chou-Wei, Yin-Shen
+Harm: Zi-Wei, Chou-Wu, Yin-Si, Mao-Chen, Shen-Hai, You-Xu
+Combination: Shen-Zi-Chen=Water, Hai-Mao-Wei=Wood, Yin-Wu-Xu=Fire, Si-You-Chou=Metal
 
 【EIGHT DOORS】
 Open: New beginnings, career, promotion
