@@ -696,9 +696,13 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--color-divider);
-            padding: 8px 0;
-            padding-bottom: max(8px, env(safe-area-inset-bottom));
+            padding: 10px 0;
+            /* 安卓手机底部安全区域 - 增加更多空间避免与系统导航栏冲突 */
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
             z-index: 100;
+            /* 确保触摸区域足够大 */
+            min-height: 60px;
+            box-sizing: border-box;
         }
 
         .nav-inner {
@@ -714,10 +718,13 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            padding: 10px 32px;
+            padding: 12px 36px;
             cursor: pointer;
             transition: all var(--transition-fast);
             border-radius: 12px;
+            /* 增加点击区域，提升安卓触摸体验 */
+            min-width: 80px;
+            min-height: 44px;
         }
 
         .nav-item i {
@@ -743,6 +750,7 @@
 
         .nav-item:active {
             background: var(--color-card);
+            transform: scale(0.95);
         }
 
         /* ===== 页面切换 ===== */
@@ -4515,7 +4523,7 @@
                 <div class="header-right">
                     <span class="brand-en">Oraculum</span>
                     <button class="lang-toggle" id="langToggle" title="Switch Language">
-                        <i class="fa-regular fa-globe"></i>
+                        <i class="fa-solid fa-globe"></i>
                     </button>
                 </div>
             </header>
@@ -4534,7 +4542,7 @@
                         <div class="card-title" data-i18n="intro_title">什么是 Oraculum?</div>
                         <div class="link-arrow" onclick="showIntroModal()">
                             <span data-i18n="learn_more">了解更多</span>
-                            <i class="fa-regular fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
                     <p class="card-subtitle" data-i18n="intro_content">Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活</p>
@@ -4547,47 +4555,47 @@
                             <div class="card-title" data-i18n="concepts_title">核心概念 · Core Concepts</div>
                             <div class="card-subtitle" data-i18n="concepts_subtitle">点击展开，了解奇门遁甲基础知识</div>
                         </div>
-                        <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                        <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
                         <div class="concept-grid">
                             <div class="concept-item" onclick="showConceptDetail('qimen')">
-                                <div class="concept-icon"><i class="fa-regular fa-compass"></i></div>
+                                <div class="concept-icon"><i class="fa-solid fa-compass"></i></div>
                                 <div class="concept-info">
                                     <div class="concept-name">奇门遁甲 <span class="concept-name-en">Qimen Dunjia</span></div>
                                     <div class="concept-brief" data-i18n="qimen_brief">中国古代最高决策术，融合天文地理的时空模型</div>
                                 </div>
                             </div>
                             <div class="concept-item" onclick="showConceptDetail('yinyang')">
-                                <div class="concept-icon"><i class="fa-regular fa-circle-half-stroke"></i></div>
+                                <div class="concept-icon"><i class="fa-solid fa-circle-half-stroke"></i></div>
                                 <div class="concept-info">
                                     <div class="concept-name">阴阳 <span class="concept-name-en">Yin-Yang</span></div>
                                     <div class="concept-brief" data-i18n="yinyang_brief">宇宙万物的两极力量，动态平衡的智慧</div>
                                 </div>
                             </div>
                             <div class="concept-item" onclick="showConceptDetail('five')">
-                                <div class="concept-icon"><i class="fa-regular fa-star"></i></div>
+                                <div class="concept-icon"><i class="fa-solid fa-star"></i></div>
                                 <div class="concept-info">
                                     <div class="concept-name">五行 <span class="concept-name-en">Five Elements</span></div>
                                     <div class="concept-brief" data-i18n="five_brief">金木水火土，相生相克的能量循环</div>
                                 </div>
                             </div>
                             <div class="concept-item" onclick="showConceptDetail('eight')">
-                                <div class="concept-icon"><i class="fa-regular fa-door-open"></i></div>
+                                <div class="concept-icon"><i class="fa-solid fa-door-open"></i></div>
                                 <div class="concept-info">
                                     <div class="concept-name">八门 <span class="concept-name-en">Eight Doors</span></div>
                                     <div class="concept-brief" data-i18n="eight_brief">休生伤杜景死惊开，八种能量门户</div>
                                 </div>
                             </div>
                             <div class="concept-item" onclick="showConceptDetail('nine')">
-                                <div class="concept-icon"><i class="fa-regular fa-sparkles"></i></div>
+                                <div class="concept-icon"><i class="fa-solid fa-sparkles"></i></div>
                                 <div class="concept-info">
                                     <div class="concept-name">九星 <span class="concept-name-en">Nine Stars</span></div>
                                     <div class="concept-brief" data-i18n="nine_brief">天蓬天任天冲等，九种宇宙能量</div>
                                 </div>
                             </div>
                             <div class="concept-item" onclick="showConceptDetail('bagua')">
-                                <div class="concept-icon"><i class="fa-regular fa-circle-nodes"></i></div>
+                                <div class="concept-icon"><i class="fa-solid fa-circle-nodes"></i></div>
                                 <div class="concept-info">
                                     <div class="concept-name">八卦 <span class="concept-name-en">Eight Trigrams</span></div>
                                     <div class="concept-brief" data-i18n="bagua_brief">乾坤震巽坎离艮兑，宇宙八种基本模式</div>
@@ -4781,7 +4789,7 @@
                     </p>
                     <div class="link-arrow" style="margin-top: 16px;" onclick="showEnergyDetail()">
                         <span data-i18n="view_analysis">查看详细分析</span>
-                        <i class="fa-regular fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </div>
 
@@ -4809,7 +4817,7 @@
                 </div>
                 <div class="header-right">
                     <button class="lang-toggle" onclick="toggleLanguage()">
-                        <i class="fa-regular fa-globe"></i>
+                        <i class="fa-solid fa-globe"></i>
                     </button>
                 </div>
             </header>
@@ -4822,66 +4830,66 @@
                 <!-- 山·修身 -->
                 <div class="wushu-card" onclick="openWushuDetail('mountain')">
                     <div class="wushu-icon">
-                        <i class="fa-regular fa-mountain"></i>
+                        <i class="fa-solid fa-mountain"></i>
                     </div>
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_mountain">山·修身</div>
                         <div class="wushu-title-en">Mountain · Cultivation</div>
                         <div class="wushu-desc" data-i18n="wushu_mountain_desc">养生、健身、修炼，强健体魄、净化心灵</div>
                     </div>
-                    <i class="fa-regular fa-chevron-right wushu-arrow"></i>
+                    <i class="fa-solid fa-chevron-right wushu-arrow"></i>
                 </div>
 
                 <!-- 医·养生 -->
                 <div class="wushu-card" onclick="openWushuDetail('medicine')">
                     <div class="wushu-icon">
-                        <i class="fa-regular fa-leaf"></i>
+                        <i class="fa-solid fa-leaf"></i>
                     </div>
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_medicine">医·养生</div>
                         <div class="wushu-title-en">Medicine · Wellness</div>
                         <div class="wushu-desc" data-i18n="wushu_medicine_desc">中医之道，草药、针灸，阴阳调和、顺应天时</div>
                     </div>
-                    <i class="fa-regular fa-chevron-right wushu-arrow"></i>
+                    <i class="fa-solid fa-chevron-right wushu-arrow"></i>
                 </div>
 
                 <!-- 命·命盘 -->
                 <div class="wushu-card" onclick="openWushuDetail('fate')">
                     <div class="wushu-icon">
-                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
                     </div>
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_fate">命·命盘</div>
                         <div class="wushu-title-en">Fate · Ziwei</div>
                         <div class="wushu-desc" data-i18n="wushu_fate_desc">紫微斗数，十四主星，洞察先天运势</div>
                     </div>
-                    <i class="fa-regular fa-chevron-right wushu-arrow"></i>
+                    <i class="fa-solid fa-chevron-right wushu-arrow"></i>
                 </div>
 
                 <!-- 相·相宅 -->
                 <div class="wushu-card" onclick="openWushuDetail('physiognomy')">
                     <div class="wushu-icon">
-                        <i class="fa-regular fa-eye"></i>
+                        <i class="fa-solid fa-eye"></i>
                     </div>
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_physiognomy">相·相宅</div>
                         <div class="wushu-title-en">Physiognomy · Fengshui</div>
                         <div class="wushu-desc" data-i18n="wushu_physiognomy_desc">面相风水，环境调理</div>
                     </div>
-                    <i class="fa-regular fa-chevron-right wushu-arrow"></i>
+                    <i class="fa-solid fa-chevron-right wushu-arrow"></i>
                 </div>
 
                 <!-- 卜·占卜 -->
                 <div class="wushu-card" onclick="openWushuDetail('divination')">
                     <div class="wushu-icon">
-                        <i class="fa-regular fa-coins"></i>
+                        <i class="fa-solid fa-coins"></i>
                     </div>
                     <div class="wushu-content">
                         <div class="wushu-title" data-i18n="wushu_divination">卜·占卜</div>
                         <div class="wushu-title-en">Divination · I-Ching</div>
                         <div class="wushu-desc" data-i18n="wushu_divination_desc">金钱卦，六爻占卜</div>
                     </div>
-                    <i class="fa-regular fa-chevron-right wushu-arrow"></i>
+                    <i class="fa-solid fa-chevron-right wushu-arrow"></i>
                 </div>
             </main>
         </div>
@@ -4896,7 +4904,7 @@
                 <div class="header-right">
                     <span class="brand-en">Oraculum</span>
                     <button class="lang-toggle" onclick="toggleLanguage()">
-                        <i class="fa-regular fa-globe"></i>
+                        <i class="fa-solid fa-globe"></i>
                     </button>
                 </div>
             </header>
@@ -4906,7 +4914,7 @@
                 <div class="card">
                     <div class="my-profile">
                         <div class="my-avatar">
-                            <i class="fa-regular fa-user"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                         <div class="my-info">
                             <div class="my-name" data-i18n="guest">游客</div>
@@ -4923,7 +4931,7 @@
                 <div class="card trial-card">
                     <div class="trial-header">
                         <div class="trial-icon">
-                            <i class="fa-regular fa-gift"></i>
+                            <i class="fa-solid fa-gift"></i>
                         </div>
                         <div class="trial-info">
                             <div class="trial-title" data-i18n="free_trial">免费试用 · Free Trial</div>
@@ -4936,7 +4944,7 @@
                     </div>
                     <button class="btn btn-primary btn-trial" onclick="showSubscription()">
                         <span data-i18n="upgrade_now">立即升级</span>
-                        <i class="fa-regular fa-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
 
@@ -4944,95 +4952,95 @@
                 <div class="card" style="padding: 0;">
                     <div class="menu-card" onclick="showSubscription()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-crown"></i>
+                            <i class="fa-solid fa-crown"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_shop">订阅商店</span>
                         <span class="menu-value" data-i18n="free_member">免费会员</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showHistory()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-clock"></i>
+                            <i class="fa-solid fa-clock"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_history">占卜历史</span>
                         <span class="menu-value" id="historyCount">0</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showSettings()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-user-gear"></i>
+                            <i class="fa-solid fa-user-gear"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_settings">账号设置</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showLanguage()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-globe"></i>
+                            <i class="fa-solid fa-globe"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_language">语言</span>
                         <span class="menu-value" id="currentLangDisplay">中文</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showAboutQimen()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-yin-yang"></i>
+                            <i class="fa-solid fa-yin-yang"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_about_qimen">关于奇门</span>
                         <span class="menu-value">About Qimen</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showLearnQimen()" style="background: linear-gradient(135deg, #F5F0EB 0%, #EDE8E3 100%);">
                         <div class="menu-icon" style="background: var(--color-primary); color: white;">
-                            <i class="fa-regular fa-graduation-cap"></i>
+                            <i class="fa-solid fa-graduation-cap"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_learn_qimen">奇门入门</span>
                         <span class="menu-value" style="color: var(--color-primary); font-weight: 600;">Learn Qimen</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showAbout()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-circle-info"></i>
+                            <i class="fa-solid fa-circle-info"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_about">关于我们</span>
                         <span class="menu-value">v1.0.0</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showFeedback()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-comment"></i>
+                            <i class="fa-solid fa-comment"></i>
                         </div>
                         <span class="menu-label">Feedback</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="showPrivacy()">
                         <div class="menu-icon">
-                            <i class="fa-regular fa-shield-check"></i>
+                            <i class="fa-solid fa-shield-check"></i>
                         </div>
                         <span class="menu-label" data-i18n="menu_privacy">隐私政策</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                     
                     <div class="menu-card" onclick="confirmDeleteData()" style="border-top: 1px solid var(--color-divider);">
                         <div class="menu-icon" style="background: rgba(255, 59, 48, 0.1); color: #FF3B30;">
-                            <i class="fa-regular fa-trash"></i>
+                            <i class="fa-solid fa-trash"></i>
                         </div>
                         <span class="menu-label" style="color: #FF3B30;" data-i18n="menu_delete_data">删除我的数据</span>
-                        <i class="fa-regular fa-chevron-right menu-arrow"></i>
+                        <i class="fa-solid fa-chevron-right menu-arrow"></i>
                     </div>
                 </div>
 
                 <!-- 邮件订阅 -->
                 <div class="card subscribe-card">
                     <div class="subscribe-header">
-                        <i class="fa-regular fa-envelope"></i>
+                        <i class="fa-solid fa-envelope"></i>
                         <div>
                             <div class="subscribe-title" data-i18n="subscribe_title">订阅邮件 · Subscribe</div>
                             <div class="subscribe-desc" data-i18n="subscribe_desc">获取最新资讯和专属优惠</div>
@@ -5057,15 +5065,15 @@
         <nav class="bottom-nav">
             <div class="nav-inner">
                 <div class="nav-item active" data-page="home" onclick="switchPage('home')">
-                    <i class="fa-regular fa-house"></i>
+                    <i class="fa-solid fa-house"></i>
                     <span data-i18n="nav_home">首页</span>
                 </div>
                 <div class="nav-item" data-page="wushu" onclick="switchPage('wushu')">
-                    <i class="fa-regular fa-yin-yang"></i>
+                    <i class="fa-solid fa-yin-yang"></i>
                     <span data-i18n="nav_wushu">五术</span>
                 </div>
                 <div class="nav-item" data-page="my" onclick="switchPage('my')">
-                    <i class="fa-regular fa-user"></i>
+                    <i class="fa-solid fa-user"></i>
                     <span data-i18n="nav_my">我的</span>
                 </div>
             </div>
@@ -5076,7 +5084,7 @@
     <div class="fullscreen-page" id="aboutQimenPage">
         <header class="page-header">
             <button class="chat-back" onclick="closeAboutQimen()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="chat-title" data-i18n="about_qimen_title">关于奇门 · About Qimen</div>
             <div style="width:44px;"></div>
@@ -5087,7 +5095,7 @@
             <div class="qimen-hero">
                 <div class="qimen-symbol">
                     <div class="qimen-bagua">
-                        <i class="fa-regular fa-yin-yang"></i>
+                        <i class="fa-solid fa-yin-yang"></i>
                     </div>
                 </div>
                 <h1 class="qimen-title" data-i18n="qimen_page_title">奇门遁甲</h1>
@@ -5124,7 +5132,7 @@
                 <h2 class="qimen-section-title" data-i18n="three_elements">三大核心要素</h2>
                 
                 <div class="element-card">
-                    <div class="element-icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="element-icon"><i class="fa-solid fa-clock"></i></div>
                     <div class="element-content">
                         <h3 data-i18n="element_time">时间 · Time</h3>
                         <p data-i18n="element_time_desc">天干地支纪时，捕捉宇宙周期节律，找到最佳行动时机。</p>
@@ -5132,7 +5140,7 @@
                 </div>
                 
                 <div class="element-card">
-                    <div class="element-icon"><i class="fa-regular fa-compass"></i></div>
+                    <div class="element-icon"><i class="fa-solid fa-compass"></i></div>
                     <div class="element-content">
                         <h3 data-i18n="element_space">空间 · Space</h3>
                         <p data-i18n="element_space_desc">九宫八卦方位，解读不同方向的能量属性，选择有利方位。</p>
@@ -5140,7 +5148,7 @@
                 </div>
                 
                 <div class="element-card">
-                    <div class="element-icon"><i class="fa-regular fa-sparkles"></i></div>
+                    <div class="element-icon"><i class="fa-solid fa-sparkles"></i></div>
                     <div class="element-content">
                         <h3 data-i18n="element_energy">能量 · Energy</h3>
                         <p data-i18n="element_energy_desc">九星八门八神，模拟宇宙能量场的流动与分布。</p>
@@ -5153,27 +5161,27 @@
                 <h2 class="qimen-section-title" data-i18n="modern_application">现代应用场景</h2>
                 <div class="application-grid">
                     <div class="app-item">
-                        <i class="fa-regular fa-briefcase"></i>
+                        <i class="fa-solid fa-briefcase"></i>
                         <span data-i18n="app_business">商业决策</span>
                     </div>
                     <div class="app-item">
-                        <i class="fa-regular fa-user-tie"></i>
+                        <i class="fa-solid fa-user-tie"></i>
                         <span data-i18n="app_career">职业规划</span>
                     </div>
                     <div class="app-item">
-                        <i class="fa-regular fa-heart"></i>
+                        <i class="fa-solid fa-heart"></i>
                         <span data-i18n="app_relationship">感情关系</span>
                     </div>
                     <div class="app-item">
-                        <i class="fa-regular fa-chart-line"></i>
+                        <i class="fa-solid fa-chart-line"></i>
                         <span data-i18n="app_investment">投资理财</span>
                     </div>
                     <div class="app-item">
-                        <i class="fa-regular fa-plane"></i>
+                        <i class="fa-solid fa-plane"></i>
                         <span data-i18n="app_travel">出行规划</span>
                     </div>
                     <div class="app-item">
-                        <i class="fa-regular fa-home"></i>
+                        <i class="fa-solid fa-home"></i>
                         <span data-i18n="app_home">居家风水</span>
                     </div>
                 </div>
@@ -5186,7 +5194,7 @@
                     <p class="quote-text">"A brilliant fusion of ancient wisdom and modern technology. Qimen Dunjia offers a unique perspective on decision-making that bridges millennia of Chinese philosophy with contemporary needs."</p>
                     <div class="expert-info">
                         <div class="expert-avatar">
-                            <i class="fa-regular fa-user"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                         <div class="expert-detail">
                             <div class="expert-name">Dr. Alan Smith</div>
@@ -5200,7 +5208,7 @@
                     <p class="quote-text">"奇门遁甲不仅是一门预测术，更是一种战略思维模式。它教会我们在正确的时间、正确的地点，做正确的事情。"</p>
                     <div class="expert-info">
                         <div class="expert-avatar">
-                            <i class="fa-regular fa-user"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div>
                         <div class="expert-detail">
                             <div class="expert-name">李明道 教授</div>
@@ -5216,7 +5224,7 @@
     <div class="fullscreen-page" id="learnQimenPage">
         <header class="page-header">
             <button class="chat-back" onclick="closeLearnQimen()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="chat-title" data-i18n="learn_qimen_title">Learn Qimen · 奇门入门</div>
             <div style="width:44px;"></div>
@@ -5226,7 +5234,7 @@
             <!-- Hero Section -->
             <div class="learn-hero">
                 <div class="learn-hero-icon">
-                    <i class="fa-regular fa-book-open"></i>
+                    <i class="fa-solid fa-book-open"></i>
                 </div>
                 <h1 class="learn-hero-title" data-i18n="learn_hero_title">Your Journey Begins Here</h1>
                 <p class="learn-hero-subtitle" data-i18n="learn_hero_subtitle">
@@ -5255,7 +5263,7 @@
                         
                         <div class="lesson-analogy">
                             <div class="analogy-icon">
-                                <i class="fa-regular fa-route"></i>
+                                <i class="fa-solid fa-route"></i>
                             </div>
                             <div class="analogy-content">
                                 <h4 data-i18n="analogy_title">Think of it like this:</h4>
@@ -5291,42 +5299,42 @@
                         
                         <div class="doors-grid">
                             <div class="door-item door-auspicious">
-                                <div class="door-icon"><i class="fa-regular fa-leaf"></i></div>
+                                <div class="door-icon"><i class="fa-solid fa-leaf"></i></div>
                                 <div class="door-info">
                                     <h5>Door of Life</h5>
                                     <p>生门 · Growth & Profit</p>
                                 </div>
                             </div>
                             <div class="door-item door-auspicious">
-                                <div class="door-icon"><i class="fa-regular fa-door-open"></i></div>
+                                <div class="door-icon"><i class="fa-solid fa-door-open"></i></div>
                                 <div class="door-info">
                                     <h5>Door of Openness</h5>
                                     <p>开门 · Career & New Paths</p>
                                 </div>
                             </div>
                             <div class="door-item door-neutral">
-                                <div class="door-icon"><i class="fa-regular fa-bed"></i></div>
+                                <div class="door-icon"><i class="fa-solid fa-bed"></i></div>
                                 <div class="door-info">
                                     <h5>Door of Rest</h5>
                                     <p>休门 · Wellness & Relationships</p>
                                 </div>
                             </div>
                             <div class="door-item door-neutral">
-                                <div class="door-icon"><i class="fa-regular fa-sun"></i></div>
+                                <div class="door-icon"><i class="fa-solid fa-sun"></i></div>
                                 <div class="door-info">
                                     <h5>Door of Scenery</h5>
                                     <p>景门 · Communication & Fame</p>
                                 </div>
                             </div>
                             <div class="door-item door-caution">
-                                <div class="door-icon"><i class="fa-regular fa-bolt"></i></div>
+                                <div class="door-icon"><i class="fa-solid fa-bolt"></i></div>
                                 <div class="door-info">
                                     <h5>Door of Injury</h5>
                                     <p>伤门 · Competition & Conflict</p>
                                 </div>
                             </div>
                             <div class="door-item door-caution">
-                                <div class="door-icon"><i class="fa-regular fa-bell"></i></div>
+                                <div class="door-icon"><i class="fa-solid fa-bell"></i></div>
                                 <div class="door-info">
                                     <h5>Door of Alarm</h5>
                                     <p>惊门 · Unexpected Changes</p>
@@ -5335,7 +5343,7 @@
                         </div>
                         
                         <div class="lesson-tip">
-                            <i class="fa-regular fa-lightbulb"></i>
+                            <i class="fa-solid fa-lightbulb"></i>
                             <span data-i18n="lesson2_tip">
                                 Tip: When reading your chart, focus on where the auspicious doors (Life, Openness) appear — these are your areas of opportunity.
                             </span>
@@ -5357,35 +5365,35 @@
                         
                         <div class="stars-list">
                             <div class="star-item">
-                                <div class="star-icon star-good"><i class="fa-regular fa-star"></i></div>
+                                <div class="star-icon star-good"><i class="fa-solid fa-star"></i></div>
                                 <div class="star-info">
                                     <h5>Tian Fu Star · 天辅</h5>
                                     <p>Wisdom, assistance, learning. Excellent for study and seeking help.</p>
                                 </div>
                             </div>
                             <div class="star-item">
-                                <div class="star-icon star-good"><i class="fa-regular fa-heart"></i></div>
+                                <div class="star-icon star-good"><i class="fa-solid fa-heart"></i></div>
                                 <div class="star-info">
                                     <h5>Tian Xin Star · 天心</h5>
                                     <p>Healing, spirituality, compassion. Good for health matters.</p>
                                 </div>
                             </div>
                             <div class="star-item">
-                                <div class="star-icon star-good"><i class="fa-regular fa-shield"></i></div>
+                                <div class="star-icon star-good"><i class="fa-solid fa-shield"></i></div>
                                 <div class="star-info">
                                     <h5>Tian Ren Star · 天任</h5>
                                     <p>Loyalty, stability, reliability. Great for partnerships.</p>
                                 </div>
                             </div>
                             <div class="star-item">
-                                <div class="star-icon star-neutral"><i class="fa-regular fa-circle"></i></div>
+                                <div class="star-icon star-neutral"><i class="fa-solid fa-circle"></i></div>
                                 <div class="star-info">
                                     <h5>Tian Qin Star · 天禽</h5>
                                     <p>Balance, centeredness, neutrality. Stability and peace.</p>
                                 </div>
                             </div>
                             <div class="star-item">
-                                <div class="star-icon star-caution"><i class="fa-regular fa-exclamation-triangle"></i></div>
+                                <div class="star-icon star-caution"><i class="fa-solid fa-exclamation-triangle"></i></div>
                                 <div class="star-info">
                                     <h5>Tian Rui Star · 天芮</h5>
                                     <p>Illness, problems. Indicates areas needing caution.</p>
@@ -5461,7 +5469,7 @@
                         </div>
                         
                         <div class="lesson-tip">
-                            <i class="fa-regular fa-compass"></i>
+                            <i class="fa-solid fa-compass"></i>
                             <span data-i18n="lesson4_tip">
                                 When your reading mentions "sitting in the East," it means positioning yourself in the eastern part of a room or building to tap into that direction's energy.
                             </span>
@@ -5531,7 +5539,7 @@
     <div class="chat-page" id="chatPage">
         <header class="chat-header">
             <button class="chat-back" onclick="closeChat()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="chat-title" id="chatSceneTitle">面试求职</div>
             <div style="display: flex; align-items: center; gap: 8px;">
@@ -5553,7 +5561,7 @@
                     <option value="12">奥克兰 UTC+12</option>
                 </select>
                 <button class="solar-time-info" onclick="showSolarTimeInfo()" title="关于真太阳时">
-                    <i class="fa-regular fa-circle-info"></i>
+                    <i class="fa-solid fa-circle-info"></i>
                 </button>
             </div>
         </header>
@@ -5565,7 +5573,7 @@
         <div class="chat-input-area">
             <textarea class="chat-input" id="chatInput" placeholder="请输入您的问题..." rows="1"></textarea>
             <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">
-                <i class="fa-regular fa-paper-plane"></i>
+                <i class="fa-solid fa-paper-plane"></i>
             </button>
             <button class="chat-stop" id="chatStopBtn" style="display: none;" onclick="stopGeneration()">
                 <span data-i18n="stop">停止</span>
@@ -5578,7 +5586,7 @@
     <div class="wushu-detail-page" id="mountainPage">
         <header class="wushu-detail-header">
             <button class="chat-back" onclick="closeWushuDetail()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="wushu-detail-title" data-i18n="wushu_mountain">山·修身</div>
         </header>
@@ -5594,7 +5602,7 @@
             <div class="card" id="todayMeditationCard">
                 <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <i class="fa-regular fa-spa" style="margin-right: 8px; color: var(--color-primary);"></i>
+                        <i class="fa-solid fa-spa" style="margin-right: 8px; color: var(--color-primary);"></i>
                         <span data-i18n="today_meditation">今日冥想</span>
                     </div>
                 </div>
@@ -5602,7 +5610,7 @@
                     静心5分钟，回归内在平静
                 </p>
                 <button onclick="startQuickMeditation()" style="width: 100%; padding: 14px; font: 500 15px/1 var(--font-stack); color: white; background: var(--color-primary); border: none; border-radius: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i class="fa-regular fa-play"></i>
+                    <i class="fa-solid fa-play"></i>
                     <span data-i18n="start_5min_meditation">开始5分钟静心</span>
                 </button>
                 
@@ -5613,7 +5621,7 @@
             <!-- 冥想足迹 -->
             <div class="card">
                 <div class="card-title">
-                    <i class="fa-regular fa-footprints" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-footprints" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="meditation_footprint">冥想足迹</span>
                 </div>
                 <div style="display: flex; justify-content: space-around; margin-top: 16px;">
@@ -5632,7 +5640,7 @@
             <!-- 修炼札记 -->
             <div class="card">
                 <div class="card-title">
-                    <i class="fa-regular fa-book-open" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-book-open" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="cultivation_notes">修炼札记</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;" data-i18n="notes_desc">
@@ -5644,7 +5652,7 @@
             <!-- 荣格心理学解读 -->
             <div class="card">
                 <div class="card-title">
-                    <i class="fa-regular fa-brain" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-brain" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="jung_perspective">荣格心理学视角</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;">
@@ -5654,7 +5662,7 @@
                     <div class="collapsible" onclick="toggleCollapsible(this)">
                         <div class="collapsible-header">
                             <span class="collapsible-title" data-i18n="jung_mindfulness">正念与觉察</span>
-                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                            <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                         </div>
                         <div class="collapsible-content">
                             <div class="collapsible-body" data-i18n="jung_mindfulness_text">
@@ -5665,7 +5673,7 @@
                     <div class="collapsible" onclick="toggleCollapsible(this)">
                         <div class="collapsible-header">
                             <span class="collapsible-title" data-i18n="jung_mandala">曼陀罗与光</span>
-                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                            <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                         </div>
                         <div class="collapsible-content">
                             <div class="collapsible-body" data-i18n="jung_mandala_text">
@@ -5676,7 +5684,7 @@
                     <div class="collapsible" onclick="toggleCollapsible(this)">
                         <div class="collapsible-header">
                             <span class="collapsible-title" data-i18n="jung_self">元神与自性</span>
-                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                            <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                         </div>
                         <div class="collapsible-content">
                             <div class="collapsible-body" data-i18n="jung_self_text">
@@ -5690,7 +5698,7 @@
             <!-- 经典原文 -->
             <div class="card">
                 <div class="card-title">
-                    <i class="fa-regular fa-scroll" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-scroll" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="classic_quotes">经典原文</span>
                 </div>
                 <div style="display: grid; gap: 12px; margin-top: 16px;">
@@ -5715,7 +5723,7 @@
     <div class="fullscreen-page" id="quickMeditationPage">
         <header class="page-header" style="background: linear-gradient(180deg, rgba(250,250,250,0.98) 0%, rgba(250,250,250,0.95) 100%);">
             <button class="chat-back" onclick="closeQuickMeditation()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="chat-title" data-i18n="meditation">冥想</div>
             <div style="width:44px;"></div>
@@ -5744,7 +5752,7 @@
             <!-- 控制按钮 -->
             <div style="display: flex; gap: 16px;">
                 <button id="quickMeditationBtn" onclick="toggleQuickMeditation()" style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-primary); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);">
-                    <i class="fa-regular fa-play" style="font-size: 24px; color: white;"></i>
+                    <i class="fa-solid fa-play" style="font-size: 24px; color: white;"></i>
                 </button>
             </div>
         </main>
@@ -5754,7 +5762,7 @@
     <div class="wushu-detail-page" id="medicinePage">
         <header class="wushu-detail-header">
             <button class="chat-back" onclick="closeWushuDetail()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="wushu-detail-title" data-i18n="wushu_medicine">医·养生</div>
         </header>
@@ -5766,7 +5774,7 @@
             <!-- 五术联动提示 -->
             <div class="card five-arts-link" id="medicineFiveArtsLink" style="display: none;">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                    <i class="fa-regular fa-link" style="color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-link" style="color: var(--color-primary);"></i>
                     <span style="font: 500 13px/1 var(--font-stack); color: var(--color-primary);" data-i18n="mingpan_based">Based on your chart</span>
                 </div>
                 <div id="medicineMingpanHint" style="font: 400 14px/1.6 var(--font-stack); color: var(--color-text-mid);">
@@ -5774,7 +5782,7 @@
                 </div>
                 <div class="link-arrow" style="margin-top: 12px;" onclick="switchTab('ming')">
                     <span data-i18n="mingpan_view">View Chart</span>
-                    <i class="fa-regular fa-arrow-right"></i>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </div>
             </div>
 
@@ -5943,7 +5951,7 @@
     <div class="wushu-detail-page" id="fatePage">
         <header class="wushu-detail-header">
             <button class="chat-back" onclick="closeWushuDetail()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="wushu-detail-title" data-i18n="wushu_fate">命·命盘</div>
         </header>
@@ -6034,7 +6042,7 @@
     <div class="wushu-detail-page" id="physiognomyPage">
         <header class="wushu-detail-header">
             <button class="chat-back" onclick="closeWushuDetail()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="wushu-detail-title" data-i18n="wushu_physiognomy">相·风水</div>
         </header>
@@ -6049,7 +6057,7 @@
             <!-- 模块一：风水经典格言 -->
             <div class="card" id="fengshuiQuoteCard">
                 <div class="card-title">
-                    <i class="fa-regular fa-quote-left" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-quote-left" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="fengshui_quote">风水经典格言</span>
                 </div>
                 <div style="margin-top: 16px; padding: 24px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border-left: 3px solid var(--color-primary); position: relative;">
@@ -6058,14 +6066,14 @@
                     <div id="fengshuiQuoteEn" style="font: 400 13px/1.6 var(--font-stack); color: var(--color-text-mid); margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border); font-style: italic;"></div>
                 </div>
                 <button onclick="refreshFengshuiQuote()" style="margin-top: 16px; padding: 8px 16px; font: 500 13px/1 var(--font-stack); color: var(--color-primary); background: rgba(212, 175, 55, 0.1); border: none; border-radius: var(--radius-small); cursor: pointer; transition: all 0.2s;">
-                    <i class="fa-regular fa-rotate" style="margin-right: 6px;"></i><span data-i18n="refresh_quote">换一条</span>
+                    <i class="fa-solid fa-rotate" style="margin-right: 6px;"></i><span data-i18n="refresh_quote">换一条</span>
                 </button>
             </div>
 
             <!-- 模块二：风水探索 -->
             <div class="card" id="fengshuiExploreCard">
                 <div class="card-title" style="margin-bottom: 16px;">
-                    <i class="fa-regular fa-compass" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-compass" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="fengshui_explore">风水探索</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;" data-i18n="fengshui_explore_desc">
@@ -6074,25 +6082,25 @@
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
                     <!-- 风水基础 -->
                     <div onclick="showFengshuiTopic('basics')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-wind" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-wind" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="fengshui_basics">气的流动</div>
                         <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">Qi Flow</div>
                     </div>
                     <!-- 阴阳平衡 -->
                     <div onclick="showFengshuiTopic('yinyang')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-yin-yang" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-yin-yang" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="fengshui_yinyang">阴阳平衡</div>
                         <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">Yin-Yang</div>
                     </div>
                     <!-- 五行生克 -->
                     <div onclick="showFengshuiTopic('wuxing')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-circle-nodes" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-circle-nodes" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="fengshui_wuxing">五行生克</div>
                         <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">Five Elements</div>
                     </div>
                     <!-- 八卦方位 -->
                     <div onclick="showFengshuiTopic('bagua')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-octagon" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-octagon" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="fengshui_bagua">八卦方位</div>
                         <div style="font: 400 11px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 4px;">Eight Trigrams</div>
                     </div>
@@ -6102,7 +6110,7 @@
             <!-- 模块三：八卦方位探索 -->
             <div class="card">
                 <div class="card-title" style="margin-bottom: 8px;">
-                    <i class="fa-regular fa-compass" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-compass" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="bagua_explore">八卦方位探索</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 20px;" data-i18n="bagua_explore_desc">
@@ -6153,7 +6161,7 @@
             <!-- 模块四：五行测试与联动 -->
             <div class="card" id="wuxingTestCard">
                 <div class="card-title">
-                    <i class="fa-regular fa-yin-yang" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-yin-yang" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="wuxing_test">五行环境测试</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin: 12px 0 16px;" data-i18n="wuxing_test_desc">
@@ -6173,7 +6181,7 @@
             <!-- 模块五：案例故事与经典选读 -->
             <div class="card" id="fengshuiStoriesCard">
                 <div class="card-title" style="margin-bottom: 16px;">
-                    <i class="fa-regular fa-book-open" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-book-open" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="fengshui_stories">案例故事与经典</span>
                 </div>
                 
@@ -6193,7 +6201,7 @@
             <!-- 风水问答（保留原有功能） -->
             <div class="card">
                 <div class="card-title" style="margin-bottom: 8px;">
-                    <i class="fa-regular fa-comments" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-comments" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="fengshui_qa">常见问题</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;" data-i18n="fengshui_qa_desc">
@@ -6208,7 +6216,7 @@
     <div class="wushu-detail-page" id="divinationPage">
         <header class="wushu-detail-header">
             <button class="chat-back" onclick="closeWushuDetail()">
-                <i class="fa-regular fa-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
             </button>
             <div class="wushu-detail-title" data-i18n="wushu_divination">卜·占卜</div>
         </header>
@@ -6223,7 +6231,7 @@
             <!-- 今日卦象推荐 -->
             <div class="card" id="todayHexagramCard">
                 <div class="card-title" style="margin-bottom: 16px;">
-                    <i class="fa-regular fa-sun" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-sun" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="today_hexagram">今日卦象</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 16px;" data-i18n="today_hexagram_desc">
@@ -6237,7 +6245,7 @@
             <!-- 快速起卦 -->
             <div class="card" id="quickDivinationCard">
                 <div class="card-title" style="margin-bottom: 16px;">
-                    <i class="fa-regular fa-sparkles" style="margin-right: 8px; color: var(--color-primary);"></i>
+                    <i class="fa-solid fa-sparkles" style="margin-right: 8px; color: var(--color-primary);"></i>
                     <span data-i18n="quick_divination">快速起卦</span>
                 </div>
                 <p style="font: 400 12px/1.4 var(--font-stack); color: var(--color-text-mid); margin-bottom: 20px;" data-i18n="quick_divination_desc">
@@ -6246,26 +6254,26 @@
                 
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px;">
                     <div onclick="generateHexagram('career')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-briefcase" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-briefcase" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="divination_career">事业</div>
                     </div>
                     <div onclick="generateHexagram('love')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-heart" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-heart" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="divination_love">感情</div>
                     </div>
                     <div onclick="generateHexagram('wealth')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-coins" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-coins" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="divination_wealth">财运</div>
                     </div>
                     <div onclick="generateHexagram('health')" style="padding: 20px 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid var(--color-border); cursor: pointer; transition: all 0.2s; text-align: center;">
-                        <i class="fa-regular fa-heart-pulse" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
+                        <i class="fa-solid fa-heart-pulse" style="font-size: 24px; color: var(--color-primary); margin-bottom: 8px;"></i>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);" data-i18n="divination_health">健康</div>
                     </div>
                 </div>
 
                 <div style="text-align: center;">
                     <button onclick="generateHexagram('general')" style="padding: 16px 40px; font: 500 16px/1 var(--font-stack); color: white; background: var(--color-primary); border: none; border-radius: 50px; cursor: pointer; transition: all 0.2s;">
-                        <i class="fa-regular fa-wand-magic-sparkles" style="margin-right: 8px;"></i>
+                        <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i>
                         <span data-i18n="random_hexagram">随机起卦</span>
                     </button>
                 </div>
@@ -6293,7 +6301,7 @@
                 </div>
 
                 <div class="divination-time" id="divinationTime">
-                    <i class="fa-regular fa-clock"></i>
+                    <i class="fa-solid fa-clock"></i>
                     <span id="divinationTimeText">起卦时间：--</span>
                 </div>
 
@@ -6301,14 +6309,14 @@
                 <div id="hexagramMingpanLink" style="display: none; margin: 16px 0; padding: 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid rgba(212, 175, 55, 0.2);"></div>
 
                 <button class="btn-interpret" id="interpretBtn" onclick="interpretHexagram()">
-                    <i class="fa-regular fa-wand-magic-sparkles"></i>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
                     <span data-i18n="interpret_hexagram">AI 解卦</span>
                 </button>
 
                 <!-- 保存按钮 -->
                 <div class="result-actions">
                     <button class="btn-result" onclick="saveHexagramResult()">
-                        <i class="fa-regular fa-bookmark"></i>
+                        <i class="fa-solid fa-bookmark"></i>
                         <span data-i18n="save_result">保存卦象</span>
                     </button>
                 </div>
@@ -6316,7 +6324,7 @@
                 <!-- AI解读结果 -->
                 <div class="interpret-result" id="interpretResult" style="display: none;">
                     <div class="interpret-header">
-                        <i class="fa-regular fa-sparkles"></i>
+                        <i class="fa-solid fa-sparkles"></i>
                         <span data-i18n="interpretation">卦象解读</span>
                     </div>
                     <div class="interpret-content" id="interpretContent"></div>
@@ -6342,7 +6350,7 @@
                 <div class="history-header">
                     <div class="history-title" data-i18n="divination_history">占卜记录</div>
                     <button class="history-clear" onclick="clearHistory()">
-                        <i class="fa-regular fa-trash"></i>
+                        <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
                 <div class="history-list" id="historyList">
@@ -8128,7 +8136,7 @@
                 <div class="tooltip-header">
                     <span class="tooltip-term">${displayTerm}</span>
                     <button class="tooltip-close" onclick="this.parentElement.parentElement.remove()">
-                        <i class="fa-regular fa-xmark"></i>
+                        <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
                 <div class="tooltip-body">${definition}</div>
@@ -8399,7 +8407,7 @@
             container.innerHTML = scenes.map(scene => `
                 <div class="scene-card" onclick="openChat('${scene.id}')">
                     <div class="scene-icon">
-                        <i class="fa-regular ${scene.icon}"></i>
+                        <i class="fa-solid ${scene.icon}"></i>
                     </div>
                     <div class="scene-name">${currentLang === 'zh' ? scene.nameZh : scene.nameEn}</div>
                     <div class="scene-name-en">${currentLang === 'zh' ? scene.nameEn : scene.nameZh}</div>
@@ -9602,7 +9610,7 @@ Qin: Balanced, centered, stable
             linkContainer.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center;">
-                        <i class="fa-regular fa-star" style="color: white;"></i>
+                        <i class="fa-solid fa-star" style="color: white;"></i>
                     </div>
                     <div style="flex: 1;">
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);">
@@ -9646,12 +9654,12 @@ Qin: Balanced, centered, stable
                 clearInterval(quickMeditationTimer);
                 quickMeditationTimer = null;
                 quickMeditationRunning = false;
-                btn.innerHTML = '<i class="fa-regular fa-play" style="font-size: 24px; color: white;"></i>';
+                btn.innerHTML = '<i class="fa-solid fa-play" style="font-size: 24px; color: white;"></i>';
                 phaseEl.textContent = currentLang === 'zh' ? '已暂停' : 'Paused';
             } else {
                 // 开始
                 quickMeditationRunning = true;
-                btn.innerHTML = '<i class="fa-regular fa-pause" style="font-size: 24px; color: white;"></i>';
+                btn.innerHTML = '<i class="fa-solid fa-pause" style="font-size: 24px; color: white;"></i>';
                 
                 quickMeditationTimer = setInterval(() => {
                     quickMeditationSeconds--;
@@ -9712,7 +9720,7 @@ Qin: Balanced, centered, stable
             guideEl.innerHTML = `
                 <div style="text-align: center;">
                     <div style="width: 60px; height: 60px; border-radius: 50%; background: #22c55e; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
-                        <i class="fa-regular fa-check" style="font-size: 28px; color: white;"></i>
+                        <i class="fa-solid fa-check" style="font-size: 28px; color: white;"></i>
                     </div>
                     <p style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text); margin: 0 0 8px;">
                         ${isZh ? '冥想完成' : 'Meditation Complete'}
@@ -9724,7 +9732,7 @@ Qin: Balanced, centered, stable
             `;
             
             const btn = document.getElementById('quickMeditationBtn');
-            btn.innerHTML = '<i class="fa-regular fa-check" style="font-size: 24px; color: white;"></i>';
+            btn.innerHTML = '<i class="fa-solid fa-check" style="font-size: 24px; color: white;"></i>';
             btn.onclick = closeQuickMeditation;
             
             const phaseEl = document.getElementById('quickTimerPhase');
@@ -9816,7 +9824,7 @@ Qin: Balanced, centered, stable
                          onclick="${isLocked ? '' : `openFengshuiLesson(${lesson.day})`}"
                          style="display: flex; align-items: center; padding: 16px; margin-bottom: 12px; background: ${isCompleted ? 'rgba(34, 197, 94, 0.08)' : isLocked ? 'rgba(0,0,0,0.03)' : 'rgba(212, 175, 55, 0.05)'}; border-radius: var(--radius-medium); border: 1px solid ${isCompleted ? 'rgba(34, 197, 94, 0.2)' : isLocked ? 'var(--color-border)' : 'rgba(212, 175, 55, 0.15)'}; cursor: ${isLocked ? 'not-allowed' : 'pointer'}; transition: all 0.2s; opacity: ${isLocked ? '0.6' : '1'};">
                         <div style="width: 44px; height: 44px; border-radius: 50%; background: ${isCompleted ? '#22c55e' : 'var(--color-primary)'}; display: flex; align-items: center; justify-content: center; margin-right: 14px; flex-shrink: 0;">
-                            ${isCompleted ? '<i class="fa-solid fa-check" style="color: white; font-size: 18px;"></i>' : `<i class="fa-regular ${lesson.icon}" style="color: white; font-size: 18px;"></i>`}
+                            ${isCompleted ? '<i class="fa-solid fa-check" style="color: white; font-size: 18px;"></i>' : `<i class="fa-solid ${lesson.icon}" style="color: white; font-size: 18px;"></i>`}
                         </div>
                         <div style="flex: 1;">
                             <div style="font: 500 15px/1.4 var(--font-stack); color: var(--color-text);">
@@ -9827,7 +9835,7 @@ Qin: Balanced, centered, stable
                             </div>
                         </div>
                         <div style="color: var(--color-text-mid);">
-                            ${isLocked ? '<i class="fa-regular fa-lock"></i>' : '<i class="fa-regular fa-chevron-right"></i>'}
+                            ${isLocked ? '<i class="fa-solid fa-lock"></i>' : '<i class="fa-solid fa-chevron-right"></i>'}
                         </div>
                     </div>
                 `;
@@ -9863,7 +9871,7 @@ Qin: Balanced, centered, stable
             let html = `
                 <div style="text-align: center; padding: 20px 0; border-bottom: 1px solid var(--color-border); margin-bottom: 24px;">
                     <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
-                        <i class="fa-regular ${lesson.icon}" style="color: white; font-size: 28px;"></i>
+                        <i class="fa-solid ${lesson.icon}" style="color: white; font-size: 28px;"></i>
                     </div>
                     <div style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text);">${isZh ? lesson.titleZh : lesson.titleEn}</div>
                     <div style="font: 400 13px/1.4 var(--font-stack); color: var(--color-text-mid); margin-top: 6px;">${lesson.duration}</div>
@@ -9881,7 +9889,7 @@ Qin: Balanced, centered, stable
                     html += `
                         <div style="margin-bottom: 20px;">
                             <div style="font: 500 15px/1.4 var(--font-stack); color: var(--color-text); margin-bottom: 12px;">
-                                <i class="fa-regular fa-lightbulb" style="color: var(--color-primary); margin-right: 8px;"></i>${section.title}
+                                <i class="fa-solid fa-lightbulb" style="color: var(--color-primary); margin-right: 8px;"></i>${section.title}
                             </div>
                             <div style="padding: 16px; background: var(--color-background-alt); border-radius: var(--radius-small);">
                                 ${section.items.map(item => `
@@ -9897,7 +9905,7 @@ Qin: Balanced, centered, stable
                     html += `
                         <div style="margin-bottom: 20px; padding: 16px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid rgba(59, 130, 246, 0.2);">
                             <div style="font: 500 15px/1.4 var(--font-stack); color: #3b82f6; margin-bottom: 8px;">
-                                <i class="fa-regular fa-hand-point-right" style="margin-right: 8px;"></i>${section.title}
+                                <i class="fa-solid fa-hand-point-right" style="margin-right: 8px;"></i>${section.title}
                             </div>
                             <p style="font: 400 14px/1.7 var(--font-stack); color: var(--color-text); margin: 0;">${section.text}</p>
                         </div>
@@ -9906,7 +9914,7 @@ Qin: Balanced, centered, stable
                     html += `
                         <div style="margin-bottom: 20px; padding: 12px 16px; background: rgba(34, 197, 94, 0.08); border-radius: var(--radius-small); border-left: 3px solid #22c55e;">
                             <span style="font: 500 13px/1.4 var(--font-stack); color: #22c55e;">
-                                <i class="fa-regular fa-check-circle" style="margin-right: 6px;"></i>${isZh ? '要点' : 'Key Point'}：
+                                <i class="fa-solid fa-check-circle" style="margin-right: 6px;"></i>${isZh ? '要点' : 'Key Point'}：
                             </span>
                             <span style="font: 400 13px/1.4 var(--font-stack); color: var(--color-text);">${section.text}</span>
                         </div>
@@ -9915,7 +9923,7 @@ Qin: Balanced, centered, stable
                     html += `
                         <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%); border-radius: var(--radius-medium); text-align: center;">
                             <div style="font: 600 16px/1.4 var(--font-stack); color: var(--color-primary); margin-bottom: 12px;">
-                                <i class="fa-regular fa-trophy" style="margin-right: 8px;"></i>${section.title}
+                                <i class="fa-solid fa-trophy" style="margin-right: 8px;"></i>${section.title}
                             </div>
                             <p style="font: 400 14px/1.7 var(--font-stack); color: var(--color-text); margin: 0;">${section.text}</p>
                         </div>
@@ -9926,7 +9934,7 @@ Qin: Balanced, centered, stable
             html += `
                 <div style="margin-top: 24px;">
                     <button onclick="completeFengshuiLesson(${day})" style="width: 100%; padding: 14px; font: 500 15px/1 var(--font-stack); color: white; background: var(--color-primary); border: none; border-radius: var(--radius-medium); cursor: pointer; transition: all 0.2s;">
-                        <i class="fa-regular fa-check" style="margin-right: 8px;"></i>${isZh ? '完成本课' : 'Complete Lesson'}
+                        <i class="fa-solid fa-check" style="margin-right: 8px;"></i>${isZh ? '完成本课' : 'Complete Lesson'}
                     </button>
                 </div>
             `;
@@ -10049,7 +10057,7 @@ Qin: Balanced, centered, stable
                 mingpanLink.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-regular fa-link" style="color: white;"></i>
+                            <i class="fa-solid fa-link" style="color: white;"></i>
                         </div>
                         <div style="flex: 1;">
                             <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);">${isZh ? '命盘联动' : 'Destiny Link'}</div>
@@ -10081,11 +10089,11 @@ Qin: Balanced, centered, stable
                         <div class="collapsible-header">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fa-regular ${c.icon}" style="color: var(--color-primary); font-size: 14px;"></i>
+                                    <i class="fa-solid ${c.icon}" style="color: var(--color-primary); font-size: 14px;"></i>
                                 </div>
                                 <span class="collapsible-title">${isZh ? c.titleZh : c.titleEn}</span>
                             </div>
-                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                            <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                         </div>
                         <div class="collapsible-content">
                             <div class="collapsible-body" style="padding: 16px;">
@@ -10118,11 +10126,11 @@ Qin: Balanced, centered, stable
                         <div class="collapsible-header">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: flex; align-items: center; justify-content: center;">
-                                    <i class="fa-regular ${c.icon}" style="color: var(--color-primary); font-size: 14px;"></i>
+                                    <i class="fa-solid ${c.icon}" style="color: var(--color-primary); font-size: 14px;"></i>
                                 </div>
                                 <span class="collapsible-title">${isZh ? c.titleZh : c.titleEn}</span>
                             </div>
-                            <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                            <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                         </div>
                         <div class="collapsible-content">
                             <div class="collapsible-body" style="padding: 16px;">
@@ -10357,7 +10365,7 @@ Qin: Balanced, centered, stable
                 <div class="collapsible" onclick="toggleCollapsible(this)">
                     <div class="collapsible-header">
                         <span class="collapsible-title">${isZh ? qa.questionZh : qa.questionEn}</span>
-                        <i class="fa-regular fa-chevron-down collapsible-icon"></i>
+                        <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                     </div>
                     <div class="collapsible-content">
                         <div class="collapsible-body">
@@ -10406,7 +10414,7 @@ Qin: Balanced, centered, stable
                         </div>
                     </div>
                     <button onclick="hideBaguaDirectionDetail()" style="background: none; border: none; cursor: pointer; padding: 4px;">
-                        <i class="fa-regular fa-xmark" style="font-size: 20px; color: var(--color-text-mid);"></i>
+                        <i class="fa-solid fa-xmark" style="font-size: 20px; color: var(--color-text-mid);"></i>
                     </button>
                 </div>
                 
@@ -10427,7 +10435,7 @@ Qin: Balanced, centered, stable
                 
                 <div style="margin-bottom: 12px;">
                     <div style="font: 500 13px/1 var(--font-stack); color: var(--color-text); margin-bottom: 8px;">
-                        <i class="fa-regular fa-check" style="color: #22c55e; margin-right: 6px;"></i>
+                        <i class="fa-solid fa-check" style="color: #22c55e; margin-right: 6px;"></i>
                         <span data-i18n="bagua_suitable">宜</span>
                     </div>
                     <p style="font: 400 13px/1.6 var(--font-stack); color: var(--color-text-mid); margin: 0;">
@@ -10437,7 +10445,7 @@ Qin: Balanced, centered, stable
                 
                 <div>
                     <div style="font: 500 13px/1 var(--font-stack); color: var(--color-text); margin-bottom: 8px;">
-                        <i class="fa-regular fa-xmark" style="color: #ef4444; margin-right: 6px;"></i>
+                        <i class="fa-solid fa-xmark" style="color: #ef4444; margin-right: 6px;"></i>
                         <span data-i18n="bagua_avoid">忌</span>
                     </div>
                     <p style="font: 400 13px/1.6 var(--font-stack); color: var(--color-text-mid); margin: 0;">
@@ -10632,11 +10640,11 @@ Qin: Balanced, centered, stable
                 // 暂停
                 clearInterval(timerInterval);
                 timerRunning = false;
-                btn.innerHTML = '<i class="fa-regular fa-play"></i><span>' + (currentLang === 'zh' ? '继续' : 'Resume') + '</span>';
+                btn.innerHTML = '<i class="fa-solid fa-play"></i><span>' + (currentLang === 'zh' ? '继续' : 'Resume') + '</span>';
             } else {
                 // 开始
                 timerRunning = true;
-                btn.innerHTML = '<i class="fa-regular fa-pause"></i><span>' + (currentLang === 'zh' ? '暂停' : 'Pause') + '</span>';
+                btn.innerHTML = '<i class="fa-solid fa-pause"></i><span>' + (currentLang === 'zh' ? '暂停' : 'Pause') + '</span>';
                 
                 const course = PRACTICE_COURSES[currentPracticeDay];
                 const totalSeconds = course.duration * 60;
@@ -10692,7 +10700,7 @@ Qin: Balanced, centered, stable
             loadPracticePhase(0);
             
             const btn = document.getElementById('timerStartBtn');
-            btn.innerHTML = '<i class="fa-regular fa-play"></i><span>' + (currentLang === 'zh' ? '开始' : 'Start') + '</span>';
+            btn.innerHTML = '<i class="fa-solid fa-play"></i><span>' + (currentLang === 'zh' ? '开始' : 'Start') + '</span>';
         }
 
         function showPracticeComplete(duration) {
@@ -11069,7 +11077,7 @@ Qin: Balanced, centered, stable
                 <div style="margin-top: 16px; padding: 16px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%); border-radius: var(--radius-medium); border: 1px solid rgba(212, 175, 55, 0.2);">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                         <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center;">
-                            <i class="fa-regular fa-link" style="color: white; font-size: 14px;"></i>
+                            <i class="fa-solid fa-link" style="color: white; font-size: 14px;"></i>
                         </div>
                         <div style="font: 500 14px/1.4 var(--font-stack); color: var(--color-text);">
                             ${isZh ? '命盘联动建议' : 'Destiny Chart Link'}
@@ -13116,7 +13124,7 @@ Return ONLY valid JSON (no markdown, no explanation):
             linkContainer.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                     <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary); display: flex; align-items: center; justify-content: center;">
-                        <i class="fa-regular fa-link" style="color: white; font-size: 12px;"></i>
+                        <i class="fa-solid fa-link" style="color: white; font-size: 12px;"></i>
                     </div>
                     <div style="font: 500 13px/1.4 var(--font-stack); color: var(--color-text);">
                         ${isZh ? '命盘联动' : 'Destiny Link'}
@@ -13337,7 +13345,7 @@ Return ONLY valid JSON (no markdown, no explanation):
             const interpretContent = document.getElementById('interpretContent');
             
             interpretResult.style.display = 'block';
-            interpretContent.innerHTML = '<div class="loading" style="text-align:center;padding:20px;"><i class="fa-regular fa-spinner fa-spin" style="font-size:24px;color:var(--color-primary);"></i></div>';
+            interpretContent.innerHTML = '<div class="loading" style="text-align:center;padding:20px;"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;color:var(--color-primary);"></i></div>';
             
             // 获取命盘数据用于个性化解读
             let mingpanContext = '';
