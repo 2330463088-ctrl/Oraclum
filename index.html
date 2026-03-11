@@ -494,48 +494,131 @@
             margin-top: 16px;
         }
 
+        /* ===== 场景卡片 - 水平布局优化 ===== */
         .scene-card {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 16px;
+            flex-direction: row;
+            align-items: center;
+            padding: 20px;
             background: var(--color-bg);
             border-radius: var(--radius-card);
             cursor: pointer;
             transition: all var(--transition-normal);
             border: 1px solid var(--color-divider);
+            gap: 16px;
         }
 
         .scene-card:hover {
             border-color: var(--color-primary);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
         }
 
         .scene-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-small);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             background: var(--color-primary-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            flex-shrink: 0;
         }
 
         .scene-icon i {
-            font-size: 18px;
+            font-size: 20px;
             color: var(--color-primary);
         }
 
+        .scene-info {
+            flex: 1;
+            min-width: 0;
+        }
+
         .scene-name {
-            font: 600 15px/1.3 var(--font-stack);
+            font: 600 16px/1.3 var(--font-stack);
             color: var(--color-text);
         }
 
         .scene-name-en {
-            font: 400 11px/1.4 var(--font-stack);
+            font: 400 12px/1.4 var(--font-stack);
             color: var(--color-text-light);
             margin-top: 2px;
+        }
+
+        .scene-preview {
+            font: 400 12px/1.5 var(--font-stack);
+            color: var(--color-text-mid);
+            margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .scene-arrow {
+            color: var(--color-text-light);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* 场景列表垂直布局 */
+        .scene-list-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* 探索更多折叠区域 */
+        .explore-more-section {
+            margin-top: 24px;
+        }
+
+        .explore-more-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 16px;
+            background: transparent;
+            border: 1.5px solid var(--color-primary);
+            border-radius: var(--radius-btn);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font: 500 15px/1 var(--font-stack);
+            color: var(--color-primary);
+        }
+
+        .explore-more-btn:hover {
+            background: var(--color-primary-light);
+        }
+
+        .explore-more-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .explore-more-btn.expanded i {
+            transform: rotate(180deg);
+        }
+
+        .explore-more-content {
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .explore-more-content.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ===== Success Stories ===== */
@@ -4536,77 +4619,22 @@
 
             <!-- 主内容 -->
             <main class="main-content">
-                <!-- 什么是Oraculum -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title" data-i18n="intro_title">什么是 Oraculum?</div>
-                        <div class="link-arrow" onclick="showIntroModal()">
-                            <span data-i18n="learn_more">了解更多</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-                    <p class="card-subtitle" data-i18n="intro_content">Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活</p>
+                <!-- ===== 场景占卜 - 视觉焦点 ===== -->
+                <div class="section-header" style="margin-bottom: 20px;">
+                    <h2 class="section-title" style="font: 600 20px/1.3 var(--font-stack); color: var(--color-text);">
+                        <span data-i18n="select_scene">选择场景</span>
+                        <span style="font: 400 14px/1 var(--font-stack); color: var(--color-text-light); margin-left: 8px;">Select Scenario</span>
+                    </h2>
+                    <p class="section-hint" style="margin-top: 8px;" data-i18n="scene_hint">点击卡片，获取奇门遁甲决策建议</p>
                 </div>
 
-                <!-- 核心概念 - 术语解释卡片 -->
-                <div class="card collapsible-card" id="conceptsCard">
-                    <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                        <div>
-                            <div class="card-title" data-i18n="concepts_title">核心概念 · Core Concepts</div>
-                            <div class="card-subtitle" data-i18n="concepts_subtitle">点击展开，了解奇门遁甲基础知识</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-down collapsible-icon"></i>
-                    </div>
-                    <div class="collapsible-content">
-                        <div class="concept-grid">
-                            <div class="concept-item" onclick="showConceptDetail('qimen')">
-                                <div class="concept-icon"><i class="fa-solid fa-compass"></i></div>
-                                <div class="concept-info">
-                                    <div class="concept-name">奇门遁甲 <span class="concept-name-en">Qimen Dunjia</span></div>
-                                    <div class="concept-brief" data-i18n="qimen_brief">中国古代最高决策术，融合天文地理的时空模型</div>
-                                </div>
-                            </div>
-                            <div class="concept-item" onclick="showConceptDetail('yinyang')">
-                                <div class="concept-icon"><i class="fa-solid fa-circle-half-stroke"></i></div>
-                                <div class="concept-info">
-                                    <div class="concept-name">阴阳 <span class="concept-name-en">Yin-Yang</span></div>
-                                    <div class="concept-brief" data-i18n="yinyang_brief">宇宙万物的两极力量，动态平衡的智慧</div>
-                                </div>
-                            </div>
-                            <div class="concept-item" onclick="showConceptDetail('five')">
-                                <div class="concept-icon"><i class="fa-solid fa-star"></i></div>
-                                <div class="concept-info">
-                                    <div class="concept-name">五行 <span class="concept-name-en">Five Elements</span></div>
-                                    <div class="concept-brief" data-i18n="five_brief">金木水火土，相生相克的能量循环</div>
-                                </div>
-                            </div>
-                            <div class="concept-item" onclick="showConceptDetail('eight')">
-                                <div class="concept-icon"><i class="fa-solid fa-door-open"></i></div>
-                                <div class="concept-info">
-                                    <div class="concept-name">八门 <span class="concept-name-en">Eight Doors</span></div>
-                                    <div class="concept-brief" data-i18n="eight_brief">休生伤杜景死惊开，八种能量门户</div>
-                                </div>
-                            </div>
-                            <div class="concept-item" onclick="showConceptDetail('nine')">
-                                <div class="concept-icon"><i class="fa-solid fa-sparkles"></i></div>
-                                <div class="concept-info">
-                                    <div class="concept-name">九星 <span class="concept-name-en">Nine Stars</span></div>
-                                    <div class="concept-brief" data-i18n="nine_brief">天蓬天任天冲等，九种宇宙能量</div>
-                                </div>
-                            </div>
-                            <div class="concept-item" onclick="showConceptDetail('bagua')">
-                                <div class="concept-icon"><i class="fa-solid fa-circle-nodes"></i></div>
-                                <div class="concept-info">
-                                    <div class="concept-name">八卦 <span class="concept-name-en">Eight Trigrams</span></div>
-                                    <div class="concept-brief" data-i18n="bagua_brief">乾坤震巽坎离艮兑，宇宙八种基本模式</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- 场景卡片列表 - 垂直排列 -->
+                <div class="scene-list-vertical" id="sceneList">
+                    <!-- 场景卡片由JS生成 -->
                 </div>
 
-                <!-- 后天八卦罗盘 -->
-                <div class="card">
+                <!-- ===== 后天八卦罗盘 - 文化点缀 ===== -->
+                <div class="card" style="margin-top: 32px;">
                     <div class="card-header">
                         <div>
                             <div class="card-title" data-i18n="compass_title">后天罗盘 · 今日能量</div>
@@ -4618,7 +4646,7 @@
                     <div class="compass-container" id="compassContainer">
                         <div class="compass-ring"></div>
                         
-                        <!-- 八方扇区 - 后天八卦传统布局：上南下北，左东右西 -->
+                        <!-- 八方扇区 -->
                         <div class="compass-sector south" data-direction="south" onclick="selectDirection('south')">
                             <span class="chinese">离</span>
                             <span class="english">S</span>
@@ -4664,141 +4692,183 @@
                     </div>
                 </div>
 
-                <!-- Daily Check-in -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Daily Check-in</div>
-                            <div class="card-subtitle" data-i18n="checkin_subtitle">开始你的签到之旅</div>
+                <!-- ===== 探索更多 - 折叠区域 ===== -->
+                <div class="explore-more-section">
+                    <button class="explore-more-btn" id="exploreMoreBtn" onclick="toggleExploreMore()">
+                        <span data-i18n="explore_more">更多功能 · More</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    
+                    <div class="explore-more-content" id="exploreMoreContent">
+                        <!-- 什么是Oraculum -->
+                        <div class="card" style="margin-top: 16px;">
+                            <div class="card-header">
+                                <div class="card-title" data-i18n="intro_title">什么是 Oraculum?</div>
+                                <div class="link-arrow" onclick="showIntroModal()">
+                                    <span data-i18n="learn_more">了解更多</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                            <p class="card-subtitle" data-i18n="intro_content">Oraculum将三千年的中国决策智慧——奇门遁甲与道家五术——融入你的日常生活</p>
                         </div>
-                        <button class="btn btn-primary btn-small" id="checkinBtn" onclick="doCheckin()" data-i18n="checkin">签到</button>
-                    </div>
-                    <div style="font: var(--font-hint); color: var(--color-text-mid);">
-                        <span data-i18n="checkin_count">已连续签到</span> <strong id="checkinCount">0</strong> <span data-i18n="days">天</span>
-                    </div>
-                </div>
 
-                <!-- Success Stories -->
-                <div class="card">
-                    <div class="card-title" style="margin-bottom: 16px;">Success Stories</div>
-                    <div class="stories-list">
-                        <div class="story-item">
-                            <div class="story-header">
-                                <div class="story-user-info">
-                                    <div class="story-avatar" style="background: #5a8a7a;">J</div>
-                                    <div>
-                                        <div class="story-user">John M.</div>
-                                        <div class="story-location">New York, USA</div>
-                                    </div>
+                        <!-- 核心概念 -->
+                        <div class="card collapsible-card" id="conceptsCard">
+                            <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                                <div>
+                                    <div class="card-title" data-i18n="concepts_title">核心概念 · Core Concepts</div>
+                                    <div class="card-subtitle" data-i18n="concepts_subtitle">点击展开，了解奇门遁甲基础知识</div>
                                 </div>
-                                <div class="story-type">Job Interview</div>
+                                <i class="fa-solid fa-chevron-down collapsible-icon"></i>
                             </div>
-                            <div class="story-quote">"Used Qimen timing for his interview. Got the offer in 3 days!"</div>
-                            <div class="story-footer">
-                                <div class="story-result">
-                                    <i class="fa-solid fa-arrow-up"></i>
-                                    <span>+35% success rate</span>
-                                </div>
-                                <div class="story-meta">
-                                    <div class="story-date">Feb 2025</div>
-                                    <div class="story-verified">
-                                        <i class="fa-solid fa-check"></i>
-                                        <span data-i18n="story_verified">Verified</span>
+                            <div class="collapsible-content">
+                                <div class="concept-grid">
+                                    <div class="concept-item" onclick="showConceptDetail('qimen')">
+                                        <div class="concept-icon"><i class="fa-solid fa-compass"></i></div>
+                                        <div class="concept-info">
+                                            <div class="concept-name">奇门遁甲 <span class="concept-name-en">Qimen Dunjia</span></div>
+                                            <div class="concept-brief" data-i18n="qimen_brief">中国古代最高决策术，融合天文地理的时空模型</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="story-item">
-                            <div class="story-header">
-                                <div class="story-user-info">
-                                    <div class="story-avatar" style="background: #8a6a5a;">S</div>
-                                    <div>
-                                        <div class="story-user">Sarah L.</div>
-                                        <div class="story-location">London, UK</div>
+                                    <div class="concept-item" onclick="showConceptDetail('yinyang')">
+                                        <div class="concept-icon"><i class="fa-solid fa-circle-half-stroke"></i></div>
+                                        <div class="concept-info">
+                                            <div class="concept-name">阴阳 <span class="concept-name-en">Yin-Yang</span></div>
+                                            <div class="concept-brief" data-i18n="yinyang_brief">宇宙万物的两极力量，动态平衡的智慧</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="story-type">Business Deal</div>
-                            </div>
-                            <div class="story-quote">"Timed her negotiation. Deal closed 20% higher!"</div>
-                            <div class="story-footer">
-                                <div class="story-result">
-                                    <i class="fa-solid fa-arrow-up"></i>
-                                    <span>+20% deal value</span>
-                                </div>
-                                <div class="story-meta">
-                                    <div class="story-date">Jan 2025</div>
-                                    <div class="story-verified">
-                                        <i class="fa-solid fa-check"></i>
-                                        <span data-i18n="story_verified">Verified</span>
+                                    <div class="concept-item" onclick="showConceptDetail('five')">
+                                        <div class="concept-icon"><i class="fa-solid fa-star"></i></div>
+                                        <div class="concept-info">
+                                            <div class="concept-name">五行 <span class="concept-name-en">Five Elements</span></div>
+                                            <div class="concept-brief" data-i18n="five_brief">金木水火土，相生相克的能量循环</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="story-item">
-                            <div class="story-header">
-                                <div class="story-user-info">
-                                    <div class="story-avatar" style="background: #5a6a8a;">T</div>
-                                    <div>
-                                        <div class="story-user">Takeshi K.</div>
-                                        <div class="story-location">Tokyo, Japan</div>
+                                    <div class="concept-item" onclick="showConceptDetail('eight')">
+                                        <div class="concept-icon"><i class="fa-solid fa-door-open"></i></div>
+                                        <div class="concept-info">
+                                            <div class="concept-name">八门 <span class="concept-name-en">Eight Doors</span></div>
+                                            <div class="concept-brief" data-i18n="eight_brief">休生伤杜景死惊开，八种能量门户</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="story-type">Investment</div>
-                            </div>
-                            <div class="story-quote">"Followed auspicious direction, profit up 15%!"</div>
-                            <div class="story-footer">
-                                <div class="story-result">
-                                    <i class="fa-solid fa-arrow-up"></i>
-                                    <span>+15% profit</span>
-                                </div>
-                                <div class="story-meta">
-                                    <div class="story-date">Dec 2024</div>
-                                    <div class="story-verified">
-                                        <i class="fa-solid fa-check"></i>
-                                        <span data-i18n="story_verified">Verified</span>
+                                    <div class="concept-item" onclick="showConceptDetail('nine')">
+                                        <div class="concept-icon"><i class="fa-solid fa-sparkles"></i></div>
+                                        <div class="concept-info">
+                                            <div class="concept-name">九星 <span class="concept-name-en">Nine Stars</span></div>
+                                            <div class="concept-brief" data-i18n="nine_brief">天蓬天任天冲等，九种宇宙能量</div>
+                                        </div>
+                                    </div>
+                                    <div class="concept-item" onclick="showConceptDetail('bagua')">
+                                        <div class="concept-icon"><i class="fa-solid fa-circle-nodes"></i></div>
+                                        <div class="concept-info">
+                                            <div class="concept-name">八卦 <span class="concept-name-en">Eight Trigrams</span></div>
+                                            <div class="concept-brief" data-i18n="bagua_brief">乾坤震巽坎离艮兑，宇宙八种基本模式</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- 今日能量 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title" data-i18n="today_energy">今日能量</div>
-                            <div class="card-subtitle" id="todayDate">Today's Energy · Mar 8</div>
+                        <!-- Daily Check-in -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">Daily Check-in</div>
+                                    <div class="card-subtitle" data-i18n="checkin_subtitle">开始你的签到之旅</div>
+                                </div>
+                                <button class="btn btn-primary btn-small" id="checkinBtn" onclick="doCheckin()" data-i18n="checkin">签到</button>
+                            </div>
+                            <div style="font: var(--font-hint); color: var(--color-text-mid);">
+                                <span data-i18n="checkin_count">已连续签到</span> <strong id="checkinCount">0</strong> <span data-i18n="days">天</span>
+                            </div>
                         </div>
-                    </div>
-                    <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 12px;">
-                        <span data-i18n="yindun">阴遁</span> <strong>8</strong> <span data-i18n="ju">局</span> <span style="margin-left: 8px; color: var(--color-text-light);">/ Yin Dun 8</span>
-                    </p>
-                    <div class="fortune-list">
-                        <div class="fortune-item good">
-                            <div class="fortune-label" data-i18n="suitable">宜 / Good for</div>
-                            <div class="fortune-items">向西北行 · 穿白色 · 生机、财运、新生事物 · 光明、喜庆、文化传播</div>
-                        </div>
-                        <div class="fortune-item bad">
-                            <div class="fortune-label" data-i18n="avoid">忌 / Avoid</div>
-                            <div class="fortune-items">西南方争吵 · 惊恐、不安、意外</div>
-                        </div>
-                    </div>
-                    <p style="font: var(--font-hint); color: var(--color-text-mid); margin-top: 16px; line-height: 1.8;">
-                        惊蛰时节，阴遁8局，宜守不宜攻，伤门临宫出行注意安全，惊门落位避免重大决策，天芮病星注意健康
-                    </p>
-                    <div class="link-arrow" style="margin-top: 16px;" onclick="showEnergyDetail()">
-                        <span data-i18n="view_analysis">查看详细分析</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </div>
-                </div>
 
-                <!-- 选择场景 -->
-                <h2 class="section-title" data-i18n="select_scene">选择场景</h2>
-                <p class="section-hint" data-i18n="scroll_hint">更多场景下滑探索 ↓</p>
+                        <!-- 今日能量 -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title" data-i18n="today_energy">今日能量</div>
+                                    <div class="card-subtitle" id="todayDate">Today's Energy · Mar 8</div>
+                                </div>
+                            </div>
+                            <p style="font: var(--font-hint); color: var(--color-text-mid); margin-bottom: 12px;">
+                                <span data-i18n="yindun">阴遁</span> <strong>8</strong> <span data-i18n="ju">局</span> <span style="margin-left: 8px; color: var(--color-text-light);">/ Yin Dun 8</span>
+                            </p>
+                            <div class="fortune-list">
+                                <div class="fortune-item good">
+                                    <div class="fortune-label" data-i18n="suitable">宜 / Good for</div>
+                                    <div class="fortune-items">向西北行 · 穿白色 · 生机、财运、新生事物</div>
+                                </div>
+                                <div class="fortune-item bad">
+                                    <div class="fortune-label" data-i18n="avoid">忌 / Avoid</div>
+                                    <div class="fortune-items">西南方争吵 · 惊恐、不安、意外</div>
+                                </div>
+                            </div>
+                            <div class="link-arrow" style="margin-top: 16px;" onclick="showEnergyDetail()">
+                                <span data-i18n="view_analysis">查看详细分析</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </div>
 
-                <div class="scene-grid" id="sceneList">
-                    <!-- 场景卡片由JS生成 -->
+                        <!-- Success Stories -->
+                        <div class="card">
+                            <div class="card-title" style="margin-bottom: 16px;">Success Stories</div>
+                            <div class="stories-list">
+                                <div class="story-item">
+                                    <div class="story-header">
+                                        <div class="story-user-info">
+                                            <div class="story-avatar" style="background: #5a8a7a;">J</div>
+                                            <div>
+                                                <div class="story-user">John M.</div>
+                                                <div class="story-location">New York, USA</div>
+                                            </div>
+                                        </div>
+                                        <div class="story-type">Job Interview</div>
+                                    </div>
+                                    <div class="story-quote">"Used Qimen timing for his interview. Got the offer in 3 days!"</div>
+                                    <div class="story-footer">
+                                        <div class="story-result">
+                                            <i class="fa-solid fa-arrow-up"></i>
+                                            <span>+35% success rate</span>
+                                        </div>
+                                        <div class="story-meta">
+                                            <div class="story-date">Feb 2025</div>
+                                            <div class="story-verified">
+                                                <i class="fa-solid fa-check"></i>
+                                                <span data-i18n="story_verified">Verified</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="story-item">
+                                    <div class="story-header">
+                                        <div class="story-user-info">
+                                            <div class="story-avatar" style="background: #8a6a5a;">S</div>
+                                            <div>
+                                                <div class="story-user">Sarah L.</div>
+                                                <div class="story-location">London, UK</div>
+                                            </div>
+                                        </div>
+                                        <div class="story-type">Business Deal</div>
+                                    </div>
+                                    <div class="story-quote">"Timed her negotiation. Deal closed 20% higher!"</div>
+                                    <div class="story-footer">
+                                        <div class="story-result">
+                                            <i class="fa-solid fa-arrow-up"></i>
+                                            <span>+20% deal value</span>
+                                        </div>
+                                        <div class="story-meta">
+                                            <div class="story-date">Jan 2025</div>
+                                            <div class="story-verified">
+                                                <i class="fa-solid fa-check"></i>
+                                                <span data-i18n="story_verified">Verified</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 免责声明 -->
@@ -6685,6 +6755,9 @@
                 view_analysis: '查看详细分析',
                 select_scene: '选择场景',
                 scroll_hint: '更多场景下滑探索 ↓',
+                scene_hint: '点击卡片，获取奇门遁甲决策建议',
+                explore_more: '更多功能 · More',
+                collapse_less: '收起 · Less',
                 five_arts: '五术',
                 wushu_slogan: '山医命相卜 · 古今智慧',
                 wushu_intro: '五术为用，助你洞察天地人和',
@@ -7040,6 +7113,9 @@
                 view_analysis: 'View detailed analysis',
                 select_scene: 'Select Scenario',
                 scroll_hint: 'Scroll down for more ↓',
+                scene_hint: 'Tap a card to get Qimen Dunjia guidance',
+                explore_more: 'More · 更多功能',
+                collapse_less: 'Less · 收起',
                 five_arts: 'Five Arts',
                 wushu_slogan: 'Five Pathways to Ancient Wisdom',
                 wushu_intro: 'Discover the Five Arts — your guide to harmony and clarity',
@@ -8299,6 +8375,19 @@
             
             initScenes();
             
+            // 更新探索更多按钮文字
+            const exploreBtn = document.getElementById('exploreMoreBtn');
+            const exploreContent = document.getElementById('exploreMoreContent');
+            if (exploreBtn && exploreContent) {
+                const isExpanded = exploreContent.classList.contains('show');
+                const btnSpan = exploreBtn.querySelector('span');
+                if (btnSpan) {
+                    btnSpan.textContent = isExpanded 
+                        ? (currentLang === 'zh' ? '收起 · Less' : 'Less · 收起')
+                        : (currentLang === 'zh' ? '更多功能 · More' : 'More · 更多功能');
+                }
+            }
+            
             // Re-render fengshui components if the page is active
             if (document.getElementById('physiognomyPage').classList.contains('active')) {
                 renderFengshuiQA();
@@ -8404,13 +8493,18 @@
         // ===== 场景列表 =====
         function initScenes() {
             const container = document.getElementById('sceneList');
+            const isZh = currentLang === 'zh';
             container.innerHTML = scenes.map(scene => `
                 <div class="scene-card" onclick="openChat('${scene.id}')">
                     <div class="scene-icon">
                         <i class="fa-solid ${scene.icon}"></i>
                     </div>
-                    <div class="scene-name">${currentLang === 'zh' ? scene.nameZh : scene.nameEn}</div>
-                    <div class="scene-name-en">${currentLang === 'zh' ? scene.nameEn : scene.nameZh}</div>
+                    <div class="scene-info">
+                        <div class="scene-name">${isZh ? scene.nameZh : scene.nameEn}</div>
+                        <div class="scene-name-en">${isZh ? scene.nameEn : scene.nameZh}</div>
+                        <div class="scene-preview">${isZh ? scene.placeholderZh.substring(0, 25) + '...' : scene.placeholderEn.substring(0, 30) + '...'}</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right scene-arrow"></i>
                 </div>
             `).join('');
         }
@@ -13590,6 +13684,25 @@ Tone: Warm and wise, like guidance from an elder. Keep under 200 words.`
         // ===== 辅助功能 =====
         function toggleCollapsible(el) {
             el.classList.toggle('open');
+        }
+
+        // ===== 探索更多折叠功能 =====
+        function toggleExploreMore() {
+            const content = document.getElementById('exploreMoreContent');
+            const btn = document.getElementById('exploreMoreBtn');
+            const isExpanded = content.classList.contains('show');
+            
+            if (isExpanded) {
+                content.classList.remove('show');
+                btn.classList.remove('expanded');
+                btn.querySelector('span').setAttribute('data-i18n', 'explore_more');
+                btn.querySelector('span').textContent = currentLang === 'zh' ? '更多功能 · More' : 'More · 更多功能';
+            } else {
+                content.classList.add('show');
+                btn.classList.add('expanded');
+                btn.querySelector('span').setAttribute('data-i18n', 'collapse_less');
+                btn.querySelector('span').textContent = currentLang === 'zh' ? '收起 · Less' : 'Less · 收起';
+            }
         }
 
         // 显示概念详情
